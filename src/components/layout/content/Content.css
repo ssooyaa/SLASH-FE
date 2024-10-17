@@ -1,0 +1,6 @@
+/* Content.css */
+.content {
+  padding: 20px;
+  background: #F6FCFF;
+  flex-grow: 1;
+}
