@@ -1,61 +1,82 @@
 import React, { useState } from 'react';
-import './Sidebar.css'; // 스타일을 위한 CSS 파일
-import logo from '../../../assets/images/logo.png'; // 이미지 import
+import './Sidebar.css'; 
+import { FiHome, FiBarChart2, FiTrendingUp, FiClipboard, FiLogOut } from 'react-icons/fi'; // 로그아웃 아이콘 추가
+import logo from '../../../assets/images/logo.png'; 
 
-// React Icons import
-import { FiHome, FiBarChart2, FiTrendingUp, FiClipboard } from 'react-icons/fi';
+const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
+  const [activeIndex, setActiveIndex] = useState(null); 
 
-
-const Sidebar = () => {
-  const [activeIndex, setActiveIndex] = useState(null); // 활성화된 메뉴 상태 관리
   const handleMenuClick = (index) => {
-    setActiveIndex(index); // 클릭된 메뉴 항목의 인덱스를 저장
+    setActiveIndex(index);
   };
 
   return (
-    <div className="sidebar">
-      <nav className="menu">
-        <aside>
-          <img src={logo} alt="Logo" className="logo" />
-          <span className="sidebar-title">SLASH</span>
+    <nav className={`nav nav--offcanvas-${effectClass} ${isNavOpen ? 'is-opened' : ''}`}>
+      <div className="navClose" onClick={toggleNav}></div>
 
-          <div className="navList">
+      <div className="nav-header">
+        <img src={logo} alt="Logo" className="logo" />
+        <span className="sidebarTitle">SLASH</span>
+      </div>
+
+      <aside>
+        <ul className="navList">
+          <li className="navItem">
             <a
               href="#"
-              className={activeIndex === 0 ? 'active' : ''}
+              className={`navLink ${activeIndex === 0 ? 'active' : ''}`}
               onClick={() => handleMenuClick(0)}
             >
               <FiHome className="navLinkIcon" />
               홈
             </a>
+          </li>
+          <li className="navItem">
             <a
               href="#"
-              className={activeIndex === 1 ? 'active' : ''}
+              className={`navLink ${activeIndex === 1 ? 'active' : ''}`}
               onClick={() => handleMenuClick(1)}
             >
               <FiBarChart2 className="navLinkIcon" />
               대시보드
             </a>
+          </li>
+          <li className="navItem">
             <a
               href="#"
-              className={activeIndex === 2 ? 'active' : ''}
+              className={`navLink ${activeIndex === 2 ? 'active' : ''}`}
               onClick={() => handleMenuClick(2)}
             >
               <FiTrendingUp className="navLinkIcon" />
               지표 관리
             </a>
+          </li>
+          <li className="navItem">
             <a
               href="#"
-              className={activeIndex === 3 ? 'active' : ''}
+              className={`navLink ${activeIndex === 3 ? 'active' : ''}`}
               onClick={() => handleMenuClick(3)}
             >
               <FiClipboard className="navLinkIcon" />
               요청 관리
             </a>
-          </div>
-        </aside>
-      </nav>
-    </div>
+          </li>
+        </ul>
+
+        {/* 로그아웃 버튼 추가 */}
+        <div className="logout-section">
+          <button className="logout-btn">
+            <FiLogOut className="logout-icon" />
+            Logout
+          </button>
+        </div>
+
+        {/* 푸터 추가 */}
+        <footer className="sidebar-footer">
+          © 2024 SLASH ERP
+        </footer>
+      </aside>
+    </nav>
   );
 };
 

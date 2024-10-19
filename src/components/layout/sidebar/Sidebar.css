@@ -1,4 +1,4 @@
-/* Sidebar.css */
+/* 'paybooc-Bold' 폰트 불러오기 */
 @font-face {
   font-family: 'paybooc-Bold';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff2') format('woff2'),
@@ -7,79 +7,111 @@
   font-style: normal;
 }
 
-
+/* 전체 바디 스타일 설정 */
 body {
   font-family: 'paybooc-Bold', sans-serif;
   width: 100%;
-  height: 100vh; /* 화면 전체 높이 */
-  margin: 0; /* 기본 여백 제거 */
+  height: 100vh;
+  margin: 0;
 }
 
-.sidebar {
-  width: 15rem;
-  background: #121824; /* 사이드바 배경 색상 */
-  color: white; /* 글자 색상 */
-  height: 100vh; /* 화면 전체 높이 */
-  padding: 20px; /* 여백 */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.6); 
-  display: flex; /* 플렉스 박스 설정 */
-  flex-direction: column; /* 세로 방향으로 배치 */
+
+/* 사이드바 스타일 */
+.nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 15rem; /* 기본 사이드바 너비 */
+  padding: 2rem; /* 콘텐츠 주변 여백 */
+  box-sizing: border-box;
+  background-color: #121824; /* 사이드바 배경색 */
+  color: white;
+  opacity: 0; /* 처음에 보이지 않게 설정 */
+  visibility: hidden;
+  box-shadow: 1.5px 0 1.5px rgba(0, 0, 0, 0.5);
 }
 
+/* 작은 화면에 맞춘 사이드바 스타일 */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 12rem; /* 작은 화면에서 사이드바 폭 축소 */
+  .nav {
+    width: 12rem; /* 화면이 작아졌을 때 사이드바 너비 축소 */
   }
 }
 
+/* 더 작은 화면에 맞춘 스타일 */
 @media (max-width: 576px) {
-  .sidebar {
-    width: 10rem; /* 더 작은 화면에서 사이드바 폭 축소 */
+  .nav {
+    width: 10rem; /* 화면이 더 작아졌을 때 사이드바 너비 축소 */
     padding: 10px; /* 작은 화면에서 여백 축소 */
   }
 }
 
-
-
-.sidebar .menu a {
-  color: white; /* 기본 글자 색상 */
-  text-decoration: none; /* 밑줄 제거 */
-  display: block;
-  padding: 12px;
-  padding-left: 30px;
-  transition: background-color 0.3s, color 0.3s; /* 애니메이션 */
+/* 사이드바 닫기 버튼 스타일 */
+.navClose {
+  position: absolute;
+  top: 7px; /* 70%로 조정 */
+  right: 0.7px; /* 70%로 조정 */
+  width: 28px; /* 40px의 70%로 조정 */
+  cursor: pointer;
 }
 
+/* 닫기 버튼의 선 스타일 */
+.navClose:before,
+.navClose:after {
+  content: '';
+  display: block;
+  width: 2.8px; /* 4px의 70%로 조정 */
+  height: 19.6px; /* 28px의 70%로 조정 */
+  background-color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  transition: all 0.2s linear;
+}
+
+/* 닫기 버튼의 왼쪽 대각선 선 */
+.navClose:before {
+  transform: rotate(-45deg);
+  top: 0;
+  left: 12.6px; /* 18px의 70%로 조정 */
+}
+
+/* 닫기 버튼의 오른쪽 대각선 선 */
+.navClose:after {
+  transform: rotate(45deg);
+  top: 0;
+  right: 12.6px; /* 18px의 70%로 조정 */
+}
+
+
+.nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  margin-bottom: 3rem; /* 아래 여백 */
+  margin-top:2.5rem;
+  margin-left:-1rem;
+}
+
+
+/* 로고 스타일 */
+.logo {
+  width: 7rem; /* 로고 너비 */
+  height: auto; /* 높이는 비율에 맞춰 자동 조정 */
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1rem; /* 로고와 타이틀 사이 간격 */
+}
+/* 사이드바 제목 스타일 */
 .sidebar-title {
   font-family: 'paybooc-Bold', sans-serif;
-  font-size: 2.5rem; /* 제목 크기 */
-  font-weight: bold; /* 제목 두께 */
-  text-transform: uppercase; /* 대문자 변환 */
-  display: inline-block; /* 텍스트와 수평 정렬 */
-  color: white; /* 글자 색상 */
-  transition: color 0.3s; /* 색상 전환 효과 추가 */
-}
-
-.sidebar .menu a:hover {
-  color: #121824; /* hover 시 색상 변경 */
+  font-size: 1.6rem; /* 제목 크기 */
   font-weight: bold;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  text-transform: uppercase; /* 대문자 변환 */
+  color: white;
+  transition: color 0.3s;
 }
 
-@media (max-width: 576px) {
-  .sidebar-title {
-    font-size: 1.5rem; /* 작은 화면에서 제목 크기 조정 */
-  }
-}
-
-.sidebar .menu a.active {
-  color: #121824; /* 클릭 후 활성화된 상태의 글자 색상 */
-  background-color: #fff; /* 활성화된 상태의 배경 색상 */
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-
+/* 작은 화면에서 로고 크기 */
 .logo {
   width: 7rem; /* 로고의 폭을 설정 */
   height: auto; /* 비율에 맞춰 높이 자동 조정 */
@@ -95,92 +127,119 @@ body {
   }
 }
 
-.navList {
-  margin-top: 3rem; /* 메뉴와 로고 사이 간격 */
-  flex-grow: 1; /* 공간을 차지하게 설정하여 저작권이 아래로 밀림 */
-}
-
-.menu a {
-  color: white; /* 기본 글자 색상 */
-  text-decoration: none; /* 밑줄 제거 */
-  display: flex; /* 플렉스 박스로 아이콘과 텍스트 수평 정렬 */
-  align-items: center; /* 아이콘과 텍스트 수직 정렬 */
-  padding: 12px;
-  padding-left: 30px;
-  transition: background-color 0.3s, color 0.3s; /* 애니메이션 */
-}
-
 .navLinkIcon {
-  margin-right: 10px; /* 아이콘과 텍스트 사이 간격 */
+  padding:0.4rem;
 }
 
-.menu a.active {
-  color: #121824;
-  background-color: #fff;
+/* 사이드바가 열렸을 때 */
+.nav--offcanvas-1.is-opened {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 메뉴 리스트 스타일 */
+.navList {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+/* 개별 메뉴 항목 스타일 */
+
+
+/* 메뉴 링크 스타일 */
+.navLink {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  padding: 10px 20px;
+  width: 11rem;
+  transition: none; /* 애니메이션 제거 */
+  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
 
-
-/* 사이드바 스타일 */
-aside {
-  color: #fff;
-  width: 250px;
-  padding-left: 20px;
-  height: 100%; /* 100% 높이 설정 */
-}
-
-aside a {
-  font-size: 15px;
-  color: #fff;
-  display: block;
-  padding: 12px;
-  padding-left: 30px;
-  text-decoration: none;
-  -webkit-tap-highlight-color:transparent;
-}
-
-
-aside a:hover {
-  color: #121824; /* hover 시 텍스트 색상을 검정색으로 변경 */
+/* hover, active, focus 효과 모두 동일하게 적용 */
+aside a:hover, 
+aside a:active, 
+aside a:focus {
+  color: #121824;
   background: #fff;
   outline: none;
   position: relative;
   background-color: #fff;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px;
 }
 
-
-
-/* hover 시 오른쪽으로 퍼지는 효과 */
-aside a:hover::after {
+aside a:hover::after, 
+aside a:active::after, 
+aside a:focus::after {
   content: "";
   position: absolute;
   background-color: transparent;
   bottom: 100%;
   right: 0;
   height: 35px;
-  width: 35px;
-  border-bottom-right-radius: 18px;
+  width: 37px;
+  border-bottom-right-radius: 35px;
   box-shadow: 0 20px 0 0 #fff;
 }
 
-aside a:hover::before {
+aside a:hover::before, 
+aside a:active::before, 
+aside a:focus::before {
   content: "";
   position: absolute;
   background-color: transparent;
-  top: 38px;
+  top: 46px;
   right: 0;
   height: 35px;
-  width: 35px;
-  border-top-right-radius: 18px;
+  width: 37px;
+  border-top-right-radius: 35px;
   box-shadow: 0 -20px 0 0 #fff;
 }
 
-aside p {
-  margin: 0; /* 기본 여백 제거 */
-  padding: 40px 0; /* 패딩 */
+
+/* 로그아웃 버튼 스타일 */
+.logout-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 500px;
+  padding: 1rem 0;
 }
 
+.logout-btn {
+  font-family: 'paybooc-Bold', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  padding: 10px;
+  background-color: #fff;
+  color: #121824;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
+.logout-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.logout-icon {
+  margin-right: 8px;
+}
+
+/* 푸터 스타일 */
+.sidebar-footer {
+  text-align: center;
+  color: #fff;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+} 
