@@ -1,20 +1,21 @@
 /* 'paybooc-Bold' 폰트 불러오기 */
 @font-face {
-  font-family: 'paybooc-Bold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff2') format('woff2'),
-       url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+  font-family: "paybooc-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff2")
+      format("woff2"),
+    url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff")
+      format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 /* 전체 바디 스타일 설정 */
 body {
-  font-family: 'paybooc-Bold', sans-serif;
+  font-family: "paybooc-Bold", sans-serif;
   width: 100%;
   height: 100vh;
   margin: 0;
 }
-
 
 /* 사이드바 스타일 */
 .nav {
@@ -58,7 +59,7 @@ body {
 /* 닫기 버튼의 선 스타일 */
 .navClose:before,
 .navClose:after {
-  content: '';
+  content: "";
   display: block;
   width: 2.8px; /* 4px의 70%로 조정 */
   height: 19.6px; /* 28px의 70%로 조정 */
@@ -82,16 +83,14 @@ body {
   right: 12.6px; /* 18px의 70%로 조정 */
 }
 
-
 .nav-header {
   display: flex;
   align-items: center;
   justify-content: flex-start; /* 왼쪽 정렬 */
   margin-bottom: 3rem; /* 아래 여백 */
-  margin-top:2.5rem;
-  margin-left:-1rem;
+  margin-top: 2.5rem;
+  margin-left: -1rem;
 }
-
 
 /* 로고 스타일 */
 .logo {
@@ -103,7 +102,7 @@ body {
 }
 /* 사이드바 제목 스타일 */
 .sidebar-title {
-  font-family: 'paybooc-Bold', sans-serif;
+  font-family: "paybooc-Bold", sans-serif;
   font-size: 1.6rem; /* 제목 크기 */
   font-weight: bold;
   text-transform: uppercase; /* 대문자 변환 */
@@ -118,7 +117,7 @@ body {
   display: inline-block; /* 인라인 블록으로 설정하여 텍스트와 수평 정렬 */
   vertical-align: middle; /* 중간 정렬 */
   margin-right: -1rem; /* 텍스트와의 간격 조정 */
-  margin-left:-2.3rem;
+  margin-left: -2.3rem;
 }
 
 @media (max-width: 576px) {
@@ -128,7 +127,7 @@ body {
 }
 
 .navLinkIcon {
-  padding:0.4rem;
+  padding: 0.4rem;
 }
 
 /* 사이드바가 열렸을 때 */
@@ -147,7 +146,6 @@ body {
 
 /* 개별 메뉴 항목 스타일 */
 
-
 /* 메뉴 링크 스타일 */
 .navLink {
   display: flex;
@@ -164,8 +162,8 @@ body {
 }
 
 /* hover, active, focus 효과 모두 동일하게 적용 */
-aside a:hover, 
-aside a:active, 
+aside a:hover,
+aside a:active,
 aside a:focus {
   color: #121824;
   background: #fff;
@@ -176,8 +174,8 @@ aside a:focus {
   border-bottom-left-radius: 35px;
 }
 
-aside a:hover::after, 
-aside a:active::after, 
+aside a:hover::after,
+aside a:active::after,
 aside a:focus::after {
   content: "";
   position: absolute;
@@ -190,8 +188,8 @@ aside a:focus::after {
   box-shadow: 0 20px 0 0 #fff;
 }
 
-aside a:hover::before, 
-aside a:active::before, 
+aside a:hover::before,
+aside a:active::before,
 aside a:focus::before {
   content: "";
   position: absolute;
@@ -204,7 +202,6 @@ aside a:focus::before {
   box-shadow: 0 -20px 0 0 #fff;
 }
 
-
 /* 로그아웃 버튼 스타일 */
 .logout-section {
   display: flex;
@@ -215,9 +212,8 @@ aside a:focus::before {
   padding: 1rem 0;
 }
 
-
 .logout-btn {
-  font-family: 'paybooc-Bold', sans-serif;
+  font-family: "paybooc-Bold", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,7 +225,7 @@ aside a:focus::before {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-right:4.5rem;
+  margin-right: 4.5rem;
 }
 
 .logout-btn:hover {
@@ -247,7 +243,6 @@ aside a:focus::before {
   font-size: 0.8rem;
   position: absolute;
   bottom: 1.5rem; /* 사이드바 하단에서의 거리 */
-  right:0.7rem;
+  right: 0.7rem;
   width: 100%;
 }
- 
