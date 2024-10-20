@@ -17,20 +17,58 @@ body {
   transition: all 0.3s linear;
 }
 
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 17px 30px;
+  position: fixed; /* 고정된 위치로 설정하여 사이드바 열림/닫힘에 영향받지 않게 함 */
+  top: 0;
+  right: 0;
+  z-index: 1000; /* z-index로 사이드바보다 위에 오게 설정 */
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.welcome-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.divider {
+  width: 100%; /* 너비를 전체로 설정 */
+  margin-top: 50px; /* 간격 추가 */
+  border: none;
+  border-top: 1px solid #ccc; /* 선의 모양 */
+}
+
+
+
 .page__content--offcanvas-1 {
   left: 0;
+  transition: left 0.3s ease; /* 부드러운 애니메이션 추가 */
 }
 
 .page__content--offcanvas-1.js-opened {
-  left: 300px;
+  left: 250px;
 }
 
 .nav-open-btn {
-  position: absolute;
-  top: 30px;
+  position: fixed;
+  top: 0.9rem;
   left: 30px;
-  width: 50px; /* 너비를 조금 더 넓게 조정 */
-  height: 50px; /* 높이를 더 크게 조정 */
+  width: 28px; /* 너비를 조금 더 넓게 조정 */
+  height: 28px; /* 높이를 더 크게 조정 */
   background-color: #121824; /* 버튼 배경을 밝은 파란색으로 설정 */
   border-radius: 50%; /* 원형으로 변경 */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 버튼에 그림자 추가 */
@@ -82,7 +120,6 @@ body {
 .content {
   width: 550px;
   padding-top: 50px;
-  margin: auto;
   text-align: center;
 }
 
@@ -91,6 +128,3 @@ h1 {
   font-size: 35px;
 }
 
-h2 {
-  margin-top: 40px;
-}

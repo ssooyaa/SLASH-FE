@@ -209,23 +209,27 @@ aside a:focus::before {
 .logout-section {
   display: flex;
   justify-content: center;
-  margin-top: 500px;
+  position: absolute;
+  bottom: 3rem; /* 사이드바 하단에서의 거리 */
+  width: 100%; /* 가로 정렬 */
   padding: 1rem 0;
 }
+
 
 .logout-btn {
   font-family: 'paybooc-Bold', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  padding: 10px;
+  width: 130px;
+  padding: 8px;
   background-color: #fff;
   color: #121824;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-right:4.5rem;
 }
 
 .logout-btn:hover {
@@ -241,5 +245,9 @@ aside a:focus::before {
   text-align: center;
   color: #fff;
   font-size: 0.8rem;
-  margin-top: 1rem;
-} 
+  position: absolute;
+  bottom: 1.5rem; /* 사이드바 하단에서의 거리 */
+  right:0.7rem;
+  width: 100%;
+}
+ 
