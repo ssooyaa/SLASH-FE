@@ -6,22 +6,22 @@ import { IoPersonCircle } from "react-icons/io5";
 const Content = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
-      className={`page__content page__content--offcanvas-${effectClass} ${
-        isNavOpen ? "js-opened" : ""
+      className={`pageContent pageContentOffcanvas${effectClass} ${
+        isNavOpen ? "jsOpened" : ""
       }`}
     >
       <button
-        className={`nav-open-btn ${isNavOpen ? "js-hidden" : ""}`}
+        className={`navOpenBtn ${isNavOpen ? "jsHidden" : ""}`}
         onClick={toggleNav}
       >
         <FaBars />
       </button>
 
       {/* 프로필 및 환영 메시지 추가 */}
-      <div className="profile-section">
-        <div className="profile-info">
-          <IoPersonCircle className="profile-img" />
-          <span className="welcome-text">관리자님 환영합니다</span>
+      <div className="profileSection">
+        <div className="profileInfo">
+          <IoPersonCircle className="profileImg" />
+          <span className="welcomeText">관리자님 환영합니다</span>
         </div>
       </div>
       <hr className="divider" />

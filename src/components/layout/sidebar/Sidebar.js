@@ -18,13 +18,13 @@ const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
 
   return (
     <nav
-      className={`nav nav--offcanvas-${effectClass} ${
+      className={`nav navOffcanvas${effectClass} ${
         isNavOpen ? "is-opened" : ""
       }`}
     >
       <div className="navClose" onClick={toggleNav}></div>
 
-      <div className="nav-header">
+      <div className="navHeader">
         <img src={logo} alt="Logo" className="logo" />
         <span className="sidebarTitle">SLASH</span>
       </div>
@@ -73,15 +73,15 @@ const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         </ul>
 
         {/* 로그아웃 버튼 추가 */}
-        <div className="logout-section">
-          <button className="logout-btn">
-            <FiLogOut className="logout-icon" />
+        <div className="logoutSection">
+          <button className="logoutBtn">
+            <FiLogOut className="logoutIcon" />
             Logout
           </button>
         </div>
 
         {/* 푸터 추가 */}
-        <footer className="sidebar-footer">© 2024 SLASH ERP</footer>
+        <footer className="sidebarFooter">© 2024 SLASH ERP</footer>
       </aside>
     </nav>
   );
