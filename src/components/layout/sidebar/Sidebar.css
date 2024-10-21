@@ -158,6 +158,10 @@ body {
   border-bottom-left-radius: 20px;
 }
 
+.navLink:hover {
+  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
+}
+
 /* hover, active, focus 효과 모두 동일하게 적용 */
 aside a:hover,
 aside a:active,
