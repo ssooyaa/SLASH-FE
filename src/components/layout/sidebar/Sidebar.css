@@ -124,6 +124,7 @@ body {
 
 /* 사이드바가 열렸을 때 */
 .navOffcanvas1.is-opened {
+  z-index: 100;
   left: 0;
   opacity: 1;
   visibility: visible;
