@@ -28,7 +28,9 @@ const Content = ({ isNavOpen, toggleNav, effectClass }) => {
       </div>
       <hr className="divider" />
       <div className="content">
-        <DateSelectBar />
+        <div className="contentBox">
+          <DateSelectBar />
+        </div>
       </div>
     </div>
   );
