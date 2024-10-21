@@ -1,0 +1,181 @@
+@font-face {
+  font-family: "paybooc-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff2")
+      format("woff2"),
+    url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "paybooc-Bold", sans-serif;
+  background-color: #f0f4f8;
+}
+
+.contentBox {
+  padding: 1%;
+  width: 90%;
+  margin: auto;
+  border: 1px solid black;
+}
+
+.pageContent {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+  transition: all 0.3s linear;
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 17px 30px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+}
+
+.profileImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.welcomeText {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.divider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin-top: 50px;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.pageContentOffcanvas1 {
+  left: 0;
+  transition: left 0.3s ease;
+}
+
+.pageContentOffcanvas1.jsOpened {
+  margin-left: 15rem;
+}
+
+.navOpenBtn {
+  position: fixed;
+  top: 0.9rem;
+  left: 30px;
+  width: 28px;
+  height: 28px;
+  background-color: #121824;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.navOpenBtn:hover {
+  background-color: #121824;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.navOpenBtn svg {
+  color: #fff;
+  font-size: 24px;
+}
+
+.navOpenBtn.jsHidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* 반응형 미디어 쿼리 시작 */
+@media (max-width: 768px) {
+  .profileSection {
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .profileImg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .welcomeText {
+    font-size: 14px;
+  }
+
+  .navOpenBtn {
+    top: 0.8rem;
+    left: 20px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .navOpenBtn svg {
+    font-size: 20px;
+  }
+
+  .content {
+    width: 90%;
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileSection {
+    padding: 8px 15px;
+  }
+
+  .profileImg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .welcomeText {
+    font-size: 12px;
+  }
+
+  .navOpenBtn {
+    top: 0.7rem;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .navOpenBtn svg {
+    font-size: 18px;
+  }
+
+  .content {
+    width: 100%;
+    padding-top: 30px;
+  }
+}
