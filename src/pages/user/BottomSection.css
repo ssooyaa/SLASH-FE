@@ -1,0 +1,54 @@
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 20px;
+}
+
+.topSection {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.dropdownContainer {
+  flex: 1; /* 왼쪽 드롭다운이 차지할 공간 */
+}
+
+.dropdownContainer select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.iconButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.iconButton {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.iconButton.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.iconButton:hover {
+  background-color: #d0d0d0;
+}
+
+.titleContainer {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+}
