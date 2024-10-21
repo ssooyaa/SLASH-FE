@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import {
-  FiHome,
-  FiBarChart2,
-  FiTrendingUp,
-  FiClipboard,
-  FiLogOut,
-} from "react-icons/fi"; // 로그아웃 아이콘 추가
+import { FiHome, FiLogOut } from "react-icons/fi";
+import { FaFileContract } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 
-const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
+const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleMenuClick = (index) => {
@@ -46,28 +41,8 @@ const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
             >
-              <FiBarChart2 className="navLinkIcon" />
-              대시보드
-            </a>
-          </li>
-          <li className="navItem">
-            <a
-              href="#"
-              className={`navLink ${activeIndex === 2 ? "active" : ""}`}
-              onClick={() => handleMenuClick(2)}
-            >
-              <FiTrendingUp className="navLinkIcon" />
-              지표 관리
-            </a>
-          </li>
-          <li className="navItem">
-            <a
-              href="#"
-              className={`navLink ${activeIndex === 3 ? "active" : ""}`}
-              onClick={() => handleMenuClick(3)}
-            >
-              <FiClipboard className="navLinkIcon" />
-              요청 관리
+              <FaFileContract className="navLinkIcon" />
+              업무 내역
             </a>
           </li>
         </ul>
@@ -87,4 +62,4 @@ const Sidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   );
 };
 
-export default Sidebar;
+export default RequestManagerSidebar;
