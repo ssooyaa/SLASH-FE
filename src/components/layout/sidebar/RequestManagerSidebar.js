@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Sidebar.css";
+import "../../../styles/Sidebar.css";
 import { FiHome, FiLogOut } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";

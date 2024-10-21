@@ -1,5 +1,5 @@
 import React from "react";
-import "./RequestManagerContent.css"; // Content 관련 CSS 파일 분리
+import "../../../styles/Content.css"; // 공통 Content css 파일 import
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import DateSelectBar from "../../../pages/user/dropdown/DateSelectBar";

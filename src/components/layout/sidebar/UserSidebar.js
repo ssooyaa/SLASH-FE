@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import "./Sidebar.css";
+import "../../../styles/Content.css";
+import "../../../styles/Sidebar.css";
 import { FiHome, FiBarChart2, FiLogOut } from "react-icons/fi";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(1);
 
   const handleMenuClick = (index) => {
     setActiveIndex(index);
