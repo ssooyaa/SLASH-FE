@@ -10,12 +10,19 @@
 
 body {
   font-family: "paybooc-Bold", sans-serif;
+  background-color: #f0f4f8;
+}
+.contentBox {
+  padding: 1%;
+  width: 90%;
+  margin: auto;
+  border: 1px solid black;
 }
 
 .pageContent {
   position: relative;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #f0f4f8;
   transition: all 0.3s linear;
 }
 
@@ -48,6 +55,10 @@ body {
 }
 
 .divider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   margin-top: 50px;
   border: none;
@@ -60,7 +71,7 @@ body {
 }
 
 .pageContentOffcanvas1.jsOpened {
-  left: 250px;
+  margin-left: 15rem;
 }
 
 .navOpenBtn {
@@ -97,14 +108,11 @@ body {
 }
 
 .content {
-  width: 550px;
+  display: flex;
+  width: 100%;
   padding-top: 50px;
   text-align: center;
-}
-
-h1 {
-  font-weight: 400;
-  font-size: 35px;
+  justify-content: center;
 }
 
 /* 반응형 미디어 쿼리 시작 */
@@ -138,10 +146,6 @@ h1 {
     width: 90%;
     padding-top: 40px;
   }
-
-  h1 {
-    font-size: 30px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -172,9 +176,5 @@ h1 {
   .content {
     width: 100%;
     padding-top: 30px;
-  }
-
-  h1 {
-    font-size: 25px;
   }
 }
