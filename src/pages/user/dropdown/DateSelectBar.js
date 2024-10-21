@@ -25,9 +25,9 @@ const DateSelectBar = () => {
   const years = ["2024", "2023", "2022", "2021", "2020"];
   const quarters = ["1", "2", "3", "4"];
 
-  const total_request = 9;
-  const processed_timely = 4;
-  const delayed_processing_cases = 5;
+  const totalRequest = 9;
+  const processedTimely = 4;
+  const delayedProcessingCases = 5;
 
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
@@ -99,7 +99,7 @@ const DateSelectBar = () => {
     const total = 96.8 + "점";
 
     return (
-      <div className="total-grade-content">
+      <div className="totalGradeContent">
         <h3>종합 평가 등급</h3>
         <div className="grade">{grade}</div>
         <div className="total">{total}</div>
@@ -135,21 +135,21 @@ const DateSelectBar = () => {
         <div className="column">
           <div className="columnContent">
             <h3>
-              <span className="number">{total_request}</span>건
+              <span className="number">{totalRequest}</span>건
             </h3>
             <span>전체 요청 건수</span>
           </div>
 
           <div className="columnContent">
             <h3>
-              <span className="number">{processed_timely}</span>건
+              <span className="number">{processedTimely}</span>건
             </h3>
             <span>적기 처리 건수</span>
           </div>
 
           <div className="columnContent">
             <h3>
-              <span className="number">{delayed_processing_cases}</span>건
+              <span className="number">{delayedProcessingCases}</span>건
             </h3>
             <span>지연 처리 건수</span>
           </div>
