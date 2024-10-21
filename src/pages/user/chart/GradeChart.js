@@ -17,7 +17,7 @@ const GradeChart = () => {
       height: 250,
     },
     title: {
-      text: "sla지표",
+      text: "SLA지표",
     },
     xAxis: {
       categories: xCategory,
