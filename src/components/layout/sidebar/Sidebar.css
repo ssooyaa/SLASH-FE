@@ -64,7 +64,7 @@ body {
   display: block;
   width: 2.8px; /* 4px의 70%로 조정 */
   height: 19.6px; /* 28px의 70%로 조정 */
-  background-color: #fff;
+  background-color: #f0f4f8;
   border-radius: 10px;
   position: absolute;
   transition: all 0.2s linear;
@@ -124,6 +124,7 @@ body {
 
 /* 사이드바가 열렸을 때 */
 .navOffcanvas1.is-opened {
+  z-index: 100;
   left: 0;
   opacity: 1;
   visibility: visible;
@@ -158,10 +159,9 @@ aside a:hover,
 aside a:active,
 aside a:focus {
   color: #121824;
-  background: #fff;
+  background-color: #f0f4f8;
   outline: none;
   position: relative;
-  background-color: #fff;
   border-top-left-radius: 200px;
   border-bottom-left-radius: 200px;
 }
@@ -177,7 +177,7 @@ aside a:focus::after {
   height: 35px;
   width: 37px;
   border-bottom-right-radius: 100%;
-  box-shadow: 0 20px 0 0 #ffffff;
+  box-shadow: 0 20px 0 0 #f0f4f8;
 }
 
 aside a:hover::before,
@@ -191,7 +191,7 @@ aside a:focus::before {
   height: 35px;
   width: 37px;
   border-top-right-radius: 100%;
-  box-shadow: 0 -20px 0 0 #fff;
+  box-shadow: 0 -20px 0 0 #f0f4f8;
 }
 
 /* 로그아웃 버튼 스타일 */
