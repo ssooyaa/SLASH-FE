@@ -154,7 +154,6 @@ body {
   padding: 10px 20px;
   width: 11rem;
   transition: none; /* 애니메이션 제거 */
-  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
