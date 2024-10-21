@@ -19,7 +19,7 @@ const UserMain = () => {
   return (
     <div className="headerContainer">
       <div className="content">
-        <DateSelectBar />
+        <UserMain />
       </div>
     </div>
   );
