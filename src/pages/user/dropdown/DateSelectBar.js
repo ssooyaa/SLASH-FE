@@ -35,7 +35,7 @@ const DateSelectBar = () => {
 
   const Month = () => {
     return (
-      <div className="date-select-component">
+      <div className="dateSelectComponent">
         <select
           name="month"
           id="month"
@@ -54,7 +54,7 @@ const DateSelectBar = () => {
 
   const Quarter = () => {
     return (
-      <div className="date-select-component">
+      <div className="dateSelectComponent">
         <select
           name="quarter"
           id="quarter"
@@ -73,7 +73,7 @@ const DateSelectBar = () => {
 
   const Year = () => {
     return (
-      <div className="date-select-component">
+      <div className="dateSelectComponent">
         <select
           name="years"
           id="years"
@@ -109,8 +109,8 @@ const DateSelectBar = () => {
 
   return (
     <>
-      <div className="date-select-box">
-        <div className="date-select-component">
+      <div className="dateSelectBox">
+        <div className="dateSelectComponent">
           <select onChange={handleTypeChange} value={selectedType}>
             {["MONTH", "QUARTER", "YEAR"].map((type) => (
               <option key={type} value={type}>
@@ -125,29 +125,29 @@ const DateSelectBar = () => {
       </div>
 
       <div className="grid">
-        <div className="total-grade-box">
+        <div className="totalGradeBox">
           <TotalGrade></TotalGrade>
         </div>
 
-        <div className="grade-chart">
+        <div className="gradeChart">
           <GradeChart />
         </div>
         <div className="column">
-          <div className="column_content">
+          <div className="columnContent">
             <h3>
               <span className="number">{total_request}</span>건
             </h3>
             <span>전체 요청 건수</span>
           </div>
 
-          <div className="column_content">
+          <div className="columnContent">
             <h3>
               <span className="number">{processed_timely}</span>건
             </h3>
             <span>적기 처리 건수</span>
           </div>
 
-          <div className="column_content">
+          <div className="columnContent">
             <h3>
               <span className="number">{delayed_processing_cases}</span>건
             </h3>

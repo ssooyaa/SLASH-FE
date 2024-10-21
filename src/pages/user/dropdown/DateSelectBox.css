@@ -12,9 +12,10 @@ body {
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
 }
 
-.total-grade-box {
+.totalGradeBox {
   width: 25%;
   height: 300px;
+  background-color: white;
   align-content: center;
   border: 0.5px solid rgb(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -52,7 +53,8 @@ select {
   margin: 0px 5px;
 }
 
-.date-select-box {
+.dateSelectBox {
+  display: flex;
   width: auto;
   height: 40px;
   background-color: white;
@@ -60,17 +62,19 @@ select {
   align-content: center;
   border-radius: 10px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  align-items: center;
 }
 
-.date-select-component {
+.dateSelectComponent {
   display: flex;
   float: left;
 }
 
-.grade-chart {
+.gradeChart {
   display: grid;
   width: 50%;
   height: 300px;
+  background-color: white;
   justify-content: center;
   align-items: center;
   border: 0.5px solid rgb(0, 0, 0, 0.15);
@@ -95,9 +99,9 @@ select {
   flex: 1;
 }
 
-.column_content {
-  width: 250px;
+.columnContent {
   height: 31%;
+  background-color: white;
   border: 0.5px solid rgb(0, 0, 0, 0.15);
   border-radius: 10px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
