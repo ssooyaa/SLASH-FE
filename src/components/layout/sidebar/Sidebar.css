@@ -29,7 +29,8 @@ body {
   color: white;
   opacity: 0; /* 처음에 보이지 않게 설정 */
   visibility: hidden;
-  box-shadow: 1.5px 0 1.5px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 0 2px rgba(0, 0, 0, 0.5);
+  border-radius: 0.1rem;
 }
 
 /* 작은 화면에 맞춘 사이드바 스타일 */
@@ -63,7 +64,7 @@ body {
   display: block;
   width: 2.8px; /* 4px의 70%로 조정 */
   height: 19.6px; /* 28px의 70%로 조정 */
-  background-color: #fff;
+  background-color: #f0f4f8;
   border-radius: 10px;
   position: absolute;
   transition: all 0.2s linear;
@@ -83,35 +84,25 @@ body {
   right: 12.6px; /* 18px의 70%로 조정 */
 }
 
-.nav-header {
+.navHeader {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* 왼쪽 정렬 */
+  justify-content: center; /* 왼쪽 정렬 */
   margin-bottom: 3rem; /* 아래 여백 */
   margin-top: 2.5rem;
   margin-left: -1rem;
 }
 
-/* 로고 스타일 */
-.logo {
-  width: 7rem; /* 로고 너비 */
-  height: auto; /* 높이는 비율에 맞춰 자동 조정 */
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 1rem; /* 로고와 타이틀 사이 간격 */
-}
-
 /* 사이드바 제목 스타일 */
-.sidebar-title {
+.sidebarTitle {
   font-family: "paybooc-Bold", sans-serif;
-  font-size: 1.6rem; /* 제목 크기 */
+  font-size: 1.5rem; /* 제목 크기 */
   font-weight: bold;
   text-transform: uppercase; /* 대문자 변환 */
   color: white;
   transition: color 0.3s;
 }
 
-/* 작은 화면에서 로고 크기 */
 .logo {
   width: 7rem; /* 로고의 폭을 설정 */
   height: auto; /* 비율에 맞춰 높이 자동 조정 */
@@ -132,7 +123,7 @@ body {
 }
 
 /* 사이드바가 열렸을 때 */
-.nav--offcanvas-1.is-opened {
+.navOffcanvas1.is-opened {
   left: 0;
   opacity: 1;
   visibility: visible;
@@ -157,9 +148,9 @@ body {
   padding: 10px 20px;
   width: 11rem;
   transition: none; /* 애니메이션 제거 */
-  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
 }
 
 /* hover, active, focus 효과 모두 동일하게 적용 */
@@ -167,12 +158,11 @@ aside a:hover,
 aside a:active,
 aside a:focus {
   color: #121824;
-  background: #fff;
+  background-color: #f0f4f8;
   outline: none;
   position: relative;
-  background-color: #fff;
-  border-top-left-radius: 35px;
-  border-bottom-left-radius: 35px;
+  border-top-left-radius: 200px;
+  border-bottom-left-radius: 200px;
 }
 
 aside a:hover::after,
@@ -185,8 +175,8 @@ aside a:focus::after {
   right: 0;
   height: 35px;
   width: 37px;
-  border-bottom-right-radius: 35px;
-  box-shadow: 0 20px 0 0 #fff;
+  border-bottom-right-radius: 100%;
+  box-shadow: 0 20px 0 0 #f0f4f8;
 }
 
 aside a:hover::before,
@@ -195,49 +185,55 @@ aside a:focus::before {
   content: "";
   position: absolute;
   background-color: transparent;
-  top: 46px;
+  top: 49px;
   right: 0;
   height: 35px;
   width: 37px;
-  border-top-right-radius: 35px;
-  box-shadow: 0 -20px 0 0 #fff;
+  border-top-right-radius: 100%;
+  box-shadow: 0 -20px 0 0 #f0f4f8;
 }
 
 /* 로그아웃 버튼 스타일 */
-.logout-section {
+.logoutSection {
   display: flex;
   justify-content: center;
-  margin-top: 500px;
+  position: absolute;
+  bottom: 4rem; /* 사이드바 하단에서의 거리 */
+  width: 100%; /* 가로 정렬 */
   padding: 1rem 0;
 }
 
-.logout-btn {
+.logoutBtn {
   font-family: "paybooc-Bold", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  padding: 10px;
+  width: 130px;
+  padding: 8px;
   background-color: #fff;
   color: #121824;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-right: 4.5rem;
 }
 
-.logout-btn:hover {
+.logoutBtn:hover {
   background-color: #f0f0f0;
 }
 
-.logout-icon {
+.logoutIcon {
   margin-right: 8px;
 }
 
 /* 푸터 스타일 */
-.sidebar-footer {
+.sidebarFooter {
   text-align: center;
   color: #fff;
   font-size: 0.8rem;
-  margin-top: 1rem;
+  position: absolute;
+  bottom: 3rem; /* 사이드바 하단에서의 거리 */
+  right: 0.7rem;
+  width: 100%;
 }
