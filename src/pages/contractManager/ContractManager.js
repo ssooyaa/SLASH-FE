@@ -3,7 +3,7 @@ import ContractManagerSidebar from "../../components/layout/sidebar/ContactManag
 import ContractManagerContent from "../../components/layout/content/contractManager/ContractManagerContent";
 
 const ContractManager = () => {
-  const [isNavOpen, setNavOpen] = useState(false);
+  const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
   const toggleNav = () => {

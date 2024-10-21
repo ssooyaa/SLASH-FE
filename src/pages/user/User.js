@@ -4,7 +4,7 @@ import UserContent from "../../components/layout/content/user/UserContent";
 import "../../styles/Content.css";
 
 const User = () => {
-  const [isNavOpen, setNavOpen] = useState(false);
+  const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
   const toggleNav = () => {

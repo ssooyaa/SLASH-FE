@@ -3,7 +3,7 @@ import RequestManagerSidebar from "../../components/layout/sidebar/RequestManage
 import RequestManagerContent from "../../components/layout/requestManager/RequestManagerContent";
 
 const RequestManager = () => {
-  const [isNavOpen, setNavOpen] = useState(false);
+  const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
   const toggleNav = () => {
