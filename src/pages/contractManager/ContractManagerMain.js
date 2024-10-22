@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
 import ContractManagerContent from "../../components/layout/content/contractManager/ContractManagerMainContent";
 
-const ContractManager = () => {
+const ContractManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -27,4 +27,4 @@ const ContractManager = () => {
   );
 };
 
-export default ContractManager;
+export default ContractManagerMain;

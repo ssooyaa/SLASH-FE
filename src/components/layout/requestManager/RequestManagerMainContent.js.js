@@ -3,7 +3,7 @@ import "../../../styles/Content.css"; // 공통 Content css 파일 import
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 
-const RequestManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
+const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -32,4 +32,4 @@ const RequestManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
   );
 };
 
-export default RequestManagerContent;
+export default RequestManagerMainContent.js;

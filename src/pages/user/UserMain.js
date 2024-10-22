@@ -3,7 +3,7 @@ import UserSidebar from "../../components/layout/sidebar/UserSidebar";
 import UserContent from "../../components/layout/content/user/UserMainContent";
 import "../../styles/Content.css";
 
-const User = () => {
+const UserMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -28,4 +28,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserMain;

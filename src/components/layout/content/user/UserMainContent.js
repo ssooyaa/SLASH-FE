@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import DashBoardTop from "./dashBoard/dashBoardTop/DashBoardTop";
 
-const Content = ({ isNavOpen, toggleNav, effectClass }) => {
+const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -35,4 +35,4 @@ const Content = ({ isNavOpen, toggleNav, effectClass }) => {
   );
 };
 
-export default Content;
+export default UserMainContent;

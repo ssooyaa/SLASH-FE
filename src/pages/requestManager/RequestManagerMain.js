@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import RequestManagerSidebar from "../../components/layout/sidebar/RequestManagerSidebar.js";
 import RequestManagerContent from "../../components/layout/requestManager/RequestManagerMainContent.js.js";
 
-const RequestManager = () => {
+const RequestManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -27,4 +27,4 @@ const RequestManager = () => {
   );
 };
 
-export default RequestManager;
+export default RequestManagerMain;
