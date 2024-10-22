@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
-import ContractManagerContent from "../../components/layout/content/contractManager/ContractManagerContent";
+import ContractManagerContent from "../../components/layout/content/contractManager/ContractManagerMainContent";
 
 const ContractManager = () => {
   const [isNavOpen, setNavOpen] = useState(true);

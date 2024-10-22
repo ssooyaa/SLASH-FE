@@ -1,10 +1,9 @@
 import React from "react";
-import "../../../../styles/Content.css";
+import "../../../styles/Content.css"; // 공통 Content css 파일 import
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import DateSelectBar from "../../../../pages/user/dropdown/DateSelectBar";
 
-const Content = ({ isNavOpen, toggleNav, effectClass }) => {
+const RequestManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -27,12 +26,10 @@ const Content = ({ isNavOpen, toggleNav, effectClass }) => {
       </div>
       <hr className="divider" />
       <div className="content">
-        <div className="contentBox">
-          <DateSelectBar />
-        </div>
+        <div className="contentBox"></div>
       </div>
     </div>
   );
 };
 
-export default Content;
+export default RequestManagerContent;

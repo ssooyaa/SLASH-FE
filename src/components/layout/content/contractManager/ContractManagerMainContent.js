@@ -2,7 +2,6 @@ import React from "react";
 import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import DateSelectBar from "../../../../pages/user/dropdown/DateSelectBar";
 
 const ContractManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -27,9 +26,7 @@ const ContractManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
       </div>
       <hr className="divider" />
       <div className="content">
-        <div className="contentBox">
-          <DateSelectBar />
-        </div>
+        <div className="contentBox"></div>
       </div>
     </div>
   );
