@@ -3,6 +3,16 @@
   min-width: 150px;
 }
 
+.request-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.additional-select {
+  margin-left: 20px;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;

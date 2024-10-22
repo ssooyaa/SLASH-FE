@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import "../styles/RequestDropdown.css";
 
-const Dropdown = ({ items, label }) => {
+const Dropdown = ({ items, label, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(label);
 
@@ -10,11 +10,17 @@ const Dropdown = ({ items, label }) => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  const handleSelect = useCallback((e, item) => {
-    e.preventDefault();
-    setSelectedItem(item);
-    setIsOpen(false);
-  }, []);
+  const handleSelect = useCallback(
+    (e, item) => {
+      e.preventDefault();
+      setSelectedItem(item);
+      setIsOpen(false);
+      if (onSelect) {
+        onSelect(item); // 선택된 값을 상위 컴포넌트에 전달
+      }
+    },
+    [onSelect]
+  );
 
   const renderedItems = useMemo(
     () =>
