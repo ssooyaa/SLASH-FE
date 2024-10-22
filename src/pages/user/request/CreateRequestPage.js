@@ -75,17 +75,18 @@ const CreateRequestPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TaskRequestDto 형식에 맞는 데이터를 생성
     const taskRequestDto = {
-      taskType: formState.taskType,
-      equipmentName: formState.selectedEquipment,
-      taskDetail: formState.taskDetail,
-      serviceRelevance: formState.isServiceRelevance,
-      title: formState.title,
+      taskType: formState.taskType, // 업무 유형
+      equipmentName: formState.selectedEquipment, // 장비 ID
+      taskDetail: formState.taskDetail, // 업무 세부 내용
+      serviceRelevance: formState.isServiceRelevance, // 서비스 제공 여부
+      title: formState.title, // 제목
       content: formState.content, // 내용
     };
 
     try {
-      const response = await createRequest(taskRequestDto); // POST 요청 보내기
+      const response = await createRequest(taskRequestDto);
     } catch (error) {
       console.error("요청 실패:", error);
     }

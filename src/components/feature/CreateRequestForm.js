@@ -75,7 +75,7 @@ const CreateRequestForm = ({
                   <td>
                     {renderDropdown(
                       "장비",
-                      equipmentOptions.map((equipment) => equipment.name),
+                      equipmentOptions,
                       formState.selectedEquipment,
                       handleEquipmentChange
                     )}
@@ -100,6 +100,7 @@ const CreateRequestForm = ({
               </tbody>
             </table>
           </div>
+
           <div className="request-info-box">
             <h3>요청 내용</h3>
             <table className="request-table">
@@ -125,6 +126,7 @@ const CreateRequestForm = ({
               onChange={(e) => updateFormState("content", e.target.value)}
             />
           </div>
+
           <div className="form-footer">
             <button type="submit">저장</button>
             <button type="button" onClick={toggleModal}>
