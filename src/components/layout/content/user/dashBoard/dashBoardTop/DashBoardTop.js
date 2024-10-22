@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./DateSelectBox.css";
-import GradeChart from "../chart/GradeChart";
+import "./DashBoardTop.css";
+import GradeChart from "../../../../../feature/chart/GradeChart";
 
-const DateSelectBar = () => {
+const DashBoardTop = () => {
   const [selectedType, setSelectedType] = useState("MONTH"); // 초기 값을 'MONTH'로 설정
   const [selectedYear, setSelectedYear] = useState("2024");
   const [selectedMonth, setSelectedMonth] = useState("8");
@@ -159,4 +159,4 @@ const DateSelectBar = () => {
   );
 };
 
-export default DateSelectBar;
+export default DashBoardTop;

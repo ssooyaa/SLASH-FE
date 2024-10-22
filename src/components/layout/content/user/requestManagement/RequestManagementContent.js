@@ -1,10 +1,11 @@
 import React from "react";
-import "../../../../styles/Content.css";
+import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import DateSelectBar from "../../../../pages/user/dropdown/DateSelectBar";
+import RequestManagementBottom from "../requestManagement/RequestManagementBottom/RequestManageBottom";
+import RequestManagementTop from "../requestManagement/RequestManagementTop/RequestManagementTop";
 
-const Content = ({ isNavOpen, toggleNav, effectClass }) => {
+const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -28,11 +29,12 @@ const Content = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <DateSelectBar />
+          <RequestManagementTop />
+          <RequestManagementBottom />
         </div>
       </div>
     </div>
   );
 };
 
-export default Content;
+export default RequestManagementContent;

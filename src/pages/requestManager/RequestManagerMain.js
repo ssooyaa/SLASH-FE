@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import RequestManagerSidebar from "../../components/layout/sidebar/RequestManagerSidebar";
-import RequestManagerContent from "../../components/layout/requestManager/RequestManagerContent";
+import RequestManagerSidebar from "../../components/layout/sidebar/RequestManagerSidebar.js";
+import RequestManagerMainContent from "../../components/layout/requestManager/RequestManagerMainContent.js.js";
 
-const RequestManager = () => {
+const RequestManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -18,7 +18,7 @@ const RequestManager = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
-      <RequestManagerContent
+      <RequestManagerMainContent
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
@@ -27,4 +27,4 @@ const RequestManager = () => {
   );
 };
 
-export default RequestManager;
+export default RequestManagerMain;

@@ -1,0 +1,65 @@
+#statics {
+  color: #666666;
+  box-shadow: 4px 4px 4px rgba(102, 102, 102, 0.15); /* #666666 */
+  border: 0.5px solid rgba(102, 102, 102, 0.15);
+}
+
+#stamp {
+  color: #2c70f4;
+  box-shadow: 4px 4px 4px rgba(44, 112, 244, 0.15); /* #2c70f4 */
+  border: 0.5px solid rgba(44, 112, 244, 0.15);
+}
+
+#processing {
+  color: #ff9a16;
+  box-shadow: 4px 4px 4px rgba(255, 154, 22, 0.15); /* #ff9a16 */
+  border: 0.5px solid rgba(255, 154, 22, 0.15);
+}
+
+#check {
+  color: #06d86f;
+  box-shadow: 4px 4px 4px rgba(6, 216, 111, 0.15); /* #06d86f */
+  border: 0.5px solid rgba(6, 216, 111, 0.15);
+}
+
+h3 {
+  margin: 0px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0px;
+}
+
+img {
+  width: 30%;
+  height: fit-content;
+}
+
+.componentBox {
+  width: 90%;
+  height: 300px;
+  display: flex;
+  background-color: white;
+  align-content: center;
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  height: 150px;
+  padding: 0px 30px;
+}
+
+.number {
+  font-family: "paybook-ExtraBold-otf";
+  font-size: xxx-large;
+}

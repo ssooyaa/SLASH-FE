@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import UserSidebar from "../../components/layout/sidebar/UserSidebar";
-import UserContent from "../../components/layout/content/user/UserContent";
 import "../../styles/Content.css";
+import UserMainContent from "../../components/layout/content/user/UserMainContent";
 
-const User = () => {
+const UserMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -19,7 +19,7 @@ const User = () => {
         setEffectClass={setEffectClass}
       />
 
-      <UserContent
+      <UserMainContent
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
@@ -28,4 +28,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserMain;
