@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
-import CreateRequestForm from "../../../components/feature/CreateRequestForm";
+import React, { useState, useEffect } from "react";
+import CreateRequestForm from "./CreateRequestForm";
 import {
   fetchSystemAndEquipments,
   fetchTaskDetails,
   createRequest,
-} from "../../../service/userService";
+} from "../../../service/api/userService";
 
-const CreateRequestPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const CreateRequest = ({ isModalOpen, toggleModal }) => {
   const [equipmentData, setEquipmentData] = useState([]);
   const [equipmentOptions, setEquipmentOptions] = useState([]);
   const [taskDetail, setTaskDetail] = useState([]);
@@ -29,10 +28,6 @@ const CreateRequestPage = () => {
     }));
   };
 
-  const toggleModal = useCallback(() => {
-    setIsModalOpen((prev) => !prev);
-  }, []);
-
   // taskType에 따라 taskDetails 로드
   useEffect(() => {
     const loadTaskDetails = async () => {
@@ -47,6 +42,7 @@ const CreateRequestPage = () => {
     }
   }, [formState.taskType]);
 
+  // 장비 데이터를 로드하는 부분
   useEffect(() => {
     const loadEquipmentTypes = async () => {
       const data = await fetchSystemAndEquipments();
@@ -55,8 +51,7 @@ const CreateRequestPage = () => {
     loadEquipmentTypes();
   }, []);
 
-  const systemTypes = equipmentData.map((system) => system.systemName);
-
+  // 시스템에 맞는 장비 선택
   const handleSystemChange = (systemName) => {
     updateFormState("selectedSystem", systemName);
     updateFormState("selectedEquipment", "");
@@ -72,10 +67,10 @@ const CreateRequestPage = () => {
     updateFormState("selectedEquipment", equipmentName);
   };
 
+  // 요청 제출 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TaskRequestDto 형식에 맞는 데이터를 생성
     const taskRequestDto = {
       taskType: formState.taskType,
       equipmentName: formState.selectedEquipment,
@@ -87,6 +82,10 @@ const CreateRequestPage = () => {
 
     try {
       const response = await createRequest(taskRequestDto);
+      if (response) {
+        console.log("들어옴-----------");
+        toggleModal();
+      }
     } catch (error) {
       console.error("요청 실패:", error);
     }
@@ -94,12 +93,11 @@ const CreateRequestPage = () => {
 
   return (
     <div>
-      <button onClick={toggleModal}>요청 등록</button>
       {isModalOpen && (
         <CreateRequestForm
           formState={formState}
           updateFormState={updateFormState}
-          systemTypes={systemTypes}
+          systemTypes={equipmentData.map((system) => system.systemName)}
           equipmentOptions={equipmentOptions}
           taskDetail={taskDetail}
           handleSystemChange={handleSystemChange}
@@ -112,4 +110,4 @@ const CreateRequestPage = () => {
   );
 };
 
-export default CreateRequestPage;
+export default CreateRequest;

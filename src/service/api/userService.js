@@ -38,7 +38,7 @@ export const createRequest = async (taskRequestDto) => {
   try {
     const response = await axios.post("/request", taskRequestDto);
     if (response.data.success) {
-      return response.data.data;
+      return response.data.success;
     } else {
       return [];
     }

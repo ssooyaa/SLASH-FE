@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "./RequestDropdown";
-import CheckBox from "../common/CheckBox";
-import "../feature/CreateRequestForm.css";
+import CheckBox from "../../common/CheckBox";
+import "../request/CreateRequestForm.css";
 
 const CreateRequestForm = ({
   formState,
