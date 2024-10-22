@@ -83,7 +83,6 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
     try {
       const response = await createRequest(taskRequestDto);
       if (response) {
-        console.log("들어옴-----------");
         toggleModal();
       }
     } catch (error) {
