@@ -33,7 +33,7 @@ const CreateRequestPage = () => {
     setIsModalOpen((prev) => !prev);
   }, []);
 
-  // requestType에 따라 taskTypes 로드
+  // taskType에 따라 taskDetails 로드
   useEffect(() => {
     const loadTaskDetails = async () => {
       const data = await fetchTaskDetails(formState.taskType);
@@ -77,12 +77,12 @@ const CreateRequestPage = () => {
 
     // TaskRequestDto 형식에 맞는 데이터를 생성
     const taskRequestDto = {
-      taskType: formState.taskType, // 업무 유형
-      equipmentName: formState.selectedEquipment, // 장비 ID
-      taskDetail: formState.taskDetail, // 업무 세부 내용
-      serviceRelevance: formState.isServiceRelevance, // 서비스 제공 여부
-      title: formState.title, // 제목
-      content: formState.content, // 내용
+      taskType: formState.taskType,
+      equipmentName: formState.selectedEquipment,
+      taskDetail: formState.taskDetail,
+      serviceRelevance: formState.isServiceRelevance,
+      title: formState.title,
+      content: formState.content,
     };
 
     try {
@@ -105,7 +105,7 @@ const CreateRequestPage = () => {
           handleSystemChange={handleSystemChange}
           handleEquipmentChange={handleEquipmentChange}
           toggleModal={toggleModal}
-          onSubmit={handleSubmit} // 제출 핸들러 전달
+          onSubmit={handleSubmit}
         />
       )}
     </div>
