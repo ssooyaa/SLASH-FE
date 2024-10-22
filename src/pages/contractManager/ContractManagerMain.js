@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
-import ContractManagerContent from "../../components/layout/content/contractManager/ContractManagerMainContent";
+import ContractManagerMainContent from "../../components/layout/content/contractManager/ContractManagerMainContent";
 
 const ContractManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
@@ -18,7 +18,7 @@ const ContractManagerMain = () => {
         setEffectClass={setEffectClass}
       />
 
-      <ContractManagerContent
+      <ContractManagerMainContent
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
