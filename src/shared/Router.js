@@ -5,6 +5,7 @@ import Login from "../pages/login/Login";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
+import RequestManagement from "../pages/user/RequestManagement";
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
 const Router = () => {
@@ -18,6 +19,7 @@ const Router = () => {
         */}
         <Route path="/" element={<Login />} />
         <Route path="/user" element={<UserMain />} />
+        <Route path="/user/requestManagement" element={<RequestManagement />} />
         <Route path="/contractManager" element={<ContractManagerMain />} />
         <Route path="/requestManager" element={<RequestManagerMain />} />
       </Routes>

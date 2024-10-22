@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RequestManagerSidebar from "../../components/layout/sidebar/RequestManagerSidebar.js";
-import RequestManagerContent from "../../components/layout/requestManager/RequestManagerMainContent.js.js";
+import RequestManagerMainContent from "../../components/layout/requestManager/RequestManagerMainContent.js.js";
 
 const RequestManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);
@@ -18,7 +18,7 @@ const RequestManagerMain = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
-      <RequestManagerContent
+      <RequestManagerMainContent
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
