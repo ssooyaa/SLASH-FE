@@ -3,6 +3,8 @@ import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagementBottom from "../requestManagement/RequestManagementBottom/RequestManageBottom";
+import RequestManagementTop from "../requestManagement/RequestManagementTop/RequestManagementTop";
+
 const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
@@ -27,6 +29,7 @@ const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
+          <RequestManagementTop />
           <RequestManagementBottom />
         </div>
       </div>
