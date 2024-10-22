@@ -1,10 +1,10 @@
 import React from "react";
-import "../../../styles/Content.css"; // 공통 Content css 파일 import
+import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import DateSelectBar from "../../../pages/user/dropdown/DateSelectBar";
+import DashBoardTop from "./dashBoard/dashBoardTop/DashBoardTop";
 
-const RequestManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
+const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -28,11 +28,11 @@ const RequestManagerContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <DateSelectBar />
+          <DashBoardTop />
         </div>
       </div>
     </div>
   );
 };
 
-export default RequestManagerContent;
+export default UserMainContent;
