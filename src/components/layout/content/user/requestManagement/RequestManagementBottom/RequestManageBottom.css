@@ -21,18 +21,17 @@
   gap: 2rem;
   justify-content: left;
   align-items: flex-start;
-  padding: 1rem;
 }
 
 .customDropdown {
-  width: 220px;
+  width: 180px;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
 .dropdownHeader {
-  padding: 10px;
+  padding: 6px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 30px;
@@ -43,6 +42,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   color: #666666;
+  font-size: 80%;
 }
 
 .arrow {
@@ -51,15 +51,24 @@
 
 .dropdownList {
   position: absolute;
-  width: 100%;
+  width: 86%;
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 10px; /* 전체 리스트에 border-radius 적용 */
   margin-top: 4px;
   top: 100%;
   left: 0;
   z-index: 10;
+  font-size: 80%;
+  max-height: 190px; /* 최대 높이를 지정하여 스크롤이 발생하도록 설정 */
+  overflow-y: auto; /* 세로 스크롤 추가 */
+  padding: 10px;
+  background-color: white; /* 배경 색상 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+
+  /* 스크롤이 있는 컨텐츠 상단과 하단의 둥근 모서리 처리 */
+  -webkit-mask-image: linear-gradient(white 100%, rgba(255, 255, 255, 0.7) 70%);
 }
 
 .dropdownOption {
@@ -71,6 +80,7 @@
 
 .dropdownOption:hover {
   background-color: #f0f0f0;
+  border-radius: 10px;
 }
 
 .dropdownOption input {
@@ -95,7 +105,7 @@
 
 .requestHeader {
   display: flex;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -104,9 +114,10 @@
   color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 30px;
-  padding: 10px 20px;
+  padding: 7px 7px;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 70%;
 }
 
 .tabButton:hover {
@@ -118,15 +129,6 @@
   justify-content: flex-start;
   gap: 2rem;
 }
-
-.customDropdown {
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-/* Add previous dropdown styles here */
 
 .tableContainer {
   width: 100%;
@@ -142,6 +144,7 @@
   border-bottom: 1px solid #ddd;
   padding: 11px;
   text-align: center;
+  font-size: 80%;
 }
 
 .requestTable th {
@@ -184,8 +187,8 @@
   position: relative;
   border: max(2px, 0.1em) solid gray;
   border-radius: 1.25em;
-  width: 2.28em;
-  height: 1.35em;
+  width: 2rem;
+  height: 1.05rem;
 }
 
 .toggle::before {
