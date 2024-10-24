@@ -6,8 +6,8 @@ import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatu
 const RequestManagementBottom = () => {
   // State for each dropdown
   const [selectedStatus, setSelectedStatus] = useState("접수완료");
-  const [selectedTaskType, setSelectedTaskType] = useState("유지보수");
-  const [selectedEquipmentType, setSelectedEquipmentType] = useState("서버");
+  const [selectedTaskType, setSelectedTaskType] = useState("서비스요청");
+  const [selectedEquipmentType, setSelectedEquipmentType] = useState("DB#1");
 
   const [isOpenStatus, setIsOpenStatus] = useState(false);
   const [isOpenTaskType, setIsOpenTaskType] = useState(false);
@@ -18,8 +18,29 @@ const RequestManagementBottom = () => {
 
   // Dropdown options
   const statusOptions = ["접수완료", "처리중", "처리완료"];
-  const taskTypeOptions = ["유지보수", "개발", "설치"];
-  const equipmentTypeOptions = ["서버", "네트워크", "데스크탑"];
+  const taskTypeOptions = ["서비스 요청", "장애 요청"];
+  const equipmentTypeOptions = [
+    "DB#1",
+    "DB#2",
+    "DB#3",
+    "DB#4",
+    "DB#5",
+    "백업장비#1",
+    "백업장비#2",
+    "백업장비#3",
+    "백업장비#4",
+    "백업장비#5",
+    "서버#1",
+    "서버#2",
+    "서버#3",
+    "서버#4",
+    "서버#5",
+    "응용프로그램#1",
+    "응용프로그램#2",
+    "응용프로그램#3",
+    "응용프로그램#4",
+    "응용프로그램#5",
+  ];
 
   // Handlers for each dropdown
   const handleSelectStatus = (option) => {
