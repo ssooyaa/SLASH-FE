@@ -7,13 +7,13 @@ import stamp from "../../../../../../assets/images/stamp.png";
 
 const RequestSelectTop = () => {
   return (
-    <div className="row">
+    <div className="rmrow">
       <div className="componentBox" id="statics">
-        <div className="row">
+        <div className="rmrow">
           <img src={statics} alt="통계이미지" />
-          <div className="column">
+          <div className="rmcolumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmnumber">15</span> 건
             </h3>
             <span>총 건수</span>
           </div>
@@ -21,11 +21,11 @@ const RequestSelectTop = () => {
       </div>
 
       <div className="componentBox" id="stamp">
-        <div className="row">
+        <div className="rmrow">
           <img src={stamp} alt=""></img>
-          <div className="column">
+          <div className="rmcolumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmnumber">15</span> 건
             </h3>
             <span>접수완료</span>
           </div>
@@ -33,11 +33,11 @@ const RequestSelectTop = () => {
       </div>
 
       <div className="componentBox" id="processing">
-        <div className="row">
+        <div className="rmrow">
           <img src={processing} alt=""></img>
-          <div className="column">
+          <div className="rmcolumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmnumber">15</span> 건
             </h3>
             <span>총 건수</span>
           </div>
@@ -45,11 +45,11 @@ const RequestSelectTop = () => {
       </div>
 
       <div className="componentBox" id="check">
-        <div className="row">
+        <div className="rmrow">
           <img src={check} alt=""></img>
-          <div className="column">
+          <div className="rmcolumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmnumber">15</span> 건
             </h3>
             <span>총 건수</span>
           </div>
