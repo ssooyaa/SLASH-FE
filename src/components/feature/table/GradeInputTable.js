@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./GradeInputTable.css";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 
