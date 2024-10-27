@@ -14,9 +14,9 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
     return true;
   };
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = (e) => {
     if (isValid()) {
-      handleSubmit();
+      handleSubmit(e);
     }
   };
 
