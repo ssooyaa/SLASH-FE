@@ -26,15 +26,15 @@ h3 {
   margin: 0px;
 }
 
-.row {
+.rmRow {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
 }
 
-.column {
+.rmColumn {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,7 +48,6 @@ img {
 
 .componentBox {
   width: 90%;
-  height: 300px;
   display: flex;
   background-color: white;
   align-content: center;
@@ -59,7 +58,7 @@ img {
   padding: 0px 30px;
 }
 
-.number {
-  font-family: "paybook-ExtraBold-otf";
+.rmNumber {
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-size: xxx-large;
 }
