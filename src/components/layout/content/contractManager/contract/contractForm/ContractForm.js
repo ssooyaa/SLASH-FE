@@ -4,7 +4,7 @@ import ContractHeader from "../contractHeader/ContractHeader";
 import ContractStep1 from "../contractContent/ContractStep1";
 import ContractStep2 from "../contractContent/ContractStep2";
 import ContractCheck from "../contractContent/ContractCheck";
-import { CreateContract } from "../../../../../../services/api/userService";
+import { CreateContract } from "../../../../../../api/userService";
 
 const ContractForm = () => {
   const steps = [
