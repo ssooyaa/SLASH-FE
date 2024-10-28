@@ -15,3 +15,17 @@ export const CreateContract = async (requestContractDTO) => {
     return false;
   }
 };
+
+export const CreateServiceDetail = async (requestContractDTO) => {
+  try {
+    const response = await axios.post("/detail", requestContractDTO);
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    return false;
+  }
+};
