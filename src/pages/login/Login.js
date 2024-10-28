@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import SlashLogo from "../../assets/images/logo.png";
+import $ from "jquery"; // jQuery import
+import { FaUser, FaLock } from "react-icons/fa";
+import Header from "./Header";
+import InputGroup from "./InputGroup";
+import ErrorMessage from "./ErrorMessage";
 import "./Login.css";
 
 const Login = () => {
@@ -19,65 +22,69 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
-      console.log("로그인 성공:", { id, password });
+      return;
     }
+
+    // jQuery AJAX 요청
+    $.ajax({
+      url: "http://localhost:8080/login",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ id, password }),
+      success: (data) => {
+        console.log("로그인 성공:", data);
+        // 로그인 성공 후 필요한 동작 (예: 페이지 이동)
+      },
+      error: (jqXHR, textStatus, errorThrown) => {
+        console.error("로그인 실패:", jqXHR.responseJSON);
+        setErrors((prev) => ({
+          ...prev,
+          password: "로그인 실패. 다시 시도해주세요.",
+        }));
+      },
+    });
   };
 
   const getLoginFormErrors = (id, password) => {
     const errors = {};
     if (!id) errors.id = "아이디를 입력해주세요.";
     if (!password) errors.password = "비밀번호를 입력해주세요.";
-    // else if (password.length < 8) errors.password = '비밀번호는 최소 8자 이상이어야 합니다.';
     return errors;
   };
 
   return (
     <div className="login-page">
       <div className="login-container">
-        <div className="header">
-          <img src={SlashLogo} alt="slash" />
-          <h3>SLASH</h3>
-        </div>
+        <Header />
 
         <form className="login-form" onSubmit={handleSubmit}>
-          <div className={`input-group ${errors.id ? "incorrect" : ""}`}>
-            <FaUser className="input-icon" />
-            <input
-              type="text"
-              placeholder="아이디"
-              value={id}
-              onChange={(e) => {
-                setId(e.target.value);
-                setErrors((prev) => ({ ...prev, id: "" }));
-              }}
-            />
-          </div>
-          <div className={`error-message ${errors.id ? "active" : ""}`}>
-            {errors.id}
-          </div>
+          <InputGroup
+            type="text"
+            value={id}
+            placeholder="아이디"
+            onChange={(e) => {
+              setId(e.target.value);
+              setErrors((prev) => ({ ...prev, id: "" }));
+            }}
+            icon={<FaUser className="input-icon" />}
+            error={errors.id}
+          />
+          <ErrorMessage message={errors.id} />
 
-          <div className={`input-group ${errors.password ? "incorrect" : ""}`}>
-            <FaLock className="input-icon" />
-            <input
-              type={isPasswordVisible ? "text" : "password"}
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setErrors((prev) => ({ ...prev, password: "" }));
-              }}
-            />
-            <div
-              className="toggle-visibility"
-              onClick={togglePasswordVisibility}
-            >
-              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-            </div>
-          </div>
-          <div className={`error-message ${errors.password ? "active" : ""}`}>
-            {errors.password}
-          </div>
+          <InputGroup
+            type={isPasswordVisible ? "text" : "password"}
+            value={password}
+            placeholder="비밀번호"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrors((prev) => ({ ...prev, password: "" }));
+            }}
+            icon={<FaLock className="input-icon" />}
+            isPassword
+            toggleVisibility={togglePasswordVisibility}
+            error={errors.password}
+          />
+          <ErrorMessage message={errors.password} />
 
           <button type="submit" className="login-button">
             로그인
