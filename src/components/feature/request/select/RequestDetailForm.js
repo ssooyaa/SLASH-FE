@@ -3,6 +3,10 @@ import RequestDetailInfoForm from "./RequestDetailInfoForm";
 import RequestContentForm from "../RequestContentForm";
 
 const RequestDetailForm = ({ requestData }) => {
+  if (!requestData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <RequestDetailInfoForm

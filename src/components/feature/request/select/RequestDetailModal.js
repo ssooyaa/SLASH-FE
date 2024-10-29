@@ -1,5 +1,6 @@
 import React from "react";
 import RequestDetail from "./RequestDetail";
+import "../../request/RequestModal.css";
 
 const ShowRequestDetailModal = ({ toggleModal, requestId }) => {
   return (
@@ -8,11 +9,7 @@ const ShowRequestDetailModal = ({ toggleModal, requestId }) => {
         <button className="closeButton" onClick={toggleModal}>
           &times;
         </button>
-        <div className="modalHeader">
-          <h3>요청 내역</h3>
-        </div>
-
-        <RequestDetail requestId={1} />
+        <RequestDetail requestId={requestId} />
         <div className="formFooter">
           <button type="button" onClick={toggleModal}>
             닫기
