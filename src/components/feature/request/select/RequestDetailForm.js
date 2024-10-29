@@ -6,6 +6,9 @@ const RequestDetailForm = ({ requestData }) => {
   return (
     <div>
       <RequestDetailInfoForm
+        taskType={requestData.taskType}
+        status={requestData.status}
+        dueOnTime={requestData.dueOnTime}
         equipmentName={requestData.equipmentName}
         taskDetail={requestData.taskDetail}
         requester={requestData.requester}

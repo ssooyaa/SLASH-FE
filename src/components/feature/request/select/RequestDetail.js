@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RequestDetailForm from "./RequestDetailForm";
 import { showRequestDetail } from "../../../../service/api/userService";
 
-const ShowRequestDetail = ({ requestId }) => {
+const RequestDetail = ({ requestId }) => {
   const [requestData, setRequestData] = useState(null);
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const ShowRequestDetail = ({ requestId }) => {
   return <RequestDetailForm requestData={requestData} />;
 };
 
-export default ShowRequestDetail;
+export default RequestDetail;
