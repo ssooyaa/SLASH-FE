@@ -1,0 +1,24 @@
+@import "../../../styles/Common.css";
+.gradeTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 13px;
+  color: var(--main--gray);
+}
+
+.gradeDiv {
+  display: flex;
+  background-color: #f1f7ff;
+  border-radius: 10px;
+  height: 30px;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.gradeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
