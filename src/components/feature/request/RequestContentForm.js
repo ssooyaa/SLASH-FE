@@ -1,6 +1,6 @@
 import React from "react";
 
-const RequestContent = ({ formState, updateFormState }) => {
+const RequestContentForm = ({ formState, updateFormState }) => {
   const renderLabel = (label) => (
     <label>
       <span className="required">*</span> {label}
@@ -36,4 +36,4 @@ const RequestContent = ({ formState, updateFormState }) => {
   );
 };
 
-export default RequestContent;
+export default RequestContentForm;
