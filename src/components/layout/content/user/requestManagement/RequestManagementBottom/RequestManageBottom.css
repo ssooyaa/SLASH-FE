@@ -31,18 +31,14 @@
 }
 
 .dropdownHeader {
-  padding: 6px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 30px;
   cursor: pointer;
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   position: relative;
-  color: #666666;
-  font-size: 80%;
+  /* color: #666666; */
+  /* font-size: 80%; */
 }
 
 .arrow {
@@ -142,13 +138,18 @@
 .requestTable th,
 .requestTable td {
   border-bottom: 1px solid #ddd;
-  padding: 11px;
+  padding: 11px 1px;
   text-align: center;
   font-size: 80%;
 }
 
 .requestTable th {
   background-color: #f9f9f9;
+}
+
+.requestTable td {
+  color: #666666;
+  margin-right: 7px;
 }
 
 .pagination {
