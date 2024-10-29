@@ -4,7 +4,7 @@
   width: 15%;
 }
 
-.dropdown-content {
+.dropdownContent {
   margin-top: 5px;
   position: absolute;
   background-color: white;
@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-.dropdown-btn {
+.dropdownBtn {
   background-color: #fff;
   color: #333;
   padding: 0 10px;
@@ -35,16 +35,16 @@
   background-size: 10px;
 }
 
-.dropdown-item {
+.dropdownItem {
   padding: 10px;
   cursor: pointer;
 }
 
-.dropdown-item:hover {
+.dropdownItem:hover {
   background-color: #f6fcff;
 }
 
-.dropdown-btn:focus {
+.dropdownBtn:focus {
   border: 2px solid;
   border-color: black;
   outline: none;

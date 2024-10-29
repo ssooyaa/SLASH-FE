@@ -17,12 +17,10 @@ export const fetchSystemAndEquipments = async () => {
   }
 };
 
-export const fetchTaskDetails = async (taskType) => {
+export const fetchTaskTypes = async () => {
   try {
-    const response = await axios.get(`/tasks`, {
-      params: { type: taskType },
-    });
-
+    const response = await axios.get("/all-task-types");
+    console.log(response.data);
     if (response.data.success) {
       return response.data.data;
     } else {

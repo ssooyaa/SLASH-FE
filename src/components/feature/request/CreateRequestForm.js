@@ -6,9 +6,10 @@ import "../request/CreateRequestForm.css";
 const CreateRequestForm = ({
   formState,
   updateFormState,
+  taskTypes,
   systemTypes,
   equipmentOptions,
-  taskDetail,
+  taskDetailOptions,
   handleSystemChange,
   handleEquipmentChange,
   toggleModal,
@@ -28,15 +29,15 @@ const CreateRequestForm = ({
     />
   );
 
-  const taskTypes = ["서비스 요청", "장애 요청"];
+  // const taskTypes = ["서비스 요청", "장애 요청"];
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-button" onClick={toggleModal}>
+    <div className="modalOverlay">
+      <div className="modalContent">
+        <button className="closeButton" onClick={toggleModal}>
           &times;
         </button>
-        <div className="modal-header">
+        <div className="modalHeader">
           <h3>요청 등록</h3>
           {renderDropdown("요청 유형", taskTypes, formState.taskType, (value) =>
             updateFormState("taskType", value)
@@ -44,8 +45,8 @@ const CreateRequestForm = ({
         </div>
 
         <form onSubmit={onSubmit}>
-          <div className="request-info-box">
-            <div className="request-header">
+          <div className="requestInfoBox">
+            <div className="requestHeader">
               <h3>요청 정보</h3>
               {formState.taskType === "장애 요청" && (
                 <CheckBox
@@ -59,7 +60,7 @@ const CreateRequestForm = ({
               )}
             </div>
 
-            <table className="request-table">
+            <table className="requestTable">
               <tbody>
                 <tr>
                   <td>{renderLabel("시스템 유형")}</td>
@@ -84,14 +85,14 @@ const CreateRequestForm = ({
               </tbody>
             </table>
 
-            <table className="request-table">
+            <table className="requestTable">
               <tbody>
                 <tr>
                   <td>{renderLabel("업무유형")}</td>
                   <td>
                     {renderDropdown(
                       "업무",
-                      taskDetail,
+                      taskDetailOptions,
                       formState.taskDetail,
                       (value) => updateFormState("taskDetail", value)
                     )}
@@ -101,9 +102,9 @@ const CreateRequestForm = ({
             </table>
           </div>
 
-          <div className="request-info-box">
+          <div className="requestInfoBox">
             <h3>요청 내용</h3>
-            <table className="request-table">
+            <table className="requestTable">
               <tbody>
                 <tr>
                   <td>{renderLabel("제목")}</td>
@@ -119,7 +120,7 @@ const CreateRequestForm = ({
               </tbody>
             </table>
             <textarea
-              className="request-content"
+              className="requestContent"
               placeholder="내용을 입력하세요"
               rows="5"
               value={formState.content}
@@ -127,7 +128,7 @@ const CreateRequestForm = ({
             />
           </div>
 
-          <div className="form-footer">
+          <div className="formFooter">
             <button type="submit">저장</button>
             <button type="button" onClick={toggleModal}>
               취소
