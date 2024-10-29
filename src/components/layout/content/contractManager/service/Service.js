@@ -5,36 +5,6 @@ import { IoPersonCircle } from "react-icons/io5";
 import ServiceForm from "./serviceForm/ServiceForm";
 
 const Service = ({ isNavOpen, toggleNav, effectClass }) => {
-  //getAPI생성 후 제거 예정
-  const mockData = {
-    categoryId: 1,
-    category: "장애 적기 가동률",
-    purpose: "서비스가 돌아가는 시간",
-    weight: 50,
-    period: null,
-    formula: null,
-    unit: null,
-    serviceTargets: [
-      {
-        grade: "A",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-      {
-        grade: "B",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-    ],
-    taskTypes: [],
-  };
-
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -57,7 +27,7 @@ const Service = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ServiceForm initialData={mockData} />
+          <ServiceForm />
         </div>
       </div>
     </div>
