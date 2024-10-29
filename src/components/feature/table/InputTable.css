@@ -1,0 +1,58 @@
+@import "../../../styles/Common.css";
+.deleteCol {
+  background-color: white !important;
+  border: none !important;
+  width: 30px !important;
+}
+
+.deleteCol svg {
+  position: absolute;
+  display: none;
+  color: var(--main--gray);
+  padding-left: 25px;
+}
+
+.deleteCol:hover svg,
+.deleteCol:focus svg {
+  display: block;
+  cursor: pointer;
+}
+
+.delete {
+  display: flex;
+  flex-direction: row;
+}
+
+.plusRow {
+  border: none !important;
+  color: var(--main--gray);
+  text-align: left !important;
+}
+
+.fullInput {
+  width: 90%;
+  border: none;
+  box-shadow: inset 1px 1px 1px 1px rgba(198, 198, 198, 0.15);
+  border-radius: 3px;
+}
+
+.tableRow:hover .deleteCol svg {
+  display: block;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.deleteCol {
+  position: relative;
+}
+
+.deleteTableButton {
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  width: 40px;
+  left: -5px;
+  top: 15px;
+  z-index: 2;
+  font-size: 15px;
+}
