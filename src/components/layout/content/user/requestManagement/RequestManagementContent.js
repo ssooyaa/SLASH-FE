@@ -4,6 +4,7 @@ import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagementBottom from "../requestManagement/RequestManagementBottom/RequestManageBottom";
 import RequestManagementTop from "../requestManagement/RequestManagementTop/RequestManagementTop";
+import Modal from "../../../../common/modal/Modal";
 
 const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -30,7 +31,7 @@ const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <div className="content">
         <div className="contentBox">
           <RequestManagementTop />
-          <RequestManagementBottom />
+          <RequestManagementBottom ModalComponent={Modal} />
         </div>
       </div>
     </div>
