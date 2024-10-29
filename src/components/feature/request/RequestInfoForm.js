@@ -1,11 +1,11 @@
 import React from "react";
 import Dropdown from "./RequestDropdown";
 import CheckBox from "../../common/CheckBox";
+import "../request/RequestInfoForm.css";
 
 const RequestInfoForm = ({
   formState,
   updateFormState,
-  taskTypes,
   systemTypes,
   equipmentOptions,
   taskDetailOptions,
@@ -42,13 +42,13 @@ const RequestInfoForm = ({
         )}
       </div>
 
-      <table className="requestTable">
+      <table className="createRequestTable">
         <tbody>
           <tr>
             <td>{renderLabel("시스템 유형")}</td>
             <td>
               {renderDropdown(
-                "시스템",
+                "시스템 선택",
                 systemTypes,
                 formState.selectedSystem,
                 handleSystemChange
@@ -57,7 +57,7 @@ const RequestInfoForm = ({
             <td>{renderLabel("장비 유형")}</td>
             <td>
               {renderDropdown(
-                "장비",
+                "장비 선택",
                 equipmentOptions,
                 formState.selectedEquipment,
                 handleEquipmentChange
@@ -67,13 +67,13 @@ const RequestInfoForm = ({
         </tbody>
       </table>
 
-      <table className="requestTable">
+      <table className="createRequestTable">
         <tbody>
           <tr>
             <td>{renderLabel("업무유형")}</td>
             <td>
               {renderDropdown(
-                "업무",
+                "업무유형 선택",
                 taskDetailOptions,
                 formState.taskDetail,
                 (value) => updateFormState("taskDetail", value)

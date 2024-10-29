@@ -1,4 +1,5 @@
 import React from "react";
+import "../request/RequestContentForm.css";
 
 const RequestContentForm = ({ formState, updateFormState }) => {
   const renderLabel = (label) => (
@@ -8,9 +9,9 @@ const RequestContentForm = ({ formState, updateFormState }) => {
   );
 
   return (
-    <div className="requestInfoBox">
+    <div className="requestContentBox">
       <h3>요청 내용</h3>
-      <table className="requestTable">
+      <table className="createRequestTable">
         <tbody>
           <tr>
             <td>{renderLabel("제목")}</td>
