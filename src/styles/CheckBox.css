@@ -1,8 +1,8 @@
-.custom-checkbox {
-  display: none; /* 기본 체크박스 숨기기 */
+.customCheckbox {
+  display: none;
 }
 
-.custom-checkbox-label {
+.customCheckboxLabel {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -11,7 +11,7 @@
   white-space: nowrap;
 }
 
-.custom-checkbox-label::before {
+.customCheckboxLabel::before {
   content: "";
   position: absolute;
   left: 0;
@@ -23,12 +23,12 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.custom-checkbox:checked + .custom-checkbox-label::before {
+.customCheckbox:checked + .customCheckboxLabel::before {
   background-color: #333;
   border-color: #333;
 }
 
-.custom-checkbox:checked + .custom-checkbox-label::after {
+.customCheckbox:checked + .customCheckboxLabel::after {
   content: "✔";
   position: absolute;
   left: 4px;
@@ -37,6 +37,6 @@
   color: white;
 }
 
-.custom-checkbox-label:hover::before {
+.customCheckboxLabel:hover::before {
   border-color: #333;
 }
