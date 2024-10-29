@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import $ from "jquery"; // jQuery import
+import axios from "axios"; // axios import
 import { FaUser, FaLock } from "react-icons/fa";
 import Header from "./Header";
 import InputGroup from "./InputGroup";
@@ -16,7 +16,7 @@ const Login = () => {
     setIsPasswordVisible((prev) => !prev);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = getLoginFormErrors(id, password);
 
@@ -25,24 +25,32 @@ const Login = () => {
       return;
     }
 
-    // jQuery AJAX 요청
-    $.ajax({
-      url: "http://localhost:8080/login",
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ id, password }),
-      success: (data) => {
-        console.log("로그인 성공:", data);
-        // 로그인 성공 후 필요한 동작 (예: 페이지 이동)
-      },
-      error: (jqXHR, textStatus, errorThrown) => {
-        console.error("로그인 실패:", jqXHR.responseJSON);
-        setErrors((prev) => ({
-          ...prev,
-          password: "로그인 실패. 다시 시도해주세요.",
-        }));
-      },
-    });
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/login",
+        { id, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("로그인 성공:", response.data);
+
+      // 로그인 성공 후 주어진 redirectUrl로 이동
+      const { redirectUrl } = response.data;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        console.warn("Redirect URL이 제공되지 않았습니다.");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error.response?.data);
+      setErrors((prev) => ({
+        ...prev,
+        password: "로그인 실패. 다시 시도해주세요.",
+      }));
+    }
   };
 
   const getLoginFormErrors = (id, password) => {
