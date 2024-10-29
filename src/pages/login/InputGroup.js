@@ -1,7 +1,8 @@
-import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const InputGroup = ({
   type = "text",
+  cls,
   value,
   placeholder,
   onChange,
@@ -11,9 +12,10 @@ const InputGroup = ({
   toggleVisibility,
 }) => {
   return (
-    <div className={`input-group ${error ? "incorrect" : ""}`}>
+    <div className={`login-input-group ${error ? "incorrect" : ""}`}>
       {icon}
       <input
+        className={cls}
         type={type}
         placeholder={placeholder}
         value={value}
