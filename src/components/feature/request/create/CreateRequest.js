@@ -4,7 +4,7 @@ import {
   fetchSystemAndEquipments,
   fetchTaskTypes,
   createRequest,
-} from "../../../service/api/userService";
+} from "../../../../service/api/userService";
 
 const CreateRequest = ({ isModalOpen, toggleModal }) => {
   const [equipmentData, setEquipmentData] = useState([]);

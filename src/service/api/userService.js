@@ -32,7 +32,6 @@ export const fetchTaskTypes = async () => {
 };
 
 export const createRequest = async (taskRequestDto) => {
-  console.log(JSON.stringify(taskRequestDto));
   try {
     const response = await axios.post("/request", taskRequestDto);
     if (response.data.success) {
@@ -42,5 +41,16 @@ export const createRequest = async (taskRequestDto) => {
     }
   } catch (error) {
     console.error("ERROR: ", error.response.data);
+  }
+};
+
+export const showRequestDetail = async (requestId) => {
+  try {
+    const response = await axios.get(`/request/${requestId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    throw error;
   }
 };

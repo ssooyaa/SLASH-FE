@@ -1,9 +1,9 @@
 import React from "react";
-import Dropdown from "./RequestDropdown";
-import CheckBox from "../../common/CheckBox";
-import "../request/RequestInfoForm.css";
+import Dropdown from "../RequestDropdown";
+import CheckBox from "../../../common/CheckBox";
+import "./CreateRequestInfoForm.css";
 
-const RequestInfoForm = ({
+const CreateRequestInfoForm = ({
   formState,
   updateFormState,
   systemTypes,
@@ -86,4 +86,4 @@ const RequestInfoForm = ({
   );
 };
 
-export default RequestInfoForm;
+export default CreateRequestInfoForm;
