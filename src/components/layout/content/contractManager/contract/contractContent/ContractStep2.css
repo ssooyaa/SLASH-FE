@@ -1,0 +1,84 @@
+@import "../../../../../../styles/Common.css";
+
+.slaInfo {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  min-height: 480px;
+  flex: 1;
+  padding-top: 70px;
+  overflow-y: auto; /* 콘텐츠 영역이 스크롤 가능하도록 설정 */
+  justify-content: space-between;
+  text-align: left;
+}
+
+.serviceCategory {
+  width: 30%;
+}
+
+.slaEvaluation {
+  width: 60%;
+}
+
+.tableTitle {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 4px;
+}
+
+.tableTitle span {
+  color: red;
+}
+
+.standardSelect {
+  margin-top: 5px; /* 상단 여백 추가 */
+  width: 70px; /* 셀렉트 박스의 너비를 100%로 설정 */
+}
+
+.categoryTable,
+.slaTable {
+  width: 100%;
+}
+
+.fullInput {
+  width: 90%;
+}
+
+.standardInput {
+  width: 40%;
+}
+
+.plusIcon {
+  margin-top: 5px;
+  color: var(--main--gray);
+}
+
+.deleteCol {
+  position: relative;
+  background-color: white !important;
+  border: none !important;
+  width: 5px !important;
+}
+
+.deleteCol svg {
+  display: none;
+}
+
+.deleteCol:hover svg {
+  display: block;
+  cursor: pointer;
+  color: var(--main--gray);
+}
+
+.slaTable span {
+  margin-left: 10px;
+}
+
+.periodSelect {
+  margin-left: 10px;
+}
+
+.inputTableTitle {
+  padding-left: 35px;
+}
