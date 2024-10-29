@@ -2,7 +2,6 @@ import React from "react";
 import CreateRequestInfoForm from "./CreateRequestInfoForm.js";
 import Dropdown from "../RequestDropdown";
 import RequestContentForm from "../RequestContentForm.js";
-import "./CreateRequestForm.css";
 import "../../request/RequestModal.css";
 
 const CreateRequestForm = ({
