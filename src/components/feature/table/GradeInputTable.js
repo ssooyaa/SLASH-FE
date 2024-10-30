@@ -4,7 +4,17 @@ import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 
 const GradeInputTable = ({ initialData, onDataChange }) => {
-  const [data, setData] = useState(initialData || []);
+  const [data, setData] = useState(
+    initialData.length > 0
+      ? initialData
+      : Array(3).fill({
+          grade: "",
+          min: "",
+          max: "",
+          minInclusive: true,
+          maxInclusive: false,
+        })
+  );
   const [minInclusive, setMinInclusive] = useState(
     initialData.length === 0 ? true : initialData[0].minInclusive
   );

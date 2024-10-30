@@ -53,11 +53,13 @@
   border: none;
   position: absolute;
   background-color: transparent;
-  width: 40px;
-  left: -5px;
+  width: 55px;
+  left: -20px;
   top: 15px;
   z-index: 2;
-  font-size: 15px;
+  font-size: 13px;
+  color: black;
+  margin-right: 10px;
 }
 
 .plusIcon {

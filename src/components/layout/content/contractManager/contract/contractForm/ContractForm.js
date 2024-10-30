@@ -34,7 +34,6 @@ const ContractForm = () => {
     startDate: null,
     endDate: null,
     totalTargets: [],
-    categories: [],
   });
 
   const handleChange = (field, value) => {
@@ -54,6 +53,7 @@ const ContractForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       const response = await CreateContract(formData);
       if (response) {

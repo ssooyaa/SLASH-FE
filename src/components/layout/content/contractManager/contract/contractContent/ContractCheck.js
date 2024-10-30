@@ -35,18 +35,6 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
           <p>계약 종료일: {formData.endDate.toLocaleDateString()}</p>
         </div>
         <div className="contractCheck">
-          <div className="serviceCategory">
-            <div className="tableTitle">
-              <p>서비스 평가 항목</p>
-              <span>*</span>
-            </div>
-            <div className="table categoryTable">
-              <OneColTable
-                label="서비스 평가 항목"
-                data={formData.categories}
-              />
-            </div>
-          </div>
           <div className="slaEvaluation">
             <div className="tableTitle">
               <p>SLA 평가 등급 설정</p>

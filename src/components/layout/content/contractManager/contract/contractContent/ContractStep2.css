@@ -16,10 +16,6 @@
   width: 30%;
 }
 
-.slaEvaluation {
-  width: 60%;
-}
-
 .tableTitle {
   display: flex;
   align-items: center;
@@ -51,23 +47,6 @@
 
 .plusIcon {
   margin-top: 5px;
-  color: var(--main--gray);
-}
-
-.deleteCol {
-  position: relative;
-  background-color: white !important;
-  border: none !important;
-  width: 5px !important;
-}
-
-.deleteCol svg {
-  display: none;
-}
-
-.deleteCol:hover svg {
-  display: block;
-  cursor: pointer;
   color: var(--main--gray);
 }
 
