@@ -3,39 +3,40 @@ import "./ServiceForm.css";
 import ServiceDetailInputTable from "../../../../../feature/table/ServiceDetailInputTable";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import InputTable from "../../../../../feature/table/InputTable";
-import TaskDetailTable from "../../../../../feature/table/TaskDetailTable";
-import { CreateServiceDetail } from "../../../../../../api/UserService";
+import TaskDetailInputTable from "../../../../../feature/table/TaskDetailInputTable";
+import {
+  fetchServiceInfo,
+  CreateServiceDetail,
+} from "../../../../../../api/UserService";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ServiceForm = () => {
   const location = useLocation();
   const { categoryId, categoryName } = location.state || {};
 
-  const [data, setData] = useState({});
-
-  // useEffect(() => {
-  //   if (categoryId) {
-  //     //get api생성시 연결
-  //   }
-  // }, [categoryId]);
-
-  const [formData, setFormData] = useState({
-    categoryId: categoryId,
-    weight: data.weight ? data.weight : 0,
-    period: data.period ? data.period : "월별",
-    formula: data.formula ? data.formula : "",
-    unit: data.unit ? data.unit : "율(%)",
-    serviceTargets: data.serviceTargets ? data.serviceTargets : [],
-    taskTypes: data.taskTypes ? data.taskTypes : [],
-  });
-
-  const [serviceTargets, setServiceTargets] = useState(
-    formData.serviceTargets || []
-  );
-  const [taskTypes, setTaskTypes] = useState(formData.taskTypes || []);
+  const [formData, setFormData] = useState({});
+  const [serviceTargets, setServiceTargets] = useState([]);
+  const [taskTypes, setTaskTypes] = useState([]);
   const [taskTable, setTaskTable] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await fetchServiceInfo(categoryId);
+      console.log("response", response);
+      console.log("serviceTargets", response.serviceTargets);
+      setFormData(response);
+      setTaskTypes(response.taskTypes);
+      setServiceTargets(response.serviceTargets || []);
+      setTaskTypes(response.taskTypes || []);
+    };
+    loadData();
+  }, [categoryId]);
+
+  if (Object.keys(formData).length === 0) {
+    return <p>Loading...</p>;
+  }
 
   const handleRedirect = () => {
     navigate("/contractManager/contract");
@@ -196,7 +197,7 @@ const ServiceForm = () => {
                         )}
                         {selectedOption === "유형및시간" && (
                           <div className="table yourTableClass">
-                            <TaskDetailTable
+                            <TaskDetailInputTable
                               initialData={taskTypes}
                               onDataChange={handleTaskDetail}
                             />

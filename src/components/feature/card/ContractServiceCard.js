@@ -19,6 +19,13 @@ const ContractServiceCard = ({ initialData }) => {
     });
   };
 
+  const handleServiceDetail = () => {
+    // categoryId와 categoryName을 state에 담아 navigate로 전달
+    navigate("/contractManager/service", {
+      state: { categoryId, categoryName },
+    });
+  };
+
   return (
     <>
       <div className="cardTitle">
@@ -26,7 +33,7 @@ const ContractServiceCard = ({ initialData }) => {
       </div>
       <div className="serviceCardSection">
         {serviceDetail.formula ? (
-          <div className="cardInfo">
+          <div className="cardInfo" onClick={handleServiceDetail}>
             <div className="cardServiceInfo">
               <div className="serviceFormula">
                 <p>{serviceDetail.purpose || "목적 없음"}</p>

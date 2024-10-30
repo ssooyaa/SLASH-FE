@@ -33,6 +33,7 @@
   width: 100%;
   height: 500px;
   overflow-y: scroll;
+  gap: 20px;
 }
 
 .gradeTableDetail {
@@ -98,4 +99,8 @@
 
 .serviceForm button {
   cursor: pointer;
+}
+
+.modalButton {
+  color: black;
 }
