@@ -6,3 +6,11 @@
 .weight {
   text-align: end;
 }
+
+.formulaRow {
+  height: 100px !important;
+}
+
+.formulaRow textarea {
+  height: 75px;
+}

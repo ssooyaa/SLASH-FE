@@ -11,32 +11,16 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ServiceForm = () => {
-  const location = useLocation();
-  const { categoryId, categoryName } = location.state || {};
+  // const location = useLocation();
+  // const contractId = location.state;
 
   const [formData, setFormData] = useState({});
   const [serviceTargets, setServiceTargets] = useState([]);
   const [taskTypes, setTaskTypes] = useState([]);
   const [taskTable, setTaskTable] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [categoryName, setCategoryName] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadData = async () => {
-      const response = await fetchServiceInfo(categoryId);
-      console.log("response", response);
-      console.log("serviceTargets", response.serviceTargets);
-      setFormData(response);
-      setTaskTypes(response.taskTypes);
-      setServiceTargets(response.serviceTargets || []);
-      setTaskTypes(response.taskTypes || []);
-    };
-    loadData();
-  }, [categoryId]);
-
-  if (Object.keys(formData).length === 0) {
-    return <p>Loading...</p>;
-  }
 
   const handleRedirect = () => {
     navigate("/contractManager/contract");
@@ -47,6 +31,11 @@ const ServiceForm = () => {
       ...prevData,
       [field]: value,
     }));
+  };
+
+  const handleCategoryName = (value) => {
+    setCategoryName(value);
+    handleChange("categoryName", value);
   };
 
   const handleServiceTargets = (value) => {
@@ -120,10 +109,15 @@ const ServiceForm = () => {
   };
 
   return (
-    <div className="form">
+    <div className="serviceTemplate">
       <div className="serviceForm">
         <div className="categoryTitle">
-          <p>{categoryName}</p>
+          <input
+            className="categoryTitleInput"
+            placeholder="서비스 항목을 입력해 주세요"
+            type="text"
+            onChange={(e) => handleCategoryName(e.target.value)}
+          />
         </div>
         <div className="serviceDetail">
           <div className="tableTitle">
@@ -137,79 +131,68 @@ const ServiceForm = () => {
             />
           </div>
         </div>
-        <div className="gradeTasksDetail">
-          <div className="gradeTableDetail">
-            <div className="tableTitle inputTableTitle">
-              <p>SLA 평가 등급 설정</p>
-              <span>*</span>
-            </div>
-            <div className="table slaTable">
-              <GradeInputTable
-                initialData={serviceTargets}
-                onDataChange={handleServiceTargets}
-              />
-            </div>
+        <div className="gradeTableDetail">
+          <div className="tableTitle inputTableTitle">
+            <p>SLA 평가 등급 설정</p>
+            <span>*</span>
           </div>
-          {((categoryName.includes("서비스") &&
-            categoryName.includes("적기")) ||
-            (categoryName.includes("장애") &&
-              categoryName.includes("적기"))) && (
-            <div className="taskTableDetail">
-              <div className="tableTitle inputTableTitle taskTitle">
-                <p>업무 유형</p>
-                <span>*</span>
-                {!taskTable ? (
-                  <div onClick={handleAddTask} className="addTaskButton">
-                    <button className="tableControlBtn">추가하기</button>
+          <div className="table slaTable">
+            <GradeInputTable
+              initialData={serviceTargets}
+              onDataChange={handleServiceTargets}
+            />
+          </div>
+        </div>
+        <div className="taskTableDetail">
+          <div className="tableTitle inputTableTitle taskTitle">
+            <p>업무 유형</p>
+            <span>*</span>
+            {!taskTable ? (
+              <div onClick={handleAddTask} className="addTaskButton">
+                <button className="tableControlBtn">추가하기</button>
+              </div>
+            ) : (
+              <div onClick={handleRemoveTask} className="removeTaskButton">
+                <button className="tableControlBtn"> 삭제하기</button>
+              </div>
+            )}
+          </div>
+          <div className="table">
+            {taskTable && (
+              <div className="taskOptions">
+                {!selectedOption ? (
+                  <div className="addTableButton">
+                    <button onClick={() => handleOptionSelect("업무유형")}>
+                      업무 유형 테이블
+                    </button>
+                    <button onClick={() => handleOptionSelect("유형및시간")}>
+                      유형 및 시간 테이블
+                    </button>
                   </div>
                 ) : (
-                  <div onClick={handleRemoveTask} className="removeTaskButton">
-                    <button className="tableControlBtn"> 삭제하기</button>
-                  </div>
-                )}
-              </div>
-              <div className="table">
-                {taskTable && (
-                  <div className="taskOptions">
-                    {!selectedOption ? (
-                      <div className="addTableButton">
-                        <button onClick={() => handleOptionSelect("업무유형")}>
-                          업무 유형 테이블
-                        </button>
-                        <button
-                          onClick={() => handleOptionSelect("유형및시간")}
-                        >
-                          유형 및 시간 테이블
-                        </button>
+                  <div className="taskTable">
+                    {selectedOption === "업무유형" && (
+                      <div className="table yourTableClass">
+                        <InputTable
+                          label="업무 유형"
+                          initialData={taskTypes.map((item) => item.taskDetail)}
+                          onDataChange={handleTaskDetail}
+                        />
                       </div>
-                    ) : (
-                      <div className="taskTable">
-                        {selectedOption === "업무유형" && (
-                          <div className="table yourTableClass">
-                            <InputTable
-                              label="업무 유형"
-                              initialData={taskTypes.map(
-                                (item) => item.taskDetail
-                              )}
-                              onDataChange={handleTaskDetail}
-                            />
-                          </div>
-                        )}
-                        {selectedOption === "유형및시간" && (
-                          <div className="table yourTableClass">
-                            <TaskDetailInputTable
-                              initialData={taskTypes}
-                              onDataChange={handleTaskDetail}
-                            />
-                          </div>
-                        )}
+                    )}
+                    {selectedOption === "유형및시간" && (
+                      <div className="table yourTableClass">
+                        <TaskDetailInputTable
+                          initialData={taskTypes}
+                          onDataChange={handleTaskDetail}
+                        />
                       </div>
                     )}
                   </div>
                 )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <div className="serviceFormButton">
           <button className="grayButton" onClick={() => handleRedirect()}>

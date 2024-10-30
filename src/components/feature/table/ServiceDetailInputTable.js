@@ -26,31 +26,13 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
       <table>
         <thead>
           <tr>
-            <th>평가 지표 내용</th>
-            <th>측정 방법</th>
-            <th>평가 지표 가중치</th>
-            <th>측정 주기</th>
-            <th>측정 단위</th>
+            <th>항목</th>
+            <th colSpan={5}>내용</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
-              <input
-                type="text"
-                className="fullInput"
-                value={formData.purpose}
-                onChange={(e) => handleChangeData("purpose", e.target.value)}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                className="fullInput"
-                value={formData.formula}
-                onChange={(e) => handleChangeData("formula", e.target.value)}
-              />
-            </td>
+            <td>가중치</td>
             <td>
               <input
                 type="number"
@@ -59,6 +41,7 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
                 onChange={(e) => handleChangeData("weight", e.target.value)}
               />
             </td>
+            <td>측정주기</td>
             <td>
               <select
                 name="period"
@@ -71,6 +54,7 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
                 <option value="연도별">연도별</option>
               </select>
             </td>
+            <td>측정 단위</td>
             <td>
               <select
                 name="unit"
@@ -81,6 +65,28 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
                 <option value="율(%)">율(%)</option>
                 <option value="건">건</option>
               </select>
+            </td>
+          </tr>
+          <tr>
+            <td>목적</td>
+            <td colSpan={5}>
+              <input
+                type="text"
+                className="fullInput"
+                value={formData.purpose}
+                onChange={(e) => handleChangeData("purpose", e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr className="formulaRow">
+            <td>산출식</td>
+            <td colSpan={5}>
+              <textarea
+                type="text"
+                className="fullInput"
+                value={formData.formula}
+                onChange={(e) => handleChangeData("formula", e.target.value)}
+              />
             </td>
           </tr>
         </tbody>
