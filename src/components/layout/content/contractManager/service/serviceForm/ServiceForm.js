@@ -10,7 +10,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 const ServiceForm = () => {
   const location = useLocation();
   const { categoryId, categoryName } = location.state || {};
-
   const [data, setData] = useState({});
 
   // useEffect(() => {
@@ -28,7 +27,6 @@ const ServiceForm = () => {
     serviceTargets: data.serviceTargets ? data.serviceTargets : [],
     taskTypes: data.taskTypes ? data.taskTypes : [],
   });
-
   const [serviceTargets, setServiceTargets] = useState(
     formData.serviceTargets || []
   );
@@ -36,11 +34,9 @@ const ServiceForm = () => {
   const [taskTable, setTaskTable] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
-
   const handleRedirect = () => {
     navigate("/contractManager/contract");
   };
-
   const handleChange = (field, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -79,6 +75,7 @@ const ServiceForm = () => {
         if (typeof item === "object") {
           return {
             type: categoryName.split(" ")[0] + " 요청",
+
             taskDetail: item.taskDetail,
             deadline: item.deadline ? item.deadline : 0,
             serviceRelevance:
@@ -91,6 +88,7 @@ const ServiceForm = () => {
         } else if (typeof item === "string") {
           return {
             type: categoryName.split(" ")[0] + " 요청",
+
             taskDetail: item,
           };
         } else {
@@ -112,6 +110,7 @@ const ServiceForm = () => {
       if (response) {
         alert("저장완료");
         handleRedirect();
+
       }
     } catch (error) {
       alert("저장실패");
@@ -132,6 +131,7 @@ const ServiceForm = () => {
           <div className="table slaTable detailTable">
             <ServiceDetailInputTable
               initialData={formData}
+
               handleData={handleChange}
             />
           </div>
@@ -153,6 +153,7 @@ const ServiceForm = () => {
             categoryName.includes("적기")) ||
             (categoryName.includes("장애") &&
               categoryName.includes("적기"))) && (
+
             <div className="taskTableDetail">
               <div className="tableTitle inputTableTitle taskTitle">
                 <p>업무 유형</p>
@@ -214,6 +215,7 @@ const ServiceForm = () => {
           <button className="grayButton" onClick={() => handleRedirect()}>
             닫기
           </button>
+
           <button className="blackButton" onClick={(e) => submit(e)}>
             저장
           </button>
