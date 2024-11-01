@@ -31,7 +31,7 @@ const Dropdown = ({ items, label, onSelect }) => {
       items.map((item, index) => (
         <div
           key={index}
-          className="dropdown-item"
+          className="dropdownItem"
           onClick={(e) => handleSelect(e, item)}
         >
           {item}
@@ -42,10 +42,10 @@ const Dropdown = ({ items, label, onSelect }) => {
 
   return (
     <div className="dropdown">
-      <button className="dropdown-btn" onClick={toggleDropdown}>
+      <button className="dropdownBtn" onClick={toggleDropdown}>
         {selectedItem}
       </button>
-      {isOpen && <div className="dropdown-content">{renderedItems}</div>}
+      {isOpen && <div className="dropdownContent">{renderedItems}</div>}
     </div>
   );
 };

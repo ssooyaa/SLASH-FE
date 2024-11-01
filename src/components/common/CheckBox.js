@@ -4,15 +4,15 @@ import "../../styles/CheckBox.css";
 
 const CheckBox = ({ id, label, checked, onChange }) => {
   return (
-    <div className="custom-checkbox-container">
+    <div className="customCheckboxContainer">
       <input
         id={id}
         type="checkbox"
         checked={checked}
         onChange={({ target: { checked } }) => onChange(checked)}
-        className="custom-checkbox"
+        className="customCheckbox"
       />
-      <label htmlFor={id} className="custom-checkbox-label">
+      <label htmlFor={id} className="customCheckboxLabel">
         {label}
       </label>
     </div>

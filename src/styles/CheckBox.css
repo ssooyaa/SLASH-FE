@@ -9,6 +9,7 @@
   position: relative;
   padding-left: 30px;
   white-space: nowrap;
+  font-size: 16px;
 }
 
 .customCheckboxLabel::before {
