@@ -91,3 +91,17 @@
 .table input {
   text-align: center;
 }
+
+.inputTableTitle {
+  padding-left: 55px;
+}
+
+.tableTitle {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.tableTitle span {
+  color: red;
+}
