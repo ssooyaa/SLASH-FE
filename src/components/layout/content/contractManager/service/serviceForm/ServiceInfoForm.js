@@ -8,10 +8,6 @@ import "./ServiceInfoForm.css";
 const ServiceInfoForm = ({ initialData }) => {
   const data = initialData;
 
-  const handleEditMode = () => {
-    navigator(`/contractManager/updateContract/${initialData.contractId}`);
-  };
-
   return (
     <div className="form">
       <div className="serviceForm">

@@ -14,12 +14,15 @@ const ContractInfoForm = () => {
 
   const navigator = useNavigate();
 
+  const [editModeOn, setEditModeOn] = useState(false);
+
   useEffect(() => {
     const loadData = async () => {
       const response = await fetchContractInfo(contractId);
       console.log(response);
       setContract(response);
       setEvaluationItemInfos(response.evaluationItems || []);
+      setEditModeOn(response.isTerminate);
     };
     loadData();
   }, [contractId]);
@@ -41,9 +44,11 @@ const ContractInfoForm = () => {
       <div className="contractInformation">
         <div className="contractTitle">
           <p>SLA 협약서</p>
-          <button className="blackButton" onClick={() => handleEditMode()}>
-            수정
-          </button>
+          {editModeOn ? null : (
+            <button className="blackButton" onClick={() => handleEditMode()}>
+              수정
+            </button>
+          )}
         </div>
         <div className="companyInfo">
           <p>회사이름: {contract.companyName}</p>
