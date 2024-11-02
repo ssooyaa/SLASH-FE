@@ -6,11 +6,11 @@ const ProcessStatusLabel = ({ processType }) => {
   const getLabelStyle = (processType) => {
     switch (processType) {
       case "REGISTERED":
-        return { backgroundColor: "#ffefef", color: "#ff4d4f" }; // 배경: 연한 빨강, 글자: 진한 빨강
+        return { backgroundColor: "#FFEFDC", color: "#FF9A16" };
       case "IN_PROGRESS":
-        return { backgroundColor: "#fff0f6", color: "#d46b08" }; // 배경: 연한 보라, 글자: 오렌지
+        return { backgroundColor: "#C3DBF8", color: "#2C70F4" };
       case "COMPLETED":
-        return { backgroundColor: "#fff7e6", color: "#ffa940" }; // 배경: 연한 주황, 글자: 주황
+        return { backgroundColor: "#C3F8DD", color: "#06D86F" };
       default:
         return { backgroundColor: "#fff", color: "#000" }; // 기본값: 흰색 배경, 검은색 글자
     }
@@ -20,9 +20,9 @@ const ProcessStatusLabel = ({ processType }) => {
   const getDisplayText = (processType) => {
     switch (processType) {
       case "REGISTERED":
-        return "접수완료";
+        return "접수 완료";
       case "IN_PROGRESS":
-        return "진행중";
+        return "진행 중";
       case "COMPLETED":
         return "처리 완료";
       default:
