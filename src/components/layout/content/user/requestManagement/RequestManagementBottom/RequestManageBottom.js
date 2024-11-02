@@ -1,52 +1,27 @@
 import React, { useState } from "react";
 import "./RequestManageBottom.css";
-import CreateRequest from "../../../../../feature/request/CreateRequest";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 
 const RequestManagementBottom = () => {
-  // 모달 열기/닫기 상태
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 드롭다운 선택 상태
+  // State for each dropdown
   const [selectedStatus, setSelectedStatus] = useState("접수완료");
-  const [selectedTaskType, setSelectedTaskType] = useState("서비스요청");
-  const [selectedEquipmentType, setSelectedEquipmentType] = useState("DB#1");
+  const [selectedTaskType, setSelectedTaskType] = useState("유지보수");
+  const [selectedEquipmentType, setSelectedEquipmentType] = useState("서버");
 
   const [isOpenStatus, setIsOpenStatus] = useState(false);
   const [isOpenTaskType, setIsOpenTaskType] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
 
-  // 페이지네이션 상태
+  // State for pagination
   const [activePage, setActivePage] = useState(1); // 현재 활성화된 페이지
 
-  // 드롭다운 옵션
+  // Dropdown options
   const statusOptions = ["접수완료", "처리중", "처리완료"];
-  const taskTypeOptions = ["서비스 요청", "장애 요청"];
-  const equipmentTypeOptions = [
-    "DB#1",
-    "DB#2",
-    "DB#3",
-    "DB#4",
-    "DB#5",
-    "백업장비#1",
-    "백업장비#2",
-    "백업장비#3",
-    "백업장비#4",
-    "백업장비#5",
-    "서버#1",
-    "서버#2",
-    "서버#3",
-    "서버#4",
-    "서버#5",
-    "응용프로그램#1",
-    "응용프로그램#2",
-    "응용프로그램#3",
-    "응용프로그램#4",
-    "응용프로그램#5",
-  ];
+  const taskTypeOptions = ["유지보수", "개발", "설치"];
+  const equipmentTypeOptions = ["서버", "네트워크", "데스크탑"];
 
-  // 상태 변경 핸들러
+  // Handlers for each dropdown
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
     setIsOpenStatus(false);
@@ -62,19 +37,14 @@ const RequestManagementBottom = () => {
     setIsOpenEquipmentType(false);
   };
 
-  // 페이지네이션 핸들러
+  // Handler for pagination click
   const handlePageClick = (pageNumber) => {
     setActivePage(pageNumber);
   };
 
-  // 모달 열기/닫기 핸들러
-  const toggleModal = () => {
-    setIsModalOpen((prev) => !prev);
-  };
-
   return (
     <div className="requestListContainer">
-      {/* 요청 목록 상단 헤더 */}
+      {/* Tabs for list management */}
       <div className="requestHeaderContainer">
         <div className="requestHeader">
           서비스 요청 목록
@@ -82,21 +52,11 @@ const RequestManagementBottom = () => {
             <input role="switch" type="checkbox" className="toggle" />
           </label>
         </div>
-        {/* 요청 등록 버튼 */}
-        <button className="tabButton" onClick={toggleModal}>
-          요청등록
-        </button>
+
+        <button className="tabButton">요청등록</button>
       </div>
 
-      {/* 요청 등록 모달 */}
-      {isModalOpen && (
-        <CreateRequest
-          isModalOpen={isModalOpen}
-          toggleModal={toggleModal} // 모달 상태 변경 함수 전달
-        />
-      )}
-
-      {/* 처리상태, 업무유형, 장비유형 드롭다운 */}
+      {/* 처리상태, 업무유형, 장비유형 Dropdowns */}
       <div className="dropdownContainer">
         <div className="customDropdown">
           <div
@@ -195,7 +155,7 @@ const RequestManagementBottom = () => {
         </div>
       </div>
 
-      {/* 요청 목록 테이블 */}
+      {/* Table Layout */}
       <div className="tableContainer">
         <table className="requestTable">
           <thead>
@@ -213,7 +173,7 @@ const RequestManagementBottom = () => {
           <tbody>
             <tr>
               <td>aaa1234</td>
-              <td>담당자</td>
+              <td>22222</td>
               <td>#서버1</td>
               <td>
                 <TaskDetailLabel taskType="장애예방" />
@@ -225,11 +185,11 @@ const RequestManagementBottom = () => {
                 <ProcessStatusLabel processType="처리완료" />
               </td>
             </tr>
-            {/* 추가적인 데이터들을 여기에 넣으면 됩니다. */}
+            {/* Add more rows as needed */}
           </tbody>
         </table>
 
-        {/* 페이지네이션 */}
+        {/* Pagination */}
         <div className="pagination">
           <button>{"<"}</button>
           {Array.from({ length: 4 }, (_, index) => (
@@ -241,6 +201,7 @@ const RequestManagementBottom = () => {
               {index + 1}
             </button>
           ))}
+
           <button>{">"}</button>
         </div>
       </div>

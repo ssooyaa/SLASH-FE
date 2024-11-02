@@ -1,0 +1,31 @@
+.rmBox {
+    width: 90%;
+    font-weight: 600;
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    background-color: white;
+    border: 0.5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.rmBox .highchartsContainer {
+    width: 100%; /* 너비를 rmBox에 맞춤 */
+    height: 100%; /* 높이를 rmBox에 맞춤 */
+}
+
+.rqNumber {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.rqColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
