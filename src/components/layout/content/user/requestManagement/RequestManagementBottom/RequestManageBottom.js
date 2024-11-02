@@ -4,6 +4,7 @@ import "./RequestManageBottom.css";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 import SearchBar from "../../../../../common/bar/SearchBar";
+import EquipmentTypeLabel from "../../../../../labels/equipmentType/EquipmentTypeLabel";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -34,8 +35,10 @@ const RequestManagementBottom = () => {
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(5);
+  const [size, setSize] = useState(6);
+  const [filteredRequests, setFilteredRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
 
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
@@ -52,6 +55,7 @@ const RequestManagementBottom = () => {
             selectedStatus !== "전체"
               ? statusMapping[selectedStatus]
               : undefined,
+          keyword: searchTerm, // 검색어 추가
           page,
           size,
         },
@@ -61,21 +65,30 @@ const RequestManagementBottom = () => {
         if (responseData && Array.isArray(responseData.results)) {
           setTaskRequests(responseData.results);
           setTotalPages(responseData.totalPages);
-          setPage(responseData.currentPage); // 현재 페이지 정보 업데이트
+          setPage(responseData.currentPage);
         } else {
           setTaskRequests([]);
+          setFilteredRequests([]);
           setTotalPages(0);
         }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setTaskRequests([]);
+        setFilteredRequests([]);
       });
   };
 
   useEffect(() => {
     fetchFilteredRequests();
-  }, [selectedEquipmentType, selectedTaskDetail, selectedStatus, page, size]);
+  }, [
+    selectedEquipmentType,
+    selectedTaskDetail,
+    selectedStatus,
+    page,
+    size,
+    searchTerm,
+  ]);
 
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
@@ -100,33 +113,37 @@ const RequestManagementBottom = () => {
       setPage(newPage);
     }
   };
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    const maxDisplayPages = 5;
 
-    if (totalPages <= maxDisplayPages) {
-      // 전체 페이지 수가 적으면 모두 표시
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      if (page <= 3) {
-        pageNumbers.push(1, 2, 3, 4, "...", totalPages);
-      } else if (page >= totalPages - 2) {
-        pageNumbers.push(
-          1,
-          "...",
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages
-        );
-      } else {
-        pageNumbers.push(1, "...", page - 1, page, page + 1, "...", totalPages);
-      }
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setPage(1); // Reset page when search changes
+  };
+
+  const [pageGroup, setPageGroup] = useState(0);
+
+  const renderPageNumbers = () => {
+    const maxDisplayPages = 6; // 한번에 표시할 페이지 수
+    const startPage = pageGroup * maxDisplayPages + 1;
+    const endPage = Math.min(startPage + maxDisplayPages - 1, totalPages);
+    const pageNumbers = [];
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
     }
 
     return pageNumbers;
+  };
+
+  const handleNextPageGroup = () => {
+    if ((pageGroup + 1) * 6 < totalPages) {
+      setPageGroup(pageGroup + 1);
+    }
+  };
+
+  const handlePreviousPageGroup = () => {
+    if (pageGroup > 0) {
+      setPageGroup(pageGroup - 1);
+    }
   };
 
   const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
@@ -140,10 +157,12 @@ const RequestManagementBottom = () => {
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
-        <button className="tabButton" onClick={toggleModal}>
-          요청등록
-        </button>
-        <SearchBar />
+        <div className="headerTop">
+          <button className="tabButton" onClick={toggleModal}>
+            요청 등록
+          </button>
+        </div>
+        <SearchBar onSearch={handleSearch} />
       </div>
 
       <div className="tableContainer">
@@ -153,11 +172,14 @@ const RequestManagementBottom = () => {
               <th>요청자</th>
               <th>담당자</th>
               <th>
-                장비 유형
                 <div
                   className="customDropdown"
                   onClick={() => setIsOpenEquipmentType(!isOpenEquipmentType)}
                 >
+                  <span className="dropdownHeaderLabel">장비 유형 : </span>
+                  <span className="dropdownHeaderText">
+                    {selectedEquipmentType}
+                  </span>
                   {isOpenEquipmentType && (
                     <div className="dropdownList">
                       {equipmentTypeOptions.map((option) => (
@@ -179,17 +201,17 @@ const RequestManagementBottom = () => {
                       ))}
                     </div>
                   )}
-                  <span className="dropdownHeaderText">
-                    {selectedEquipmentType}
-                  </span>
                 </div>
               </th>
               <th>
-                업무 유형
                 <div
                   className="customDropdown"
                   onClick={() => setIsOpenTaskType(!isOpenTaskType)}
                 >
+                  <span className="dropdownHeaderLabel">업무 유형 : </span>
+                  <span className="dropdownHeaderText">
+                    {selectedTaskDetail}
+                  </span>
                   {isOpenTaskType && (
                     <div className="dropdownList">
                       {taskDetailOptions.map((option) => (
@@ -211,9 +233,6 @@ const RequestManagementBottom = () => {
                       ))}
                     </div>
                   )}
-                  <span className="dropdownHeaderText">
-                    {selectedTaskDetail}
-                  </span>
                 </div>
               </th>
               <th>요청 제목</th>
@@ -221,11 +240,12 @@ const RequestManagementBottom = () => {
               <th>요청 시간</th>
               <th>완료 시간</th>
               <th>
-                처리 상태
                 <div
                   className="customDropdown"
                   onClick={() => setIsOpenStatus(!isOpenStatus)}
                 >
+                  <span className="dropdownHeaderLabel">처리 상태 : </span>
+                  <span className="dropdownHeaderText">{selectedStatus}</span>
                   {isOpenStatus && (
                     <div className="dropdownList">
                       {statusOptions.map((option) => (
@@ -247,7 +267,6 @@ const RequestManagementBottom = () => {
                       ))}
                     </div>
                   )}
-                  <span className="dropdownHeaderText">{selectedStatus}</span>
                 </div>
               </th>
             </tr>
@@ -257,12 +276,15 @@ const RequestManagementBottom = () => {
               <tr key={task.id || index}>
                 <td>{task.requesterName}</td>
                 <td>{task.managerName}</td>
-                <td>{task.equipmentName}</td>
+                <td className="equipmentCell">
+                  <EquipmentTypeLabel equipmentType={task.equipmentName} />
+                </td>
+
                 <td>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
-                <td>{task.title}</td>
-                <td>{task.content}</td>
+                <td className="truncate">{task.title}</td>
+                <td className="truncate">{task.content}</td>
                 <td>{formatDate(task.createTime)}</td>
                 <td>
                   {task.status === "COMPLETED"
@@ -278,34 +300,29 @@ const RequestManagementBottom = () => {
         </table>
       </div>
 
-      {/* Pagination Controls */}
       <div className="pagination">
         <button
           className="arrow-button"
-          onClick={() => handlePageChange(page - 1)}
-          disabled={page === 1}
+          onClick={handlePreviousPageGroup}
+          disabled={pageGroup === 0}
         >
           {"<"}
         </button>
-        {renderPageNumbers().map((number, index) =>
-          number === "..." ? (
-            <span key={index} className="dots">
-              ...
-            </span>
-          ) : (
-            <button
-              key={number}
-              className={`page-button ${page === number ? "activePage" : ""}`}
-              onClick={() => handlePageChange(number)}
-            >
-              {number}
-            </button>
-          )
-        )}
+
+        {renderPageNumbers().map((number) => (
+          <button
+            key={number}
+            className={`page-button ${page === number ? "activePage" : ""}`}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </button>
+        ))}
+
         <button
           className="arrow-button"
-          onClick={() => handlePageChange(page + 1)}
-          disabled={page === totalPages}
+          onClick={handleNextPageGroup}
+          disabled={(pageGroup + 1) * 6 >= totalPages}
         >
           {">"}
         </button>
@@ -314,11 +331,10 @@ const RequestManagementBottom = () => {
   );
 };
 
-// 날짜 배열을 포맷팅하는 함수
 const formatDate = (dateArray) => {
-  if (!Array.isArray(dateArray) || dateArray.length < 6) return "Invalid date";
-  const [year, month, day, hour, minute, second] = dateArray;
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  if (!Array.isArray(dateArray) || dateArray.length < 5) return "Invalid date";
+  const [year, month, day, hour, minute] = dateArray;
+  return `${year}.${month}.${day} ${hour}시${minute}분`;
 };
 
 export default RequestManagementBottom;
