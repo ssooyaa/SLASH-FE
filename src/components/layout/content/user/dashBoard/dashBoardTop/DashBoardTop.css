@@ -1,10 +1,8 @@
-@font-face {
-  font-family: "paybooc-Bold";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff2")
-      format("woff2"),
-    url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff")
-      format("woff");
-  font-style: normal;
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
+body {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  background-color: #f0f4f8;
 }
 
 body {
