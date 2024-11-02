@@ -92,6 +92,7 @@ const ContractForm = () => {
 
   const handleRedirect = () => {
     //계약 리스트페이지 작성 후 추가 예정
+    navigator(-1);
   };
 
   const handleEvaluationItem = (index, value) => {

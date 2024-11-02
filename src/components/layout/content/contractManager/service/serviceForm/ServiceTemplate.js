@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ServiceTemplate.css";
 import ServiceDetailInputTable from "../../../../../feature/table/ServiceDetailInputTable";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import InputTable from "../../../../../feature/table/InputTable";
 import TaskDetailInputTable from "../../../../../feature/table/TaskDetailInputTable";
+import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 
 const ServiceTemplate = ({ index, initialData = {}, dataChangeHandle }) => {
   const [formData, setFormData] = useState(initialData);
+
   const [serviceTargets, setServiceTargets] = useState([]);
+
   const [taskTypes, setTaskTypes] = useState([]);
+
   const [taskTable, setTaskTable] = useState(false);
+
   const [selectedOption, setSelectedOption] = useState(null);
-  const [category, setCategory] = useState(
-    initialData.category ? initialData.category : ""
-  );
 
   const handleChange = (field, value) => {
     const updatedFormData = {
@@ -25,7 +27,6 @@ const ServiceTemplate = ({ index, initialData = {}, dataChangeHandle }) => {
   };
 
   const handleServiceTargets = (value) => {
-    console.log(value);
     setServiceTargets(value);
     handleChange("serviceTargets", value);
   };
@@ -93,10 +94,17 @@ const ServiceTemplate = ({ index, initialData = {}, dataChangeHandle }) => {
           <span>*</span>
         </div>
         <div className="table">
-          <GradeInputTable
-            initialData={serviceTargets}
-            onDataChange={handleServiceTargets}
-          />
+          {formData.unit === "건" ? (
+            <GradeInputTable
+              initialData={serviceTargets}
+              onDataChange={handleServiceTargets}
+            />
+          ) : (
+            <NoScoreGradeInputTable
+              initialData={serviceTargets}
+              onDataChange={handleServiceTargets}
+            />
+          )}
         </div>
       </div>
       <div className="taskTableDetail">
