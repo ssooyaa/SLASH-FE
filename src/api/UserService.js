@@ -6,19 +6,21 @@ export const CreateContract = async (requestContractDTO) => {
   try {
     const response = await axios.post("/contract", requestContractDTO);
     if (response.data.success) {
-      return response.data.success;
+      alert("계약생성 성공");
+      return response.data.data;
     } else {
       return false;
     }
   } catch (error) {
     console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
     return false;
   }
 };
 
 export const CreateServiceDetail = async (requestContractDTO) => {
   try {
-    const response = await axios.post("/detail", requestContractDTO);
+    const response = await axios.post("/evaluation-item", requestContractDTO);
     if (response.data.success) {
       return response.data.success;
     } else {
@@ -30,9 +32,27 @@ export const CreateServiceDetail = async (requestContractDTO) => {
   }
 };
 
-export const fetchContractInfo = async () => {
+export const fetchContractInfo = async (contractId) => {
   try {
-    const response = await axios.get("/contract");
+    const response = await axios.get(`/contract/${contractId}`);
+
+    if (response.data.success) {
+      console.log(response.data.data);
+      return response.data.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(
+      "ERROR: ",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
+
+export const fetchServiceInfo = async (evaluationItemId) => {
+  try {
+    const response = await axios.get(`/detail/${evaluationItemId}`);
 
     if (response.data.success) {
       console.log(response.data.data);
@@ -45,9 +65,9 @@ export const fetchContractInfo = async () => {
   }
 };
 
-export const fetchServiceInfo = async (categoryId) => {
+export const fetchAllContractInfo = async () => {
   try {
-    const response = await axios.get(`/detail/${categoryId}`);
+    const response = await axios.get("/all-contract");
 
     if (response.data.success) {
       console.log(response.data.data);
