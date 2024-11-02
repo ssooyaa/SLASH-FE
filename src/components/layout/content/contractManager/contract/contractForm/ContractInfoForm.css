@@ -11,12 +11,14 @@
   background-color: white;
   border-radius: 10px;
 }
+
 .contractTitle {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
 .contractTitle button {
   margin-left: 10px;
 }
@@ -29,13 +31,9 @@
   margin-left: 50px;
 }
 
-.contractInfo {
-  width: 70%;
+.contractInformation {
+  width: 80%;
   height: 750px;
-}
-
-.contractInfoDiv {
-  height: 500px;
   overflow-y: scroll;
 }
 
@@ -53,13 +51,29 @@
 }
 .cardSection {
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 20px;
+  flex-wrap: wrap; /* 카드들이 화면에 맞춰 줄 바꿈되도록 설정 */
+  gap: 10px; /* 카드 간의 간격 설정 */
 }
 
 .serviceInfoCard {
-  flex: 0 0 50%;
+  flex: 0 0 100%;
   box-sizing: border-box;
-  height: 300px;
+  /* height: 300px; */
   padding: 10px;
+}
+
+.addServiceCard {
+  width: 50%;
+}
+
+.cardSectionTitle {
+  text-align: start;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 4px;
+}
+
+.cardSectionTitle span {
+  color: red;
 }
