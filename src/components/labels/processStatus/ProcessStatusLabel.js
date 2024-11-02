@@ -10,7 +10,7 @@ const ProcessStatusLabel = ({ processType }) => {
       case "IN_PROGRESS":
         return { backgroundColor: "#C3DBF8", color: "#2C70F4" };
       case "COMPLETED":
-        return { backgroundColor: "#C3F8DD", color: "#06D86F" };
+        return { backgroundColor: "#C3F8DD", color: "#2e8b57" };
       default:
         return { backgroundColor: "#fff", color: "#000" }; // 기본값: 흰색 배경, 검은색 글자
     }
