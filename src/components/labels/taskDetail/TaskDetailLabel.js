@@ -2,24 +2,14 @@ import React from "react";
 import "../../../styles/Label.css";
 
 const TaskDetailLabel = ({ taskDetail }) => {
-  // 스타일을 taskType에 따라 동적으로 설정
-  const getLabelStyle = (taskDetail) => {
-    switch (taskDetail) {
-      case "단순 장애":
-        return { backgroundColor: "#ffefef", color: "#ff4d4f" };
-      case "복합 장애":
-        return { backgroundColor: "#fff0f6", color: "#d46b08" };
-      case "업무 지원":
-        return { backgroundColor: "#C3F8DD", color: "#06D86F" };
-      case "장애 예방":
-        return { backgroundColor: "#FFE4DC", color: "#FE4853" };
-      case "기타":
-        return { backgroundColor: "#f0f0f0", color: "#8c8c8c" };
-    }
+  // 통일된 스타일 설정
+  const labelStyle = {
+    backgroundColor: "#f0f0f0", // 파란색 배경
+    color: "#666666", // 흰색 텍스트
   };
 
   return (
-    <div className="label" style={getLabelStyle(taskDetail)}>
+    <div className="label" style={labelStyle}>
       {taskDetail}
     </div>
   );
