@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./GradeInputTable.css";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
@@ -7,56 +7,46 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
   const [data, setData] = useState(
     initialData.length > 0
       ? initialData
-      : Array(3).fill({
+      : Array(1).fill({
           grade: "",
-          min: "",
-          max: "",
+          min: 0,
+          max: 0,
           minInclusive: true,
           maxInclusive: false,
+          score: 0,
         })
   );
-  const [minInclusive, setMinInclusive] = useState(
-    initialData.length === 0 ? true : initialData[0].minInclusive
-  );
-  const [maxInclusive, setMaxInclusive] = useState(
-    initialData.length === 0 ? false : initialData[0].maxInclusive
-  );
 
-  //span값 변경 및 모든 데이터 값 변경
-  const handleMin = (value) => {
-    const newValue = value === "true";
-    setMinInclusive(newValue);
-    const updateData = data.map((item) => ({
-      ...item,
-      minInclusive: newValue,
-    }));
-    setData(updateData);
-    onDataChange(updateData);
-  };
-
-  const handleMax = (value) => {
-    const newValue = value === "true";
-    setMaxInclusive(newValue);
-    const updateData = data.map((item) => ({
-      ...item,
-      maxInclusive: newValue,
-    }));
-    setData(updateData);
-    onDataChange(updateData);
-  };
+  // initialData가 변경될 때마다 data를 초기화
+  useEffect(() => {
+    setData(
+      initialData.length > 0
+        ? initialData
+        : Array(1).fill({
+            grade: "",
+            min: 0,
+            max: 0,
+            minInclusive: true,
+            maxInclusive: false,
+            score: 0,
+          })
+    );
+  }, [initialData]);
 
   const addDataRow = () => {
     const updatedData = [
       ...data,
       {
         grade: "",
-        min: "",
-        max: "",
-        minInclusive: minInclusive,
-        maxInclusive: maxInclusive,
+        min: 0,
+        max: 0,
+        minInclusive: true, // 기본값 설정
+        maxInclusive: false, // 기본값 설정
+        score: 0,
       },
     ];
     setData(updatedData);
+    onDataChange(updatedData);
   };
 
   const handleData = (index, field, value) => {
@@ -65,6 +55,7 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
       ...updateData[index],
       [field]: value,
     };
+    console.log(updateData);
     setData(updateData);
     onDataChange(updateData);
   };
@@ -96,30 +87,9 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
           <tr>
             <th className="deleteCol"></th>
             <th> 서비스 수준 등급 </th>
-            <th className="tableSelect">
-              최소
-              <select
-                className="standardSelect"
-                name="minStandard"
-                value={minInclusive}
-                onChange={(e) => handleMin(e.target.value)}
-              >
-                <option value="true">이상</option>
-                <option value="false">초과</option>
-              </select>
-            </th>
-            <th className="tableSelect">
-              최대
-              <select
-                className="standardSelect"
-                name="maxStandard"
-                value={maxInclusive}
-                onChange={(e) => handleMax(e.target.value)}
-              >
-                <option value="false">미만</option>
-                <option value="true">이하</option>
-              </select>
-            </th>
+            <th className="tableSelect">최소</th>
+            <th className="tableSelect">최대</th>
+            <th>변환점수</th>
           </tr>
         </thead>
         <tbody>
@@ -147,23 +117,51 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
                   onChange={(e) => handleData(index, "grade", e.target.value)}
                 />
               </td>
-              <td>
+              <td className="standardInput">
                 <input
                   type="number"
-                  className="standardInput"
                   value={item.min}
-                  onChange={(e) => handleData(index, "min", e.target.value)}
+                  onChange={(e) =>
+                    handleData(index, "min", Number(e.target.value))
+                  }
                 />
-                <span>{minInclusive ? "이상" : "초과"}</span>
+                <select
+                  className="standardSelect"
+                  name="minStandard"
+                  value={item.minInclusive}
+                  onChange={(e) =>
+                    handleData(index, "minInclusive", e.target.value === "true")
+                  }
+                >
+                  <option value={true}>이상</option>
+                  <option value={false}>초과</option>
+                </select>
+              </td>
+              <td className="standardInput">
+                <input
+                  type="number"
+                  value={item.max}
+                  onChange={(e) => handleData(index, "max", e.target.value)}
+                />
+                <select
+                  className="standardSelect"
+                  name="maxStandard"
+                  value={item.maxInclusive}
+                  onChange={(e) =>
+                    handleData(index, "maxInclusive", e.target.value === "true")
+                  }
+                >
+                  <option value={false}>미만</option>
+                  <option value={true}>이하</option>
+                </select>
               </td>
               <td>
                 <input
                   type="number"
-                  className="standardInput"
-                  value={item.max}
-                  onChange={(e) => handleData(index, "max", e.target.value)}
+                  className="fullInput"
+                  value={item.score}
+                  onChange={(e) => handleData(index, "score", e.target.value)}
                 />
-                <span>{maxInclusive ? "이하" : "미만"}</span>
               </td>
             </tr>
           ))}

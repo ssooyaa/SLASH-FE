@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ServiceDetailInputTable.css";
 
-const ServiceDetailInputTable = ({ initialData, handleData }) => {
+const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
   const [formData, setFormData] = useState({
     purpose: initialData.purpose || "",
     weight: initialData.weight || 0,
@@ -38,7 +38,9 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
                 type="number"
                 className="fullInput weight"
                 value={formData.weight}
-                onChange={(e) => handleChangeData("weight", e.target.value)}
+                onChange={(e) =>
+                  handleChangeData("weight", Number(e.target.value))
+                }
               />
             </td>
             <td>측정주기</td>
