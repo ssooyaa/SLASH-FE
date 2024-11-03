@@ -1,8 +1,8 @@
 .taskLabel {
   display: inline-block;
   padding: 6px;
-  margin-right: 1.5rem;
-  border-radius: 20px;
+  margin-right: 0.5rem;
+  border-radius: 5px;
   text-align: center;
   line-height: 1.5;
   font-size: 90%;

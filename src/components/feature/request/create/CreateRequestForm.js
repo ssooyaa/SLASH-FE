@@ -1,8 +1,8 @@
 import React from "react";
-import RequestInfoForm from "./RequestInfoForm.js";
-import Dropdown from "./RequestDropdown";
-import RequestContentForm from "./RequestContentForm.js";
-import "../request/CreateRequestForm.css";
+import CreateRequestInfoForm from "./CreateRequestInfoForm.js";
+import Dropdown from "../RequestDropdown";
+import RequestContentForm from "../RequestContentForm.js";
+import "../../request/RequestModal.css";
 
 const CreateRequestForm = ({
   formState,
@@ -38,7 +38,7 @@ const CreateRequestForm = ({
         </div>
 
         <form onSubmit={onSubmit}>
-          <RequestInfoForm
+          <CreateRequestInfoForm
             formState={formState}
             updateFormState={updateFormState}
             taskTypes={taskTypes}
@@ -51,6 +51,7 @@ const CreateRequestForm = ({
           <RequestContentForm
             formState={formState}
             updateFormState={updateFormState}
+            isEditable={true}
           />
           <div className="formFooter">
             <button type="submit">저장</button>

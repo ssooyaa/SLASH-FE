@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RequestManageBottom.css";
-import CreateRequest from "../../../../../feature/request/CreateRequest";
+import CreateRequest from "../../../../../feature/request/create/CreateRequest";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 
