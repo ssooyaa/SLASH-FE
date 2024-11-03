@@ -2,7 +2,7 @@ import React from "react";
 import "../../../../styles/Content.css";
 import {FaBars} from "react-icons/fa6";
 import {IoPersonCircle} from "react-icons/io5";
-import ContractManagerMainTop from "./contractManager/ContractManagerMainTop/ContractManagerMainTop";
+import ContractManagerMainTop from "./contractManagerMain/ContractManagerMainTop/ContractManagerMainTop";
 
 const ContractManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
     return (
