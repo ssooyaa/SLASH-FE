@@ -21,7 +21,6 @@ const ContractListTable = ({ initialData = [] }) => {
             <th>시작일</th>
             <th>종료일</th>
             <th>상세보기</th>
-            <th>수정하기</th>
           </tr>
         </thead>
         <tbody>
@@ -34,13 +33,6 @@ const ContractListTable = ({ initialData = [] }) => {
                 <button onClick={() => handleDetail(item.contractId)}>
                   상세보기
                 </button>
-              </td>
-              <td>
-                {item.terminate ? null : (
-                  <button onClick={() => handleEdit(item.contractId)}>
-                    수정하기
-                  </button>
-                )}
               </td>
             </tr>
           ))}
