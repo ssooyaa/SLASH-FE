@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./RequestManageBottom.css";
+import "../../../../../../styles/RequestManageBottom.css";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 import SearchBar from "../../../../../common/bar/SearchBar";
