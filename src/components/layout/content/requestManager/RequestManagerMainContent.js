@@ -3,6 +3,7 @@ import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagerTop from "./requestManagerTop/RequestManagerTop";
+import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
 
 const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -29,6 +30,7 @@ const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <div className="content">
         <div className="contentBox">
           <RequestManagerTop />
+          <RequestManagerBottom />
         </div>
       </div>
     </div>
