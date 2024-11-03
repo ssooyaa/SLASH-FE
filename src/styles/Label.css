@@ -1,9 +1,9 @@
 .taskLabel {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 6px;
+  margin-right: 1.5rem;
   border-radius: 20px;
-  font-weight: bold;
   text-align: center;
-  font-size: 16px;
   line-height: 1.5;
+  font-size: 90%;
 }
