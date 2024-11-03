@@ -64,6 +64,7 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
             checked={isAgreed}
             onChange={handleCheckboxChange}
           />
+
         </div>
       </div>
       <div className="contractButton">
@@ -81,4 +82,5 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
     </>
   );
 };
+
 export default ContractCheck;

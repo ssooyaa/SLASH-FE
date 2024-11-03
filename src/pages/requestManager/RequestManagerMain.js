@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RequestManagerSidebar from "../../components/layout/sidebar/RequestManagerSidebar.js";
-import RequestManagerMainContent from "../../components/layout/content/requestManager/RequestManagerMainContent.js";
+import RequestManagerMainContent from "../../components/layout/requestManager/RequestManagerMainContent.js.js";
 
 const RequestManagerMain = () => {
   const [isNavOpen, setNavOpen] = useState(true);

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 const ContractForm = () => {
   const navigate = useNavigate();
-
   const steps = [
     {
       number: 1,

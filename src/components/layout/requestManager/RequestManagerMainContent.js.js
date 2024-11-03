@@ -1,8 +1,7 @@
 import React from "react";
-import "../../../../styles/Content.css"; // 공통 Content css 파일 import
+import "../../../styles/Content.css"; // 공통 Content css 파일 import
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import RequestManagerTop from "./requestManagerTop/RequestManagerTop";
 
 const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -27,12 +26,10 @@ const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       </div>
       <hr className="divider" />
       <div className="content">
-        <div className="contentBox">
-          <RequestManagerTop />
-        </div>
+        <div className="contentBox"></div>
       </div>
     </div>
   );
 };
 
-export default RequestManagerMainContent;
+export default RequestManagerMainContent.js;

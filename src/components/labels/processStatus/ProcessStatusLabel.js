@@ -9,7 +9,7 @@ const ProcessStatusLabel = ({ processType }) => {
         return { backgroundColor: "#ffefef", color: "#ff4d4f" }; // 배경: 연한 빨강, 글자: 진한 빨강
       case "처리완료":
         return { backgroundColor: "#fff0f6", color: "#d46b08" }; // 배경: 연한 보라, 글자: 오렌지
-      case "접수중":
+      case "접수완료":
         return { backgroundColor: "#fff7e6", color: "#ffa940" }; // 배경: 연한 주황, 글자: 주황
       default:
         return { backgroundColor: "#fff", color: "#000" }; // 기본값: 흰색 배경, 검은색 글자

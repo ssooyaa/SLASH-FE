@@ -87,3 +87,8 @@
 .table th {
   background-color: #f0f0f0;
 }
+
+.table input {
+  text-align: center;
+}
+
