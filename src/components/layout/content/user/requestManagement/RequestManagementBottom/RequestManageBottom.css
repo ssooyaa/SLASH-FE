@@ -49,10 +49,7 @@
   /* display: flex; */
   justify-content: space-between;
   align-items: center;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   position: relative;
-  /* color: #666666; */
-  /* font-size: 80%; */
 }
 
 .dropdownHeaderText::after {
@@ -160,7 +157,7 @@
   border-bottom: 1px solid #ddd;
   padding: 8px 5px; /* 동일한 padding 설정 */
   text-align: center;
-  font-size: 67%; /* 크기를 좀 더 조정 */
+  font-size: 70%; /* 크기를 좀 더 조정 */
 }
 
 .requestTable th {

@@ -3,11 +3,19 @@
 body {
   font-family: "IBM Plex Sans KR", sans-serif;
   background-color: #f0f4f8;
-}
-
-body {
   border-radius: 10px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+.column {
+  width: auto;
+  margin: 5px 0px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  flex: 1;
 }
 
 .totalGradeBox {
@@ -21,14 +29,8 @@ body {
   margin: 5px 5px 5px 0px;
 }
 
-#dateSelect {
-  border: 0.5px solid rgb(0, 0, 0, 0.15);
-  border-radius: 10px;
-  width: 120px;
-  margin: 0px 5px;
-}
 .grade {
-  font-family: "paybook-ExtraBold-otf";
+  font-family: "IBM Plex Sans KR", sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 70px;
@@ -44,7 +46,7 @@ body {
 
 select {
   color: rgb(0, 0, 0, 0.5);
-  font-family: "paybooc-Bold";
+  font-family: "IBM Plex Sans KR", sans-serif;
   border: 0.5px solid rgb(0, 0, 0, 0.15);
   border-radius: 5px;
   width: 120px;
@@ -86,21 +88,15 @@ select {
   flex-direction: row;
 }
 
-.column {
-  width: auto;
-  margin: 5px 0px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  flex: 1;
-}
-
 .columnContent {
   height: 31%;
   background-color: white;
   border: 0.5px solid rgb(0, 0, 0, 0.15);
   border-radius: 10px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  align-content: center;
+}
+
+.number {
+  font-size: xx-large;
 }
