@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ContractForm.css";
-import ContractHeader from "../contractHeader/ContractHeader";
+import ContractHeader from "../contractHeader/ContractHeader.js";
 import ContractStep1 from "../contractContent/ContractStep1";
 import ContractStep2 from "../contractContent/ContractStep2";
 import ContractCheck from "../contractContent/ContractCheck";

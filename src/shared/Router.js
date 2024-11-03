@@ -38,7 +38,6 @@ const Router = () => {
           path="/contractManager/contract"
           element={<ContractInformation />}
         />
-
       </Routes>
     </BrowserRouter>
   );
