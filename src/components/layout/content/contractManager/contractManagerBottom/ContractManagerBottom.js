@@ -17,14 +17,7 @@ const statusMapping = {
   "처리 완료": "COMPLETED",
 };
 
-// 장비 유형 매핑
-const equipmentTypeMapping = {
-  전체: undefined,
-  DB: "DB",
-  백업: "백업",
-  서버: "서버",
-  응용프로그램: "응용프로그램",
-};
+const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
 const ContractManagerBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,6 +39,34 @@ const ContractManagerBottom = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // 동적 드롭다운 옵션 상태
+  const [taskTypeOptions, setTaskTypeOptions] = useState(["전체"]);
+  const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
+  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
+
+  // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
+  const fetchOptions = async () => {
+    try {
+      const [systemsResponse, taskTypeResponse, taskDetailResponse] =
+        await Promise.all([
+          axios.get("/options/systems"),
+          axios.get("/options/task-type"),
+          axios.get("/options/task-detail"),
+        ]);
+
+      setEquipmentTypeOptions(systemsResponse.data);
+      setTaskTypeOptions(taskTypeResponse.data);
+      setTaskDetailOptions(taskDetailResponse.data);
+    } catch (error) {
+      console.error("Error fetching options:", error);
+    }
+  };
+
+  // 페이지 로드 시 옵션 데이터를 가져옴
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
     axios
@@ -54,7 +75,7 @@ const ContractManagerBottom = () => {
           type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
           equipmentName:
             selectedEquipmentType !== "전체"
-              ? equipmentTypeMapping[selectedEquipmentType]
+              ? selectedEquipmentType
               : undefined,
           taskDetail:
             selectedTaskDetail !== "전체" ? selectedTaskDetail : undefined,
@@ -103,6 +124,7 @@ const ContractManagerBottom = () => {
     setIsOpenStatus(false);
     setPage(1);
   };
+
   const handleSelectTaskType = (option) => {
     setSelectedTaskType(option);
     setIsOpenTaskType(false);
@@ -159,11 +181,6 @@ const ContractManagerBottom = () => {
     }
   };
 
-  const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
-  const taskTypeOptions = ["전체", "서비스 요청", "장애 요청"];
-  const taskDetailOptions = ["전체", "장애 예방", "업무 지원", "기타"];
-  const equipmentTypeOptions = ["전체", "DB", "백업", "서버", "응용프로그램"];
-
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
@@ -171,7 +188,11 @@ const ContractManagerBottom = () => {
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
-        <div className="headerTop"></div>
+        <div className="headerTop">
+          <button className="tabButton" onClick={toggleModal}>
+            요청 등록
+          </button>
+        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
 
@@ -191,11 +212,7 @@ const ContractManagerBottom = () => {
                       {taskTypeOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedTaskType === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedTaskType === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -224,11 +241,7 @@ const ContractManagerBottom = () => {
                       {equipmentTypeOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedEquipmentType === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedEquipmentType === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -256,11 +269,7 @@ const ContractManagerBottom = () => {
                       {taskDetailOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedTaskDetail === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedTaskDetail === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -290,11 +299,7 @@ const ContractManagerBottom = () => {
                       {statusOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedStatus === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedStatus === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -310,7 +315,6 @@ const ContractManagerBottom = () => {
               </th>
             </tr>
           </thead>
-
           <tbody>
             {taskRequests.map((task, index) => (
               <tr key={task.id || index}>

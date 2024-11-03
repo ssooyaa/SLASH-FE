@@ -16,29 +16,48 @@ const statusMapping = {
   "처리 완료": "COMPLETED",
 };
 
-// 장비 유형 매핑
-const equipmentTypeMapping = {
-  전체: undefined,
-  DB: "DB",
-  백업: "백업",
-  서버: "서버",
-  응용프로그램: "응용프로그램",
-};
-
 const RequestManagementBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
   const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
+
   const [isOpenStatus, setIsOpenStatus] = useState(false);
-  const [isOpenTaskType, setIsOpenTaskType] = useState(false);
+  const [isOpenTaskDetail, setIsOpenTaskDetail] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
+
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // 동적 드롭다운 옵션 상태
+  const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
+  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
+
+  // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
+  const fetchOptions = async () => {
+    try {
+      const [systemsResponse, taskTypeResponse, taskDetailResponse] =
+        await Promise.all([
+          axios.get("/options/systems"),
+          axios.get("/options/task-type"),
+          axios.get("/options/task-detail"),
+        ]);
+
+      setEquipmentTypeOptions(systemsResponse.data);
+      setTaskDetailOptions(taskDetailResponse.data);
+    } catch (error) {
+      console.error("Error fetching options:", error);
+    }
+  };
+
+  // 페이지 로드 시 옵션 데이터를 가져옴
+  useEffect(() => {
+    fetchOptions();
+  }, []);
 
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
@@ -47,7 +66,7 @@ const RequestManagementBottom = () => {
         params: {
           equipmentName:
             selectedEquipmentType !== "전체"
-              ? equipmentTypeMapping[selectedEquipmentType]
+              ? selectedEquipmentType
               : undefined,
           taskDetail:
             selectedTaskDetail !== "전체" ? selectedTaskDetail : undefined,
@@ -98,7 +117,7 @@ const RequestManagementBottom = () => {
 
   const handleSelectTaskDetail = (option) => {
     setSelectedTaskDetail(option);
-    setIsOpenTaskType(false);
+    setIsOpenTaskDetail(false);
     setPage(1); // Reset page when filter changes
   };
 
@@ -147,8 +166,6 @@ const RequestManagementBottom = () => {
   };
 
   const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
-  const taskDetailOptions = ["전체", "장애 예방", "업무 지원", "기타"];
-  const equipmentTypeOptions = ["전체", "DB", "백업", "서버", "응용프로그램"];
 
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
@@ -185,11 +202,7 @@ const RequestManagementBottom = () => {
                       {equipmentTypeOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedEquipmentType === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedEquipmentType === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -206,22 +219,18 @@ const RequestManagementBottom = () => {
               <th>
                 <div
                   className="customDropdown"
-                  onClick={() => setIsOpenTaskType(!isOpenTaskType)}
+                  onClick={() => setIsOpenTaskDetail(!isOpenTaskDetail)}
                 >
                   <span className="dropdownHeaderLabel">업무 유형 : </span>
                   <span className="dropdownHeaderText">
                     {selectedTaskDetail}
                   </span>
-                  {isOpenTaskType && (
+                  {isOpenTaskDetail && (
                     <div className="dropdownList">
                       {taskDetailOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedTaskDetail === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedTaskDetail === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
