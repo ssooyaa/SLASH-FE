@@ -7,6 +7,7 @@ import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
 import RequestManagement from "../pages/user/RequestManagement";
 import CreateContract from "../pages/contractManager/CreateContract";
+import CreateService from "../pages/contractManager/CreateService";
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
 const Router = () => {
@@ -26,6 +27,10 @@ const Router = () => {
         <Route
           path="/contractManager/createContract"
           element={<CreateContract />}
+        />
+        <Route
+          path="/contractManager/createService"
+          element={<CreateService />}
         />
       </Routes>
     </BrowserRouter>
