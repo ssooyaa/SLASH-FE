@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import CreateRequestForm from "./CreateRequestForm";
 import {
   fetchSystemAndEquipments,
-  fetchTaskDetails,
+  fetchTaskTypes,
   createRequest,
-} from "../../../service/api/userService";
+} from "../../../../service/api/userService";
 
 const CreateRequest = ({ isModalOpen, toggleModal }) => {
   const [equipmentData, setEquipmentData] = useState([]);
   const [equipmentOptions, setEquipmentOptions] = useState([]);
-  const [taskDetail, setTaskDetail] = useState([]);
+  const [taskTypeData, setTaskTypeData] = useState([]);
+  const [taskDetailOptions, setTaskDetailOptions] = useState([]);
 
   const [formState, setFormState] = useState({
-    taskType: "서비스 요청",
+    taskType: "",
     isServiceRelevance: false,
     selectedSystem: "",
     selectedEquipment: "",
@@ -21,6 +22,15 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
     content: "",
   });
 
+  //taskTypes 로드
+  useEffect(() => {
+    const loadTaskTypes = async () => {
+      const data = await fetchTaskTypes();
+      setTaskTypeData(data);
+    };
+    loadTaskTypes();
+  }, []);
+
   const updateFormState = (field, value) => {
     setFormState((prevState) => ({
       ...prevState,
@@ -28,19 +38,13 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
     }));
   };
 
-  // taskType에 따라 taskDetails 로드
+  //taskType 변경 시 taskDetailOptions 업데이트
   useEffect(() => {
-    const loadTaskDetails = async () => {
-      const data = await fetchTaskDetails(formState.taskType);
-      if (data) {
-        setTaskDetail(data);
-      }
-    };
-
-    if (formState.taskType) {
-      loadTaskDetails();
-    }
-  }, [formState.taskType]);
+    const selectedTypeData = taskTypeData.find(
+      (task) => task.type === formState.taskType
+    );
+    setTaskDetailOptions(selectedTypeData ? selectedTypeData.typeDetails : []);
+  }, [formState.taskType, taskTypeData]);
 
   // 장비 데이터를 로드하는 부분
   useEffect(() => {
@@ -72,7 +76,7 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
     e.preventDefault();
 
     const taskRequestDto = {
-      taskType: formState.taskType,
+      type: formState.taskType,
       equipmentName: formState.selectedEquipment,
       taskDetail: formState.taskDetail,
       serviceRelevance: formState.isServiceRelevance,
@@ -96,9 +100,10 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
         <CreateRequestForm
           formState={formState}
           updateFormState={updateFormState}
+          taskTypes={taskTypeData.map((task) => task.type)}
           systemTypes={equipmentData.map((system) => system.systemName)}
           equipmentOptions={equipmentOptions}
-          taskDetail={taskDetail}
+          taskDetailOptions={taskDetailOptions}
           handleSystemChange={handleSystemChange}
           handleEquipmentChange={handleEquipmentChange}
           toggleModal={toggleModal}
