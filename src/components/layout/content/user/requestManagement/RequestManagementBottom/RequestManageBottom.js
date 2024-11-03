@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../../../../styles/RequestManageBottom.css";
+import CreateRequest from "../../../../../feature/request/create/CreateRequest";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 import SearchBar from "../../../../../common/bar/SearchBar";
@@ -173,6 +174,7 @@ const RequestManagementBottom = () => {
 
   return (
     <div className="requestListContainer">
+      {/* 요청 목록 상단 헤더 */}
       <div className="requestHeaderContainer">
         <div className="headerTop">
           <button className="tabButton" onClick={toggleModal}>

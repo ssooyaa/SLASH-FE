@@ -144,13 +144,23 @@ body {
   transition: none; /* 애니메이션 제거 */
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+}
+
+.navLink:hover,
+.navLink.active,
+.navLink:focus {
   box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
 }
 
+/* focus 상태에서는 스타일 변경 안되게 함 */
+.navLink:focus {
+  outline: none; /* outline 제거 */
+}
+
 /* hover, active, focus 효과 모두 동일하게 적용 */
-aside a:hover,
-aside a:active,
-aside a:focus {
+.navLink:hover,
+.navLink.active,
+.navLink:focus {
   color: #121824;
   background-color: #f0f4f8;
   outline: none;
@@ -159,9 +169,9 @@ aside a:focus {
   border-bottom-left-radius: 200px;
 }
 
-aside a:hover::after,
-aside a:active::after,
-aside a:focus::after {
+.navLink:hover::after,
+.navLink.active::after,
+.navLink:focus::after {
   content: "";
   position: absolute;
   background-color: transparent;
@@ -173,9 +183,9 @@ aside a:focus::after {
   box-shadow: 0 20px 0 0 #f0f4f8;
 }
 
-aside a:hover::before,
-aside a:active::before,
-aside a:focus::before {
+.navLink:hover::before,
+.navLink.active::before,
+.navLink:focus::before {
   content: "";
   position: absolute;
   background-color: transparent;

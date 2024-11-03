@@ -1,0 +1,93 @@
+:root {
+  --main--color: #121824;
+  --main--blue: #2c70f4;
+  --main--red: #fe4853;
+  --main--green: #06d86f;
+  --main--yellow: #ff9a16;
+  --main--gray: #666666;
+}
+
+.grayButton {
+  width: 98px;
+  height: 46px;
+  background-color: #a4a4a4;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.grayButton:hover {
+  background-color: #919191;
+}
+
+.blackButton {
+  width: 98px;
+  height: 46px;
+  background-color: var(--main--color);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.blackButton:hover {
+  background-color: #1d2637;
+}
+
+.componentBox {
+  display: flex;
+  background-color: white;
+  align-content: center;
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  padding: 0px 30px;
+}
+
+.grayComponentBox {
+  color: var(--main--gray);
+  box-shadow: 4px 4px 4px rgba(102, 102, 102, 0.15); /* #666666 */
+  border: 0.5px solid rgba(102, 102, 102, 0.15);
+}
+
+.blueComponentBox {
+  color: var(--main--blue);
+  box-shadow: 4px 4px 4px rgba(44, 112, 244, 0.15); /* #2c70f4 */
+  border: 0.5px solid rgba(44, 112, 244, 0.15);
+}
+
+.yellowComponentBox {
+  color: var(--main--yellow);
+  box-shadow: 4px 4px 4px rgba(255, 154, 22, 0.15); /* #ff9a16 */
+  border: 0.5px solid rgba(255, 154, 22, 0.15);
+}
+
+.greenComponentBox {
+  color: var(--main--green);
+  box-shadow: 4px 4px 4px rgba(6, 216, 111, 0.15); /* #06d86f */
+  border: 0.5px solid rgba(6, 216, 111, 0.15);
+}
+
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: black;
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #f0f0f0;
+}
+
+.table input {
+  text-align: center;
+}
