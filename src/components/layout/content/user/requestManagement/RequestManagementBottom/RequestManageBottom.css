@@ -195,7 +195,9 @@
   cursor: pointer;
   font-size: 75%;
   border-radius: 29%;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   width: 1.2rem;
   height: 1.2rem;
   display: flex;

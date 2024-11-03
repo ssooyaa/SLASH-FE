@@ -7,13 +7,13 @@ import stamp from "../../../../../../assets/images/stamp.png";
 
 const RequestSelectTop = () => {
   return (
-    <div className="row">
+    <div className="rmRow">
       <div className="componentBox" id="statics">
-        <div className="row">
+        <div className="rmRow">
           <img src={statics} alt="통계이미지" />
-          <div className="column">
+          <div className="rmColumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmNumber">15</span> 건
             </h3>
             <span>총 건수</span>
           </div>
@@ -21,11 +21,11 @@ const RequestSelectTop = () => {
       </div>
 
       <div className="componentBox" id="stamp">
-        <div className="row">
+        <div className="rmRow">
           <img src={stamp} alt=""></img>
-          <div className="column">
+          <div className="rmColumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmNumber">15</span> 건
             </h3>
             <span>접수완료</span>
           </div>
@@ -33,25 +33,25 @@ const RequestSelectTop = () => {
       </div>
 
       <div className="componentBox" id="processing">
-        <div className="row">
+        <div className="rmRow">
           <img src={processing} alt=""></img>
-          <div className="column">
+          <div className="rmColumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmNumber">15</span> 건
             </h3>
-            <span>처리 중</span>
+            <span>총 건수</span>
           </div>
         </div>
       </div>
 
       <div className="componentBox" id="check">
-        <div className="row">
+        <div className="rmRow">
           <img src={check} alt=""></img>
-          <div className="column">
+          <div className="rmColumn">
             <h3>
-              <span className="number">15</span> 건
+              <span className="rmNumber">15</span> 건
             </h3>
-            <span>처리 완료</span>
+            <span>총 건수</span>
           </div>
         </div>
       </div>
