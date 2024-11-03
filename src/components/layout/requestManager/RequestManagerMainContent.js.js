@@ -1,9 +1,8 @@
 import React from "react";
-import "../../../../styles/Content.css";
+import "../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import RequestManagerTop from "./requestManagerTop/RequestManagerTop";
-import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
+import RequestManagerBottom from "../requestManager/RequestManagerMainContent.js";
 
 const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -29,7 +28,6 @@ const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <RequestManagerTop />
           <RequestManagerBottom />
         </div>
       </div>
