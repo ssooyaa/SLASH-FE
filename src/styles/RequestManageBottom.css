@@ -7,7 +7,7 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  height: 405px;
+  height: 409px;
   background-color: white;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
   border: 0.5px solid rgb(0, 0, 0, 0.15);
@@ -18,18 +18,18 @@
 .dropdownContainer {
   display: flex;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 3rem;
   justify-content: left;
   align-items: flex-start;
 }
 
 .customDropdown {
-  width: 180px;
+  width: 170px;
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
   border-radius: 5px;
 }
 
@@ -76,12 +76,16 @@
 
   /* 스크롤이 있는 컨텐츠 상단과 하단의 둥근 모서리 처리 */
   -webkit-mask-image: linear-gradient(white 100%, rgba(255, 255, 255, 0.7) 70%);
+
+  /* 스크롤 처리 */
+  max-height: calc(1.5em * 8); /* 항목 높이에 맞게 최대 4개까지 표시 */
+  overflow-y: auto; /* 스크롤 표시 */
 }
 
 .dropdownOption {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 2px; /* 항목 간격 조정을 위한 padding */
   cursor: pointer;
 }
 
@@ -195,9 +199,7 @@
   cursor: pointer;
   font-size: 75%;
   border-radius: 29%;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
   width: 1.2rem;
   height: 1.2rem;
   display: flex;
