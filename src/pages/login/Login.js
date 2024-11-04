@@ -5,6 +5,7 @@ import Header from "./Header";
 import InputGroup from "./InputGroup";
 import ErrorMessage from "./ErrorMessage";
 import "./Login.css";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -35,19 +36,28 @@ const Login = () => {
           },
         }
       );
-      const jwtToken = response.headers.get("Authorization");
-      console.log(jwtToken);
-      const { username, role, sessionId, redirectUrl } = response.data;
+      const { grantType, accessToken } = response.data;
 
-      // 세션 ID와 사용자 정보를 sessionStorage에 저장
-      sessionStorage.setItem("sessionId", sessionId);
-      sessionStorage.setItem("username", username);
-      sessionStorage.setItem("role", role);
+      // 토큰 정보를 localStorage에 저장
+      localStorage.setItem("accessToken", accessToken);
 
-      console.log("로그인 성공:", response.data);
+      const decoded = jwtDecode(accessToken);
 
-      // 로그인 성공 메시지 출력
-      alert("로그인 성공! 잠시 후 페이지로 이동합니다...");
+      let redirectUrl;
+
+      switch (decoded.auth) {
+        case "ROLE_CONTRACT_MANAGER":
+          redirectUrl = "contract-manager";
+          break;
+        case "ROLE_REQUEST_MANAGER":
+          redirectUrl = "request-manager";
+          break;
+        case "ROLE_USER":
+          redirectUrl = "user";
+          break;
+        default:
+          redirectUrl = null;
+      }
 
       if (redirectUrl) {
         window.location.href = redirectUrl;
