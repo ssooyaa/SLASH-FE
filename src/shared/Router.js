@@ -45,7 +45,7 @@ const Router = () => {
           path="/contractManager/service"
           element={<ServiceInformation />}
         />
-          <Route path="/contractManager/request" element={<RequestDetail/>}/>
+        <Route path="/contractManager/request/:requestId" element={<RequestDetail/>}/>
       </Routes>
     </BrowserRouter>
   );
