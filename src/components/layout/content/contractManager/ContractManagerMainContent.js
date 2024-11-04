@@ -2,8 +2,8 @@ import React from "react";
 import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractManagerBottom from "./contractManagerBottom/ContractManagerBottom";
 import ContractManagerMainTop from "./contractManagerMain/ContractManagerMainTop/ContractManagerMainTop";
+import ContractManagerBottom from "./contractManagerBottom/ContractManagerBottom";
 
 const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -29,7 +29,7 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractManagerMainTop/>
+          <ContractManagerMainTop />
           <ContractManagerBottom />
         </div>
       </div>

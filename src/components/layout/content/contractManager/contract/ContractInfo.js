@@ -34,4 +34,5 @@ const ContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
     </div>
   );
 };
+
 export default ContractInfo;
