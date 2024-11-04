@@ -13,6 +13,7 @@ const ContractListForm = () => {
     };
     loadData();
   }, []);
+
   return (
     <>
       <div className="contractListForm">

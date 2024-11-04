@@ -129,6 +129,7 @@ const UpdateContractForm = () => {
         ...updatedItems[index],
         ...value,
       };
+
       return updatedItems;
     });
     console.log(setEvaluationItems);
@@ -139,6 +140,7 @@ const UpdateContractForm = () => {
     setEvaluationItems((prevItems) => {
       const updatedItems = prevItems.filter((_, i) => i !== index);
       console.log("Updated evaluationItems:", updatedItems); // 새로운 배열 로그
+
       return updatedItems;
     });
   };
@@ -159,6 +161,7 @@ const UpdateContractForm = () => {
     console.log(updateEvaluationItems);
     if (!isAgreed) {
       alert("계약 사항에 동의해 주세요");
+
       return;
     }
     try {
