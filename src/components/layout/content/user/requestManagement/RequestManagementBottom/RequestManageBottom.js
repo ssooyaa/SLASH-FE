@@ -334,7 +334,7 @@ const RequestManagementBottom = () => {
                     ? formatDate(task.updateTime)
                     : ""}
                 </td>
-                <td onClick={() => openModal(task.requesterid)}>
+                <td>
                   <ProcessStatusLabel processType={task.status} />
                 </td>
               </tr>
