@@ -3,6 +3,7 @@ import "./taskDetailTable.css";
 
 const TaskDetailTable = ({ initialData }) => {
   const [data, setData] = useState(initialData || []);
+
   return (
     <>
       <table>
