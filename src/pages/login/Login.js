@@ -6,8 +6,10 @@ import InputGroup from "./InputGroup";
 import ErrorMessage from "./ErrorMessage";
 import "./Login.css";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -43,26 +45,18 @@ const Login = () => {
 
       const decoded = jwtDecode(accessToken);
 
-      let redirectUrl;
-
       switch (decoded.auth) {
         case "ROLE_CONTRACT_MANAGER":
-          redirectUrl = "contract-manager";
+          navigate("/contract-manager");
           break;
         case "ROLE_REQUEST_MANAGER":
-          redirectUrl = "request-manager";
+          navigate("/request-manager");
           break;
         case "ROLE_USER":
-          redirectUrl = "user";
+          navigate("/user");
           break;
         default:
-          redirectUrl = null;
-      }
-
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        console.warn("Redirect URL이 제공되지 않았습니다.");
+          navigate("/error");
       }
     } catch (error) {
       console.error("로그인 실패:", error.response?.data);
