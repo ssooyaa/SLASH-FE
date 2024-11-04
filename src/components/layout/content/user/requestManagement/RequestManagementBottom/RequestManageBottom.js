@@ -6,6 +6,7 @@ import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
 import SearchBar from "../../../../../common/bar/SearchBar";
 import EquipmentTypeLabel from "../../../../../labels/equipmentType/EquipmentTypeLabel";
+import ShowRequestDetailModal from "../../../../../feature/request/select/RequestDetailModal";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -19,6 +20,7 @@ const statusMapping = {
 
 const RequestManagementBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
   const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
@@ -172,6 +174,18 @@ const RequestManagementBottom = () => {
     setIsModalOpen((prev) => !prev);
   };
 
+  //모달 열고 requestId 설정
+  const openModal = (requestId) => {
+    setSelectedRequestId(requestId);
+    setIsModalOpen(true);
+  };
+
+  //모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequestId(null);
+  };
+
   return (
     <div className="requestListContainer">
       {/* 요청 목록 상단 헤더 */}
@@ -284,31 +298,56 @@ const RequestManagementBottom = () => {
           </thead>
           <tbody>
             {taskRequests.map((task, index) => (
-              <tr key={task.id || index}>
-                <td>{task.requesterName}</td>
-                <td>{task.managerName}</td>
-                <td className="equipmentCell">
+              <tr key={task.requester || index}>
+                <td onClick={() => openModal(task.requester)}>
+                  {task.requesterName}
+                </td>
+                <td onClick={() => openModal(task.requester)}>
+                  {task.managerName}
+                </td>
+                <td
+                  className="equipmentCell"
+                  onClick={() => openModal(task.requester)}
+                >
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
-
-                <td>
+                <td onClick={() => openModal(task.requester)}>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
-                <td className="truncate">{task.title}</td>
-                <td className="truncate">{task.content}</td>
-                <td>{formatDate(task.createTime)}</td>
-                <td>
+                <td
+                  className="truncate"
+                  onClick={() => openModal(task.requester)}
+                >
+                  {task.title}
+                </td>
+                <td
+                  className="truncate"
+                  onClick={() => openModal(task.requester)}
+                >
+                  {task.content}
+                </td>
+                <td onClick={() => openModal(task.requester)}>
+                  {formatDate(task.createTime)}
+                </td>
+                <td onClick={() => openModal(task.requester)}>
                   {task.status === "COMPLETED"
                     ? formatDate(task.updateTime)
                     : ""}
                 </td>
-                <td>
+                <td onClick={() => openModal(task.requesterid)}>
                   <ProcessStatusLabel processType={task.status} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {/* 모달이 열려 있을 때만 ShowRequestDetailModal 컴포넌트 표시 */}
+        {isModalOpen && (
+          <ShowRequestDetailModal
+            toggleModal={closeModal}
+            requestId={selectedRequestId}
+          />
+        )}
       </div>
 
       <div className="pagination">
