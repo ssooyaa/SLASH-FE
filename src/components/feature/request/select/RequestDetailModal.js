@@ -9,7 +9,7 @@ const ShowRequestDetailModal = ({ toggleModal, requestId }) => {
         <button className="closeButton" onClick={toggleModal}>
           &times;
         </button>
-        <RequestDetail requestId={requestId} />
+        <RequestDetail requestId={requestId} onClose={toggleModal} />
         <div className="formFooter">
           <button type="button" onClick={toggleModal}>
             닫기

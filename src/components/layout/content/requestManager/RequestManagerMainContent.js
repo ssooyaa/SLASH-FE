@@ -1,9 +1,10 @@
 import React from "react";
-import "../../../../styles/Content.css";
+import "../../../../styles/Content.css"; // 공통 Content css 파일 import
 import {FaBars} from "react-icons/fa6";
 import {IoPersonCircle} from "react-icons/io5";
+import RequestManagerTop from "./requestManagerTop/RequestManagerTop";
 
-const ContractManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
+const RequestManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
     return (
         <div
             className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -27,12 +28,11 @@ const ContractManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
             <hr className="divider"/>
             <div className="content">
                 <div className="contentBox">
-                    <ContractManagerMainTop/>
-                    <ContractManagerBottom/>
+                    <RequestManagerTop/>
                 </div>
             </div>
         </div>
     );
 };
 
-export default ContractManagerMainContent;
+export default RequestManagerMainContent;
