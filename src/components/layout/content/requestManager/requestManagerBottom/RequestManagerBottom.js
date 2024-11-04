@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../../../../../styles/RequestManageBottom.css";
-import CreateRequest from "../../../../../feature/request/create/CreateRequest";
-import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
-import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
-import SearchBar from "../../../../../common/bar/SearchBar";
-import EquipmentTypeLabel from "../../../../../labels/equipmentType/EquipmentTypeLabel";
+import "../../../../../styles/RequestManageBottom.css";
+import SearchBar from "../../../../common/bar/SearchBar";
+import EquipmentTypeLabel from "../../../../labels/equipmentType/EquipmentTypeLabel";
+import TaskDetailLabel from "../../../../labels/taskDetail/TaskDetailLabel";
+import TaskTypeLabel from "../../../../labels/taskType/TaskTypeLabel";
+import ProcessStatusLabel from "../../../../labels/processStatus/ProcessStatusLabel";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -17,13 +17,18 @@ const statusMapping = {
   "처리 완료": "COMPLETED",
 };
 
-const RequestManagementBottom = () => {
+const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
+
+const RequestManagerBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("전체");
+  const [selectedTaskType, setSelectedTaskType] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
   const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
 
+  // 드롭다운 열기/닫기 상태 분리
   const [isOpenStatus, setIsOpenStatus] = useState(false);
+  const [isOpenTaskType, setIsOpenTaskType] = useState(false);
   const [isOpenTaskDetail, setIsOpenTaskDetail] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
 
@@ -35,6 +40,7 @@ const RequestManagementBottom = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // 동적 드롭다운 옵션 상태
+  const [taskTypeOptions, setTaskTypeOptions] = useState(["전체"]);
   const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
   const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
 
@@ -49,6 +55,7 @@ const RequestManagementBottom = () => {
         ]);
 
       setEquipmentTypeOptions(systemsResponse.data);
+      setTaskTypeOptions(taskTypeResponse.data);
       setTaskDetailOptions(taskDetailResponse.data);
     } catch (error) {
       console.error("Error fetching options:", error);
@@ -65,6 +72,7 @@ const RequestManagementBottom = () => {
     axios
       .get("/requests", {
         params: {
+          type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
           equipmentName:
             selectedEquipmentType !== "전체"
               ? selectedEquipmentType
@@ -75,7 +83,7 @@ const RequestManagementBottom = () => {
             selectedStatus !== "전체"
               ? statusMapping[selectedStatus]
               : undefined,
-          keyword: searchTerm, // 검색어 추가
+          keyword: searchTerm,
           page,
           size,
         },
@@ -102,6 +110,7 @@ const RequestManagementBottom = () => {
   useEffect(() => {
     fetchFilteredRequests();
   }, [
+    selectedTaskType,
     selectedEquipmentType,
     selectedTaskDetail,
     selectedStatus,
@@ -113,19 +122,25 @@ const RequestManagementBottom = () => {
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
     setIsOpenStatus(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
+  };
+
+  const handleSelectTaskType = (option) => {
+    setSelectedTaskType(option);
+    setIsOpenTaskType(false);
+    setPage(1);
   };
 
   const handleSelectTaskDetail = (option) => {
     setSelectedTaskDetail(option);
     setIsOpenTaskDetail(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
   };
 
   const handleSelectEquipmentType = (option) => {
     setSelectedEquipmentType(option);
     setIsOpenEquipmentType(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
   };
 
   const handlePageChange = (newPage) => {
@@ -136,13 +151,13 @@ const RequestManagementBottom = () => {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    setPage(1); // Reset page when search changes
+    setPage(1);
   };
 
   const [pageGroup, setPageGroup] = useState(0);
 
   const renderPageNumbers = () => {
-    const maxDisplayPages = 6; // 한번에 표시할 페이지 수
+    const maxDisplayPages = 6;
     const startPage = pageGroup * maxDisplayPages + 1;
     const endPage = Math.min(startPage + maxDisplayPages - 1, totalPages);
     const pageNumbers = [];
@@ -166,15 +181,12 @@ const RequestManagementBottom = () => {
     }
   };
 
-  const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
-
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
 
   return (
     <div className="requestListContainer">
-      {/* 요청 목록 상단 헤더 */}
       <div className="requestHeaderContainer">
         <div className="headerTop">
           <button className="tabButton" onClick={toggleModal}>
@@ -188,8 +200,32 @@ const RequestManagementBottom = () => {
         <table className="requestTable">
           <thead>
             <tr>
-              <th>요청자</th>
-              <th>담당자</th>
+              <th>
+                <div
+                  className="customDropdown"
+                  onClick={() => setIsOpenTaskType(!isOpenTaskType)}
+                >
+                  <span className="dropdownHeaderLabel">요청 분류 : </span>
+                  <span className="dropdownHeaderText">{selectedTaskType}</span>
+                  {isOpenTaskType && (
+                    <div className="dropdownList">
+                      {taskTypeOptions.map((option) => (
+                        <label
+                          key={option}
+                          className={`dropdownOption ${selectedTaskType === option ? "boldText" : "normalText"}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedTaskType === option}
+                            onChange={() => handleSelectTaskType(option)}
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </th>
               <th>
                 <div
                   className="customDropdown"
@@ -262,11 +298,7 @@ const RequestManagementBottom = () => {
                       {statusOptions.map((option) => (
                         <label
                           key={option}
-                          className={`dropdownOption ${
-                            selectedStatus === option
-                              ? "boldText"
-                              : "normalText"
-                          }`}
+                          className={`dropdownOption ${selectedStatus === option ? "boldText" : "normalText"}`}
                         >
                           <input
                             type="checkbox"
@@ -282,11 +314,13 @@ const RequestManagementBottom = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
             {taskRequests.map((task, index) => (
               <tr key={task.id || index}>
-                <td>{task.requesterName}</td>
-                <td>{task.managerName}</td>
+                <td>
+                  <TaskTypeLabel taskType={task.type} />
+                </td>
                 <td className="equipmentCell">
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
@@ -348,4 +382,4 @@ const formatDate = (dateArray) => {
   return `${year}.${month}.${day} ${hour}시${minute}분`;
 };
 
-export default RequestManagementBottom;
+export default RequestManagerBottom;
