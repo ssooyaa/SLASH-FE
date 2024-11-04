@@ -1,10 +1,10 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  width: 15%;
+  width: 100%;
 }
 
-.dropdown-content {
+.dropdownContent {
   margin-top: 5px;
   position: absolute;
   background-color: white;
@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-.dropdown-btn {
+.dropdownBtn {
   background-color: #fff;
   color: #333;
   padding: 0 10px;
@@ -25,6 +25,7 @@
   border-radius: 10px;
   cursor: pointer;
   width: 100%;
+  min-width: 100px;
   text-align: left;
   height: 34px;
   line-height: 34px;
@@ -35,16 +36,16 @@
   background-size: 10px;
 }
 
-.dropdown-item {
+.dropdownItem {
   padding: 10px;
   cursor: pointer;
 }
 
-.dropdown-item:hover {
+.dropdownItem:hover {
   background-color: #f6fcff;
 }
 
-.dropdown-btn:focus {
+.dropdownBtn:focus {
   border: 2px solid;
   border-color: black;
   outline: none;
