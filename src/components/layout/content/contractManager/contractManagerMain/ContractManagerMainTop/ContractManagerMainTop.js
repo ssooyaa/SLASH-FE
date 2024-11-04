@@ -1,7 +1,7 @@
 import React from "react";
 import "./ContractManagerMainTop.css";
-import indicator from "../../../../../assets/images/indicator.png";
-import contract from "../../../../../assets/images/contract.png";
+import indicator from "../../../../../../assets/images/indicator.png";
+import contract from "../../../../../../assets/images/contract.png";
 import {useNavigate} from "react-router-dom";
 
 const ContractManagerMainTop = () => {
