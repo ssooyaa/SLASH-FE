@@ -1,0 +1,231 @@
+#toggle {
+  display: flex;
+  align-items: center;
+}
+
+.requestListContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 409px;
+  background-color: white;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 10px;
+  gap: 20px;
+}
+.dropdownContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.customDropdown {
+  width: 170px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.customDropdown:hover .dropdownHeaderText {
+  color: #007bff;
+}
+
+.dropdownHeaderText::after {
+  content: "▼";
+  font-size: 12px;
+  margin-left: 8px;
+  color: #666;
+}
+
+.dropdownHeader {
+  cursor: pointer;
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.dropdownHeaderText::after {
+  content: "▼";
+  font-size: 10px;
+  margin-left: 4px;
+  color: #666;
+}
+
+.arrow {
+  margin-left: 10px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  padding: 8px 0;
+
+  /* 스크롤이 있는 컨텐츠 상단과 하단의 둥근 모서리 처리 */
+  -webkit-mask-image: linear-gradient(white 100%, rgba(255, 255, 255, 0.7) 70%);
+
+  /* 스크롤 처리 */
+  max-height: calc(1.5em * 8); /* 항목 높이에 맞게 최대 4개까지 표시 */
+  overflow-y: auto; /* 스크롤 표시 */
+}
+
+.dropdownOption {
+  display: flex;
+  align-items: center;
+  padding: 10px 2px; /* 항목 간격 조정을 위한 padding */
+  cursor: pointer;
+}
+
+.dropdownOption:hover {
+  background-color: #f1f1f1;
+  color: #007bff;
+}
+
+.dropdownOption input {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.boldText {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.normalText {
+  font-weight: normal;
+}
+
+.requestHeaderContainer {
+  display: flex;
+  flex-direction: row-reverse; /* 수직으로 정렬 */
+  gap: 0.8rem; /* 요청 등록 버튼과 검색 바 사이 간격 */
+}
+
+.headerTop {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.requestHeader {
+  display: flex;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.tabButton {
+  background-color: #121824;
+  color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 1px 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 50%;
+}
+
+.tabButton:hover {
+  size: 1.2rem;
+}
+
+.dropdownContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.tableContainer {
+  width: 100%;
+}
+
+.requestTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 모든 열의 너비를 균일하게 설정 */
+}
+
+.requestTable th,
+.requestTable td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 5px; /* 동일한 padding 설정 */
+  text-align: center;
+  font-size: 70%; /* 크기를 좀 더 조정 */
+}
+
+.requestTable th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+}
+
+.requestTable td {
+  color: #666666;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* 페이지네이션 css 추가 */
+.pagination {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.page-button,
+.arrow-button {
+  background-color: transparent;
+  color: #444343;
+  border: none;
+  cursor: pointer;
+  font-size: 75%;
+  border-radius: 29%;
+  transition: background-color 0.3s, color 0.3s;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-button.activePage {
+  background-color: #121824; /* 현재 페이지 배경색 */
+  color: #fff; /* 현재 페이지 텍스트 색 */
+  font-weight: bold;
+}
+
+.page-button:hover:not(.activePage),
+.arrow-button:hover {
+  background-color: #dadce0; /* 호버 시 배경색 */
+  color: #121824; /* 호버 시 텍스트 색 */
+}
+
+.arrow-button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.dots {
+  padding: 6px;
+  color: #888;
+  font-size: 1rem;
+}
