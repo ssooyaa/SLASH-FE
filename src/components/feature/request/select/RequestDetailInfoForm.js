@@ -14,6 +14,10 @@ const RequestDetailInfoForm = ({
   manager,
   requestTime,
   endTime,
+  canDelete,
+  canEdit,
+  onDelete,
+  onEdit,
 }) => {
   const renderLabel = (label) => (
     <label>
@@ -28,6 +32,16 @@ const RequestDetailInfoForm = ({
         <RequestLabel requestType={taskType} />
         <ProcessStatusLabel processType={status} />
         <DueOnTimeLabel dueOnTime={dueOnTime} />
+        {canEdit && (
+          <button className="deleteButton" onClick={onEdit}>
+            수정
+          </button>
+        )}
+        {canDelete && (
+          <button className="deleteButton" onClick={onDelete}>
+            삭제
+          </button>
+        )}
       </div>
 
       <div className="requestDetailInfoBox">
