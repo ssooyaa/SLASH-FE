@@ -1,40 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ServiceForm from "./serviceForm/ServiceForm";
+import UpdateContractForm from "./contractForm/UpdateContractForm";
 
-const Service = ({ isNavOpen, toggleNav, effectClass }) => {
-  //getAPI생성 후 제거 예정
-  const mockData = {
-    categoryId: 1,
-    category: "장애 적기 가동률",
-    purpose: "서비스가 돌아가는 시간",
-    weight: 50,
-    period: null,
-    formula: null,
-    unit: null,
-    serviceTargets: [
-      {
-        grade: "A",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-      {
-        grade: "B",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-    ],
-    taskTypes: [],
-  };
-
+const UpdateContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -48,6 +18,7 @@ const Service = ({ isNavOpen, toggleNav, effectClass }) => {
         <FaBars />
       </button>
 
+      {/* 프로필 및 환영 메시지 추가 */}
       <div className="profileSection">
         <div className="profileInfo">
           <IoPersonCircle className="profileImg" />
@@ -57,13 +28,11 @@ const Service = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-
-          <ServiceForm />
-
+          <UpdateContractForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default Service;
+export default UpdateContractInfo;
