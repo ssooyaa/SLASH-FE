@@ -14,6 +14,27 @@ import {
 import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 
 const ContractForm = () => {
+  const navigate = useNavigate();
+  const steps = [
+    {
+      number: 1,
+      label: "기본 정보 입력",
+      detail: "회사 정보 및 계약기간을 설정합니다.",
+    },
+    {
+      number: 2,
+      label: "SLA 지표 설정",
+      detail: "SLA 평가를 위한 기준을 작성합니다.",
+    },
+    {
+      number: 3,
+      label: "계약 확인 및 완료",
+      detail: "계약의 내용을 확인해 주세요",
+    },
+  ];
+
+  const [currentStep, setCurrentStep] = useState(1);
+
   const [formData, setFormData] = useState({
     companyName: "",
     startDate: null,

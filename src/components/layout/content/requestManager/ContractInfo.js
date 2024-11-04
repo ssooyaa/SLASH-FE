@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractForm from "./contractForm/ContractForm";
+import ContractInfoForm from "./contractForm/ContractInfoForm";
 
-const Contract = ({ isNavOpen, toggleNav, effectClass }) => {
+const ContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -28,12 +28,10 @@ const Contract = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractForm />
+          <ContractInfoForm />
         </div>
       </div>
     </div>
   );
 };
-
-export default Contract;
-
+export default ContractInfo;
