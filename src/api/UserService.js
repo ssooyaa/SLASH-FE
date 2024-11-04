@@ -57,3 +57,33 @@ export const getManagerTaskStatus = async () => {
   }
 };
 
+
+export const fetchContractInfo = async () => {
+  try {
+    const response = await axios.get("/contract");
+
+    if (response.data.success) {
+      console.log(response.data.data);
+      return response.data.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+  }
+};
+
+export const fetchServiceInfo = async (categoryId) => {
+  try {
+    const response = await axios.get(`/detail/${categoryId}`);
+
+    if (response.data.success) {
+      console.log(response.data.data);
+      return response.data.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+  }
+};

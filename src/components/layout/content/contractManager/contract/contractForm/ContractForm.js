@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./ContractForm.css";
-import ContractHeader from "../contractHeader/ContractHeader";
+import ContractHeader from "../contractHeader/ContractHeader.js";
 import ContractStep1 from "../contractContent/ContractStep1";
 import ContractStep2 from "../contractContent/ContractStep2";
 import ContractCheck from "../contractContent/ContractCheck";
 import { CreateContract } from "../../../../../../api/UserService";
+import { useNavigate } from "react-router-dom";
 
 const ContractForm = () => {
+  const navigate = useNavigate();
   const steps = [
     {
       number: 1,
@@ -55,7 +57,7 @@ const ContractForm = () => {
       const response = await CreateContract(formData);
       if (response) {
         alert("계약 생성 성공");
-        //확인 후 이동 로직 설정
+        navigate("/contractManager/contract");
       }
     } catch (error) {
       alert("계약 생성 실패");

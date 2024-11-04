@@ -54,7 +54,7 @@ const ContractStep1 = ({ formData, handleChange, handleNext, handleClose }) => {
   return (
     <>
       <div className="contractContent">
-        <div className="data">
+        <div className="CompanyDataDiv">
           <p>회사이름</p>
           <input
             className="companyData"

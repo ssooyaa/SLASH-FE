@@ -54,3 +54,21 @@ export const showRequestDetail = async (requestId) => {
     throw error;
   }
 };
+
+export const deleteRequest = async (requestId) => {
+  try {
+    const response = await axios.delete(`/request/${requestId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+  }
+};
+
+export const editRequest = async (requestId, taskRequestDto) => {
+  try {
+    const response = await axios.patch(`/request/${requestId}`, taskRequestDto);
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+  }
+};

@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import "./ServiceForm.css";
 import ServiceDetailInputTable from "../../../../../feature/table/ServiceDetailInputTable";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import InputTable from "../../../../../feature/table/InputTable";
-import TaskDetailTable from "../../../../../feature/table/TaskDetailTable";
-import { CreateServiceDetail } from "../../../../../../api/UserService";
+import TaskDetailInputTable from "../../../../../feature/table/TaskDetailInputTable";
+import {
+  fetchServiceInfo,
+  CreateServiceDetail,
+} from "../../../../../../api/UserService";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const ServiceForm = ({ initialData }) => {
-  const [formData, setFormData] = useState(initialData);
+const ServiceForm = () => {
+  const location = useLocation();
+  const { categoryId, categoryName } = location.state || {};
 
-  const [serviceTargets, setServiceTargets] = useState(
-    initialData.serviceTargets || []
-  );
-  const [taskTypes, setTaskTypes] = useState(initialData.taskTypes || []);
+  const [formData, setFormData] = useState({});
+  const [serviceTargets, setServiceTargets] = useState([]);
+  const [taskTypes, setTaskTypes] = useState([]);
   const [taskTable, setTaskTable] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const navigate = useNavigate();
 
-  const category = initialData.category;
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await fetchServiceInfo(categoryId);
+      console.log("response", response);
+      console.log("serviceTargets", response.serviceTargets);
+      setFormData(response);
+      setTaskTypes(response.taskTypes);
+      setServiceTargets(response.serviceTargets || []);
+      setTaskTypes(response.taskTypes || []);
+    };
+    loadData();
+  }, [categoryId]);
+
+  if (Object.keys(formData).length === 0) {
+    return <p>Loading...</p>;
+  }
+
+  const handleRedirect = () => {
+    navigate("/contractManager/contract");
+  };
 
   const handleChange = (field, value) => {
     setFormData((prevData) => ({
@@ -55,7 +80,7 @@ const ServiceForm = ({ initialData }) => {
       .map((item) => {
         if (typeof item === "object") {
           return {
-            type: initialData.category.split(" ")[0] + " 요청",
+            type: categoryName.split(" ")[0] + " 요청",
             taskDetail: item.taskDetail,
             deadline: item.deadline ? item.deadline : 0,
             serviceRelevance:
@@ -67,7 +92,7 @@ const ServiceForm = ({ initialData }) => {
           };
         } else if (typeof item === "string") {
           return {
-            type: initialData.category.split(" ")[0] + " 요청",
+            type: categoryName.split(" ")[0] + " 요청",
             taskDetail: item,
           };
         } else {
@@ -88,6 +113,7 @@ const ServiceForm = ({ initialData }) => {
       const response = await CreateServiceDetail(updatedFormData);
       if (response) {
         alert("저장완료");
+        handleRedirect();
       }
     } catch (error) {
       alert("저장실패");
@@ -98,7 +124,7 @@ const ServiceForm = ({ initialData }) => {
     <div className="form">
       <div className="serviceForm">
         <div className="categoryTitle">
-          <p>{category}</p>
+          <p>{categoryName}</p>
         </div>
         <div className="serviceDetail">
           <div className="tableTitle">
@@ -107,7 +133,7 @@ const ServiceForm = ({ initialData }) => {
           </div>
           <div className="table slaTable detailTable">
             <ServiceDetailInputTable
-              initialData={initialData}
+              initialData={formData}
               handleData={handleChange}
             />
           </div>
@@ -125,8 +151,10 @@ const ServiceForm = ({ initialData }) => {
               />
             </div>
           </div>
-          {((category.includes("서비스") && category.includes("적기")) ||
-            (category.includes("장애") && category.includes("적기"))) && (
+          {((categoryName.includes("서비스") &&
+            categoryName.includes("적기")) ||
+            (categoryName.includes("장애") &&
+              categoryName.includes("적기"))) && (
             <div className="taskTableDetail">
               <div className="tableTitle inputTableTitle taskTitle">
                 <p>업무 유형</p>
@@ -170,7 +198,7 @@ const ServiceForm = ({ initialData }) => {
                         )}
                         {selectedOption === "유형및시간" && (
                           <div className="table yourTableClass">
-                            <TaskDetailTable
+                            <TaskDetailInputTable
                               initialData={taskTypes}
                               onDataChange={handleTaskDetail}
                             />
@@ -185,7 +213,9 @@ const ServiceForm = ({ initialData }) => {
           )}
         </div>
         <div className="serviceFormButton">
-          <button className="grayButton">닫기</button>
+          <button className="grayButton" onClick={() => handleRedirect()}>
+            닫기
+          </button>
           <button className="blackButton" onClick={(e) => submit(e)}>
             저장
           </button>

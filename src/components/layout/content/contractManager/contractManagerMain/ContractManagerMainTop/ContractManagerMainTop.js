@@ -1,7 +1,7 @@
 import React from "react";
 import "./ContractManagerMainTop.css";
-import indicator from "../../../../../assets/images/indicator.png";
-import contract from "../../../../../assets/images/contract.png";
+import indicator from "../../../../../../assets/images/indicator.png";
+import contract from "../../../../../../assets/images/contract.png";
 import {useNavigate} from "react-router-dom";
 
 const ContractManagerMainTop = () => {
@@ -59,7 +59,7 @@ const ContractManagerMainTop = () => {
                                 onClick={handleContractClick}
                                 style={{cursor: "pointer"}}
                             >
-                                <img src={contract}/>
+                                <img src={contract} alt={"contract"}/>
                                 계약 생성
                             </div>
                         </div>
@@ -69,7 +69,7 @@ const ContractManagerMainTop = () => {
                                 onClick={handleIndicatorClick}
                                 style={{cursor: "pointer"}}
                             >
-                                <img src={indicator}/>
+                                <img src={indicator} alt={"indicator"}/>
                                 지표관리
                             </div>
                         </div>
