@@ -23,8 +23,8 @@ const Router = () => {
         <Route path="/" element={<Login />} />
         <Route path="/user" element={<UserMain />} />
         <Route path="/user/requestManagement" element={<RequestManagement />} />
-        <Route path="/contractManager" element={<ContractManagerMain />} />
         <Route path="/requestManager" element={<RequestManagerMain />} />
+        <Route path="/contractManager" element={<ContractManagerMain />} />
         <Route
           path="/contractManager/updateContract/:contractId"
           element={<UpdateContract />}
