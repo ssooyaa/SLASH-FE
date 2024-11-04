@@ -35,10 +35,20 @@ const Login = () => {
           },
         }
       );
+      const jwtToken = response.headers.get("Authorization");
+      console.log(jwtToken);
+      const { username, role, sessionId, redirectUrl } = response.data;
+
+      // 세션 ID와 사용자 정보를 sessionStorage에 저장
+      sessionStorage.setItem("sessionId", sessionId);
+      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("role", role);
+
       console.log("로그인 성공:", response.data);
 
-      // 로그인 성공 후 주어진 redirectUrl로 이동
-      const { redirectUrl } = response.data;
+      // 로그인 성공 메시지 출력
+      alert("로그인 성공! 잠시 후 페이지로 이동합니다...");
+
       if (redirectUrl) {
         window.location.href = redirectUrl;
       } else {
@@ -61,11 +71,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="loginPage">
+      <div className="loginContainer">
         <Header />
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="loginForm" onSubmit={handleSubmit}>
           <InputGroup
             type="text"
             value={id}
@@ -74,7 +84,7 @@ const Login = () => {
               setId(e.target.value);
               setErrors((prev) => ({ ...prev, id: "" }));
             }}
-            icon={<FaUser className="input-icon" />}
+            icon={<FaUser className="inputIcon" />}
             error={errors.id}
           />
           <ErrorMessage message={errors.id} />
@@ -87,14 +97,14 @@ const Login = () => {
               setPassword(e.target.value);
               setErrors((prev) => ({ ...prev, password: "" }));
             }}
-            icon={<FaLock className="input-icon" />}
+            icon={<FaLock className="inputIcon" />}
             isPassword
             toggleVisibility={togglePasswordVisibility}
             error={errors.password}
           />
           <ErrorMessage message={errors.password} />
 
-          <button type="submit" className="login-button">
+          <button type="submit" className="loginButton">
             로그인
           </button>
         </form>
