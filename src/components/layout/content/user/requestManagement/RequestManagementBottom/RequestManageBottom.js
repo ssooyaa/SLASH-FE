@@ -43,9 +43,9 @@ const RequestManagementBottom = () => {
     try {
       const [systemsResponse, taskTypeResponse, taskDetailResponse] =
         await Promise.all([
-          axios.get("/options/systems"),
-          axios.get("/options/task-type"),
-          axios.get("/options/task-detail"),
+          axios.get("/common/systems"),
+          axios.get("/common/task-type"),
+          axios.get("/common/task-detail"),
         ]);
 
       setEquipmentTypeOptions(systemsResponse.data);
@@ -63,7 +63,7 @@ const RequestManagementBottom = () => {
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
     axios
-      .get("/requests", {
+      .get("/common/requests", {
         params: {
           equipmentName:
             selectedEquipmentType !== "전체"
