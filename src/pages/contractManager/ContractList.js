@@ -27,4 +27,5 @@ const ContractList = () => {
     </div>
   );
 };
+
 export default ContractList;

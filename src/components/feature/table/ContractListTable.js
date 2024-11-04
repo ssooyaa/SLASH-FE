@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 const ContractListTable = ({ initialData = [] }) => {
   const data = initialData;
+
   const navigator = useNavigate();
 
   const handleDetail = (contractId) => {
     navigator(`/contractManager/contract/${contractId}`);
   };
 
-  const handleEdit = (contractId) => {
-    navigator(`/contractManager/updateContract/${contractId}`);
-  };
   return (
     <>
       <table>

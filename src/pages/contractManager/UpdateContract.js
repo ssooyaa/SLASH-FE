@@ -27,4 +27,5 @@ const UpdateContract = () => {
     </div>
   );
 };
+
 export default UpdateContract;

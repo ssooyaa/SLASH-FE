@@ -28,4 +28,5 @@ const ContractListForm = () => {
     </>
   );
 };
+
 export default ContractListForm;

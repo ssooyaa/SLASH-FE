@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { CgMenuGridO } from "react-icons/cg";
-import { FaPlus } from "react-icons/fa6";
 import "./taskDetailTable.css";
 
 const TaskDetailTable = ({ initialData }) => {
