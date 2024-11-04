@@ -4,7 +4,10 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 export const CreateContract = async (requestContractDTO) => {
   try {
-    const response = await axios.post("/contract", requestContractDTO);
+    const response = await axios.post(
+      "/contract-manager/contract",
+      requestContractDTO
+    );
     if (response.data.success) {
       alert("계약생성 성공");
       return response.data.data;
@@ -34,10 +37,13 @@ export const CreateServiceDetail = async (requestContractDTO) => {
 
 export const fetchContractInfo = async (contractId) => {
   try {
-    const response = await axios.get(`/contract/${contractId}`);
+    const response = await axios.get(
+      `/contract-manager/contract/${contractId}`
+    );
+    console.log(response);
 
     if (response.data.success) {
-      console.log(response.data.data);
+      console.log(response);
       return response.data.data;
     } else {
       return [];
@@ -67,7 +73,7 @@ export const fetchServiceInfo = async (evaluationItemId) => {
 
 export const fetchAllContractInfo = async () => {
   try {
-    const response = await axios.get("/all-contract");
+    const response = await axios.get("/contract-manager/all-contract");
 
     if (response.data.success) {
       console.log(response.data.data);
