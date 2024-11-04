@@ -2,39 +2,9 @@ import React from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ServiceForm from "./serviceForm/ServiceForm";
+import ServiceInfoForm from "./serviceForm/ServiceInfoForm";
 
-const Service = ({ isNavOpen, toggleNav, effectClass }) => {
-  //getAPI생성 후 제거 예정
-  const mockData = {
-    categoryId: 1,
-    category: "장애 적기 가동률",
-    purpose: "서비스가 돌아가는 시간",
-    weight: 50,
-    period: null,
-    formula: null,
-    unit: null,
-    serviceTargets: [
-      {
-        grade: "A",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-      {
-        grade: "B",
-        min: 90.0,
-        minInclusive: true,
-        max: 100.0,
-        maxInclusive: false,
-        score: 95.5,
-      },
-    ],
-    taskTypes: [],
-  };
-
+const ServiceInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -57,13 +27,10 @@ const Service = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-
-          <ServiceForm />
-
+          <ServiceInfoForm />
         </div>
       </div>
     </div>
   );
 };
-
-export default Service;
+export default ServiceInfo;
