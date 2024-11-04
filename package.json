@@ -40,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "3.3.3",
+    "source-map-loader": "^5.0.0"
   }
 }

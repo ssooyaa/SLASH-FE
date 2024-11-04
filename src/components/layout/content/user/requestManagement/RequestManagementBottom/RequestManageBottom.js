@@ -1,73 +1,173 @@
-import React, { useState } from "react";
-import "./RequestManageBottom.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../../../../../../styles/RequestManageBottom.css";
 import CreateRequest from "../../../../../feature/request/create/CreateRequest";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../../labels/processStatus/ProcessStatusLabel";
+import SearchBar from "../../../../../common/bar/SearchBar";
+import EquipmentTypeLabel from "../../../../../labels/equipmentType/EquipmentTypeLabel";
+
+// Axios 기본 URL 설정
+axios.defaults.baseURL = "http://localhost:8080";
+
+// 한글 상태 -> 영어 enum 상태 변환 매핑
+const statusMapping = {
+  "접수 완료": "REGISTERED",
+  진행중: "IN_PROGRESS",
+  "처리 완료": "COMPLETED",
+};
 
 const RequestManagementBottom = () => {
-  // 모달 열기/닫기 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 드롭다운 선택 상태
-  const [selectedStatus, setSelectedStatus] = useState("접수완료");
-  const [selectedTaskType, setSelectedTaskType] = useState("서비스요청");
-  const [selectedEquipmentType, setSelectedEquipmentType] = useState("DB#1");
+  const [selectedStatus, setSelectedStatus] = useState("전체");
+  const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
+  const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
 
   const [isOpenStatus, setIsOpenStatus] = useState(false);
-  const [isOpenTaskType, setIsOpenTaskType] = useState(false);
+  const [isOpenTaskDetail, setIsOpenTaskDetail] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
 
-  // 페이지네이션 상태
-  const [activePage, setActivePage] = useState(1); // 현재 활성화된 페이지
+  const [taskRequests, setTaskRequests] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(6);
+  const [filteredRequests, setFilteredRequests] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // 드롭다운 옵션
-  const statusOptions = ["접수완료", "처리중", "처리완료"];
-  const taskTypeOptions = ["서비스 요청", "장애 요청"];
-  const equipmentTypeOptions = [
-    "DB#1",
-    "DB#2",
-    "DB#3",
-    "DB#4",
-    "DB#5",
-    "백업장비#1",
-    "백업장비#2",
-    "백업장비#3",
-    "백업장비#4",
-    "백업장비#5",
-    "서버#1",
-    "서버#2",
-    "서버#3",
-    "서버#4",
-    "서버#5",
-    "응용프로그램#1",
-    "응용프로그램#2",
-    "응용프로그램#3",
-    "응용프로그램#4",
-    "응용프로그램#5",
-  ];
+  // 동적 드롭다운 옵션 상태
+  const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
+  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
 
-  // 상태 변경 핸들러
+  // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
+  const fetchOptions = async () => {
+    try {
+      const [systemsResponse, taskTypeResponse, taskDetailResponse] =
+        await Promise.all([
+          axios.get("/options/systems"),
+          axios.get("/options/task-type"),
+          axios.get("/options/task-detail"),
+        ]);
+
+      setEquipmentTypeOptions(systemsResponse.data);
+      setTaskDetailOptions(taskDetailResponse.data);
+    } catch (error) {
+      console.error("Error fetching options:", error);
+    }
+  };
+
+  // 페이지 로드 시 옵션 데이터를 가져옴
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  // 데이터를 필터링하고 가져오는 함수
+  const fetchFilteredRequests = () => {
+    axios
+      .get("/requests", {
+        params: {
+          equipmentName:
+            selectedEquipmentType !== "전체"
+              ? selectedEquipmentType
+              : undefined,
+          taskDetail:
+            selectedTaskDetail !== "전체" ? selectedTaskDetail : undefined,
+          status:
+            selectedStatus !== "전체"
+              ? statusMapping[selectedStatus]
+              : undefined,
+          keyword: searchTerm, // 검색어 추가
+          page,
+          size,
+        },
+      })
+      .then((response) => {
+        const responseData = response.data.data;
+        if (responseData && Array.isArray(responseData.results)) {
+          setTaskRequests(responseData.results);
+          setTotalPages(responseData.totalPages);
+          setPage(responseData.currentPage);
+        } else {
+          setTaskRequests([]);
+          setFilteredRequests([]);
+          setTotalPages(0);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setTaskRequests([]);
+        setFilteredRequests([]);
+      });
+  };
+
+  useEffect(() => {
+    fetchFilteredRequests();
+  }, [
+    selectedEquipmentType,
+    selectedTaskDetail,
+    selectedStatus,
+    page,
+    size,
+    searchTerm,
+  ]);
+
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
     setIsOpenStatus(false);
+    setPage(1); // Reset page when filter changes
   };
 
-  const handleSelectTaskType = (option) => {
-    setSelectedTaskType(option);
-    setIsOpenTaskType(false);
+  const handleSelectTaskDetail = (option) => {
+    setSelectedTaskDetail(option);
+    setIsOpenTaskDetail(false);
+    setPage(1); // Reset page when filter changes
   };
 
   const handleSelectEquipmentType = (option) => {
     setSelectedEquipmentType(option);
     setIsOpenEquipmentType(false);
+    setPage(1); // Reset page when filter changes
   };
 
-  // 페이지네이션 핸들러
-  const handlePageClick = (pageNumber) => {
-    setActivePage(pageNumber);
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
+    }
   };
 
-  // 모달 열기/닫기 핸들러
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setPage(1); // Reset page when search changes
+  };
+
+  const [pageGroup, setPageGroup] = useState(0);
+
+  const renderPageNumbers = () => {
+    const maxDisplayPages = 6; // 한번에 표시할 페이지 수
+    const startPage = pageGroup * maxDisplayPages + 1;
+    const endPage = Math.min(startPage + maxDisplayPages - 1, totalPages);
+    const pageNumbers = [];
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers;
+  };
+
+  const handleNextPageGroup = () => {
+    if ((pageGroup + 1) * 6 < totalPages) {
+      setPageGroup(pageGroup + 1);
+    }
+  };
+
+  const handlePreviousPageGroup = () => {
+    if (pageGroup > 0) {
+      setPageGroup(pageGroup - 1);
+    }
+  };
+
+  const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
+
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
@@ -76,176 +176,176 @@ const RequestManagementBottom = () => {
     <div className="requestListContainer">
       {/* 요청 목록 상단 헤더 */}
       <div className="requestHeaderContainer">
-        <div className="requestHeader">
-          서비스 요청 목록
-          <label id="toggle">
-            <input role="switch" type="checkbox" className="toggle" />
-          </label>
+        <div className="headerTop">
+          <button className="tabButton" onClick={toggleModal}>
+            요청 등록
+          </button>
         </div>
-        {/* 요청 등록 버튼 */}
-        <button className="tabButton" onClick={toggleModal}>
-          요청등록
-        </button>
+        <SearchBar onSearch={handleSearch} />
       </div>
 
-      {/* 요청 등록 모달 */}
-      {isModalOpen && (
-        <CreateRequest
-          isModalOpen={isModalOpen}
-          toggleModal={toggleModal} // 모달 상태 변경 함수 전달
-        />
-      )}
-
-      {/* 처리상태, 업무유형, 장비유형 드롭다운 */}
-      <div className="dropdownContainer">
-        <div className="customDropdown">
-          <div
-            className="dropdownHeader"
-            onClick={() => setIsOpenEquipmentType(!isOpenEquipmentType)}
-          >
-            장비유형:{" "}
-            <span className={selectedEquipmentType ? "boldText" : "normalText"}>
-              {selectedEquipmentType}
-            </span>
-            <span className="arrow">{isOpenEquipmentType ? "▲" : "▼"}</span>
-          </div>
-          {isOpenEquipmentType && (
-            <div className="dropdownList">
-              {equipmentTypeOptions.map((option) => (
-                <label
-                  key={option}
-                  className={`dropdownOption ${
-                    selectedEquipmentType === option ? "boldText" : "normalText"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedEquipmentType === option}
-                    onChange={() => handleSelectEquipmentType(option)}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="customDropdown">
-          <div
-            className="dropdownHeader"
-            onClick={() => setIsOpenTaskType(!isOpenTaskType)}
-          >
-            업무유형:{" "}
-            <span className={selectedTaskType ? "boldText" : "normalText"}>
-              {selectedTaskType}
-            </span>
-            <span className="arrow">{isOpenTaskType ? "▲" : "▼"}</span>
-          </div>
-          {isOpenTaskType && (
-            <div className="dropdownList">
-              {taskTypeOptions.map((option) => (
-                <label
-                  key={option}
-                  className={`dropdownOption ${
-                    selectedTaskType === option ? "boldText" : "normalText"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedTaskType === option}
-                    onChange={() => handleSelectTaskType(option)}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="customDropdown">
-          <div
-            className="dropdownHeader"
-            onClick={() => setIsOpenStatus(!isOpenStatus)}
-          >
-            처리상태:{" "}
-            <span className={selectedStatus ? "boldText" : "normalText"}>
-              {selectedStatus}
-            </span>
-            <span className="arrow">{isOpenStatus ? "▲" : "▼"}</span>
-          </div>
-          {isOpenStatus && (
-            <div className="dropdownList">
-              {statusOptions.map((option) => (
-                <label
-                  key={option}
-                  className={`dropdownOption ${
-                    selectedStatus === option ? "boldText" : "normalText"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedStatus === option}
-                    onChange={() => handleSelectStatus(option)}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 요청 목록 테이블 */}
       <div className="tableContainer">
         <table className="requestTable">
           <thead>
             <tr>
               <th>요청자</th>
               <th>담당자</th>
-              <th>장비 유형</th>
-              <th>업무 유형</th>
+              <th>
+                <div
+                  className="customDropdown"
+                  onClick={() => setIsOpenEquipmentType(!isOpenEquipmentType)}
+                >
+                  <span className="dropdownHeaderLabel">장비 유형 : </span>
+                  <span className="dropdownHeaderText">
+                    {selectedEquipmentType}
+                  </span>
+                  {isOpenEquipmentType && (
+                    <div className="dropdownList">
+                      {equipmentTypeOptions.map((option) => (
+                        <label
+                          key={option}
+                          className={`dropdownOption ${selectedEquipmentType === option ? "boldText" : "normalText"}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedEquipmentType === option}
+                            onChange={() => handleSelectEquipmentType(option)}
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </th>
+              <th>
+                <div
+                  className="customDropdown"
+                  onClick={() => setIsOpenTaskDetail(!isOpenTaskDetail)}
+                >
+                  <span className="dropdownHeaderLabel">업무 유형 : </span>
+                  <span className="dropdownHeaderText">
+                    {selectedTaskDetail}
+                  </span>
+                  {isOpenTaskDetail && (
+                    <div className="dropdownList">
+                      {taskDetailOptions.map((option) => (
+                        <label
+                          key={option}
+                          className={`dropdownOption ${selectedTaskDetail === option ? "boldText" : "normalText"}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedTaskDetail === option}
+                            onChange={() => handleSelectTaskDetail(option)}
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </th>
               <th>요청 제목</th>
+              <th>요청 내용</th>
               <th>요청 시간</th>
               <th>완료 시간</th>
-              <th>처리 상태</th>
+              <th>
+                <div
+                  className="customDropdown"
+                  onClick={() => setIsOpenStatus(!isOpenStatus)}
+                >
+                  <span className="dropdownHeaderLabel">처리 상태 : </span>
+                  <span className="dropdownHeaderText">{selectedStatus}</span>
+                  {isOpenStatus && (
+                    <div className="dropdownList">
+                      {statusOptions.map((option) => (
+                        <label
+                          key={option}
+                          className={`dropdownOption ${
+                            selectedStatus === option
+                              ? "boldText"
+                              : "normalText"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedStatus === option}
+                            onChange={() => handleSelectStatus(option)}
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>aaa1234</td>
-              <td>담당자</td>
-              <td>#서버1</td>
-              <td>
-                <TaskDetailLabel taskType="장애예방" />
-              </td>
-              <td>업무요청 제목입니다.</td>
-              <td>2023-10-22 11:00:00</td>
-              <td>2023-10-22 12:00:00</td>
-              <td>
-                <ProcessStatusLabel processType="처리완료" />
-              </td>
-            </tr>
-            {/* 추가적인 데이터들을 여기에 넣으면 됩니다. */}
+            {taskRequests.map((task, index) => (
+              <tr key={task.id || index}>
+                <td>{task.requesterName}</td>
+                <td>{task.managerName}</td>
+                <td className="equipmentCell">
+                  <EquipmentTypeLabel equipmentType={task.equipmentName} />
+                </td>
+
+                <td>
+                  <TaskDetailLabel taskDetail={task.taskDetail} />
+                </td>
+                <td className="truncate">{task.title}</td>
+                <td className="truncate">{task.content}</td>
+                <td>{formatDate(task.createTime)}</td>
+                <td>
+                  {task.status === "COMPLETED"
+                    ? formatDate(task.updateTime)
+                    : ""}
+                </td>
+                <td>
+                  <ProcessStatusLabel processType={task.status} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+      </div>
 
-        {/* 페이지네이션 */}
-        <div className="pagination">
-          <button>{"<"}</button>
-          {Array.from({ length: 4 }, (_, index) => (
-            <button
-              key={index + 1}
-              className={activePage === index + 1 ? "activePage" : ""}
-              onClick={() => handlePageClick(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button>{">"}</button>
-        </div>
+      <div className="pagination">
+        <button
+          className="arrow-button"
+          onClick={handlePreviousPageGroup}
+          disabled={pageGroup === 0}
+        >
+          {"<"}
+        </button>
+
+        {renderPageNumbers().map((number) => (
+          <button
+            key={number}
+            className={`page-button ${page === number ? "activePage" : ""}`}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </button>
+        ))}
+
+        <button
+          className="arrow-button"
+          onClick={handleNextPageGroup}
+          disabled={(pageGroup + 1) * 6 >= totalPages}
+        >
+          {">"}
+        </button>
       </div>
     </div>
   );
+};
+
+const formatDate = (dateArray) => {
+  if (!Array.isArray(dateArray) || dateArray.length < 5) return "Invalid date";
+  const [year, month, day, hour, minute] = dateArray;
+  return `${year}.${month}.${day} ${hour}시${minute}분`;
 };
 
 export default RequestManagementBottom;
