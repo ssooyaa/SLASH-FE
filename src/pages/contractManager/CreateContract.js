@@ -27,4 +27,6 @@ const CreateContract = () => {
     </div>
   );
 };
+
 export default CreateContract;
+

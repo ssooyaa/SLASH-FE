@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
@@ -57,10 +57,13 @@ const Service = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ServiceForm initialData={mockData} />
+
+          <ServiceForm />
+
         </div>
       </div>
     </div>
   );
 };
+
 export default Service;

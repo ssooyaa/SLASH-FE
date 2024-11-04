@@ -2,7 +2,6 @@ import React from "react";
 import "../../../../styles/Content.css";
 import {FaBars} from "react-icons/fa6";
 import {IoPersonCircle} from "react-icons/io5";
-import ContractManagerMainTop from "./contractManagerMain/ContractManagerMainTop/ContractManagerMainTop";
 
 const ContractManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
     return (
@@ -29,6 +28,7 @@ const ContractManagerMainContent = ({isNavOpen, toggleNav, effectClass}) => {
             <div className="content">
                 <div className="contentBox">
                     <ContractManagerMainTop/>
+                    <ContractManagerBottom/>
                 </div>
             </div>
         </div>

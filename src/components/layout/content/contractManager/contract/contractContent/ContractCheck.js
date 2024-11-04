@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./ContractCheck.css";
 import OneColTable from "../../../../../feature/table/OneColTable";
 import GradeVerticalTable from "../../../../../feature/table/GradeVerticalTable";
+import CheckBox from "../../../../../common/CheckBox";
 
 const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
   const [isAgreed, setIsAgreed] = useState(false);
@@ -33,7 +34,7 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
           <p>계약 시작일: {formData.startDate.toLocaleDateString()}</p>
           <p>계약 종료일: {formData.endDate.toLocaleDateString()}</p>
         </div>
-        <div className="contractInfo">
+        <div className="contractCheck">
           <div className="serviceCategory">
             <div className="tableTitle">
               <p>서비스 평가 항목</p>
@@ -57,13 +58,13 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
           </div>
         </div>
         <div className="agreement">
-          <label>
-            <input
-              type="checkbox"
-              onChange={(e) => handleCheckboxChange(e.target.checked)}
-            />{" "}
-            계약 내용에 동의합니다.
-          </label>
+          <CheckBox
+            id="contractAgreeCheckBox"
+            label="계약 내용에 동의합니다."
+            checked={isAgreed}
+            onChange={handleCheckboxChange}
+          />
+
         </div>
       </div>
       <div className="contractButton">
@@ -81,4 +82,5 @@ const ContractCheck = ({ formData, handlePrevious, handleSubmit }) => {
     </>
   );
 };
+
 export default ContractCheck;
