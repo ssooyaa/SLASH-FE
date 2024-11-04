@@ -7,7 +7,6 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
-
 }
 
 .cqMini {
@@ -43,7 +42,6 @@
 
 .cqBox {
     text-align: left;
-
     width: 100%;
     font-weight: 600;
     display: flex;

@@ -8,13 +8,14 @@ import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
 import RequestManagement from "../pages/user/RequestManagement";
 import CreateContract from "../pages/contractManager/CreateContract";
 import CreateService from "../pages/contractManager/CreateService";
+import RequestDetail from "../pages/contractManager/RequestDetail";
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 
+        {/*
                         Routes안에 이렇게 작성합니다. 
                         path는 우리가 흔히 말하는 사용하고싶은 "주소"를 넣어주면 됩니다.
                         element는 해당 주소로 이동했을 때 보여주고자 하는 컴포넌트를 넣어줍니다.
@@ -32,6 +33,7 @@ const Router = () => {
           path="/contractManager/createService"
           element={<CreateService />}
         />
+          <Route path="/contractManager/request" element={<RequestDetail/>}/>
       </Routes>
     </BrowserRouter>
   );
