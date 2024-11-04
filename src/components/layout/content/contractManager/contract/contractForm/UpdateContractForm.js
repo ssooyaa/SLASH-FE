@@ -3,7 +3,7 @@ import "./UpdateContractForm.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarMonth } from "react-icons/md";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import { useParams } from "react-router-dom";
 import ServiceTemplate from "../../service/serviceForm/ServiceTemplate";
