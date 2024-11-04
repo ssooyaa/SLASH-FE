@@ -1,40 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./ContractForm.css";
+import "./UpdateContractForm.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarMonth } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
+import { useParams } from "react-router-dom";
 import ServiceTemplate from "../../service/serviceForm/ServiceTemplate";
-import CheckBox from "../../../../../common/CheckBox";
 import { useNavigate } from "react-router-dom";
+import ServiceInfoForm from "../../service/serviceForm/ServiceInfoForm";
+import CheckBox from "../../../../../common/CheckBox";
 import {
   CreateContract,
+  fetchContractInfo,
   CreateServiceDetail,
 } from "../../../../../../api/UserService";
 
-const ContractForm = () => {
-  const navigate = useNavigate();
-  const steps = [
-    {
-      number: 1,
-      label: "기본 정보 입력",
-      detail: "회사 정보 및 계약기간을 설정합니다.",
-    },
-    {
-      number: 2,
-      label: "SLA 지표 설정",
-      detail: "SLA 평가를 위한 기준을 작성합니다.",
-    },
-    {
-      number: 3,
-      label: "계약 확인 및 완료",
-      detail: "계약의 내용을 확인해 주세요",
-    },
-  ];
-
-  const [currentStep, setCurrentStep] = useState(1);
-
+const UpdateContractForm = () => {
+  const { contractId } = useParams();
   const [formData, setFormData] = useState({
     companyName: "",
     startDate: null,
@@ -54,13 +37,37 @@ const ContractForm = () => {
 
   const calendarRef = useRef(null);
 
-  const [isAgreed, setIsAgreed] = useState(false);
+  const [contract, setContract] = useState(null);
 
   const navigator = useNavigate();
 
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const [updateEvaluationItemInfos, setUpdateEvaluationItemInfos] = useState(
+    []
+  );
+
   useEffect(() => {
-    console.log("Updated evaluationItems:", evaluationItems);
-  }, [evaluationItems]);
+    console.log(contractId);
+    const loadData = async () => {
+      const response = await fetchContractInfo(contractId);
+      console.log(response);
+      setContract(response);
+      setFormData({
+        companyName: response.companyName,
+        startDate: response.startDate,
+        endDate: response.endDate,
+        totalTargets: response.totalTargets,
+      });
+      setTotalTargets(response.totalTargets);
+      setUpdateEvaluationItemInfos(response.evaluationItems || []);
+    };
+    loadData();
+  }, [contractId]);
+
+  if (!contract) {
+    return <p>로딩중....</p>;
+  }
 
   const handleChangeFormData = (field, value) => {
     setFormData((prev) => ({
@@ -124,11 +131,14 @@ const ContractForm = () => {
       };
       return updatedItems;
     });
+    console.log(setEvaluationItems);
   };
 
   const handleRemoveEvaluationItem = (index) => {
+    console.log("Removing item at index:", index);
     setEvaluationItems((prevItems) => {
       const updatedItems = prevItems.filter((_, i) => i !== index);
+      console.log("Updated evaluationItems:", updatedItems); // 새로운 배열 로그
       return updatedItems;
     });
   };
@@ -141,13 +151,16 @@ const ContractForm = () => {
     e.preventDefault();
     const updateFormData = { ...formData };
     setFormData(updateFormData);
+    const updatedEvaluationItemInfos = [...updateEvaluationItemInfos];
+    setUpdateEvaluationItemInfos(updatedEvaluationItemInfos);
     const updateEvaluationItems = [...evaluationItems];
     setEvaluationItems(updateEvaluationItems);
+    console.log(updateFormData);
+    console.log(updateEvaluationItems);
     if (!isAgreed) {
       alert("계약 사항에 동의해 주세요");
       return;
     }
-
     try {
       const response = await CreateContract(updateFormData);
       if (response) {
@@ -162,7 +175,16 @@ const ContractForm = () => {
             return await CreateServiceDetail(updatedItem);
           }
         );
+        const editServiceDetail = updateEvaluationItemInfos.map(
+          async (item) => {
+            const updatedItem = {
+              ...item,
+              contractId: response,
+            };
 
+            return await CreateServiceDetail(updatedItem);
+          }
+        );
         await Promise.all(serviceDetailsPromises);
 
         console.log("모든 서비스 세부 사항이 성공적으로 생성되었습니다.");
@@ -174,6 +196,24 @@ const ContractForm = () => {
     }
   };
 
+  const handleRemoveEvaluationItemInfos = (index, evaluationItemId) => {
+    console.log(updateEvaluationItemInfos);
+    const isConfirmed = window.confirm(
+      "삭제 즉시 반영 됩니다. 계속 하시겠습니까?"
+    );
+
+    if (isConfirmed) {
+      // 삭제 요청 API 구현 후 추가
+
+      // 업데이트된 evaluationItemInfos에서 항목 삭제
+      setUpdateEvaluationItemInfos(
+        (prevInfos) => prevInfos.filter((_, i) => i !== index) // 삭제된 인덱스를 제외한 새 배열
+      );
+    } else {
+      // 취소 시 아무것도 하지 않음
+      console.log("삭제가 취소되었습니다.");
+    }
+  };
   return (
     <div className="contractTemplate">
       <div className="contractForm">
@@ -203,11 +243,7 @@ const ContractForm = () => {
                 className="companyData"
                 name="startDate"
                 placeholder="DD/MM/YYYY"
-                value={
-                  formData.startDate
-                    ? formData.startDate.toLocaleDateString("en-GB")
-                    : ""
-                }
+                value={formData.startDate ? formData.startDate : ""}
                 readOnly
               />
               <MdCalendarMonth
@@ -222,11 +258,7 @@ const ContractForm = () => {
                 className="companyData"
                 name="endDate"
                 placeholder="DD/MM/YYYY"
-                value={
-                  formData.endDate
-                    ? formData.endDate.toLocaleDateString("en-GB")
-                    : ""
-                }
+                value={formData.endDate ? formData.endDate : ""}
                 readOnly
               />
               <MdCalendarMonth
@@ -275,36 +307,50 @@ const ContractForm = () => {
         </div>
         <div className="evaluationItemsInfo">
           <div className="evaluationItemsDetail">
-            {evaluationItems.length === 0 ? (
-              <div className="addItems" onClick={handleAddEvaluationItem}>
-                <p>서비스 평가 항목 추가하기</p>
-                <FaPlus />
-              </div>
-            ) : (
-              evaluationItems.map((item, index) => (
-                <div key={item.id} className="evaluationItem">
-                  <div className="categoryTitle">
-                    <p>서비스 평가항목</p>
-                    <button onClick={() => handleRemoveEvaluationItem(index)}>
-                      삭제하기
-                    </button>
-                  </div>
-                  <ServiceTemplate
-                    index={index}
-                    initialData={item}
-                    dataChangeHandle={handleEvaluationItem}
-                  />
+            {updateEvaluationItemInfos.map((item, index) => (
+              <div key={item.id} className="evaluationItem inputTableTitle">
+                <div className="categoryListTitle">
+                  <p>이래 항목의 수정을 원할 시 삭제 후 재 입력 해주세요</p>
+                  <button
+                    onClick={() =>
+                      handleRemoveEvaluationItemInfos(
+                        index,
+                        item.evaluationItemId
+                      )
+                    }
+                  >
+                    삭제하기
+                  </button>
                 </div>
-              ))
-            )}
+                <ServiceInfoForm
+                  index={index}
+                  initialData={item}
+                  dataChangeHandle={handleEvaluationItem}
+                />
+              </div>
+            ))}
+            {evaluationItems.map((item, index) => (
+              <div key={item.id} className="evaluationItem">
+                <div className="categoryTitle">
+                  <p>서비스 평가항목</p>
+                  <button onClick={() => handleRemoveEvaluationItem(index)}>
+                    삭제하기
+                  </button>
+                </div>
+                <ServiceTemplate
+                  index={index}
+                  initialData={item}
+                  dataChangeHandle={handleEvaluationItem}
+                />
+              </div>
+            ))}
           </div>
         </div>
-        {evaluationItems.length === 0 ? null : (
-          <div className="addItems" onClick={handleAddEvaluationItem}>
-            <p>서비스 평가 항목 추가하기</p>
-            <FaPlus />
-          </div>
-        )}
+
+        <div className="addItems" onClick={handleAddEvaluationItem}>
+          <p>서비스 평가 항목 추가하기</p>
+          <FaPlus />
+        </div>
         <div className="agreement">
           <CheckBox
             id="contractAgreeCheckBox"
@@ -313,6 +359,7 @@ const ContractForm = () => {
             onChange={handleCheckboxChange}
           />
         </div>
+
         <div className="serviceFormButton">
           <button className="grayButton" onClick={handleRedirect}>
             닫기
@@ -326,4 +373,4 @@ const ContractForm = () => {
   );
 };
 
-export default ContractForm;
+export default UpdateContractForm;
