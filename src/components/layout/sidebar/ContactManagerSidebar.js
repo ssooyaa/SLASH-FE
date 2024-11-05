@@ -4,12 +4,19 @@ import { FiHome, FiLogOut } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleMenuClick = (index) => {
     setActiveIndex(index);
+  };
+
+  const handleMain = () => {
+    navigator("/contractManager");
   };
 
   return (
@@ -29,7 +36,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="#"
+              href="/contractManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >
@@ -38,7 +45,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItem">
             <a
-              href="#"
+              href="/contractManager/contractList"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
             >
