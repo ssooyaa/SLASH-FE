@@ -4,12 +4,21 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 export const CreateContract = async (requestContractDTO) => {
   try {
+    const token = localStorage.getItem("accessToken");
+
     const response = await axios.post(
       "/contract-manager/contract",
-      requestContractDTO
+      requestContractDTO,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
     if (response.data.success) {
       alert("계약생성 성공");
+
       return response.data.data;
     } else {
       return false;
@@ -17,13 +26,21 @@ export const CreateContract = async (requestContractDTO) => {
   } catch (error) {
     console.error("ERROR: ", error.response.data);
     alert(error.response.data.message);
+
     return false;
   }
 };
 
 export const CreateServiceDetail = async (requestContractDTO) => {
   try {
-    const response = await axios.post("/evaluation-item", requestContractDTO);
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.post("/evaluation-item", requestContractDTO, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (response.data.success) {
       return response.data.success;
     } else {
@@ -31,19 +48,29 @@ export const CreateServiceDetail = async (requestContractDTO) => {
     }
   } catch (error) {
     console.error("ERROR: ", error.response.data);
+
     return false;
   }
 };
 
 export const fetchContractInfo = async (contractId) => {
   try {
+    const token = localStorage.getItem("accessToken");
+
     const response = await axios.get(
-      `/contract-manager/contract/${contractId}`
+      `/contract-manager/contract/${contractId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
     console.log(response);
 
     if (response.data.success) {
       console.log(response);
+
       return response.data.data;
     } else {
       return [];
@@ -58,10 +85,17 @@ export const fetchContractInfo = async (contractId) => {
 
 export const fetchServiceInfo = async (evaluationItemId) => {
   try {
-    const response = await axios.get(`/detail/${evaluationItemId}`);
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.get(`/detail/${evaluationItemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.data.success) {
       console.log(response.data.data);
+
       return response.data.data;
     } else {
       return [];
@@ -73,10 +107,17 @@ export const fetchServiceInfo = async (evaluationItemId) => {
 
 export const fetchAllContractInfo = async () => {
   try {
-    const response = await axios.get("/contract-manager/all-contract");
+    const token = localStorage.getItem("accessToken"); // 토큰 가져오기
+
+    const response = await axios.get("/contract-manager/all-contract", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.data.success) {
       console.log(response.data.data);
+
       return response.data.data;
     } else {
       return [];
