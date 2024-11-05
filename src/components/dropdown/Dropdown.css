@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
+body {
+  font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+/* 드롭다운 버튼 스타일 */
+.customDropdown1 {
+  width: auto;
+  height: 17px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  position: relative; /* 추가: 드롭다운 목록의 상대 위치 설정 */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownHeaderLabel {
+  color: #666;
+  font-weight: bold;
+  margin-right: 4px;
+  font-size: 85%;
+}
+
+/* 드롭다운 헤더 텍스트 및 화살표 */
+.dropdownHeaderText {
+  color: #333;
+  font-weight: bold;
+  font-size: 85%;
+}
+
+.dropdownHeaderText::after {
+  content: "▼";
+  font-size: 12px;
+  margin-left: 8px;
+  color: #666;
+}
+
+/* 드롭다운 목록 스타일 */
+.dropdownList {
+  margin-top: 1px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  padding: 4px 0;
+  font-size: 0.9rem;
+  min-width: 100%;
+  background-color: #ffffff; /* 드롭다운 배경 색상 */
+}
+
+/* 드롭다운 옵션 스타일 */
+.dropdownOption {
+  padding: 3px 5px;
+  color: #333;
+  cursor: pointer;
+  font-size: 80%;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.dropdownOption:hover {
+  background-color: #f1f1f1;
+}
+
+/* 선택된 옵션 스타일 */
+.boldText {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.normalText {
+  font-weight: normal;
+}
