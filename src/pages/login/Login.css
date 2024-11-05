@@ -1,11 +1,11 @@
-.login-page {
+.loginPage {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.login-container {
+.loginContainer {
   background-color: white;
 
   padding: 60px;
@@ -16,7 +16,7 @@
   position: relative;
 }
 
-.login-header {
+.loginHeader {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,18 +26,18 @@
   transform: translateX(-11%);
 }
 
-.login-header img {
+.loginHeader img {
   height: 55px;
   transform: translateX(+20%);
   object-fit: contain;
 }
 
-.login-header h3 {
+.loginHeader h3 {
   font-size: 30px;
   color: #333;
 }
 
-.login-input-group {
+.loginInputGroup {
   display: flex;
   align-items: center;
   margin: 15px 0px;
@@ -48,7 +48,7 @@
   position: relative;
 }
 
-.login-input-group input {
+.loginInputGroupInput {
   flex: 1;
   border: none;
   outline: none;
@@ -56,7 +56,7 @@
   padding-left: 35px;
 }
 
-.login-input-group input[type="text"] {
+.loginInputGroup input[type="text"] {
   flex: 1;
   border: none;
   outline: none;
@@ -64,14 +64,14 @@
   padding-left: 35px;
 }
 
-.input-icon {
+.inputIcon {
   position: absolute;
   left: 10px;
   font-size: 1.2rem;
   color: #aaa;
 }
 
-.toggle-visibility {
+.toggleVisibility {
   position: absolute;
   right: 10px;
   font-size: 1.2rem;
@@ -79,11 +79,11 @@
   cursor: pointer;
 }
 
-.login-input-group.incorrect input {
+.loginInputGroup.incorrect input {
   border-color: red;
 }
 
-.error-message {
+.errorMessage {
   color: red;
   font-size: 0.875rem;
   margin-top: 5px;
@@ -91,11 +91,11 @@
   visibility: hidden;
 }
 
-.error-message.active {
+.errorMessage.active {
   visibility: visible;
 }
 
-.login-button {
+.loginButton {
   width: 100%;
   padding: 15px;
   background-color: #000;
@@ -107,6 +107,6 @@
   margin-top: 20px;
 }
 
-.login-button:hover {
+.loginButton:hover {
   background-color: #333;
 }
