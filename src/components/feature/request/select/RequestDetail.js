@@ -16,7 +16,13 @@ const RequestDetail = ({ requestId, onClose }) => {
     fetchRequestDetail();
   }, [requestId]);
 
-  return <RequestDetailForm requestData={requestData} onClose={onClose} />;
+  return (
+    <RequestDetailForm
+      requestData={requestData}
+      currentUser={"c"}
+      onClose={onClose}
+    />
+  );
 };
 
 export default RequestDetail;

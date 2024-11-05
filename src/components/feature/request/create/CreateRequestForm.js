@@ -25,8 +25,8 @@ const CreateRequestForm = ({
   );
 
   return (
-    <div className="modalOverlay">
-      <div className="modalContent">
+    <div className="requestModalOverlay">
+      <div className="requestModalContent">
         <button className="closeButton" onClick={toggleModal}>
           &times;
         </button>
