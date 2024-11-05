@@ -53,17 +53,20 @@ const ContractManagerBottom = () => {
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+              Authorization: `Bearer ${token}`,
             },
           }),
           axios.get("/common/task-type", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+              Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+
+              Authorization: `Bearer ${token}`,
+
             },
           }),
         ]);
@@ -87,6 +90,10 @@ const ContractManagerBottom = () => {
 
     axios
       .get("/common/requests", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+
         params: {
           type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
           equipmentName:

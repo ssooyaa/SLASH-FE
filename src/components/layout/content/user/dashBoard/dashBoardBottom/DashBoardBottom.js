@@ -20,13 +20,13 @@ const DashBoardBottom = () => {
   const [contractData, setContractData] = useState(null);
 
   useEffect(() => {
-    // 계약 데이터 가져오기
-    const token = localStorage.getItem("accessToken");
 
+    const token = localStorage.getItem("accessToken");
+    //계약 데이터 가져오기
     axios
-      .get(`/common/contract/1`, {
+      .get(`common/contract/1`, {
         headers: {
-          Authorization: `Bearer ${token}`, // 토큰 추가
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -36,6 +36,7 @@ const DashBoardBottom = () => {
       })
       .catch((error) => {
         console.error("계약 데이터를 가져오는 중 오류:", error);
+
       });
   }, []);
 

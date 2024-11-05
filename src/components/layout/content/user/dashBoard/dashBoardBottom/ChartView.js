@@ -27,9 +27,10 @@ const ChartView = ({ selectedCriteria }) => {
   const fetchSystems = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await axios.get("/common/all-systems", {
+
+      const response = await axios.get("http://localhost:8080/all-systems", {
         headers: {
-          Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -54,9 +55,16 @@ const ChartView = ({ selectedCriteria }) => {
     if (!selectedSystem) return;
 
     try {
-      setLoading(true);
       const token = localStorage.getItem("accessToken");
-      const response = await axios.get("/common/statistics", {
+
+      setLoading(true);
+
+      const response = await axios.get("http://localhost:8080/statistics", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+
+
         params: {
           serviceType: selectedCriteria,
           period: selectedPeriod,
