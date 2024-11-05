@@ -231,7 +231,7 @@ const RequestManagerBottom = () => {
                   className="customDropdown"
                   onClick={() => setIsOpenEquipmentType(!isOpenEquipmentType)}
                 >
-                  <span className="dropdownHeaderLabel">장비 유형 : </span>
+                  <span className="dropdownHeaderLabel">시스템 유형 : </span>
                   <span className="dropdownHeaderText">
                     {selectedEquipmentType}
                   </span>
