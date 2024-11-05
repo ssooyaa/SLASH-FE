@@ -1,0 +1,15 @@
+.criteria {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* 좌우로 배치 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin-top: 10px;
+}
+
+.criteria2 {
+  width: 320px;
+}
+
+.criteriaStatistics {
+  margin-top: 5px;
+}
