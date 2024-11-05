@@ -119,7 +119,7 @@ const UpdateContractForm = () => {
   };
 
   const handleRedirect = () => {
-    //계약 리스트페이지 작성 후 추가 예정
+    navigator(-1);
   };
 
   const handleEvaluationItem = (index, value) => {
@@ -129,6 +129,7 @@ const UpdateContractForm = () => {
         ...updatedItems[index],
         ...value,
       };
+
       return updatedItems;
     });
     console.log(setEvaluationItems);
@@ -139,6 +140,7 @@ const UpdateContractForm = () => {
     setEvaluationItems((prevItems) => {
       const updatedItems = prevItems.filter((_, i) => i !== index);
       console.log("Updated evaluationItems:", updatedItems); // 새로운 배열 로그
+
       return updatedItems;
     });
   };
@@ -159,6 +161,7 @@ const UpdateContractForm = () => {
     console.log(updateEvaluationItems);
     if (!isAgreed) {
       alert("계약 사항에 동의해 주세요");
+
       return;
     }
     try {
@@ -214,6 +217,7 @@ const UpdateContractForm = () => {
       console.log("삭제가 취소되었습니다.");
     }
   };
+
   return (
     <div className="contractTemplate">
       <div className="contractForm">
@@ -236,7 +240,6 @@ const UpdateContractForm = () => {
                 required
               />
             </p>
-
             <p className="companyNameLabel">
               계약시작일
               <input
@@ -251,7 +254,6 @@ const UpdateContractForm = () => {
                 onClick={(e) => handleCalendarClick("startDate", e)}
               />
             </p>
-
             <p className="companyNameLabel">
               계약종료일
               <input
@@ -346,7 +348,6 @@ const UpdateContractForm = () => {
             ))}
           </div>
         </div>
-
         <div className="addItems" onClick={handleAddEvaluationItem}>
           <p>서비스 평가 항목 추가하기</p>
           <FaPlus />
@@ -359,9 +360,8 @@ const UpdateContractForm = () => {
             onChange={handleCheckboxChange}
           />
         </div>
-
         <div className="serviceFormButton">
-          <button className="grayButton" onClick={handleRedirect}>
+          <button className="grayButton" onClick={() => handleRedirect()}>
             닫기
           </button>
           <button className="blackButton" onClick={(e) => submit(e)}>

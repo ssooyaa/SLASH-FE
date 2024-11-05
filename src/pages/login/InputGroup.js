@@ -12,7 +12,7 @@ const InputGroup = ({
   toggleVisibility,
 }) => {
   return (
-    <div className={`login-input-group ${error ? "incorrect" : ""}`}>
+    <div className={`loginInputGroup ${error ? "incorrect" : ""}`}>
       {icon}
       <input
         className={cls}
@@ -22,7 +22,7 @@ const InputGroup = ({
         onChange={onChange}
       />
       {isPassword && (
-        <div className="toggle-visibility" onClick={toggleVisibility}>
+        <div className="toggleVisibility" onClick={toggleVisibility}>
           {type === "password" ? <FaEye /> : <FaEyeSlash />}
         </div>
       )}
