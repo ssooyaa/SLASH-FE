@@ -27,4 +27,5 @@ const ContractInformation = () => {
     </div>
   );
 };
+
 export default ContractInformation;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ServiceDetailTable from "../../../../../feature/table/ServiceDetailTable";
 import GradeVerticalTable from "../../../../../feature/table/GradeVerticalTable";
 import TaskDetailTable from "../../../../../feature/table/TaskDetailTable";
 import OneColTable from "../../../../../feature/table/OneColTable";
+import NoScoreGradeTable from "../../../../../feature/table/NoScoreGradeTable";
 import "./ServiceInfoForm.css";
 
 const ServiceInfoForm = ({ initialData }) => {
@@ -30,7 +31,11 @@ const ServiceInfoForm = ({ initialData }) => {
               <span>*</span>
             </div>
             <div className="table infoTable">
-              <GradeVerticalTable data={data.serviceTargets || []} />
+              {data.unit === "건" ? (
+                <GradeVerticalTable data={data.serviceTargets || []} />
+              ) : (
+                <NoScoreGradeTable data={data.serviceTargets} />
+              )}
             </div>
           </div>
           {data.taskTypes && data.taskTypes.length > 0 && (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const GradeHorizonTable = ({ initialData }) => {
   const data = initialData ? initialData : [{ min: 1 }, { min: 2 }];
@@ -30,4 +30,5 @@ const GradeHorizonTable = ({ initialData }) => {
     </>
   );
 };
+
 export default GradeHorizonTable;

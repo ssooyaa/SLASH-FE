@@ -49,6 +49,7 @@
 .contractInfo::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
 .cardSection {
   display: flex;
   flex-wrap: wrap; /* 카드들이 화면에 맞춰 줄 바꿈되도록 설정 */

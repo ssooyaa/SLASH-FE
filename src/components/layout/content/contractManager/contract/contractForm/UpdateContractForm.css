@@ -23,3 +23,10 @@
   background-color: white;
   color: var(--main--gray);
 }
+
+.serviceFormButton {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  gap: 10px;
+}

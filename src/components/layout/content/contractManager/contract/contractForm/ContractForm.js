@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarMonth } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
-import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import ServiceTemplate from "../../service/serviceForm/ServiceTemplate";
 import CheckBox from "../../../../../common/CheckBox";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import {
   CreateContract,
   CreateServiceDetail,
 } from "../../../../../../api/UserService";
+import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 
 const ContractForm = () => {
   const navigate = useNavigate();
@@ -113,6 +113,7 @@ const ContractForm = () => {
 
   const handleRedirect = () => {
     //계약 리스트페이지 작성 후 추가 예정
+    navigator(-1);
   };
 
   const handleEvaluationItem = (index, value) => {
@@ -137,8 +138,46 @@ const ContractForm = () => {
     setIsAgreed(value);
   };
 
+  const isValid = () => {
+    if (formData.companyName === "") {
+      alert("회사 이름을 입력해 주세요");
+      return false;
+    }
+    if (formData.startDate === null) {
+      alert("계약 시작일을 입력해 주세요");
+      return false;
+    }
+
+    if (formData.endDate === null) {
+      alert("게약 종료일을 입력해 주세요");
+      return false;
+    }
+
+    if (totalTargets.length === 0) {
+      alert("평가 점수를 입력해 주세요");
+      return false;
+    }
+
+    if (evaluationItems.length === 0) {
+      alert("평가 서비스를 입력해 주세요 ");
+      return false;
+    }
+
+    return true;
+  };
+
   const submit = async (e) => {
     e.preventDefault();
+
+    if (!isValid()) {
+      return; //미입력값 있을 시 제출 불가
+    }
+
+    if (!isAgreed) {
+      alert("계약 사항에 동의해 주세요");
+      return;
+    }
+
     const updateFormData = { ...formData };
     setFormData(updateFormData);
     const updateEvaluationItems = [...evaluationItems];
@@ -266,7 +305,7 @@ const ContractForm = () => {
               <span>*</span>
             </div>
             <div className="totalInputTable">
-              <GradeInputTable
+              <NoScoreGradeInputTable
                 initialData={totalTargets}
                 onDataChange={handleTotalTargets}
               />
