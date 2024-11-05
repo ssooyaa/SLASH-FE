@@ -54,7 +54,7 @@
 
 }
 
-tr.loading-row td {
+tr.loadingRow td {
     text-align: center;
     color: #888;
     font-style: italic;

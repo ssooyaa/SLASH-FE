@@ -73,7 +73,7 @@ const RequestDetailBottom = () => {
                         </thead>
                         <tbody className="tbd">
                         {loading ? ( // 로딩 상태 체크
-                            <tr className="loading-row">
+                            <tr className="loadingRow">
                                 <td className="tData">Loading...</td>
                                 <td className="tData">Loading...</td>
                                 <td className="tData">Loading...</td>
