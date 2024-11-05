@@ -53,20 +53,17 @@ const ContractManagerBottom = () => {
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${token}`, // 토큰 추가
             },
           }),
           axios.get("/common/task-type", {
             headers: {
-              Authorization: `Bearer ${token}`,
-
+              Authorization: `Bearer ${token}`, // 토큰 추가
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
-
-              Authorization: `Bearer ${token}`,
-
+              Authorization: `Bearer ${token}`, // 토큰 추가
             },
           }),
         ]);
@@ -91,9 +88,8 @@ const ContractManagerBottom = () => {
     axios
       .get("/common/requests", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // 토큰 추가
         },
-
         params: {
           type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
           equipmentName:
@@ -109,9 +105,6 @@ const ContractManagerBottom = () => {
           keyword: searchTerm,
           page,
           size,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // 토큰 추가
         },
       })
       .then((response) => {

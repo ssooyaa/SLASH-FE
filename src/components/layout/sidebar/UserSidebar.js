@@ -6,7 +6,7 @@ import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const handleMenuClick = (index) => {
     setActiveIndex(index);
@@ -29,7 +29,7 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="#"
+              href="/user"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >
@@ -48,7 +48,7 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItem">
             <a
-              href="#"
+              href="/user/requestManagement"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() => handleMenuClick(2)}
             >
