@@ -90,27 +90,3 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 두 개의 열 생성 */
 }
-
-/* Optional: Center-align if charts are not full-width */
-.systemCharts {
-  justify-content: space-around;
-  gap: 38px;
-}
-
-.noDataMessage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  color: #666;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 90%;
-}
-
-.noDataIcon {
-  font-size: 2rem;
-  color: #ccc;
-  margin-bottom: 10px;
-}
