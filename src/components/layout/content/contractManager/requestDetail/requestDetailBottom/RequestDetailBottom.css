@@ -1,0 +1,61 @@
+.rdBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 600;
+    background-color: white;
+    border: 0.5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.rdBox h3 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: left;
+}
+
+.tb {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.thd th {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.tbd td {
+    padding: 10px 12px; /* 원하는 여백만큼 조절 */
+    border-bottom: 1px solid #ddd;
+}
+
+.tbd tr:hover {
+    background-color: #f1f1f1; /* 행 hover 효과 */
+}
+
+.tData {
+    text-align: left;
+    color: #333;
+}
+
+.tData:last-child {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.tData:last-child:hover {
+
+}
+
+tr.loadingRow td {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}

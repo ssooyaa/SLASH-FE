@@ -47,10 +47,10 @@ const Login = () => {
 
       switch (decoded.auth) {
         case "ROLE_CONTRACT_MANAGER":
-          navigate("/contract-manager");
+          navigate("/contractManager");
           break;
         case "ROLE_REQUEST_MANAGER":
-          navigate("/request-manager");
+          navigate("/requestManager");
           break;
         case "ROLE_USER":
           navigate("/user");

@@ -1,0 +1,52 @@
+#allot {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    height: 15%;
+    width: 15%;
+}
+
+.modalM {
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.mark {
+    font-size: xx-large;
+    width: 15%;
+    color: #2EC44F;
+    background-color: #F6FFF8;
+    font-weight: bolder;
+    border-radius: 50px;
+}
+
+/* 모달 배경 */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* 모달 내용 */
+.modalContent {
+    height: 200px;
+    align-content: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.markBox {
+    display: flex;
+    justify-content: space-around;
+}

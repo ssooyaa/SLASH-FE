@@ -9,6 +9,7 @@ const ContractManagerMain = () => {
   const toggleNav = () => {
     setNavOpen(!isNavOpen);
   };
+
   return (
     <div>
       <ContractManagerSidebar
