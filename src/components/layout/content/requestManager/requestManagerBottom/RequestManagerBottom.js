@@ -47,11 +47,25 @@ const RequestManagerBottom = () => {
   // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
   const fetchOptions = async () => {
     try {
+      const token = localStorage.getItem("accessToken");
+
       const [systemsResponse, taskTypeResponse, taskDetailResponse] =
         await Promise.all([
-          axios.get("/common/systems"),
-          axios.get("/common/task-type"),
-          axios.get("/common/task-detail"),
+          axios.get("/common/systems", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get("/common/task-type", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get("/common/task-detail", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
         ]);
 
       setEquipmentTypeOptions(systemsResponse.data);
@@ -69,8 +83,13 @@ const RequestManagerBottom = () => {
 
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
+    const token = localStorage.getItem("accessToken");
+
     axios
       .get("/common/requests", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         params: {
           type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
           equipmentName:

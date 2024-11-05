@@ -17,12 +17,19 @@ const DashBoardBottom = () => {
   const [contractData, setContractData] = useState(null);
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
     //계약 데이터 가져오기
-    axios.get(`contract/1`).then((response) => {
-      if (response.data.success) {
-        setContractData(response.data.data);
-      }
-    });
+    axios
+      .get(`common/contract/1`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setContractData(response.data.data);
+        }
+      });
   }, []);
 
   return (

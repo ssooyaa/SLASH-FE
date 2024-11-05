@@ -23,7 +23,13 @@ const ChartView = ({ selectedCriteria }) => {
   // 시스템 옵션 데이터를 가져오는 함수
   const fetchSystems = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-systems");
+      const token = localStorage.getItem("accessToken");
+
+      const response = await axios.get("http://localhost:8080/all-systems", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data.success) {
         const systemNames = response.data.data.map(
           (system) => system.systemName
@@ -45,8 +51,15 @@ const ChartView = ({ selectedCriteria }) => {
     if (!selectedSystem) return;
 
     try {
+      const token = localStorage.getItem("accessToken");
+
       setLoading(true);
+
       const response = await axios.get("http://localhost:8080/statistics", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+
         params: {
           serviceType: selectedCriteria,
           period: selectedPeriod,
