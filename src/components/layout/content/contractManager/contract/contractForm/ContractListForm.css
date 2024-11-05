@@ -9,6 +9,17 @@
   align-items: center;
 }
 
+.ContractTitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ContractTitle p {
+  width: 80%;
+}
+
 .contractListInfo {
   width: 80%;
   height: 850px;
@@ -23,4 +34,18 @@
 
 .contractListTable {
   margin-right: 20px;
+}
+
+.smallBlackButton {
+  width: 70px;
+  height: 42px;
+  background-color: var(--main--color);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.smallBlackButtons:hover {
+  background-color: #1d2637;
 }

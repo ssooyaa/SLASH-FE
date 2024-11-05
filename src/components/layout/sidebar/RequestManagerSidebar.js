@@ -28,7 +28,7 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="#"
+              href="/requestManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >

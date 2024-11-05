@@ -56,7 +56,7 @@
   padding-left: 35px;
 }
 
-.loginInputGroup input[type="text"] {
+.loginInputGroup input {
   flex: 1;
   border: none;
   outline: none;
