@@ -55,10 +55,10 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
             requestTime={requestData.requestTime}
             endTime={requestData.endTime}
             canDelete={
-              requestData.requester === "a" && requestData.status !== "진행중"
+              requestData.requester === "c" && requestData.status !== "진행중"
             }
             canEdit={
-              requestData.requester === "a" && requestData.status === "접수완료"
+              requestData.requester === "c" && requestData.status === "접수완료"
             }
             onDelete={handleDelete}
             onEdit={handleEdit}

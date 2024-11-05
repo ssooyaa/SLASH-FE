@@ -28,11 +28,14 @@ const ChartView = ({ selectedCriteria }) => {
     try {
       const token = localStorage.getItem("accessToken");
 
-      const response = await axios.get("http://localhost:8080/all-systems", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:8080/common/all-systems",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         const systemNames = response.data.data.map(
@@ -59,21 +62,23 @@ const ChartView = ({ selectedCriteria }) => {
 
       setLoading(true);
 
-      const response = await axios.get("http://localhost:8080/statistics", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await axios.get(
+        "http://localhost:8080/common/statistics",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
 
-
-        params: {
-          serviceType: selectedCriteria,
-          period: selectedPeriod,
-          targetSystem: selectedSystem,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+          params: {
+            serviceType: selectedCriteria,
+            period: selectedPeriod,
+            targetSystem: selectedSystem,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.data.success) {
         setStatistics({ [selectedSystem]: response.data.data });
       } else {

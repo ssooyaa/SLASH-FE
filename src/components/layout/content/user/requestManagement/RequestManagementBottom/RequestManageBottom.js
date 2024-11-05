@@ -40,6 +40,8 @@ const RequestManagementBottom = () => {
   const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
   const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
 
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+
   // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
   const fetchOptions = async () => {
     try {
@@ -50,19 +52,16 @@ const RequestManagementBottom = () => {
           axios.get("/common/systems", {
             headers: {
               Authorization: `Bearer ${token}`,
-
             },
           }),
           axios.get("/common/task-type", {
             headers: {
               Authorization: `Bearer ${token}`,
-
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
               Authorization: `Bearer ${token}`,
-
             },
           }),
         ]);
@@ -199,6 +198,10 @@ const RequestManagementBottom = () => {
     setIsModalOpen((prev) => !prev);
   };
 
+  const toggleRequestModal = () => {
+    setIsRequestModalOpen((prev) => !prev);
+  };
+
   //모달 열고 requestId 설정
   const openModal = (requestId) => {
     setSelectedRequestId(requestId);
@@ -216,9 +219,15 @@ const RequestManagementBottom = () => {
       {/* 요청 목록 상단 헤더 */}
       <div className="requestHeaderContainer">
         <div className="headerTop">
-          <button className="tabButton" onClick={toggleModal}>
+          <button className="tabButton" onClick={toggleRequestModal}>
             요청 등록
           </button>
+          {isRequestModalOpen && (
+            <CreateRequest
+              isModalOpen={isRequestModalOpen}
+              toggleModal={toggleRequestModal} // 모달 상태 변경 함수 전달
+            />
+          )}
         </div>
         <SearchBar onSearch={handleSearch} />
       </div>

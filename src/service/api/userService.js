@@ -7,12 +7,11 @@ export const fetchSystemAndEquipments = async () => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.get("/all-systems", {
+    const response = await axios.get("/common/all-systems", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
 
     if (response.data.success) {
       return response.data.data;
@@ -28,7 +27,7 @@ export const fetchTaskTypes = async () => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.get("/all-task-types", {
+    const response = await axios.get("/common/all-task-types", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -80,8 +79,8 @@ export const showRequestDetail = async (requestId) => {
   } catch (error) {
     console.error(error.response.data);
     throw error;
-   }
- };
+  }
+};
 
 export const deleteRequest = async (requestId) => {
   try {
@@ -104,7 +103,7 @@ export const editRequest = async (requestId, taskRequestDto) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.patch(
-      `/request/${requestId}`,
+      `/request-manager/request/${requestId}`,
       taskRequestDto,
       {
         headers: {
