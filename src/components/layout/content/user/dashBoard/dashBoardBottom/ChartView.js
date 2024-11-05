@@ -8,6 +8,9 @@ import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
 import { FaExclamationCircle } from "react-icons/fa";
 
+// Axios 기본 URL 설정
+axios.defaults.baseURL = "http://localhost:8080";
+
 // Initialize modules
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
@@ -30,6 +33,7 @@ const ChartView = ({ selectedCriteria }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (response.data.success) {
         const systemNames = response.data.data.map(
           (system) => system.systemName
@@ -60,10 +64,14 @@ const ChartView = ({ selectedCriteria }) => {
           Authorization: `Bearer ${token}`,
         },
 
+
         params: {
           serviceType: selectedCriteria,
           period: selectedPeriod,
           targetSystem: selectedSystem,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.data.success) {

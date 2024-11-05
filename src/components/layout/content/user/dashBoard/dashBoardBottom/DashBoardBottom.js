@@ -6,6 +6,9 @@ import TableView from "./TableView";
 import ChartView from "./ChartView";
 import axios from "axios";
 
+// Axios 기본 URL 설정
+axios.defaults.baseURL = "http://localhost:8080";
+
 const DashBoardBottom = () => {
   const targetCriteria = [
     "서비스 가동률",
@@ -17,6 +20,7 @@ const DashBoardBottom = () => {
   const [contractData, setContractData] = useState(null);
 
   useEffect(() => {
+
     const token = localStorage.getItem("accessToken");
     //계약 데이터 가져오기
     axios
@@ -29,6 +33,10 @@ const DashBoardBottom = () => {
         if (response.data.success) {
           setContractData(response.data.data);
         }
+      })
+      .catch((error) => {
+        console.error("계약 데이터를 가져오는 중 오류:", error);
+
       });
   }, []);
 

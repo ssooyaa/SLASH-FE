@@ -53,17 +53,23 @@ const RequestManagerBottom = () => {
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
+
               Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-type", {
             headers: {
+
               Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
+
               Authorization: `Bearer ${token}`,
+
             },
           }),
         ]);
@@ -105,6 +111,9 @@ const RequestManagerBottom = () => {
           keyword: searchTerm,
           page,
           size,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`, // 토큰 추가
         },
       })
       .then((response) => {

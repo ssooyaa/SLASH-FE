@@ -44,21 +44,25 @@ const RequestManagementBottom = () => {
   const fetchOptions = async () => {
     try {
       const token = localStorage.getItem("accessToken");
+
       const [systemsResponse, taskTypeResponse, taskDetailResponse] =
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
               Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-type", {
             headers: {
               Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
               Authorization: `Bearer ${token}`,
+
             },
           }),
         ]);
@@ -78,6 +82,7 @@ const RequestManagementBottom = () => {
   // 데이터를 필터링하고 가져오는 함수
   const fetchFilteredRequests = () => {
     const token = localStorage.getItem("accessToken");
+
     axios
       .get("/common/requests", {
         headers: {
@@ -97,6 +102,9 @@ const RequestManagementBottom = () => {
           keyword: searchTerm, // 검색어 추가
           page,
           size,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`, // 토큰 추가
         },
       })
       .then((response) => {

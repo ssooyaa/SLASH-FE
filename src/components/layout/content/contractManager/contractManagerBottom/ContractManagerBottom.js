@@ -59,11 +59,14 @@ const ContractManagerBottom = () => {
           axios.get("/common/task-type", {
             headers: {
               Authorization: `Bearer ${token}`,
+
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
+
               Authorization: `Bearer ${token}`,
+
             },
           }),
         ]);
@@ -106,6 +109,9 @@ const ContractManagerBottom = () => {
           keyword: searchTerm,
           page,
           size,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`, // 토큰 추가
         },
       })
       .then((response) => {

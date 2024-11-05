@@ -13,6 +13,7 @@ export const fetchSystemAndEquipments = async () => {
       },
     });
 
+
     if (response.data.success) {
       return response.data.data;
     } else {
@@ -66,21 +67,21 @@ export const createRequest = async (taskRequestDto) => {
   }
 };
 
-// export const showRequestDetail = async (requestId) => {
-//   try {
-//     const token = localStorage.getItem("accessToken");
-//     const response = await axios.get(`/common/request/${requestId}`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error.response.data);
-//     throw error;
-//   }
-// };
+export const showRequestDetail = async (requestId) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(`/common/request/${requestId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error.response.data);
+    throw error;
+   }
+ };
 
 export const deleteRequest = async (requestId) => {
   try {
