@@ -5,7 +5,7 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 export const fetchSystemAndEquipments = async () => {
   try {
-    const response = await axios.get("/all-systems");
+    const response = await axios.get("/common/all-systems");
 
     if (response.data.success) {
       return response.data.data;

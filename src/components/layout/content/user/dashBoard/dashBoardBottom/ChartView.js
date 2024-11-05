@@ -8,6 +8,9 @@ import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
 import { FaExclamationCircle } from "react-icons/fa";
 
+// Axios 기본 URL 설정
+axios.defaults.baseURL = "http://localhost:8080";
+
 // Initialize modules
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
@@ -23,7 +26,13 @@ const ChartView = ({ selectedCriteria }) => {
   // 시스템 옵션 데이터를 가져오는 함수
   const fetchSystems = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/all-systems");
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get("/common/all-systems", {
+        headers: {
+          Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
+        },
+      });
+
       if (response.data.success) {
         const systemNames = response.data.data.map(
           (system) => system.systemName
@@ -46,11 +55,15 @@ const ChartView = ({ selectedCriteria }) => {
 
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8080/statistics", {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get("/common/statistics", {
         params: {
           serviceType: selectedCriteria,
           period: selectedPeriod,
           targetSystem: selectedSystem,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.data.success) {
