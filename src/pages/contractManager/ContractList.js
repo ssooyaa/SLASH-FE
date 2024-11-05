@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
 import "../../styles/Content.css";
-import UpdateContractInfo from "../../components/layout/content/contractManager/contract/UpdateContractInfo";
+import ContractListInfo from "../../components/layout/content/contractManager/contract/ContractListInfo";
 
-const UpdateContract = () => {
+const ContractList = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -19,7 +19,7 @@ const UpdateContract = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
-      <UpdateContractInfo
+      <ContractListInfo
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
@@ -28,4 +28,4 @@ const UpdateContract = () => {
   );
 };
 
-export default UpdateContract;
+export default ContractList;

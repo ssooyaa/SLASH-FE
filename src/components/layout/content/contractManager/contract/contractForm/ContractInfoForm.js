@@ -32,7 +32,7 @@ const ContractInfoForm = () => {
   }
 
   const handleRedirect = () => {
-    //계약관리페이지 구현 후 작성
+    navigator(-1);
   };
 
   const handleEditMode = () => {

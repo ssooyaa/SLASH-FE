@@ -1,6 +1,6 @@
 const ErrorMessage = ({ message }) => {
   return (
-    <div className={`error-message ${message ? "active" : ""}`}>{message}</div>
+    <div className={`errorMessage ${message ? "active" : ""}`}>{message}</div>
   );
 };
 

@@ -2,9 +2,9 @@ import React from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import UpdateContractForm from "./contractForm/UpdateContractForm";
+import ContractListForm from "./contractForm/ContractListForm";
 
-const UpdateContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
+const ContractListInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -28,11 +28,11 @@ const UpdateContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <UpdateContractForm />
+          <ContractListForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default UpdateContractInfo;
+export default ContractListInfo;

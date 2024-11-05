@@ -5,8 +5,11 @@ import Header from "./Header";
 import InputGroup from "./InputGroup";
 import ErrorMessage from "./ErrorMessage";
 import "./Login.css";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -35,14 +38,25 @@ const Login = () => {
           },
         }
       );
-      console.log("로그인 성공:", response.data);
+      const { grantType, accessToken } = response.data;
 
-      // 로그인 성공 후 주어진 redirectUrl로 이동
-      const { redirectUrl } = response.data;
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        console.warn("Redirect URL이 제공되지 않았습니다.");
+      // 토큰 정보를 localStorage에 저장
+      localStorage.setItem("accessToken", accessToken);
+
+      const decoded = jwtDecode(accessToken);
+
+      switch (decoded.auth) {
+        case "ROLE_CONTRACT_MANAGER":
+          navigate("/contract-manager");
+          break;
+        case "ROLE_REQUEST_MANAGER":
+          navigate("/request-manager");
+          break;
+        case "ROLE_USER":
+          navigate("/user");
+          break;
+        default:
+          navigate("/error");
       }
     } catch (error) {
       console.error("로그인 실패:", error.response?.data);
@@ -61,11 +75,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="loginPage">
+      <div className="loginContainer">
         <Header />
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="loginForm" onSubmit={handleSubmit}>
           <InputGroup
             type="text"
             value={id}
@@ -74,7 +88,7 @@ const Login = () => {
               setId(e.target.value);
               setErrors((prev) => ({ ...prev, id: "" }));
             }}
-            icon={<FaUser className="input-icon" />}
+            icon={<FaUser className="inputIcon" />}
             error={errors.id}
           />
           <ErrorMessage message={errors.id} />
@@ -87,14 +101,14 @@ const Login = () => {
               setPassword(e.target.value);
               setErrors((prev) => ({ ...prev, password: "" }));
             }}
-            icon={<FaLock className="input-icon" />}
+            icon={<FaLock className="inputIcon" />}
             isPassword
             toggleVisibility={togglePasswordVisibility}
             error={errors.password}
           />
           <ErrorMessage message={errors.password} />
 
-          <button type="submit" className="login-button">
+          <button type="submit" className="loginButton">
             로그인
           </button>
         </form>
