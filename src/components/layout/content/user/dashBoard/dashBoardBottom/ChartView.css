@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap");
+
+body {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+.statisticsContainer {
+  width: auto;
+  min-height: 320px;
+  padding: 5px 15px;
+  background-color: white;
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  align-content: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+.dropDown {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  margin-bottom: 85px;
+  margin-left: -6px;
+}
+
+.statisticItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 320px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: all 0.3s ease;
+  margin-top: -10px;
+  gap: 20px;
+}
+
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  position: relative;
+  margin-left: 130px;
+  flex: 1 1 1 33%; /* Two items per row */
+  max-width: 15%;
+  margin-bottom: 20px; /* Space below each row */
+}
+
+.statDate {
+  font-size: 1rem;
+  color: #212222;
+  font-weight: bold;
+  margin-left: -130px;
+}
+.serviceType {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: bold;
+  margin-top: -30px;
+  margin-left: -70px;
+  align-self: flex-start; /* 왼쪽 정렬 */
+}
+
+.statDetails {
+  margin-left: -20px;
+  margin-top: -15px;
+}
+
+.statDetails p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.statDetails p:first-child {
+  font-weight: bold;
+}
+
+.statisticItem .highcharts-root {
+  width: 500px;
+  margin-top: -27px;
+  margin-left: -10px;
+}
+.systemCharts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 두 개의 열 생성 */
+}
+
+/* Optional: Center-align if charts are not full-width */
+.systemCharts {
+  justify-content: space-around;
+  gap: 38px;
+}
+
+.noDataMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #666;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 90%;
+}
+
+.noDataIcon {
+  font-size: 2rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
