@@ -1,0 +1,46 @@
+.dashboardToggle {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 115px;
+  height: 50%;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+.tableView {
+  width: auto;
+  height: 350px;
+  margin-top: 20px;
+  padding: 5px 15px;
+  background-color: white;
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  align-content: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+.ctable,
+.chart {
+  flex: 1;
+  padding: 4px;
+  border: none;
+  background-color: #f5faff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.ctable.active,
+.chart.active {
+  background-color: #d4ebff;
+}
+
+.ctable:hover,
+.chart:hover {
+  background-color: #e0f0ff;
+}
