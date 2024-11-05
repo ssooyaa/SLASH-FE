@@ -1,0 +1,32 @@
+.contractUpdateBtn {
+  text-align: end;
+  padding-right: 80px;
+}
+
+.categoryListTitle {
+  display: flex;
+  margin-top: 10px;
+  text-align: start;
+  gap: 10px;
+  height: 40px;
+  align-items: center;
+}
+
+.categoryListTitle {
+  font-size: 14px;
+  color: #767676;
+}
+
+.categoryListTitle button {
+  border: none;
+  height: 30px;
+  background-color: white;
+  color: var(--main--gray);
+}
+
+.serviceFormButton {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  gap: 10px;
+}

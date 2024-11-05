@@ -1,14 +1,16 @@
 @import "../../../styles/Common.css";
+
 .deleteCol {
   background-color: white !important;
   border: none !important;
-  width: 30px !important;
+  width: 35px !important;
 }
 
 .deleteCol svg {
   position: absolute;
   display: none;
   color: var(--main--gray);
+  font-size: 11px;
   padding-left: 25px;
 }
 
@@ -53,11 +55,14 @@
   border: none;
   position: absolute;
   background-color: transparent;
-  width: 40px;
-  left: -5px;
-  top: 15px;
+  width: 55px;
+  left: -20px;
+  top: 20px;
   z-index: 2;
-  font-size: 15px;
+  font-size: 13px;
+  color: black;
+  margin-right: 10px;
+  padding: 0px;
 }
 
 .plusIcon {

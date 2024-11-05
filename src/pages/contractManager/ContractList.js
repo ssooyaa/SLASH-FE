@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
 import "../../styles/Content.css";
-import ServiceInfo from "../../components/layout/content/contractManager/service/ServiceInfo";
+import ContractListInfo from "../../components/layout/content/contractManager/contract/ContractListInfo";
 
-const ServiceInformation = () => {
+const ContractList = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -19,7 +19,7 @@ const ServiceInformation = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
-      <ServiceInfo
+      <ContractListInfo
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
@@ -27,4 +27,5 @@ const ServiceInformation = () => {
     </div>
   );
 };
-export default ServiceInformation;
+
+export default ContractList;

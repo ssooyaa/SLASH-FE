@@ -28,9 +28,6 @@ const ContractServiceCard = ({ initialData }) => {
 
   return (
     <>
-      <div className="cardTitle">
-        <p>{categoryName || "카테고리 없음"}</p>
-      </div>
       <div className="serviceCardSection">
         {serviceDetail.formula ? (
           <div className="cardInfo" onClick={handleServiceDetail}>

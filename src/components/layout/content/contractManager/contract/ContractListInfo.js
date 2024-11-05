@@ -2,9 +2,9 @@ import React from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ServiceInfoForm from "./serviceForm/ServiceInfoForm";
+import ContractListForm from "./contractForm/ContractListForm";
 
-const ServiceInfo = ({ isNavOpen, toggleNav, effectClass }) => {
+const ContractListInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -18,6 +18,7 @@ const ServiceInfo = ({ isNavOpen, toggleNav, effectClass }) => {
         <FaBars />
       </button>
 
+      {/* 프로필 및 환영 메시지 추가 */}
       <div className="profileSection">
         <div className="profileInfo">
           <IoPersonCircle className="profileImg" />
@@ -27,10 +28,11 @@ const ServiceInfo = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ServiceInfoForm />
+          <ContractListForm />
         </div>
       </div>
     </div>
   );
 };
-export default ServiceInfo;
+
+export default ContractListInfo;

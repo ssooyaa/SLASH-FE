@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./GradeInputTable.css";
 import { CgMenuGridO } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 
-const GradeInputTable = ({ initialData, onDataChange }) => {
+const NoScoreGradeInputTable = ({ initialData, onDataChange }) => {
   const [data, setData] = useState(
     initialData.length > 0
       ? initialData
@@ -13,7 +12,6 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
           max: 0,
           minInclusive: true,
           maxInclusive: false,
-          score: 0,
         })
   );
 
@@ -28,7 +26,6 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
             max: 0,
             minInclusive: true,
             maxInclusive: false,
-            score: 0,
           })
     );
   }, [initialData]);
@@ -89,7 +86,6 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
             <th> 서비스 수준 등급 </th>
             <th className="tableSelect">최소</th>
             <th className="tableSelect">최대</th>
-            <th>변환점수</th>
           </tr>
         </thead>
         <tbody>
@@ -155,14 +151,6 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
                   <option value={true}>이하</option>
                 </select>
               </td>
-              <td>
-                <input
-                  type="number"
-                  className="fullInput"
-                  value={item.score}
-                  onChange={(e) => handleData(index, "score", e.target.value)}
-                />
-              </td>
             </tr>
           ))}
           <tr>
@@ -178,4 +166,4 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
   );
 };
 
-export default GradeInputTable;
+export default NoScoreGradeInputTable;

@@ -1,11 +1,113 @@
+@import "../../../../../../styles/Common.css";
+
 .contractTemplate {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-height: 900px;
-    box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
-    background-color: white;
-    border-radius: 10px;
-  }  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 900px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  background-color: white;
+  border-radius: 10px;
+}
+
+.contractForm {
+  width: 90%;
+  height: 850px;
+  padding-left: 100px;
+  overflow: scroll;
+}
+
+.contractInfo,
+.evaluationItemsInfo {
+  width: 90%;
+}
+
+.companyInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.companyNameLabel input {
+  margin-left: 23px;
+}
+
+.companyData {
+  height: 35px !important;
+  width: 354px !important;
+  padding: 10px;
+  padding-right: 35px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.companyData:focus {
+  border-color: black;
+  outline: none;
+}
+
+.calendarIcon {
+  position: relative;
+  cursor: pointer;
+  font-size: 24px;
+  top: 20px;
+  left: -30px;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.calendarModal {
+  position: absolute;
+  z-index: 1000;
+}
+
+.evaluationItemsTitle {
+  width: 100%;
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+  padding-left: 40px;
+}
+
+.addItems {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  color: var(--main--gray);
+  cursor: pointer;
+  width: 190px;
+}
+
+.evaluationDeleteBtn {
+  position: relative;
+  top: 100px;
+  left: -30px;
+}
+
+.categoryTitle {
+  display: flex;
+  margin-top: 10px;
+  text-align: start;
+  padding-left: 50px;
+  gap: 10px;
+}
+
+.categoryTitle button {
+  border: none;
+  background-color: white;
+  color: var(--main--gray);
+}
+
+.evaluationItemsDetail {
+  min-height: 190px;
+}
+
+.agreement {
+  text-align: end;
+  padding-right: 100px;
+}

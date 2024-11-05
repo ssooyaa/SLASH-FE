@@ -1,6 +1,6 @@
 import React from "react";
 
-const GradeVerticalTable = ({ data }) => {
+const NoScoreGradeTable = ({ data }) => {
   return (
     <table>
       <thead>
@@ -8,7 +8,6 @@ const GradeVerticalTable = ({ data }) => {
           <th>서비스 수준 등급</th>
           <th>최소</th>
           <th>최대</th>
-          <th>변환 점수</th>
         </tr>
       </thead>
       <tbody>
@@ -24,7 +23,6 @@ const GradeVerticalTable = ({ data }) => {
                 {item.max}
                 {item.maxInclusive ? "이하" : "미만"}
               </td>
-              <td>{item.score}</td>
             </tr>
           );
         })}
@@ -33,4 +31,4 @@ const GradeVerticalTable = ({ data }) => {
   );
 };
 
-export default GradeVerticalTable;
+export default NoScoreGradeTable;

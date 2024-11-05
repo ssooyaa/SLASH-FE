@@ -1,46 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { fetchServiceInfo } from "../../../../../../api/UserService";
-import { useNavigate, useLocation } from "react-router-dom";
+import React from "react";
 import ServiceDetailTable from "../../../../../feature/table/ServiceDetailTable";
 import GradeVerticalTable from "../../../../../feature/table/GradeVerticalTable";
 import TaskDetailTable from "../../../../../feature/table/TaskDetailTable";
 import OneColTable from "../../../../../feature/table/OneColTable";
+import NoScoreGradeTable from "../../../../../feature/table/NoScoreGradeTable";
 import "./ServiceInfoForm.css";
 
-const ServiceInfoForm = () => {
-  const location = useLocation();
-  const { categoryId, categoryName } = location.state || {};
-
-  const [data, setData] = useState(null);
-  const navigate = useNavigate(); // 오타 수정
-
-  useEffect(() => {
-    const loadData = async () => {
-      const response = await fetchServiceInfo(categoryId);
-      setData(response || {});
-    };
-    loadData();
-  }, [categoryId]);
-
-  if (!data || Object.keys(data).length === 0) {
-    return <p>Loading...</p>;
-  }
-
-  const handleRedirect = () => {
-    navigate("/contractManager/contract");
-  };
-
-  const handleModify = () => {
-    navigate("/contractManager/createService", {
-      state: { categoryId, categoryName },
-    });
-  };
+const ServiceInfoForm = ({ initialData }) => {
+  const data = initialData;
 
   return (
     <div className="form">
       <div className="serviceForm">
-        <div className="categoryTitle">
-          <p>{data.categoryName}</p>
+        <div className="evaluationItemTitle">
+          <p>{data.category}</p>
         </div>
         <div className="serviceInfoDetail">
           <div className="tableTitle">
@@ -58,7 +31,11 @@ const ServiceInfoForm = () => {
               <span>*</span>
             </div>
             <div className="table infoTable">
-              <GradeVerticalTable data={data.serviceTargets || []} />
+              {data.unit === "건" ? (
+                <GradeVerticalTable data={data.serviceTargets || []} />
+              ) : (
+                <NoScoreGradeTable data={data.serviceTargets} />
+              )}
             </div>
           </div>
           {data.taskTypes && data.taskTypes.length > 0 && (
@@ -79,14 +56,6 @@ const ServiceInfoForm = () => {
               </div>
             </div>
           )}
-        </div>
-        <div className="serviceFormButton">
-          <button className="grayButton" onClick={() => handleRedirect()}>
-            닫기
-          </button>
-          <button className="blackButton" onClick={() => handleModify()}>
-            수정
-          </button>
         </div>
       </div>
     </div>
