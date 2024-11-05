@@ -21,7 +21,7 @@
 }
 
 /* 모달 배경 */
-.modal-overlay {
+.modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -35,7 +35,7 @@
 }
 
 /* 모달 내용 */
-.modal-content {
+.modalContent {
     height: 200px;
     align-content: center;
     background: white;

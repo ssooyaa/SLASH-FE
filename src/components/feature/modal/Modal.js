@@ -5,8 +5,8 @@ const Modal = ({isOpen, onClose, message}) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modalOerlay" onClick={onClose}>
+            <div className="modalContent" onClick={(e) => e.stopPropagation()}>
                 <div className="markBox">
                     <div className="mark">!</div>
                 </div>
