@@ -62,8 +62,8 @@ const RequestDetailBottom = () => {
             {!isAssigned && ( // 할당 여부 체크
                 <div className="rdBox">
                     <h3>업무 현황</h3>
-                    <table>
-                        <thead>
+                    <table className="tb">
+                        <thead className="thd">
                         <tr>
                             <th>이름</th>
                             <th>할당 건수</th>
@@ -71,21 +71,21 @@ const RequestDetailBottom = () => {
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="tbd">
                         {loading ? ( // 로딩 상태 체크
-                            <tr>
-                                <td>Loading...</td>
-                                <td>Loading...</td>
-                                <td>Loading...</td>
-                                <td>Loading...</td>
+                            <tr className="loading-row">
+                                <td className="tData">Loading...</td>
+                                <td className="tData">Loading...</td>
+                                <td className="tData">Loading...</td>
+                                <td className="tData">Loading...</td>
                             </tr>
                         ) : result && result.length > 0 ? (
                             result.map((item) => (
                                 <tr key={item.managerId}>
-                                    <td>{item.managerName}</td>
-                                    <td>{item.totalCount}건</td>
-                                    <td>{item.inProgressCount}건</td>
-                                    <td><AssignmentButton onClick={() => handleAssign(item.managerId)}/></td>
+                                    <td className="tData">{item.managerName}</td>
+                                    <td className="tData">{item.totalCount}건</td>
+                                    <td className="tData">{item.inProgressCount}건</td>
+                                    <td className="tData"><AssignmentButton onClick={() => handleAssign(item.managerId)}/></td>
                                 </tr>
                             ))
                         ) : (

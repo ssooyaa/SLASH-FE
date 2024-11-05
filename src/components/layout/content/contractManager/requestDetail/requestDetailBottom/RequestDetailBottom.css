@@ -19,38 +19,38 @@
     text-align: left;
 }
 
-table {
+.tb {
     width: 100%;
     border-collapse: collapse;
 }
 
-thead th {
+.thd th {
     padding: 10px;
     text-align: left;
     font-weight: bold;
     border-bottom: 1px solid #ddd;
 }
 
-tbody td {
+.tbd td {
     padding: 10px 12px; /* 원하는 여백만큼 조절 */
     border-bottom: 1px solid #ddd;
 }
 
-tbody tr:hover {
+.tbd tr:hover {
     background-color: #f1f1f1; /* 행 hover 효과 */
 }
 
-td {
+.tData {
     text-align: left;
     color: #333;
 }
 
-td:last-child {
+.tData:last-child {
     cursor: pointer;
     text-decoration: underline;
 }
 
-td:last-child:hover {
+.tData:last-child:hover {
 
 }
 

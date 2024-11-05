@@ -88,10 +88,15 @@ export const fetchAllContractInfo = async () => {
 
 export const getMonthlyData = async (selectedYear, selectedMonth) => {
   try {
+    const token = localStorage.getItem("accessToken");
     const params = { year: selectedYear, month: selectedMonth };
     console.log("전송 값:", params);
 
-    const response = await axios.get("/request-manager/monthly-data", { params });
+    const response = await axios.get("/request-manager/monthly-data", { params },{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("서버 응답:", JSON.stringify(response.data, null, 2));
 
     return response.data; // 데이터를 반환
@@ -104,7 +109,12 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
 
 export const assignTaskManager = async (dto) => {
     try {
-        const response = await axios.patch('/request/allocate', dto);
+      const token = localStorage.getItem("accessToken");
+        const response = await axios.patch('/request/allocate', dto,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log("전송 데이터:", dto); // 전송 데이터 출력
 
         return response.data; // 응답 데이터 반환
@@ -115,7 +125,12 @@ export const assignTaskManager = async (dto) => {
 
 export const getManagerTaskStatus = async () => {
   try {
-    const response = await axios.get("/contract-manager/status");
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get("/contract-manager/status",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log("서버 응답:", JSON.stringify(response.data, null, 2));
 
     return response.data; // 데이터를 반환
