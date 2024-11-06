@@ -14,7 +14,7 @@ const DueOnTimeLabel = ({ dueOnTime }) => {
   };
 
   return (
-    <div className="taskLabel" style={getLabelStyle(dueOnTime)}>
+    <div className="label" style={getLabelStyle(dueOnTime)}>
       {dueOnTime ? "적기 처리 완료" : "지연 처리"}
     </div>
   );
