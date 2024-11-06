@@ -150,7 +150,7 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
 export const assignTaskManager = async (dto) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.patch("/request/allocate", dto, {
+    const response = await axios.patch("/contract-manager/request/allocate", dto, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
