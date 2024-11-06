@@ -19,7 +19,7 @@ const RequestLabel = ({ requestType }) => {
   };
 
   return (
-    <div className="taskLabel" style={getLabelStyle(requestType)}>
+    <div className="label" style={getLabelStyle(requestType)}>
       {requestType}
     </div>
   );
