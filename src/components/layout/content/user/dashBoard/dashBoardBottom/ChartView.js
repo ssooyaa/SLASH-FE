@@ -16,7 +16,7 @@ HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
 const ChartView = ({ selectedCriteria }) => {
-  const [selectedSystem, setSelectedSystem] = useState("DB");
+  const [selectedSystem, setSelectedSystem] = useState("백업");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
   const [targetSystems, setTargetSystems] = useState([]);
   const [statistics, setStatistics] = useState({});

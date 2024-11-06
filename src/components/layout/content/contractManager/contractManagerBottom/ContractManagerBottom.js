@@ -53,24 +53,32 @@ const ContractManagerBottom = () => {
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+              Authorization: `Bearer ${token}`,
             },
           }),
           axios.get("/common/task-type", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+              Authorization: `Bearer ${token}`,
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
-              Authorization: `Bearer ${token}`, // 토큰 추가
+              Authorization: `Bearer ${token}`,
             },
           }),
         ]);
 
-      setEquipmentTypeOptions(systemsResponse.data);
-      setTaskTypeOptions(taskTypeResponse.data);
-      setTaskDetailOptions(taskDetailResponse.data);
+      // `data` 속성 안에 있는 배열만 가져오도록 수정
+      setEquipmentTypeOptions(
+        Array.isArray(systemsResponse.data.data)
+          ? systemsResponse.data.data
+          : []
+      );
+      setTaskDetailOptions(
+        Array.isArray(taskDetailResponse.data.data)
+          ? taskDetailResponse.data.data
+          : []
+      );
     } catch (error) {
       console.error("Error fetching options:", error);
     }
@@ -350,10 +358,10 @@ const ContractManagerBottom = () => {
                 </td>
                 <td className="truncate">{task.title}</td>
                 <td className="truncate">{task.content}</td>
-                <td>{formatDate(task.createTime)}</td>
+                <td>{formatDateTime(task.createTime)}</td>
                 <td>
                   {task.status === "COMPLETED"
-                    ? formatDate(task.updateTime)
+                    ? formatDateTime(task.updateTime)
                     : ""}
                 </td>
                 <td>
@@ -396,10 +404,16 @@ const ContractManagerBottom = () => {
   );
 };
 
-const formatDate = (dateArray) => {
-  if (!Array.isArray(dateArray) || dateArray.length < 5) return "Invalid date";
-  const [year, month, day, hour, minute] = dateArray;
-  return `${year}.${month}.${day} ${hour}시${minute}분`;
-};
+function formatDateTime(dateTimeString) {
+  const date = new Date(dateTimeString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}.${month}.${day} ${hours}:${minutes}`;
+}
 
 export default ContractManagerBottom;
