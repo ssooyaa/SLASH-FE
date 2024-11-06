@@ -347,10 +347,10 @@ const RequestManagerBottom = () => {
                 </td>
                 <td className="truncate">{task.title}</td>
                 <td className="truncate">{task.content}</td>
-                <td>{formatDate(task.createTime)}</td>
+                <td>{formatDateTime(task.createTime)}</td>
                 <td>
                   {task.status === "COMPLETED"
-                    ? formatDate(task.updateTime)
+                    ? formatDateTime(task.updateTime)
                     : ""}
                 </td>
                 <td>
@@ -393,10 +393,16 @@ const RequestManagerBottom = () => {
   );
 };
 
-const formatDate = (dateArray) => {
-  if (!Array.isArray(dateArray) || dateArray.length < 5) return "Invalid date";
-  const [year, month, day, hour, minute] = dateArray;
-  return `${year}.${month}.${day} ${hour}시${minute}분`;
-};
+function formatDateTime(dateTimeString) {
+  const date = new Date(dateTimeString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}.${month}.${day} ${hours}:${minutes}`;
+}
 
 export default RequestManagerBottom;
