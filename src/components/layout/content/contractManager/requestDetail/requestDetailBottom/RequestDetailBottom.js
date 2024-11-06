@@ -7,6 +7,7 @@ import "./RequestDetailBottom.css";
 import AssignmentButton from "../../../../../common/button/AssignmentButton";
 import { useParams } from "react-router-dom";
 import Modal from "../../../../../feature/modal/Modal";
+import RequestDetail from "../../../../../feature/request/select/RequestDetail";
 
 const RequestDetailBottom = () => {
   const { requestId } = useParams(); // URL에서 requestId 가져오기
@@ -57,6 +58,9 @@ const RequestDetailBottom = () => {
 
   return (
     <div>
+      <div className="requestBox">
+        <RequestDetail requestId={requestId} />
+      </div>
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
