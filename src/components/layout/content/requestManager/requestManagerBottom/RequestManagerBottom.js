@@ -68,9 +68,17 @@ const RequestManagerBottom = () => {
           }),
         ]);
 
-      setEquipmentTypeOptions(systemsResponse.data);
-      setTaskTypeOptions(taskTypeResponse.data);
-      setTaskDetailOptions(taskDetailResponse.data);
+      // `data` 속성 안에 있는 배열만 가져오도록 수정
+      setEquipmentTypeOptions(
+        Array.isArray(systemsResponse.data.data)
+          ? systemsResponse.data.data
+          : []
+      );
+      setTaskDetailOptions(
+        Array.isArray(taskDetailResponse.data.data)
+          ? taskDetailResponse.data.data
+          : []
+      );
     } catch (error) {
       console.error("Error fetching options:", error);
     }

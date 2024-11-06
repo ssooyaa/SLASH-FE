@@ -37,8 +37,8 @@ const RequestManagementBottom = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // 동적 드롭다운 옵션 상태
-  const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
-  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
+  const [taskDetailOptions, setTaskDetailOptions] = useState([]);
+  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState([]);
 
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
 
@@ -66,8 +66,17 @@ const RequestManagementBottom = () => {
           }),
         ]);
 
-      setEquipmentTypeOptions(systemsResponse.data);
-      setTaskDetailOptions(taskDetailResponse.data);
+      // `data` 속성 안에 있는 배열만 가져오도록 수정
+      setEquipmentTypeOptions(
+        Array.isArray(systemsResponse.data.data)
+          ? systemsResponse.data.data
+          : []
+      );
+      setTaskDetailOptions(
+        Array.isArray(taskDetailResponse.data.data)
+          ? taskDetailResponse.data.data
+          : []
+      );
     } catch (error) {
       console.error("Error fetching options:", error);
     }
@@ -277,23 +286,29 @@ const RequestManagementBottom = () => {
                   </span>
                   {isOpenTaskDetail && (
                     <div className="dropdownList">
-                      {taskDetailOptions.map((option) => (
-                        <label
-                          key={option}
-                          className={`dropdownOption ${selectedTaskDetail === option ? "boldText" : "normalText"}`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedTaskDetail === option}
-                            onChange={() => handleSelectTaskDetail(option)}
-                          />
-                          {option}
-                        </label>
-                      ))}
+                      {taskDetailOptions.map(
+                        (
+                          option,
+                          index // index를 key로 사용
+                        ) => (
+                          <label
+                            key={index} // index로 key 설정
+                            className={`dropdownOption ${selectedTaskDetail === option ? "boldText" : "normalText"}`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedTaskDetail === option}
+                              onChange={() => handleSelectTaskDetail(option)}
+                            />
+                            {option}
+                          </label>
+                        )
+                      )}
                     </div>
                   )}
                 </div>
               </th>
+
               <th>요청 제목</th>
               <th>요청 내용</th>
               <th>요청 시간</th>
