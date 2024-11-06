@@ -53,23 +53,17 @@ const RequestManagerBottom = () => {
         await Promise.all([
           axios.get("/common/systems", {
             headers: {
-
               Authorization: `Bearer ${token}`,
-
             },
           }),
           axios.get("/common/task-type", {
             headers: {
-
               Authorization: `Bearer ${token}`,
-
             },
           }),
           axios.get("/common/task-detail", {
             headers: {
-
               Authorization: `Bearer ${token}`,
-
             },
           }),
         ]);
@@ -216,11 +210,6 @@ const RequestManagerBottom = () => {
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
-        <div className="headerTop">
-          <button className="tabButton" onClick={toggleModal}>
-            요청 등록
-          </button>
-        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
 
