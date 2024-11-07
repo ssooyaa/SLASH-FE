@@ -191,15 +191,17 @@
   position: relative;
 }
 
-.page-button,
-.arrow-button {
+.pageButton,
+.arrowButton {
   background-color: transparent;
   color: #444343;
   border: none;
   cursor: pointer;
   font-size: 75%;
   border-radius: 29%;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   width: 1.2rem;
   height: 1.2rem;
   display: flex;
@@ -207,19 +209,19 @@
   justify-content: center;
 }
 
-.page-button.activePage {
+.pageButton.activePage {
   background-color: #121824; /* 현재 페이지 배경색 */
   color: #fff; /* 현재 페이지 텍스트 색 */
   font-weight: bold;
 }
 
-.page-button:hover:not(.activePage),
-.arrow-button:hover {
+.pageButton:hover:not(.activePage),
+.arrowButton:hover {
   background-color: #dadce0; /* 호버 시 배경색 */
   color: #121824; /* 호버 시 텍스트 색 */
 }
 
-.arrow-button:disabled {
+.arrowButton:disabled {
   color: #ccc;
   cursor: not-allowed;
 }
@@ -228,4 +230,17 @@
   padding: 6px;
   color: #888;
   font-size: 1rem;
+}
+
+/* tr에 대한 hover 효과 */
+.clickableRow {
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border 0.3s ease;
+}
+
+.clickableRow:hover {
+  background-color: #eaeff3; /* 연한 파란색 배경 */
+  border-radius: 5px; /* 테두리에 둥근 모서리 */
 }
