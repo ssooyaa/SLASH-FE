@@ -116,6 +116,7 @@ const RequestManagementBottom = () => {
         },
       })
       .then((response) => {
+        console.log("Response Data:", response.data); // 응답 데이터 출력
         const responseData = response.data.data;
         if (responseData && Array.isArray(responseData.results)) {
           setTaskRequests(responseData.results);
@@ -202,10 +203,6 @@ const RequestManagementBottom = () => {
   };
 
   const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
-
-  const toggleModal = () => {
-    setIsModalOpen((prev) => !prev);
-  };
 
   const toggleRequestModal = () => {
     setIsRequestModalOpen((prev) => !prev);
@@ -347,42 +344,33 @@ const RequestManagementBottom = () => {
           </thead>
           <tbody>
             {taskRequests.map((task, index) => (
-              <tr key={task.requester || index}>
-                <td onClick={() => openModal(task.requester)}>
-                  {task.requesterName}
-                </td>
-                <td onClick={() => openModal(task.requester)}>
-                  {task.managerName}
-                </td>
+              <tr className="clickableRow" key={task.requester || index}>
+                <td onClick={() => openModal(task.id)}>{task.requesterName}</td>
+                <td onClick={() => openModal(task.id)}>{task.managerName}</td>
                 <td
                   className="equipmentCell"
-                  onClick={() => openModal(task.requester)}
+                  onClick={() => openModal(task.id)}
                 >
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
-                <td onClick={() => openModal(task.requester)}>
+                <td onClick={() => openModal(task.id)}>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
-                <td
-                  className="truncate"
-                  onClick={() => openModal(task.requester)}
-                >
+                <td className="truncate" onClick={() => openModal(task.id)}>
                   {task.title}
                 </td>
-                <td
-                  className="truncate"
-                  onClick={() => openModal(task.requester)}
-                >
+                <td className="truncate" onClick={() => openModal(task.id)}>
                   {task.content}
                 </td>
-                <td onClick={() => openModal(task.requester)}>
+                <td onClick={() => openModal(task.id)}>
                   {formatDateTime(task.createTime)}
                 </td>
-                <td onClick={() => openModal(task.requester)}>
+                <td onClick={() => openModal(task.id)}>
                   {task.status === "COMPLETED"
                     ? formatDateTime(task.updateTime)
                     : ""}
                 </td>
+                {/* 마지막 <td>는 클릭 이벤트 없음 */}
                 <td>
                   <ProcessStatusLabel processType={task.status} />
                 </td>
@@ -401,7 +389,7 @@ const RequestManagementBottom = () => {
 
       <div className="pagination">
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handlePreviousPageGroup}
           disabled={pageGroup === 0}
         >
@@ -411,7 +399,7 @@ const RequestManagementBottom = () => {
         {renderPageNumbers().map((number) => (
           <button
             key={number}
-            className={`page-button ${page === number ? "activePage" : ""}`}
+            className={`pageButton ${page === number ? "activePage" : ""}`}
             onClick={() => handlePageChange(number)}
           >
             {number}
@@ -419,7 +407,7 @@ const RequestManagementBottom = () => {
         ))}
 
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handleNextPageGroup}
           disabled={(pageGroup + 1) * 6 >= totalPages}
         >

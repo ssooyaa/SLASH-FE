@@ -6,6 +6,7 @@ import EquipmentTypeLabel from "../../../../labels/equipmentType/EquipmentTypeLa
 import TaskDetailLabel from "../../../../labels/taskDetail/TaskDetailLabel";
 import TaskTypeLabel from "../../../../labels/taskType/TaskTypeLabel";
 import ProcessStatusLabel from "../../../../labels/processStatus/ProcessStatusLabel";
+import ShowRequestDetailModal from "../../../../feature/request/select/RequestDetailModal";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -21,6 +22,7 @@ const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
 const RequestManagerBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
   const [selectedTaskType, setSelectedTaskType] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
@@ -77,6 +79,11 @@ const RequestManagerBottom = () => {
       setTaskDetailOptions(
         Array.isArray(taskDetailResponse.data.data)
           ? taskDetailResponse.data.data
+          : []
+      );
+      setTaskTypeOptions(
+        Array.isArray(taskTypeResponse.data.data)
+          ? taskTypeResponse.data.data
           : []
       );
     } catch (error) {
@@ -215,6 +222,19 @@ const RequestManagerBottom = () => {
     setIsModalOpen((prev) => !prev);
   };
 
+  //모달 열고 requestId 설정
+  const openModal = (requestId) => {
+    setSelectedRequestId(requestId);
+    setIsModalOpen(true);
+    console.log(requestId);
+  };
+
+  //모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequestId(null);
+  };
+
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
@@ -342,14 +362,17 @@ const RequestManagerBottom = () => {
 
           <tbody>
             {taskRequests.map((task, index) => (
-              <tr key={task.id || index}>
+              <tr
+                key={task.id || index}
+                className="clickableRow"
+                onClick={() => openModal(task.id)}
+              >
                 <td>
                   <TaskTypeLabel taskType={task.type} />
                 </td>
                 <td className="equipmentCell">
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
-
                 <td>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
@@ -369,10 +392,16 @@ const RequestManagerBottom = () => {
           </tbody>
         </table>
       </div>
-
+      {/* 모달이 열려 있을 때만 ShowRequestDetailModal 컴포넌트 표시 */}
+      {isModalOpen && (
+        <ShowRequestDetailModal
+          toggleModal={closeModal}
+          requestId={selectedRequestId}
+        />
+      )}
       <div className="pagination">
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handlePreviousPageGroup}
           disabled={pageGroup === 0}
         >
@@ -382,7 +411,7 @@ const RequestManagerBottom = () => {
         {renderPageNumbers().map((number) => (
           <button
             key={number}
-            className={`page-button ${page === number ? "activePage" : ""}`}
+            className={`pageButton ${page === number ? "activePage" : ""}`}
             onClick={() => handlePageChange(number)}
           >
             {number}
@@ -390,7 +419,7 @@ const RequestManagerBottom = () => {
         ))}
 
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handleNextPageGroup}
           disabled={(pageGroup + 1) * 6 >= totalPages}
         >
