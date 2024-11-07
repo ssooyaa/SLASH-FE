@@ -1,28 +1,29 @@
 import React, {useEffect, useState} from "react";
 import MonthPicker from "../../../../feature/MonthPicker";
-import "../../../../feature/MonthPicker.css"
+import "../../../../feature/MonthPicker.css";
 import "./RequestManagerTop.css";
-import {getMonthlyData} from "../../../../../api/UserService";
-import {PieChart} from "../../../../feature/chart/systemTypeChart/PieChart";
-import "../../../../feature/chart/systemTypeChart/PieChart.css"
+import { getMonthlyData } from "../../../../../api/UserService";
+import { PieChart } from "../../../../feature/chart/systemTypeChart/PieChart";
+import "../../../../feature/chart/systemTypeChart/PieChart.css";
 
 const RequestManagerTop = () => {
     const [monthlyData, setMonthlyData] = useState(null);
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(
-        String(new Date().getMonth() + 1).padStart(2, "0"),
+        String(new Date().getMonth() + 1).padStart(2, "0")
     );
+
+    // MonthPicker에서 데이터를 업데이트할 핸들러 함수
+    const handleMonthlyDataChange = async (selectedYear, selectedMonth) => {
+        console.log("받은 데이터:", selectedYear, selectedMonth);
+        const data = await getMonthlyData(selectedYear, selectedMonth);
+        setMonthlyData(data.data);
+    };
 
     // 초기 데이터 요청
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await getMonthlyData(year, month);
-            console.log("초기 데이터:", response.data); // 초기 데이터 출력
-            setMonthlyData(response.data); // 상태 업데이트
-        };
-
-        fetchData(); // 데이터 요청
-    }, [year, month]); // year와 month가 변경될 때마다 호출
+        handleMonthlyDataChange(year, month); // 초기 데이터 한 번 호출
+    }, []); // 빈 배열로 초기 1회 호출 후 추가 호출 방지
 
     const REGISTERED = monthlyData?.statusCountList
         ? (monthlyData.statusCountList.find((item) => item.name === "REGISTERED")
@@ -37,13 +38,6 @@ const RequestManagerTop = () => {
             ?.count ?? 0)
         : 0;
     const TOTAL = REGISTERED + IN_PROGRESS + COMPLETED;
-
-    // MonthPicker에서 데이터를 업데이트할 핸들러 함수
-    const handleMonthlyDataChange = async (selectedYear, selectedMonth) => {
-        console.log("받은 데이터:", selectedYear, selectedMonth); // 데이터 출력
-        const data = await getMonthlyData(selectedYear, selectedMonth);
-        setMonthlyData(data); // 상태 업데이트
-    };
 
     return (
         <div className="rmRow">
