@@ -6,6 +6,7 @@ import TaskTypeLabel from "../../../../labels/taskType/TaskTypeLabel";
 import EquipmentTypeLabel from "../../../../labels/equipmentType/EquipmentTypeLabel";
 import TaskDetailLabel from "../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../labels/processStatus/ProcessStatusLabel";
+import ShowRequestDetailModal from "../../../../feature/request/select/RequestDetailModal";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -21,6 +22,7 @@ const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
 const ContractManagerBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
   const [selectedTaskType, setSelectedTaskType] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
@@ -77,6 +79,11 @@ const ContractManagerBottom = () => {
       setTaskDetailOptions(
         Array.isArray(taskDetailResponse.data.data)
           ? taskDetailResponse.data.data
+          : []
+      );
+      setTaskTypeOptions(
+        Array.isArray(taskTypeResponse.data.data)
+          ? taskTypeResponse.data.data
           : []
       );
     } catch (error) {
@@ -212,6 +219,22 @@ const ContractManagerBottom = () => {
     setIsModalOpen((prev) => !prev);
   };
 
+  //모달 열고 requestId 설정
+  const openModal = (requestId) => {
+    setSelectedRequestId(requestId);
+    setIsModalOpen(true);
+  };
+
+  //모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequestId(null);
+  };
+
+  const handleProcessClick = (id) => {
+    console.log("Clicked task ID:", id);
+  };
+
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
@@ -344,38 +367,58 @@ const ContractManagerBottom = () => {
           </thead>
           <tbody>
             {taskRequests.map((task, index) => (
-              <tr key={task.id || index}>
-                <td>
+              <tr key={task.id || index} className="clickableRow">
+                <td onClick={() => openModal(task.id)}>
                   <TaskTypeLabel taskType={task.type} />
                 </td>
-                <td>{task.managerName}</td>
-                <td className="equipmentCell">
+                <td onClick={() => openModal(task.id)}>{task.managerName}</td>
+                <td
+                  className="equipmentCell"
+                  onClick={() => openModal(task.id)}
+                >
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
 
-                <td>
+                <td onClick={() => openModal(task.id)}>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
-                <td className="truncate">{task.title}</td>
-                <td className="truncate">{task.content}</td>
-                <td>{formatDateTime(task.createTime)}</td>
-                <td>
+                <td className="truncate" onClick={() => openModal(task.id)}>
+                  {task.title}
+                </td>
+                <td className="truncate" onClick={() => openModal(task.id)}>
+                  {task.content}
+                </td>
+                <td onClick={() => openModal(task.id)}>
+                  {formatDateTime(task.createTime)}
+                </td>
+                <td onClick={() => openModal(task.id)}>
                   {task.status === "COMPLETED"
                     ? formatDateTime(task.updateTime)
                     : ""}
                 </td>
                 <td>
-                  <ProcessStatusLabel processType={task.status} />
+                  <ProcessStatusLabel
+                    processType={task.status}
+                    id={task.id}
+                    isContractManager={true}
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {/* 모달이 열려 있을 때만 ShowRequestDetailModal 컴포넌트 표시 */}
+        {isModalOpen && (
+          <ShowRequestDetailModal
+            toggleModal={closeModal}
+            requestId={selectedRequestId}
+          />
+        )}
       </div>
 
       <div className="pagination">
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handlePreviousPageGroup}
           disabled={pageGroup === 0}
         >
@@ -385,7 +428,7 @@ const ContractManagerBottom = () => {
         {renderPageNumbers().map((number) => (
           <button
             key={number}
-            className={`page-button ${page === number ? "activePage" : ""}`}
+            className={`pageButton ${page === number ? "activePage" : ""}`}
             onClick={() => handlePageChange(number)}
           >
             {number}
@@ -393,7 +436,7 @@ const ContractManagerBottom = () => {
         ))}
 
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handleNextPageGroup}
           disabled={(pageGroup + 1) * 6 >= totalPages}
         >
