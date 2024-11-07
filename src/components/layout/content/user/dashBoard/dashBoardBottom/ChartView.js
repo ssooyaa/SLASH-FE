@@ -16,10 +16,10 @@ HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
 const ChartView = ({ selectedCriteria }) => {
-  const [selectedSystem, setSelectedSystem] = useState("");
-  const [selectedEquipment, setSelectedEquipment] = useState("");
+  const [selectedSystem, setSelectedSystem] = useState("전체");
+  const [selectedEquipment, setSelectedEquipment] = useState("전체");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
-  const [statistics, setStatistics] = useState({});
+  const [statistics, setStatistics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [targetSystems, setTargetSystems] = useState([]);
@@ -44,15 +44,23 @@ const ChartView = ({ selectedCriteria }) => {
         const systemsData = response.data.data;
         setSystemData(systemsData); // 전체 시스템 데이터를 저장
 
-        // 시스템 이름 목록 설정
-        const systemNames = systemsData.map((system) => system.systemName);
+        // 시스템 이름 목록 설정 (전체 포함)
+        const systemNames = [
+          "전체",
+          ...systemsData.map((system) => system.systemName),
+        ];
         setTargetSystems(systemNames);
         setSelectedSystem(systemNames[0]); // 첫 번째 시스템을 기본값으로 설정
 
-        // 첫 번째 시스템의 장비 목록 설정
-        const initialEquipments = systemsData[0].equipmentInfos;
-        setTargetEquipments(initialEquipments);
-        setSelectedEquipment(initialEquipments[0]); // 첫 번째 장비를 기본값으로 설정
+        // 장비 이름 목록 설정 (전체 포함)
+        const allEquipments = [
+          "전체",
+          ...systemsData.flatMap((system) =>
+            system.equipmentInfos.map((equipment) => equipment.name)
+          ),
+        ];
+        setTargetEquipments(allEquipments);
+        setSelectedEquipment(allEquipments[0]); // 첫 번째 장비를 기본값으로 설정
       }
     } catch (error) {
       console.error("시스템 및 장비 데이터를 가져오는 중 오류:", error);
@@ -62,13 +70,23 @@ const ChartView = ({ selectedCriteria }) => {
 
   // 선택된 시스템에 따라 장비 목록 업데이트
   useEffect(() => {
-    if (selectedSystem) {
+    if (selectedSystem === "전체") {
+      // "전체" 시스템 선택 시 모든 장비를 표시
+      const allEquipments = [
+        "전체",
+        ...systemData.flatMap((system) =>
+          system.equipmentInfos.map((equipment) => equipment.name)
+        ),
+      ];
+      setTargetEquipments(allEquipments);
+      setSelectedEquipment(allEquipments[0]);
+    } else {
       const selectedSystemData = systemData.find(
         (system) => system.systemName === selectedSystem
       );
       if (selectedSystemData) {
-        setTargetEquipments(selectedSystemData.equipmentInfos);
-        setSelectedEquipment(selectedSystemData.equipmentInfos[0]); // 첫 번째 장비를 기본값으로 설정
+        setTargetEquipments(["전체", ...selectedSystemData.equipmentInfos]);
+        setSelectedEquipment("전체");
       }
     }
   }, [selectedSystem, systemData]);
@@ -79,12 +97,20 @@ const ChartView = ({ selectedCriteria }) => {
 
   // 선택된 시스템과 기간에 따른 통계 데이터를 가져오기
   const fetchStatistics = async () => {
-    if (!selectedSystem) return;
+    if (!selectedSystem || !selectedPeriod) return;
 
     try {
       const token = localStorage.getItem("accessToken");
 
       setLoading(true);
+
+      const params = {
+        serviceType: selectedCriteria,
+        period: selectedPeriod,
+        targetSystem: selectedSystem === "전체" ? null : selectedSystem,
+        targetEquipment:
+          selectedEquipment === "전체" ? null : selectedEquipment,
+      };
 
       const response = await axios.get(
         "http://localhost:8080/common/statistics",
@@ -92,19 +118,14 @@ const ChartView = ({ selectedCriteria }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-
-          params: {
-            serviceType: selectedCriteria,
-            period: selectedPeriod,
-            targetSystem: selectedSystem,
-            targetEquipments: selectedEquipment,
-          },
+          params,
         }
       );
+
       if (response.data.success) {
-        setStatistics({ [selectedSystem]: response.data.data });
+        setStatistics(response.data.data);
       } else {
-        setStatistics({ [selectedSystem]: [] });
+        setStatistics([]);
       }
     } catch (error) {
       console.error("오류:", error);
@@ -115,10 +136,10 @@ const ChartView = ({ selectedCriteria }) => {
   };
 
   useEffect(() => {
-    if (selectedSystem) {
+    if (selectedSystem && selectedEquipment && selectedCriteria) {
       fetchStatistics();
     }
-  }, [selectedSystem, selectedEquipment, selectedPeriod, , selectedCriteria]);
+  }, [selectedSystem, selectedEquipment, selectedPeriod, selectedCriteria]);
 
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>{error}</p>;
@@ -229,21 +250,11 @@ const ChartView = ({ selectedCriteria }) => {
       </div>
 
       <div
-        className={
-          statistics[selectedSystem] && statistics[selectedSystem].length > 0
-            ? "systemCharts"
-            : "noDataContainer"
-        }
+        className={statistics.length > 0 ? "systemCharts" : "noDataContainer"}
       >
-        {
-          statistics[selectedSystem] && statistics[selectedSystem].length > 0
-            ? statistics[selectedSystem].map((stat, index) => (
-                <div className="chartContainer" key={index}>
-                  {renderChart(stat, index)}
-                </div>
-              ))
-            : renderNoDataMessage() // 데이터가 없을 때 메시지 렌더링
-        }
+        {statistics.length > 0
+          ? statistics.map((stat, index) => renderChart(stat, index))
+          : renderNoDataMessage()}
       </div>
     </div>
   );
