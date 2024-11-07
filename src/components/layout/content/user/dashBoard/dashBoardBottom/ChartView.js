@@ -74,9 +74,6 @@ const ChartView = ({ selectedCriteria }) => {
             period: selectedPeriod,
             targetSystem: selectedSystem,
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
       );
       if (response.data.success) {
