@@ -16,15 +16,18 @@ HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
 const ChartView = ({ selectedCriteria }) => {
-  const [selectedSystem, setSelectedSystem] = useState("백업");
+  const [selectedSystem, setSelectedSystem] = useState("");
+  const [selectedEquipment, setSelectedEquipment] = useState("");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
-  const [targetSystems, setTargetSystems] = useState([]);
   const [statistics, setStatistics] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [targetSystems, setTargetSystems] = useState([]);
+  const [targetEquipments, setTargetEquipments] = useState([]);
+  const [systemData, setSystemData] = useState([]); // 시스템 데이터 전체 저장
 
-  // 시스템 옵션 데이터를 가져오는 함수
-  const fetchSystems = async () => {
+  // 시스템 및 장비 데이터를 가져오는 함수
+  const fetchSystemAndEquipment = async () => {
     try {
       const token = localStorage.getItem("accessToken");
 
@@ -38,19 +41,40 @@ const ChartView = ({ selectedCriteria }) => {
       );
 
       if (response.data.success) {
-        const systemNames = response.data.data.map(
-          (system) => system.systemName
-        );
+        const systemsData = response.data.data;
+        setSystemData(systemsData); // 전체 시스템 데이터를 저장
+
+        // 시스템 이름 목록 설정
+        const systemNames = systemsData.map((system) => system.systemName);
         setTargetSystems(systemNames);
         setSelectedSystem(systemNames[0]); // 첫 번째 시스템을 기본값으로 설정
+
+        // 첫 번째 시스템의 장비 목록 설정
+        const initialEquipments = systemsData[0].equipmentInfos;
+        setTargetEquipments(initialEquipments);
+        setSelectedEquipment(initialEquipments[0]); // 첫 번째 장비를 기본값으로 설정
       }
     } catch (error) {
-      console.error("시스템 데이터를 가져오는 중 오류:", error);
+      console.error("시스템 및 장비 데이터를 가져오는 중 오류:", error);
+      setError("데이터를 가져오는 데 실패했습니다.");
     }
   };
 
+  // 선택된 시스템에 따라 장비 목록 업데이트
   useEffect(() => {
-    fetchSystems();
+    if (selectedSystem) {
+      const selectedSystemData = systemData.find(
+        (system) => system.systemName === selectedSystem
+      );
+      if (selectedSystemData) {
+        setTargetEquipments(selectedSystemData.equipmentInfos);
+        setSelectedEquipment(selectedSystemData.equipmentInfos[0]); // 첫 번째 장비를 기본값으로 설정
+      }
+    }
+  }, [selectedSystem, systemData]);
+
+  useEffect(() => {
+    fetchSystemAndEquipment();
   }, []);
 
   // 선택된 시스템과 기간에 따른 통계 데이터를 가져오기
@@ -73,6 +97,7 @@ const ChartView = ({ selectedCriteria }) => {
             serviceType: selectedCriteria,
             period: selectedPeriod,
             targetSystem: selectedSystem,
+            targetEquipments: selectedEquipment,
           },
         }
       );
@@ -93,7 +118,7 @@ const ChartView = ({ selectedCriteria }) => {
     if (selectedSystem) {
       fetchStatistics();
     }
-  }, [selectedSystem, selectedPeriod, , selectedCriteria]);
+  }, [selectedSystem, selectedEquipment, selectedPeriod, , selectedCriteria]);
 
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>{error}</p>;
@@ -184,10 +209,16 @@ const ChartView = ({ selectedCriteria }) => {
     <div className="statisticsContainer">
       <div className="dropDown">
         <Dropdown
-          label="장비 유형 : "
+          label="시스템 유형 : "
           options={targetSystems}
           selectedOption={selectedSystem}
           onSelect={setSelectedSystem}
+        />
+        <Dropdown
+          label="장비 유형 : "
+          options={targetEquipments}
+          selectedOption={selectedEquipment}
+          onSelect={setSelectedEquipment}
         />
         <Dropdown
           label="기간 : "
