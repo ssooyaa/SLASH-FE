@@ -92,6 +92,11 @@
   text-align: center;
 }
 
+.table input:focus {
+  border-color: black;
+  outline: none;
+}
+
 .inputTableTitle {
   padding-left: 55px;
 }

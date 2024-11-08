@@ -6,7 +6,7 @@ const NoScoreGradeInputTable = ({ initialData, onDataChange }) => {
   const [data, setData] = useState(
     initialData.length > 0
       ? initialData
-      : Array(1).fill({
+      : Array(3).fill({
           grade: "",
           min: 0,
           max: 0,
@@ -20,7 +20,7 @@ const NoScoreGradeInputTable = ({ initialData, onDataChange }) => {
     setData(
       initialData.length > 0
         ? initialData
-        : Array(1).fill({
+        : Array(3).fill({
             grade: "",
             min: 0,
             max: 0,
