@@ -30,7 +30,6 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 320px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -73,7 +72,7 @@ body {
 }
 
 .statDetails p {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #333;
 }
 
