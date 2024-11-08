@@ -38,7 +38,7 @@ const Login = () => {
           },
         }
       );
-      const { grantType, accessToken } = response.data;
+      const { grantType, accessToken } = response.data.data;
 
       // 토큰 정보를 localStorage에 저장
       localStorage.setItem("accessToken", accessToken);

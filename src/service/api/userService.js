@@ -48,7 +48,7 @@ export const createRequest = async (taskRequestDto) => {
     const token = localStorage.getItem("accessToken");
 
     const response = await axios.post(
-      "request-manager/request",
+      "/user/request",
       taskRequestDto,
       {
         headers: {
@@ -86,7 +86,7 @@ export const deleteRequest = async (requestId) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.delete(
-      `request-manager/request/${requestId}`,
+      `/user/request/${requestId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -103,7 +103,7 @@ export const editRequest = async (requestId, taskRequestDto) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.patch(
-      `/request-manager/request/${requestId}`,
+      `/user/request/${requestId}`,
       taskRequestDto,
       {
         headers: {
