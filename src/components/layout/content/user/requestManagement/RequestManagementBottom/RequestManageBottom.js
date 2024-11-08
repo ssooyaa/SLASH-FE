@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  fetchOptions,
+  fetchFilteredRequests,
+} from "../../../../../../api/UserService";
 import "../../../../../../styles/RequestManageBottom.css";
 import CreateRequest from "../../../../../feature/request/create/CreateRequest";
 import TaskDetailLabel from "../../../../../labels/taskDetail/TaskDetailLabel";
@@ -22,122 +26,67 @@ const RequestManagementBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
+  const [selectedTaskType, setSelectedTaskType] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
   const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
 
   const [isOpenStatus, setIsOpenStatus] = useState(false);
+  const [isOpenTaskType, setIsOpenTaskType] = useState(false);
   const [isOpenTaskDetail, setIsOpenTaskDetail] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
 
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
-  const [filteredRequests, setFilteredRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // 동적 드롭다운 옵션 상태
-  const [taskDetailOptions, setTaskDetailOptions] = useState([]);
-  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState([]);
+  const [taskTypeOptions, setTaskTypeOptions] = useState(["전체"]);
+  const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
+  const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
 
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
-  // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
-  const fetchOptions = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
-
-      const [systemsResponse, taskTypeResponse, taskDetailResponse] =
-        await Promise.all([
-          axios.get("/common/systems", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.get("/common/task-type", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.get("/common/task-detail", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-        ]);
-
-      // `data` 속성 안에 있는 배열만 가져오도록 수정
-      setEquipmentTypeOptions(
-        Array.isArray(systemsResponse.data.data)
-          ? systemsResponse.data.data
-          : []
-      );
-      setTaskDetailOptions(
-        Array.isArray(taskDetailResponse.data.data)
-          ? taskDetailResponse.data.data
-          : []
-      );
-    } catch (error) {
-      console.error("Error fetching options:", error);
-    }
-  };
-
-  // 페이지 로드 시 옵션 데이터를 가져옴
   useEffect(() => {
-    fetchOptions();
+    const loadOptions = async () => {
+      try {
+        const options = await fetchOptions();
+        setEquipmentTypeOptions([...options.equipmentTypeOptions]);
+        setTaskTypeOptions([...options.taskTypeOptions]);
+        setTaskDetailOptions([...options.taskDetailOptions]);
+      } catch (error) {
+        console.error("Error loading options:", error);
+      }
+    };
+
+    loadOptions();
   }, []);
 
-  // 데이터를 필터링하고 가져오는 함수
-  const fetchFilteredRequests = () => {
-    const token = localStorage.getItem("accessToken");
-
-    axios
-      .get("/common/requests", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          equipmentName:
-            selectedEquipmentType !== "전체"
-              ? selectedEquipmentType
-              : undefined,
-          taskDetail:
-            selectedTaskDetail !== "전체" ? selectedTaskDetail : undefined,
-          status:
-            selectedStatus !== "전체"
-              ? statusMapping[selectedStatus]
-              : undefined,
-          keyword: searchTerm, // 검색어 추가
+  useEffect(() => {
+    const loadFilteredRequests = async () => {
+      try {
+        const response = await fetchFilteredRequests({
+          selectedTaskType,
+          selectedEquipmentType,
+          selectedTaskDetail,
+          selectedStatus,
+          searchTerm,
           page,
           size,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // 토큰 추가
-        },
-      })
-      .then((response) => {
-        console.log("Response Data:", response.data); // 응답 데이터 출력
-        const responseData = response.data.data;
-        if (responseData && Array.isArray(responseData.results)) {
-          setTaskRequests(responseData.results);
-          setTotalPages(responseData.totalPages);
-          setPage(responseData.currentPage);
-        } else {
-          setTaskRequests([]);
-          setFilteredRequests([]);
-          setTotalPages(0);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setTaskRequests([]);
-        setFilteredRequests([]);
-      });
-  };
+          statusMapping,
+        });
+        setTaskRequests(response.results);
+        setTotalPages(response.totalPages);
+        setPage(response.currentPage);
+      } catch (error) {
+        console.error("Error loading filtered requests:", error);
+      }
+    };
 
-  useEffect(() => {
-    fetchFilteredRequests();
+    loadFilteredRequests();
   }, [
+    selectedTaskType,
     selectedEquipmentType,
     selectedTaskDetail,
     selectedStatus,
@@ -149,19 +98,25 @@ const RequestManagementBottom = () => {
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
     setIsOpenStatus(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
+  };
+
+  const handleSelectTaskType = (option) => {
+    setSelectedTaskType(option);
+    setIsOpenTaskType(false);
+    setPage(1);
   };
 
   const handleSelectTaskDetail = (option) => {
     setSelectedTaskDetail(option);
     setIsOpenTaskDetail(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
   };
 
   const handleSelectEquipmentType = (option) => {
     setSelectedEquipmentType(option);
     setIsOpenEquipmentType(false);
-    setPage(1); // Reset page when filter changes
+    setPage(1);
   };
 
   const handlePageChange = (newPage) => {
@@ -172,13 +127,13 @@ const RequestManagementBottom = () => {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    setPage(1); // Reset page when search changes
+    setPage(1);
   };
 
   const [pageGroup, setPageGroup] = useState(0);
 
   const renderPageNumbers = () => {
-    const maxDisplayPages = 6; // 한번에 표시할 페이지 수
+    const maxDisplayPages = 6;
     const startPage = pageGroup * maxDisplayPages + 1;
     const endPage = Math.min(startPage + maxDisplayPages - 1, totalPages);
     const pageNumbers = [];
@@ -202,19 +157,19 @@ const RequestManagementBottom = () => {
     }
   };
 
-  const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
-
   const toggleRequestModal = () => {
     setIsRequestModalOpen((prev) => !prev);
   };
 
-  //모달 열고 requestId 설정
+  const toggleModal = () => {
+    setIsModalOpen((prev) => !prev);
+  };
+
   const openModal = (requestId) => {
     setSelectedRequestId(requestId);
     setIsModalOpen(true);
   };
 
-  //모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedRequestId(null);

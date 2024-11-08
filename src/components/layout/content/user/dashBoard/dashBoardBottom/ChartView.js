@@ -1,159 +1,101 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import "./ChartView.css";
+import Dropdown from "../../../../../dropdown/Dropdown";
+import { FaExclamationCircle } from "react-icons/fa";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";
 import SolidGauge from "highcharts/modules/solid-gauge";
-import "./ChartView.css";
-import Dropdown from "../../../../../dropdown/Dropdown";
-import { FaExclamationCircle } from "react-icons/fa";
+import {
+  fetchSystemAndEquipment,
+  fetchStatistics,
+} from "../../../../../../api/UserService";
 
-// Axios 기본 URL 설정
-axios.defaults.baseURL = "http://localhost:8080";
-
-// Initialize modules
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
 const ChartView = ({ selectedCriteria, setStatistics }) => {
-  // props로 setStatistics 받음
   const [selectedSystem, setSelectedSystem] = useState("전체");
   const [selectedEquipment, setSelectedEquipment] = useState("전체");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
-  const [statistics, setLocalStatistics] = useState([]); // 로컬 상태명 변경
+  const [statistics, setLocalStatistics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [targetSystems, setTargetSystems] = useState([]);
   const [targetEquipments, setTargetEquipments] = useState([]);
-  const [systemData, setSystemData] = useState([]); // 시스템 데이터 전체 저장
+  const [systemData, setSystemData] = useState([]);
 
   const formatDowntimeToHours = (totalMinutes) => {
     if (totalMinutes < 60) {
-      // 1시간 미만이면 분으로 표시
       return `${totalMinutes}m`;
     } else {
-      // 1시간 이상이면 시간과 분으로 표시
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
       return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
     }
   };
 
-  // 시스템 및 장비 데이터를 가져오는 함수
-  const fetchSystemAndEquipment = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchSystemAndEquipment();
+        if (data.success) {
+          const systemsData = data.data;
+          setSystemData(systemsData);
 
-      const response = await axios.get(
-        "http://localhost:8080/common/all-systems",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          const systemNames = [
+            "전체",
+            ...systemsData.map((system) => system.systemName),
+          ];
+          setTargetSystems(systemNames);
+          setSelectedSystem(systemNames[0]);
+
+          const allEquipments = [
+            "전체",
+            ...systemsData.flatMap((system) =>
+              system.equipmentInfos.map((equipment) => equipment.name)
+            ),
+          ];
+          setTargetEquipments(allEquipments);
+          setSelectedEquipment(allEquipments[0]);
         }
-      );
-
-      if (response.data.success) {
-        const systemsData = response.data.data;
-        setSystemData(systemsData); // 전체 시스템 데이터를 저장
-
-        // 시스템 이름 목록 설정 (전체 포함)
-        const systemNames = [
-          "전체",
-          ...systemsData.map((system) => system.systemName),
-        ];
-        setTargetSystems(systemNames);
-        setSelectedSystem(systemNames[0]); // 첫 번째 시스템을 기본값으로 설정
-
-        // 장비 이름 목록 설정 (전체 포함)
-        const allEquipments = [
-          "전체",
-          ...systemsData.flatMap((system) =>
-            system.equipmentInfos.map((equipment) => equipment.name)
-          ),
-        ];
-        setTargetEquipments(allEquipments);
-        setSelectedEquipment(allEquipments[0]); // 첫 번째 장비를 기본값으로 설정
+      } catch (err) {
+        setError("데이터를 가져오는 데 실패했습니다.");
       }
-    } catch (error) {
-      console.error("시스템 및 장비 데이터를 가져오는 중 오류:", error);
-      setError("데이터를 가져오는 데 실패했습니다.");
-    }
-  };
+    };
 
-  // 선택된 시스템에 따라 장비 목록 업데이트
-  useEffect(() => {
-    if (selectedSystem === "전체") {
-      // "전체" 시스템 선택 시 모든 장비를 표시
-      const allEquipments = [
-        "전체",
-        ...systemData.flatMap((system) =>
-          system.equipmentInfos.map((equipment) => equipment.name)
-        ),
-      ];
-      setTargetEquipments(allEquipments);
-      setSelectedEquipment(allEquipments[0]);
-    } else {
-      const selectedSystemData = systemData.find(
-        (system) => system.systemName === selectedSystem
-      );
-      if (selectedSystemData) {
-        setTargetEquipments(["전체", ...selectedSystemData.equipmentInfos]);
-        setSelectedEquipment("전체");
-      }
-    }
-  }, [selectedSystem, systemData]);
-
-  useEffect(() => {
-    fetchSystemAndEquipment();
+    getData();
   }, []);
 
-  // 선택된 시스템과 기간에 따른 통계 데이터를 가져오기
-  const fetchStatistics = async () => {
-    if (!selectedSystem || !selectedPeriod) return;
-
-    try {
-      const token = localStorage.getItem("accessToken");
-
-      setLoading(true);
-
-      const params = {
-        serviceType: selectedCriteria,
-        period: selectedPeriod,
-        targetSystem: selectedSystem === "전체" ? null : selectedSystem,
-        targetEquipment:
-          selectedEquipment === "전체" ? null : selectedEquipment,
-      };
-
-      const response = await axios.get(
-        "http://localhost:8080/common/statistics",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params,
-        }
-      );
-
-      if (response.data.success) {
-        setStatistics(response.data.data); // 상위 컴포넌트의 상태 업데이트
-        setLocalStatistics(response.data.data); // 로컬 상태 업데이트
-      } else {
-        setStatistics([]);
-        setLocalStatistics([]);
-      }
-    } catch (error) {
-      console.error("오류:", error);
-      setError("데이터를 가져오는 데 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (selectedSystem && selectedEquipment && selectedCriteria) {
-      fetchStatistics();
-    }
+    const getStatistics = async () => {
+      if (!selectedSystem || !selectedPeriod) return;
+
+      try {
+        setLoading(true);
+        const params = {
+          serviceType: selectedCriteria,
+          period: selectedPeriod,
+          targetSystem: selectedSystem === "전체" ? null : selectedSystem,
+          targetEquipment:
+            selectedEquipment === "전체" ? null : selectedEquipment,
+        };
+        const data = await fetchStatistics(params);
+        if (data.success) {
+          setStatistics(data.data);
+          setLocalStatistics(data.data);
+        } else {
+          setStatistics([]);
+          setLocalStatistics([]);
+        }
+      } catch (err) {
+        setError("데이터를 가져오는 데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getStatistics();
   }, [selectedSystem, selectedEquipment, selectedPeriod, selectedCriteria]);
 
   if (loading) return <p>로딩 중...</p>;
@@ -170,8 +112,6 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
   const renderChart = (stat, index) => {
     const formattedDate = stat.date.slice(0, 7);
     const score = stat.score;
-
-    // 색상 설정: 99% 이상의 값은 녹색, 그 외에는 빨간색
     const color = score >= 100 ? "#2e8b57" : "#ff4d4d";
 
     const options = {
@@ -200,7 +140,7 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
         ],
       },
       yAxis: {
-        min: 90, // 최소값을 98로 설정하여 확대된 범위 표시
+        min: 90,
         max: 100,
         lineWidth: 0,
         tickPositions: [],
@@ -270,7 +210,6 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
           onSelect={setSelectedPeriod}
         />
       </div>
-
       <div
         className={statistics.length > 0 ? "systemCharts" : "noDataContainer"}
       >
