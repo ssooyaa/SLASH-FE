@@ -27,9 +27,16 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
   const [targetEquipments, setTargetEquipments] = useState([]);
   const [systemData, setSystemData] = useState([]); // 시스템 데이터 전체 저장
 
-  const formatDowntimeToHours = (totalSeconds) => {
-    const hours = totalSeconds / 3600; // 초를 시간으로 변환
-    return `${hours.toFixed(3)}h`; // 소수점 세 자리까지 표시
+  const formatDowntimeToHours = (totalMinutes) => {
+    if (totalMinutes < 60) {
+      // 1시간 미만이면 분으로 표시
+      return `${totalMinutes}m`;
+    } else {
+      // 1시간 이상이면 시간과 분으로 표시
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+    }
   };
 
   // 시스템 및 장비 데이터를 가져오는 함수

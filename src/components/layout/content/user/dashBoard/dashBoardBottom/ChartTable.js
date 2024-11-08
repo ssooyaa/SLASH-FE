@@ -2,9 +2,16 @@ import React from "react";
 import "./ChartTable.css";
 
 const ChartTable = ({ statistics }) => {
-  const formatDowntimeToHours = (totalSeconds) => {
-    const hours = totalSeconds / 3600; // 초를 시간으로 변환
-    return `${hours.toFixed(3)}h`; // 소수점 세 자리까지 표시
+  const formatDowntimeToHours = (totalMinutes) => {
+    if (totalMinutes < 60) {
+      // 1시간 미만이면 분으로 표시
+      return `${totalMinutes}m`;
+    } else {
+      // 1시간 이상이면 시간과 분으로 표시
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+    }
   };
 
   return (
@@ -16,7 +23,7 @@ const ChartTable = ({ statistics }) => {
             <th>장비명</th>
             <th>등급</th>
             <th>점수 (%)</th>
-            <th>총 중단 시간 (h)</th>
+            <th>총 중단 시간</th>
             <th>요청 건수</th>
           </tr>
         </thead>
