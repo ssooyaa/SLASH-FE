@@ -24,3 +24,12 @@ yarn-error.log*
 
 # README file
 README.md
+
+# xml
+checkstyle-idea.xml
+prettier.xml
+eslint.xml
+
+# mjs
+eslint.config.mjs
+

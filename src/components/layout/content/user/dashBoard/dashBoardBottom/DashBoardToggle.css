@@ -7,12 +7,14 @@
   width: 115px;
   height: 50%;
   border-radius: 10px;
+  right: 0px;
+  margin: 20px 0px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
 }
 
-.tableView {
+.chartTable {
   width: auto;
-  height: 350px;
+  min-height: 350px;
   margin-top: 20px;
   padding: 5px 15px;
   background-color: white;
