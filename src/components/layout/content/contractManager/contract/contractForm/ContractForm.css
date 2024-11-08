@@ -12,9 +12,37 @@
 
 .contractForm {
   width: 90%;
-  height: 850px;
+  height: 85%;
   padding-left: 100px;
+  padding-top: 50px;
   overflow: scroll;
+}
+
+.contractTitle input {
+  height: 35px;
+  width: 50%;
+  padding: 10px;
+  padding-right: 35px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.contractTitle input:focus {
+  border-color: black;
+  outline: none;
+}
+
+.contractDate {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  text-align: start;
+  padding-top: 20px;
+  gap: 0px;
 }
 
 .contractInfo,
@@ -26,15 +54,15 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  height: 500px;
 }
-
 .companyNameLabel input {
   margin-left: 23px;
 }
 
 .companyData {
-  height: 35px !important;
-  width: 354px !important;
+  height: 35px;
+  width: 354px;
   padding: 10px;
   padding-right: 35px;
   border: 1px solid #d9d9d9;
@@ -63,51 +91,4 @@
 .calendarModal {
   position: absolute;
   z-index: 1000;
-}
-
-.evaluationItemsTitle {
-  width: 100%;
-  font-size: 15px;
-  display: flex;
-  justify-content: flex-start !important;
-  align-items: center;
-  padding-left: 40px;
-}
-
-.addItems {
-  display: flex;
-  align-items: center;
-  padding-left: 40px;
-  color: var(--main--gray);
-  cursor: pointer;
-  width: 190px;
-}
-
-.evaluationDeleteBtn {
-  position: relative;
-  top: 100px;
-  left: -30px;
-}
-
-.categoryTitle {
-  display: flex;
-  margin-top: 10px;
-  text-align: start;
-  padding-left: 50px;
-  gap: 10px;
-}
-
-.categoryTitle button {
-  border: none;
-  background-color: white;
-  color: var(--main--gray);
-}
-
-.evaluationItemsDetail {
-  min-height: 190px;
-}
-
-.agreement {
-  text-align: end;
-  padding-right: 100px;
 }
