@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  fetchOptions,
+  fetchFilteredRequests,
+} from "../../../../../api/UserService";
 import "../../../../../styles/RequestManageBottom.css";
 import SearchBar from "../../../../common/bar/SearchBar";
 import TaskTypeLabel from "../../../../labels/taskType/TaskTypeLabel";
 import EquipmentTypeLabel from "../../../../labels/equipmentType/EquipmentTypeLabel";
 import TaskDetailLabel from "../../../../labels/taskDetail/TaskDetailLabel";
 import ProcessStatusLabel from "../../../../labels/processStatus/ProcessStatusLabel";
+import ShowRequestDetailModal from "../../../../feature/request/select/RequestDetailModal";
 
-// Axios 기본 URL 설정
-axios.defaults.baseURL = "http://localhost:8080";
-
-// 한글 상태 -> 영어 enum 상태 변환 매핑
 const statusMapping = {
   "접수 완료": "REGISTERED",
   진행중: "IN_PROGRESS",
@@ -21,6 +21,7 @@ const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
 const ContractManagerBottom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
   const [selectedTaskType, setSelectedTaskType] = useState("전체");
   const [selectedTaskDetail, setSelectedTaskDetail] = useState("전체");
@@ -35,7 +36,6 @@ const ContractManagerBottom = () => {
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
-  const [filteredRequests, setFilteredRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -44,98 +44,43 @@ const ContractManagerBottom = () => {
   const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
   const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
 
-  // 드롭다운 옵션 데이터를 백엔드에서 가져오는 함수
-  const fetchOptions = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
-
-      const [systemsResponse, taskTypeResponse, taskDetailResponse] =
-        await Promise.all([
-          axios.get("/common/systems", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.get("/common/task-type", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.get("/common/task-detail", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-        ]);
-
-      // `data` 속성 안에 있는 배열만 가져오도록 수정
-      setEquipmentTypeOptions(
-        Array.isArray(systemsResponse.data.data)
-          ? systemsResponse.data.data
-          : []
-      );
-      setTaskDetailOptions(
-        Array.isArray(taskDetailResponse.data.data)
-          ? taskDetailResponse.data.data
-          : []
-      );
-    } catch (error) {
-      console.error("Error fetching options:", error);
-    }
-  };
-
-  // 페이지 로드 시 옵션 데이터를 가져옴
   useEffect(() => {
-    fetchOptions();
+    const loadOptions = async () => {
+      try {
+        const options = await fetchOptions();
+        setEquipmentTypeOptions([...options.equipmentTypeOptions]);
+        setTaskTypeOptions([...options.taskTypeOptions]);
+        setTaskDetailOptions([...options.taskDetailOptions]);
+      } catch (error) {
+        console.error("Error loading options:", error);
+      }
+    };
+
+    loadOptions();
   }, []);
 
-  // 데이터를 필터링하고 가져오는 함수
-  const fetchFilteredRequests = () => {
-    const token = localStorage.getItem("accessToken");
-
-    axios
-      .get("/common/requests", {
-        headers: {
-          Authorization: `Bearer ${token}`, // 토큰 추가
-        },
-        params: {
-          type: selectedTaskType !== "전체" ? selectedTaskType : undefined,
-          equipmentName:
-            selectedEquipmentType !== "전체"
-              ? selectedEquipmentType
-              : undefined,
-          taskDetail:
-            selectedTaskDetail !== "전체" ? selectedTaskDetail : undefined,
-          status:
-            selectedStatus !== "전체"
-              ? statusMapping[selectedStatus]
-              : undefined,
-          keyword: searchTerm,
+  useEffect(() => {
+    const loadFilteredRequests = async () => {
+      try {
+        const response = await fetchFilteredRequests({
+          selectedTaskType,
+          selectedEquipmentType,
+          selectedTaskDetail,
+          selectedStatus,
+          searchTerm,
           page,
           size,
-        },
-      })
-      .then((response) => {
-        const responseData = response.data.data;
-        if (responseData && Array.isArray(responseData.results)) {
-          setTaskRequests(responseData.results);
-          setTotalPages(responseData.totalPages);
-          setPage(responseData.currentPage);
-        } else {
-          setTaskRequests([]);
-          setFilteredRequests([]);
-          setTotalPages(0);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setTaskRequests([]);
-        setFilteredRequests([]);
-      });
-  };
+          statusMapping,
+        });
+        setTaskRequests(response.results);
+        setTotalPages(response.totalPages);
+        setPage(response.currentPage);
+      } catch (error) {
+        console.error("Error loading filtered requests:", error);
+      }
+    };
 
-  useEffect(() => {
-    fetchFilteredRequests();
+    loadFilteredRequests();
   }, [
     selectedTaskType,
     selectedEquipmentType,
@@ -210,6 +155,16 @@ const ContractManagerBottom = () => {
 
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
+  };
+
+  const openModal = (requestId) => {
+    setSelectedRequestId(requestId);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequestId(null);
   };
 
   return (
@@ -344,38 +299,58 @@ const ContractManagerBottom = () => {
           </thead>
           <tbody>
             {taskRequests.map((task, index) => (
-              <tr key={task.id || index}>
-                <td>
+              <tr key={task.id || index} className="clickableRow">
+                <td onClick={() => openModal(task.id)}>
                   <TaskTypeLabel taskType={task.type} />
                 </td>
-                <td>{task.managerName}</td>
-                <td className="equipmentCell">
+                <td onClick={() => openModal(task.id)}>{task.managerName}</td>
+                <td
+                  className="equipmentCell"
+                  onClick={() => openModal(task.id)}
+                >
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
 
-                <td>
+                <td onClick={() => openModal(task.id)}>
                   <TaskDetailLabel taskDetail={task.taskDetail} />
                 </td>
-                <td className="truncate">{task.title}</td>
-                <td className="truncate">{task.content}</td>
-                <td>{formatDateTime(task.createTime)}</td>
-                <td>
+                <td className="truncate" onClick={() => openModal(task.id)}>
+                  {task.title}
+                </td>
+                <td className="truncate" onClick={() => openModal(task.id)}>
+                  {task.content}
+                </td>
+                <td onClick={() => openModal(task.id)}>
+                  {formatDateTime(task.createTime)}
+                </td>
+                <td onClick={() => openModal(task.id)}>
                   {task.status === "COMPLETED"
                     ? formatDateTime(task.updateTime)
                     : ""}
                 </td>
                 <td>
-                  <ProcessStatusLabel processType={task.status} />
+                  <ProcessStatusLabel
+                    processType={task.status}
+                    id={task.id}
+                    isContractManager={true}
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {/* 모달이 열려 있을 때만 ShowRequestDetailModal 컴포넌트 표시 */}
+        {isModalOpen && (
+          <ShowRequestDetailModal
+            toggleModal={closeModal}
+            requestId={selectedRequestId}
+          />
+        )}
       </div>
 
       <div className="pagination">
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handlePreviousPageGroup}
           disabled={pageGroup === 0}
         >
@@ -385,7 +360,7 @@ const ContractManagerBottom = () => {
         {renderPageNumbers().map((number) => (
           <button
             key={number}
-            className={`page-button ${page === number ? "activePage" : ""}`}
+            className={`pageButton ${page === number ? "activePage" : ""}`}
             onClick={() => handlePageChange(number)}
           >
             {number}
@@ -393,7 +368,7 @@ const ContractManagerBottom = () => {
         ))}
 
         <button
-          className="arrow-button"
+          className="arrowButton"
           onClick={handleNextPageGroup}
           disabled={(pageGroup + 1) * 6 >= totalPages}
         >

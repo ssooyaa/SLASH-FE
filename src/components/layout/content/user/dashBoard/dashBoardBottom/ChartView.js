@@ -1,102 +1,102 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import "./ChartView.css";
+import Dropdown from "../../../../../dropdown/Dropdown";
+import { FaExclamationCircle } from "react-icons/fa";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";
 import SolidGauge from "highcharts/modules/solid-gauge";
-import "./ChartView.css";
-import Dropdown from "../../../../../dropdown/Dropdown";
-import { FaExclamationCircle } from "react-icons/fa";
+import {
+  fetchSystemAndEquipment,
+  fetchStatistics,
+} from "../../../../../../api/UserService";
 
-// Axios 기본 URL 설정
-axios.defaults.baseURL = "http://localhost:8080";
-
-// Initialize modules
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
-const ChartView = ({ selectedCriteria }) => {
-  const [selectedSystem, setSelectedSystem] = useState("백업");
+const ChartView = ({ selectedCriteria, setStatistics }) => {
+  const [selectedSystem, setSelectedSystem] = useState("전체");
+  const [selectedEquipment, setSelectedEquipment] = useState("전체");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
-  const [targetSystems, setTargetSystems] = useState([]);
-  const [statistics, setStatistics] = useState({});
+  const [statistics, setLocalStatistics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [targetSystems, setTargetSystems] = useState([]);
+  const [targetEquipments, setTargetEquipments] = useState([]);
+  const [systemData, setSystemData] = useState([]);
 
-  // 시스템 옵션 데이터를 가져오는 함수
-  const fetchSystems = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
-
-      const response = await axios.get(
-        "http://localhost:8080/common/all-systems",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        const systemNames = response.data.data.map(
-          (system) => system.systemName
-        );
-        setTargetSystems(systemNames);
-        setSelectedSystem(systemNames[0]); // 첫 번째 시스템을 기본값으로 설정
-      }
-    } catch (error) {
-      console.error("시스템 데이터를 가져오는 중 오류:", error);
+  const formatDowntimeToHours = (totalMinutes) => {
+    if (totalMinutes < 60) {
+      return `${totalMinutes}m`;
+    } else {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
     }
   };
 
   useEffect(() => {
-    fetchSystems();
+    const getData = async () => {
+      try {
+        const data = await fetchSystemAndEquipment();
+        if (data.success) {
+          const systemsData = data.data;
+          setSystemData(systemsData);
+
+          const systemNames = [
+            "전체",
+            ...systemsData.map((system) => system.systemName),
+          ];
+          setTargetSystems(systemNames);
+          setSelectedSystem(systemNames[0]);
+
+          const allEquipments = [
+            "전체",
+            ...systemsData.flatMap((system) =>
+              system.equipmentInfos.map((equipment) => equipment.name)
+            ),
+          ];
+          setTargetEquipments(allEquipments);
+          setSelectedEquipment(allEquipments[0]);
+        }
+      } catch (err) {
+        setError("데이터를 가져오는 데 실패했습니다.");
+      }
+    };
+
+    getData();
   }, []);
 
-  // 선택된 시스템과 기간에 따른 통계 데이터를 가져오기
-  const fetchStatistics = async () => {
-    if (!selectedSystem) return;
-
-    try {
-      const token = localStorage.getItem("accessToken");
-
-      setLoading(true);
-
-      const response = await axios.get(
-        "http://localhost:8080/common/statistics",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-
-          params: {
-            serviceType: selectedCriteria,
-            period: selectedPeriod,
-            targetSystem: selectedSystem,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.data.success) {
-        setStatistics({ [selectedSystem]: response.data.data });
-      } else {
-        setStatistics({ [selectedSystem]: [] });
-      }
-    } catch (error) {
-      console.error("오류:", error);
-      setError("데이터를 가져오는 데 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (selectedSystem) {
-      fetchStatistics();
-    }
-  }, [selectedSystem, selectedPeriod, , selectedCriteria]);
+    const getStatistics = async () => {
+      if (!selectedSystem || !selectedPeriod) return;
+
+      try {
+        setLoading(true);
+        const params = {
+          serviceType: selectedCriteria,
+          period: selectedPeriod,
+          targetSystem: selectedSystem === "전체" ? null : selectedSystem,
+          targetEquipment:
+            selectedEquipment === "전체" ? null : selectedEquipment,
+        };
+        const data = await fetchStatistics(params);
+        if (data.success) {
+          setStatistics(data.data);
+          setLocalStatistics(data.data);
+        } else {
+          setStatistics([]);
+          setLocalStatistics([]);
+        }
+      } catch (err) {
+        setError("데이터를 가져오는 데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getStatistics();
+  }, [selectedSystem, selectedEquipment, selectedPeriod, selectedCriteria]);
 
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>{error}</p>;
@@ -111,6 +111,8 @@ const ChartView = ({ selectedCriteria }) => {
 
   const renderChart = (stat, index) => {
     const formattedDate = stat.date.slice(0, 7);
+    const score = stat.score;
+    const color = score >= 100 ? "#2e8b57" : "#ff4d4d";
 
     const options = {
       chart: {
@@ -131,14 +133,14 @@ const ChartView = ({ selectedCriteria }) => {
         background: [
           {
             outerRadius: "100%",
-            innerRadius: "60%",
+            innerRadius: "80%",
             backgroundColor: Highcharts.color("#e6e6e6").get(),
             borderWidth: 0,
           },
         ],
       },
       yAxis: {
-        min: 0,
+        min: 90,
         max: 100,
         lineWidth: 0,
         tickPositions: [],
@@ -152,8 +154,8 @@ const ChartView = ({ selectedCriteria }) => {
             useHTML: true,
             format: `
               <div style="text-align:center">
-                <span style="font-size:1.5rem;color:#333">${stat.grade}</span><br/>
-                <span style="font-size:1.2rem;color:#333">${stat.score}%</span>
+                <span style="font-size:1.4rem;color:#333">${stat.grade}</span><br/>
+                <span style="font-size:1.1rem;color:${color}">${score.toFixed(2)}%</span>
               </div>
             `,
           },
@@ -162,8 +164,10 @@ const ChartView = ({ selectedCriteria }) => {
       series: [
         {
           name: "Score",
-          data: [{ y: stat.score, radius: "100%", innerRadius: "60%" }],
-          innerRadius: "60%",
+          data: [
+            { y: score, radius: "100%", innerRadius: "80%", color: color },
+          ],
+          innerRadius: "80%",
           outerRadius: "100%",
         },
       ],
@@ -176,7 +180,8 @@ const ChartView = ({ selectedCriteria }) => {
           <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
         <div className="statDetails">
-          <p>총 중단 시간: {stat.totalDowntime}h</p>
+          <p>장비명: {stat.targetEquipment}</p>
+          <p>총 중단 시간: {formatDowntimeToHours(stat.totalDowntime)}</p>
           <p>요청 건수: {stat.requestCount}건</p>
         </div>
       </div>
@@ -187,10 +192,16 @@ const ChartView = ({ selectedCriteria }) => {
     <div className="statisticsContainer">
       <div className="dropDown">
         <Dropdown
-          label="장비 유형 : "
+          label="시스템 유형 : "
           options={targetSystems}
           selectedOption={selectedSystem}
           onSelect={setSelectedSystem}
+        />
+        <Dropdown
+          label="장비 유형 : "
+          options={targetEquipments}
+          selectedOption={selectedEquipment}
+          onSelect={setSelectedEquipment}
         />
         <Dropdown
           label="기간 : "
@@ -199,23 +210,12 @@ const ChartView = ({ selectedCriteria }) => {
           onSelect={setSelectedPeriod}
         />
       </div>
-
       <div
-        className={
-          statistics[selectedSystem] && statistics[selectedSystem].length > 0
-            ? "systemCharts"
-            : "noDataContainer"
-        }
+        className={statistics.length > 0 ? "systemCharts" : "noDataContainer"}
       >
-        {
-          statistics[selectedSystem] && statistics[selectedSystem].length > 0
-            ? statistics[selectedSystem].map((stat, index) => (
-                <div className="chartContainer" key={index}>
-                  {renderChart(stat, index)}
-                </div>
-              ))
-            : renderNoDataMessage() // 데이터가 없을 때 메시지 렌더링
-        }
+        {statistics.length > 0
+          ? statistics.map((stat, index) => renderChart(stat, index))
+          : renderNoDataMessage()}
       </div>
     </div>
   );

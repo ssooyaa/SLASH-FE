@@ -1,26 +1,48 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../../styles/Label.css";
+import AssignmentButton from "../../common/button/AssignmentButton";
 
-const ProcessStatusLabel = ({ processType }) => {
-  // 스타일을 taskType에 따라 동적으로 설정
+const ProcessStatusLabel = ({ processType, id, isContractManager }) => {
+  const navigate = useNavigate();
+
   const getLabelStyle = (processType) => {
+    if (processType === "REGISTERED" && isContractManager) {
+      // AssignmentButton이 렌더링될 때는 스타일을 기본값으로 설정
+      return {};
+    }
     switch (processType) {
-      case "REGISTERED":
-        return { backgroundColor: "#FFEFDC", color: "#FF9A16" };
       case "IN_PROGRESS":
         return { backgroundColor: "#C3DBF8", color: "#2C70F4" };
       case "COMPLETED":
         return { backgroundColor: "#C3F8DD", color: "#2e8b57" };
+      case "REGISTERED":
+        return { backgroundColor: "#FFEFDC", color: "#FF9A16" }; // 접수 완료 스타일
       default:
-        return { backgroundColor: "#fff", color: "#000" }; // 기본값: 흰색 배경, 검은색 글자
+        return { backgroundColor: "#fff", color: "#000" };
     }
   };
 
-  //표시할 텍스트를 processType에 따라 설정
   const getDisplayText = (processType) => {
-    switch (processType) {
-      case "REGISTERED":
+    if (processType === "REGISTERED") {
+      if (isContractManager) {
+        // ContractManagerBottom에서만 AssignmentButton을 렌더링
+        return (
+          <AssignmentButton
+            id={id}
+            onClick={() => {
+              console.log("ProcessStatusLabel에서 할당하기 클릭됨:", id);
+              navigate(`request/${id}`); // 이동 처리
+            }}
+          />
+        );
+      } else {
+        // 다른 컴포넌트에서는 '접수 완료' 텍스트만 렌더링
         return "접수 완료";
+      }
+    }
+
+    switch (processType) {
       case "IN_PROGRESS":
         return "진행 중";
       case "COMPLETED":

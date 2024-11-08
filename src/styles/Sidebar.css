@@ -90,7 +90,6 @@ body {
 
 /* 사이드바 제목 스타일 */
 .sidebarTitle {
-  font-family: "paybooc-Bold", sans-serif;
   font-size: 1.5rem; /* 제목 크기 */
   font-weight: bold;
   text-transform: uppercase; /* 대문자 변환 */
@@ -208,7 +207,6 @@ body {
 }
 
 .logoutBtn {
-  font-family: "paybooc-Bold", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

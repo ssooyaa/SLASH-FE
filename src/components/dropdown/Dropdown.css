@@ -27,17 +27,17 @@ body {
 }
 
 .dropdownHeaderLabel {
-  color: #666;
+  color: #333;
   font-weight: bold;
   margin-right: 4px;
-  font-size: 85%;
+  font-size: 92%;
 }
 
 /* 드롭다운 헤더 텍스트 및 화살표 */
 .dropdownHeaderText {
   color: #333;
   font-weight: bold;
-  font-size: 85%;
+  font-size: 92%;
 }
 
 .dropdownHeaderText::after {
