@@ -6,13 +6,14 @@ import {
   createRequest,
 } from "../../../../service/api/userService";
 
-const CreateRequest = ({ isModalOpen, toggleModal }) => {
+const CreateRequest = ({ isModalOpen, toggleModal, contactId }) => {
   const [equipmentData, setEquipmentData] = useState([]);
   const [equipmentOptions, setEquipmentOptions] = useState([]);
   const [taskTypeData, setTaskTypeData] = useState([]);
   const [taskDetailOptions, setTaskDetailOptions] = useState([]);
 
   const [formState, setFormState] = useState({
+    contractId: contactId,
     taskType: "",
     isServiceRelevance: false,
     selectedSystem: "",
@@ -24,8 +25,8 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
 
   //taskTypes 로드
   useEffect(() => {
-    const loadTaskTypes = async () => {
-      const data = await fetchTaskTypes();
+    const loadTaskTypes = async (contractId) => {
+      const data = await fetchTaskTypes(contactId);
       setTaskTypeData(data);
     };
     loadTaskTypes();
@@ -76,6 +77,7 @@ const CreateRequest = ({ isModalOpen, toggleModal }) => {
     e.preventDefault();
 
     const taskRequestDto = {
+      contractId: formState.contractId,
       type: formState.taskType,
       equipmentName: formState.selectedEquipment,
       taskDetail: formState.taskDetail,
