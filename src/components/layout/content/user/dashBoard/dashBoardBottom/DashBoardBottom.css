@@ -13,3 +13,53 @@
 .criteriaStatistics {
   margin-top: 5px;
 }
+
+.toggleTable {
+  width: auto;
+  height: 350px;
+  margin-top: 20px;
+  padding: 5px 15px;
+  background-color: white;
+  border: 0.5px solid rgb(0, 0, 0, 0.15);
+  align-content: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+}
+
+/* 토글 헤더 스타일 */
+.toggleHeader {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+  margin: 10px 0px;
+}
+
+.toggleHeader:hover {
+  background-color: #e6f7ff;
+}
+
+.toggleHeader span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 토글 아이콘 스타일 */
+.toggleHeader svg {
+  font-size: 18px;
+  color: #0073e6;
+}
+
+/* 토글된 TableView 스타일 */
+.toggleTable {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
