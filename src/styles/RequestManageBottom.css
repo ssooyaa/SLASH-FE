@@ -80,6 +80,7 @@
   /* 스크롤 처리 */
   max-height: calc(1.5em * 8); /* 항목 높이에 맞게 최대 4개까지 표시 */
   overflow-y: auto; /* 스크롤 표시 */
+  min-width: 38px;
 }
 
 .dropdownOption {
@@ -161,7 +162,7 @@
   border-bottom: 1px solid #ddd;
   padding: 8px 5px; /* 동일한 padding 설정 */
   text-align: center;
-  font-size: 70%; /* 크기를 좀 더 조정 */
+  font-size: 75%; /* 크기를 좀 더 조정 */
 }
 
 .requestTable th {
@@ -169,10 +170,6 @@
   font-weight: bold;
   cursor: pointer;
   white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-}
-
-.requestTable td {
-  color: #666666;
 }
 
 .truncate {
