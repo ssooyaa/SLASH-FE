@@ -2,7 +2,6 @@ import React from "react";
 import "../../../styles/Label.css";
 
 const RequestLabel = ({ requestType }) => {
-  // 스타일을 taskType에 따라 동적으로 설정
   const getLabelStyle = (requestType) => {
     switch (requestType) {
       case "장애 요청":

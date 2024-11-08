@@ -7,7 +7,6 @@ import SolidGauge from "highcharts/modules/solid-gauge";
 import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
 import { FaExclamationCircle } from "react-icons/fa";
-import ChartTable from "./ChartTable";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
