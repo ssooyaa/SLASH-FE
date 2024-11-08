@@ -7,6 +7,7 @@ import SolidGauge from "highcharts/modules/solid-gauge";
 import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
 import { FaExclamationCircle } from "react-icons/fa";
+import ChartTable from "./ChartTable";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -15,16 +16,22 @@ axios.defaults.baseURL = "http://localhost:8080";
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
-const ChartView = ({ selectedCriteria }) => {
+const ChartView = ({ selectedCriteria, setStatistics }) => {
+  // props로 setStatistics 받음
   const [selectedSystem, setSelectedSystem] = useState("전체");
   const [selectedEquipment, setSelectedEquipment] = useState("전체");
   const [selectedPeriod, setSelectedPeriod] = useState("월별");
-  const [statistics, setStatistics] = useState([]);
+  const [statistics, setLocalStatistics] = useState([]); // 로컬 상태명 변경
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [targetSystems, setTargetSystems] = useState([]);
   const [targetEquipments, setTargetEquipments] = useState([]);
   const [systemData, setSystemData] = useState([]); // 시스템 데이터 전체 저장
+
+  const formatDowntimeToHours = (totalSeconds) => {
+    const hours = totalSeconds / 3600; // 초를 시간으로 변환
+    return `${hours.toFixed(3)}h`; // 소수점 세 자리까지 표시
+  };
 
   // 시스템 및 장비 데이터를 가져오는 함수
   const fetchSystemAndEquipment = async () => {
@@ -123,9 +130,11 @@ const ChartView = ({ selectedCriteria }) => {
       );
 
       if (response.data.success) {
-        setStatistics(response.data.data);
+        setStatistics(response.data.data); // 상위 컴포넌트의 상태 업데이트
+        setLocalStatistics(response.data.data); // 로컬 상태 업데이트
       } else {
         setStatistics([]);
+        setLocalStatistics([]);
       }
     } catch (error) {
       console.error("오류:", error);
@@ -154,6 +163,10 @@ const ChartView = ({ selectedCriteria }) => {
 
   const renderChart = (stat, index) => {
     const formattedDate = stat.date.slice(0, 7);
+    const score = stat.score;
+
+    // 색상 설정: 99% 이상의 값은 녹색, 그 외에는 빨간색
+    const color = score >= 100 ? "#2e8b57" : "#ff4d4d";
 
     const options = {
       chart: {
@@ -174,14 +187,14 @@ const ChartView = ({ selectedCriteria }) => {
         background: [
           {
             outerRadius: "100%",
-            innerRadius: "60%",
+            innerRadius: "80%",
             backgroundColor: Highcharts.color("#e6e6e6").get(),
             borderWidth: 0,
           },
         ],
       },
       yAxis: {
-        min: 0,
+        min: 90, // 최소값을 98로 설정하여 확대된 범위 표시
         max: 100,
         lineWidth: 0,
         tickPositions: [],
@@ -195,8 +208,8 @@ const ChartView = ({ selectedCriteria }) => {
             useHTML: true,
             format: `
               <div style="text-align:center">
-                <span style="font-size:1.5rem;color:#333">${stat.grade}</span><br/>
-                <span style="font-size:1.2rem;color:#333">${stat.score}%</span>
+                <span style="font-size:1.4rem;color:#333">${stat.grade}</span><br/>
+                <span style="font-size:1.1rem;color:${color}">${score.toFixed(2)}%</span>
               </div>
             `,
           },
@@ -205,8 +218,10 @@ const ChartView = ({ selectedCriteria }) => {
       series: [
         {
           name: "Score",
-          data: [{ y: stat.score, radius: "100%", innerRadius: "60%" }],
-          innerRadius: "60%",
+          data: [
+            { y: score, radius: "100%", innerRadius: "80%", color: color },
+          ],
+          innerRadius: "80%",
           outerRadius: "100%",
         },
       ],
@@ -219,7 +234,8 @@ const ChartView = ({ selectedCriteria }) => {
           <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
         <div className="statDetails">
-          <p>총 중단 시간: {stat.totalDowntime}h</p>
+          <p>장비명: {stat.targetEquipment}</p>
+          <p>총 중단 시간: {formatDowntimeToHours(stat.totalDowntime)}</p>
           <p>요청 건수: {stat.requestCount}건</p>
         </div>
       </div>
