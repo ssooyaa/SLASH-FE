@@ -2,8 +2,7 @@ import React from "react";
 import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractManagerMainTop from "./contractManagerMain/ContractManagerMainTop/ContractManagerMainTop";
-import ContractManagerBottom from "./contractManagerBottom/ContractManagerBottom";
+import ContractManagerMain from "./contractManagerMain/ContractManagerMain";
 
 const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -18,7 +17,6 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       >
         <FaBars />
       </button>
-
       {/* 프로필 및 환영 메시지 추가 */}
       <div className="profileSection">
         <div className="profileInfo">
@@ -29,8 +27,7 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractManagerMainTop />
-          <ContractManagerBottom />
+          <ContractManagerMain />
         </div>
       </div>
     </div>
