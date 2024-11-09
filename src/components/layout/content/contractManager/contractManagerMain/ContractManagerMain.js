@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ContractManagerMain.css";
 import {
   fetchAllContraName,
@@ -9,9 +10,16 @@ import EvaluationItemListTable from "../../../../feature/table/EvaluationItemLis
 import { FaSearch } from "react-icons/fa";
 
 const ContractManagerMain = () => {
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
   const [contractId, setContractId] = useState(null);
+
   const [contractInfo, setContractInfo] = useState(null);
+
   const [contractList, setContractList] = useState([]);
+
   const [evaluationItems, setEvaluationItems] = useState([]);
 
   // 초기 계약 리스트와 첫 번째 계약 정보 로드
@@ -20,7 +28,9 @@ const ContractManagerMain = () => {
       const response = await fetchAllContraName();
       setContractList(response);
 
-      const firstContractId = response[0]?.contractId;
+      const firstContractId = location.state
+        ? location.state.contractId
+        : response[0].contractId;
       if (firstContractId) {
         setContractId(firstContractId);
         const initialContractInfo = await fetchContractInfo(firstContractId);
