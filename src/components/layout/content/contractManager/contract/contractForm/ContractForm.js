@@ -106,8 +106,7 @@ const ContractForm = () => {
       console.log(updateFormData);
       const response = await CreateContract(updateFormData);
       if (response) {
-        console.log("계약 생성이 완료되었습니다.");
-        navigator(`/contractManager/contract/${response}`);
+        navigator("/contractManager/contractList");
       }
     } catch (error) {
       alert("저장 실패");

@@ -1,0 +1,85 @@
+.evaluationContractTitle {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.evaluationContractTitle p {
+  font-weight: 600;
+}
+
+.evaluationItemForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 600px;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 20px;
+  align-items: flex-start;
+  padding-bottom: 20px;
+}
+
+.evaluationItemTitle {
+  justify-content: center;
+  height: 50px;
+}
+.evaluationItemTitle input {
+  height: 35px;
+  width: 50%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.evaluationItemTitle input:focus {
+  border-color: black;
+  outline: none;
+}
+
+.evaluationItemInfo {
+  width: 95%;
+  min-height: 750px;
+}
+
+.serviceDetailTable {
+  padding-left: 55px;
+}
+
+.addTableButton {
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.addTableButton button {
+  width: 150px;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 3px;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  background-color: white;
+  color: black;
+}
+
+.addTaskButton button,
+.removeTaskButton button {
+  width: 100px;
+  border: none;
+  background-color: transparent;
+}
