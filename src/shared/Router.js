@@ -32,8 +32,8 @@ const Router = () => {
           element={<UpdateContract />}
         />
         <Route
-          path="/contractManager/contract/:contractId"
-          element={<ContractInformation />}
+          path="/contractManager/contractDetail"
+          element={<ContractManagerMain />}
         />
         <Route
           path="/contractManager/createContract"
