@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
-import { FaExclamationCircle } from "react-icons/fa";
+import {FaExclamationCircle} from "react-icons/fa";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";
@@ -14,16 +14,80 @@ import {
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
-const ChartView = ({ selectedCriteria, setStatistics }) => {
+const ChartView = ({selectedCriteria, setStatistics}) => {
   const [selectedSystem, setSelectedSystem] = useState("전체");
   const [selectedEquipment, setSelectedEquipment] = useState("전체");
-  const [selectedPeriod, setSelectedPeriod] = useState("월별");
   const [statistics, setLocalStatistics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [targetSystems, setTargetSystems] = useState([]);
-  const [targetEquipments, setTargetEquipments] = useState([]);
+  const [targetSystems, setTargetSystems] = useState(["전체"]);
+  const [targetEquipments, setTargetEquipments] = useState(["전체"]);
   const [systemData, setSystemData] = useState([]);
+
+  const getEquipmentsFromStatistics = (stats, selectedSystemName) => {
+    if (selectedSystemName === "전체") {
+      return ["전체", ...new Set(stats.map(stat => stat.targetEquipment))];
+    } else {
+      return [
+        "전체",
+        ...new Set(
+          stats
+            .filter(stat => stat.targetSystem === selectedSystemName)
+            .map(stat => stat.targetEquipment)
+        ),
+      ];
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+
+        const systemResponse = await fetchSystemAndEquipment();
+        if (systemResponse.success && systemResponse.data) {
+          const systemsData = systemResponse.data;
+          setSystemData(systemsData);
+          setTargetSystems(["전체", ...systemsData.map(system => system.systemName)]);
+        }
+
+        const statisticsResponse = await fetchStatistics({
+          date: "2024-10-31",
+          evaluationItemId: 1,
+        });
+
+        if (statisticsResponse.success && statisticsResponse.data) {
+          const statsData = statisticsResponse.data;
+          setStatistics(statsData);
+          setLocalStatistics(statsData);
+
+          const initialEquipments = getEquipmentsFromStatistics(statsData, "전체");
+          setTargetEquipments(initialEquipments);
+        }
+      } catch (err) {
+        setError("데이터를 가져오는 데 실패했습니다.");
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (statistics.length > 0) {
+      const newEquipments = getEquipmentsFromStatistics(statistics, selectedSystem);
+      setTargetEquipments(newEquipments);
+      setSelectedEquipment("전체");
+    }
+  }, [selectedSystem, statistics]);
+
+  const filteredStatistics = statistics.filter((stat) => {
+    const systemMatch = selectedSystem === "전체" || stat.targetSystem === selectedSystem;
+    const equipmentMatch = selectedEquipment === "전체" || stat.targetEquipment === selectedEquipment;
+    return systemMatch && equipmentMatch;
+  });
 
   const formatDowntimeToHours = (totalMinutes) => {
     if (totalMinutes < 60) {
@@ -35,75 +99,12 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
     }
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchSystemAndEquipment();
-        if (data.success) {
-          const systemsData = data.data;
-          setSystemData(systemsData);
-
-          const systemNames = [
-            "전체",
-            ...systemsData.map((system) => system.systemName),
-          ];
-          setTargetSystems(systemNames);
-          setSelectedSystem(systemNames[0]);
-
-          const allEquipments = [
-            "전체",
-            ...systemsData.flatMap((system) =>
-              system.equipmentInfos.map((equipment) => equipment.name)
-            ),
-          ];
-          setTargetEquipments(allEquipments);
-          setSelectedEquipment(allEquipments[0]);
-        }
-      } catch (err) {
-        setError("데이터를 가져오는 데 실패했습니다.");
-      }
-    };
-
-    getData();
-  }, []);
-
-  useEffect(() => {
-    const getStatistics = async () => {
-      if (!selectedSystem || !selectedPeriod) return;
-
-      try {
-        setLoading(true);
-        const params = {
-          serviceType: selectedCriteria,
-          period: selectedPeriod,
-          targetSystem: selectedSystem === "전체" ? null : selectedSystem,
-          targetEquipment:
-            selectedEquipment === "전체" ? null : selectedEquipment,
-        };
-        const data = await fetchStatistics(params);
-        if (data.success) {
-          setStatistics(data.data);
-          setLocalStatistics(data.data);
-        } else {
-          setStatistics([]);
-          setLocalStatistics([]);
-        }
-      } catch (err) {
-        setError("데이터를 가져오는 데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getStatistics();
-  }, [selectedSystem, selectedEquipment, selectedPeriod, selectedCriteria]);
-
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>{error}</p>;
 
   const renderNoDataMessage = () => (
     <div className="noDataMessage">
-      <FaExclamationCircle className="noDataIcon" />
+      <FaExclamationCircle className="noDataIcon"/>
       <p>현재 선택된 조건에 맞는 데이터가 없습니다.</p>
       <p>다른 기간이나 시스템을 선택해 보세요.</p>
     </div>
@@ -164,9 +165,7 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
       series: [
         {
           name: "Score",
-          data: [
-            { y: score, radius: "100%", innerRadius: "80%", color: color },
-          ],
+          data: [{y: score, radius: "100%", innerRadius: "80%", color: color}],
           innerRadius: "80%",
           outerRadius: "100%",
         },
@@ -177,7 +176,7 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
       <div key={index} className="statisticItem">
         <div className="chartContainer">
           <p className="statDate">{formattedDate}</p>
-          <HighchartsReact highcharts={Highcharts} options={options} />
+          <HighchartsReact highcharts={Highcharts} options={options}/>
         </div>
         <div className="statDetails">
           <p>장비명: {stat.targetEquipment}</p>
@@ -195,26 +194,18 @@ const ChartView = ({ selectedCriteria, setStatistics }) => {
           label="시스템 유형 : "
           options={targetSystems}
           selectedOption={selectedSystem}
-          onSelect={setSelectedSystem}
+          onSelect={(value) => setSelectedSystem(value)}
         />
         <Dropdown
           label="장비 유형 : "
           options={targetEquipments}
           selectedOption={selectedEquipment}
-          onSelect={setSelectedEquipment}
-        />
-        <Dropdown
-          label="기간 : "
-          options={["월별", "분기별", "연별"]}
-          selectedOption={selectedPeriod}
-          onSelect={setSelectedPeriod}
+          onSelect={(value) => setSelectedEquipment(value)}
         />
       </div>
-      <div
-        className={statistics.length > 0 ? "systemCharts" : "noDataContainer"}
-      >
-        {statistics.length > 0
-          ? statistics.map((stat, index) => renderChart(stat, index))
+      <div className={filteredStatistics.length > 0 ? "systemCharts" : "noDataContainer"}>
+        {filteredStatistics.length > 0
+          ? filteredStatistics.map((stat, index) => renderChart(stat, index))
           : renderNoDataMessage()}
       </div>
     </div>

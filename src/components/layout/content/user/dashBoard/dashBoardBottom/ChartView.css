@@ -20,10 +20,10 @@ body {
 
 .dropDown {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   flex-direction: row;
-  margin-bottom: 85px;
-  margin-left: -6px;
+  margin: 20px;
+  margin-left: 1px;
 }
 
 .statisticItem {
@@ -36,7 +36,7 @@ body {
   text-align: left;
   transition: all 0.3s ease;
   margin-top: -10px;
-  gap: 20px;
+  gap: 10px;
 }
 
 .chartContainer {
@@ -46,9 +46,10 @@ body {
   width: 100px;
   position: relative;
   margin-left: 130px;
-  flex: 1 1 1 33%; /* Two items per row */
+  flex: 1 1; /* Two items per row */
   max-width: 15%;
   margin-bottom: 20px; /* Space below each row */
+  height: 200px;
 }
 
 .statDate {
@@ -87,14 +88,16 @@ body {
 }
 .systemCharts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 두 개의 열 생성 */
+  grid-template-columns: repeat(3, 1fr);
+  gap:20px;/* 두 개의 열 생성 */
+  padding: 10px;
 }
 
-/* Optional: Center-align if charts are not full-width */
-.systemCharts {
-  justify-content: space-around;
-  gap: 38px;
-}
+/*!* Optional: Center-align if charts are not full-width *!*/
+/*.systemCharts {*/
+/*  justify-content: space-around;*/
+/*  gap: 20px;*/
+/*}*/
 
 .noDataMessage {
   display: flex;
