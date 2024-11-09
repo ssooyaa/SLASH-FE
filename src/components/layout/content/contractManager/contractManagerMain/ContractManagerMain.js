@@ -22,22 +22,26 @@ const ContractManagerMain = () => {
 
   const [evaluationItems, setEvaluationItems] = useState([]);
 
+  const [contractName, setContractName] = useState("");
+
   // 초기 계약 리스트와 첫 번째 계약 정보 로드
   useEffect(() => {
     const loadData = async () => {
       const response = await fetchAllContraName();
       setContractList(response);
 
-      const firstContractId = location.state
-        ? location.state.contractId
-        : response[0].contractId;
+      // location.state가 없거나 contractId가 없으면 null 처리
+      const firstContractId =
+        location.state?.contractId || response[0]?.contractId || null;
+      setContractId(firstContractId);
+
       if (firstContractId) {
-        setContractId(firstContractId);
         const initialContractInfo = await fetchContractInfo(firstContractId);
         setContractInfo(initialContractInfo);
-        setEvaluationItems(initialContractInfo.evaluationItems);
+        setEvaluationItems(initialContractInfo?.evaluationItems || []);
+        setContractName(initialContractInfo?.contractName || "");
       } else {
-        console.warn("No contract ID found.");
+        console.warn("No contract ID found or state is empty.");
       }
     };
     loadData();
@@ -49,11 +53,22 @@ const ContractManagerMain = () => {
       const contractInfo = await fetchContractInfo(contractId);
       setContractInfo(contractInfo);
       setEvaluationItems(contractInfo.evaluationItems);
+      setContractName(contractInfo.contractName);
     }
   };
 
   const handleContractChange = (event) => {
     setContractId(Number(event.target.value));
+  };
+
+  const handleAddEvaluation = (contractId) => {
+    navigate("/contractManager/addEvaluationItem", {
+      state: { contractId, contractName },
+    });
+  };
+
+  const handleAddContract = () => {
+    navigate("/contractManager/createContract");
   };
 
   return (
@@ -74,31 +89,48 @@ const ContractManagerMain = () => {
         </button>
       </div>
 
-      {contractInfo && contractInfo.contractName && (
-        <div className="mainContractInfo">
-          <p>협약서: {contractInfo.contractName}</p>
-          <p>계약 시작일: {contractInfo.startDate}</p>
-          <p>계약 만료일: {contractInfo.endDate}</p>
+      {contractList.length > 0 ? (
+        contractInfo && contractInfo.contractName ? (
+          <>
+            <div className="mainContractInfo">
+              <p>협약서: {contractInfo.contractName}</p>
+              <p>계약 시작일: {contractInfo.startDate}</p>
+              <p>계약 만료일: {contractInfo.endDate}</p>
+            </div>
+
+            <div className="mainSlaGrade">
+              <div className="mainGradeEditBtnDiv">
+                <button>수정하기</button>
+              </div>
+              <div className="table mainTotalGrade">
+                <GradeHorizonTable
+                  initialData={contractInfo?.totalTargets || []}
+                />
+              </div>
+            </div>
+
+            <div className="mainServiceCategory">
+              <div className="mainGradeEditBtnDiv">
+                <button onClick={() => handleAddEvaluation(contractId)}>
+                  지표추가
+                </button>
+              </div>
+              <div className="categoryTitle">
+                <EvaluationItemListTable initialData={evaluationItems} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div>계약 정보가 없습니다.</div>
+        )
+      ) : (
+        <div className="noContracts">
+          <p>계약 목록이 없습니다.</p>
+          <button className="addContractBtn" onClick={handleAddContract}>
+            계약추가
+          </button>
         </div>
       )}
-
-      <div className="mainSlaGrade">
-        <div className="mainGradeEditBtnDiv">
-          <button>수정하기</button>
-        </div>
-        <div className="table mainTotalGrade">
-          <GradeHorizonTable initialData={contractInfo?.totalTargets || []} />
-        </div>
-      </div>
-
-      <div className="mainServiceCategory">
-        <div className="mainGradeEditBtnDiv">
-          <button>지표추가</button>
-        </div>
-        <div className="categoryTitle">
-          <EvaluationItemListTable initialData={evaluationItems} />
-        </div>
-      </div>
     </div>
   );
 };
