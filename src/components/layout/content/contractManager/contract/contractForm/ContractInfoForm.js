@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ContractInfoForm.css";
-import { fetchContractInfo } from "../../../../../../api/UserService";
+import { fetchContractInfo } from "../../../../../../api/CommonService";
 import GradeHorizonTable from "../../../../../feature/table/GradeHorizonTable";
 import ServiceInfoForm from "../../service/serviceForm/ServiceInfoForm";
 import { useParams, useNavigate } from "react-router-dom";

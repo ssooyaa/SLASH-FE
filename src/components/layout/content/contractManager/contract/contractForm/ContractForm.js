@@ -4,10 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import {
-  CreateContract,
-  CreateServiceDetail,
-} from "../../../../../../api/UserService";
+import { CreateContract } from "../../../../../../api/ContractManagerService";
 import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 
 const ContractForm = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ContractListForm.css";
-import { fetchAllContractInfo } from "../../../../../../api/UserService";
+import { fetchAllContractInfo } from "../../../../../../api/CommonService";
 import ContractListTable from "../../../../../feature/table/ContractListTable";
 import { useNavigate } from "react-router-dom";
 

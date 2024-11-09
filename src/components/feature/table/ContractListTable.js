@@ -25,7 +25,7 @@ const ContractListTable = ({ initialData = [] }) => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td>{item.companyName}</td>
+              <td>{item.contractName}</td>
               <td>{item.startDate}</td>
               <td>{item.endDate}</td>
               <td>{item.terminate}</td>
