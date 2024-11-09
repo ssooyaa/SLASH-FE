@@ -35,11 +35,15 @@ export const CreateServiceDetail = async (requestContractDTO) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.post("/evaluation-item", requestContractDTO, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      "/contract-manager/evaluation-item",
+      requestContractDTO,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (response.data.success) {
       return response.data.success;
