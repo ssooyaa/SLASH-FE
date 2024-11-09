@@ -36,7 +36,6 @@ const ContractManagerMain = () => {
         const initialContractInfo = await fetchContractInfo(firstContractId);
         setContractInfo(initialContractInfo);
         setEvaluationItems(initialContractInfo.evaluationItems);
-        console.log("초기 계약정보 데이터 ", initialContractInfo);
       } else {
         console.warn("No contract ID found.");
       }
@@ -50,7 +49,6 @@ const ContractManagerMain = () => {
       const contractInfo = await fetchContractInfo(contractId);
       setContractInfo(contractInfo);
       setEvaluationItems(contractInfo.evaluationItems);
-      console.log("조회 버튼 클릭 시 계약정보 데이터 ", contractInfo);
     }
   };
 
