@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const EvaluationItemListTable = ({ initialData }) => {
   const [data, setData] = useState(initialData || []);
 
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("EvaluationItemListTable 데이터: ", initialData); // data 값 확인
@@ -19,8 +19,9 @@ const EvaluationItemListTable = ({ initialData }) => {
 
   const handleEvaluationItemDetail = (evaluationItemId) => {
     console.log(evaluationItemId);
-    // navigator();
-    //상세페이지 구현 후 직성
+    navigate("/contractManager/evaluationItemDetail", {
+      state: { evaluationItemId },
+    });
   };
 
   return (

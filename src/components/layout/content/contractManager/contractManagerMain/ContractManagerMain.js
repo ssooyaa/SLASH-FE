@@ -76,7 +76,11 @@ const ContractManagerMain = () => {
       <div className="contractSelect">
         <span className="contractTitleSpan">*</span>
         <p>협약서</p>
-        <select value={contractId ?? ""} onChange={handleContractChange}>
+        <select
+          className="contractDropDown"
+          value={contractId ?? ""}
+          onChange={handleContractChange}
+        >
           {contractList.map((item) => (
             <option key={item.contractId} value={item.contractId}>
               {item.contractName}
