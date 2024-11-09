@@ -6,7 +6,6 @@ import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
 import RequestManagement from "../pages/user/RequestManagement";
 import CreateContract from "../pages/contractManager/CreateContract";
-import ContractInformation from "../pages/contractManager/ContractInformation";
 import UpdateContract from "../pages/contractManager/UpdateContract";
 import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
