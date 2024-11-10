@@ -3,7 +3,7 @@ import RequestDetailInfoForm from "./RequestDetailInfoForm";
 import RequestContentForm from "../RequestContentForm";
 import EditRequestForm from "../EditRequestForm";
 import { deleteRequest } from "../../../../service/api/userService";
-import {completeRequest} from "../../../../api/UserService"
+import {completeRequest} from "../../../../api/RequestManagerService";
 
 const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
