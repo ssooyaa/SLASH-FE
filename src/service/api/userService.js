@@ -23,11 +23,11 @@ export const fetchSystemAndEquipments = async () => {
   }
 };
 
-export const fetchTaskTypes = async () => {
+export const fetchTaskTypes = async (contractId) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.get("/common/all-task-types", {
+    const response = await axios.get(`/user/all-task-types/${contractId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -47,15 +47,11 @@ export const createRequest = async (taskRequestDto) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.post(
-      "/user/request",
-      taskRequestDto,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post("/user/request", taskRequestDto, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.data.success) {
       return response.data.success;
     } else {
@@ -85,14 +81,11 @@ export const showRequestDetail = async (requestId) => {
 export const deleteRequest = async (requestId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.delete(
-      `/user/request/${requestId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`/user/request/${requestId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error.response.data);

@@ -15,9 +15,10 @@ const ContractListTable = ({ initialData = [] }) => {
       <table>
         <thead>
           <tr>
-            <th>회사명</th>
+            <th>협약서</th>
             <th>시작일</th>
             <th>종료일</th>
+            <th>만료여부</th>
             <th>상세보기</th>
           </tr>
         </thead>
@@ -27,6 +28,7 @@ const ContractListTable = ({ initialData = [] }) => {
               <td>{item.companyName}</td>
               <td>{item.startDate}</td>
               <td>{item.endDate}</td>
+              <td>{item.terminate}</td>
               <td>
                 <button onClick={() => handleDetail(item.contractId)}>
                   상세보기
