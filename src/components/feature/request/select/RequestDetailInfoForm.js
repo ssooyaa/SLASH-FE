@@ -15,9 +15,11 @@ const RequestDetailInfoForm = ({
   requestTime,
   endTime,
   canDelete,
+  canComplete,
   canEdit,
   onDelete,
   onEdit,
+  onComplete,
 }) => {
   const renderLabel = (label) => (
     <label>
@@ -40,6 +42,11 @@ const RequestDetailInfoForm = ({
         {canDelete && (
           <button className="deleteButton" onClick={onDelete}>
             삭제
+          </button>
+        )}
+        {canComplete && (
+          <button className="completeButton" onClick={onComplete}>
+            처리 완료
           </button>
         )}
       </div>

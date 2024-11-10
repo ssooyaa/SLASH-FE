@@ -42,6 +42,7 @@ const Login = () => {
 
       // 토큰 정보를 localStorage에 저장
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userId",id);
 
       const decoded = jwtDecode(accessToken);
 

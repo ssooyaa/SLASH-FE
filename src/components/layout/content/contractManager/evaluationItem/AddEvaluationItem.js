@@ -1,10 +1,10 @@
 import React from "react";
-import "../../../../styles/Content.css";
+import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractManagerMain from "./contractManagerMain/ContractManagerMain";
+import AddEvaluationItemForm from "./evaluationItemForm/AddEvaluationItemForm";
 
-const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
+const AddEvaluationItem = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -27,11 +27,11 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractManagerMain />
+          <AddEvaluationItemForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default ContractManagerMainContent;
+export default AddEvaluationItem;

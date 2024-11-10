@@ -6,11 +6,13 @@ import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
 import RequestManagement from "../pages/user/RequestManagement";
 import CreateContract from "../pages/contractManager/CreateContract";
-import ContractInformation from "../pages/contractManager/ContractInformation";
 import UpdateContract from "../pages/contractManager/UpdateContract";
 import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
 import IndexManagement from "../pages/user/IndexManagement";
+import CreateEvaluationItem from "../pages/contractManager/CreateEvaluationItem";
+import EvaluationItemDetail from "../pages/contractManager/EvaluationItemDetail";
+
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
 const Router = () => {
@@ -33,8 +35,8 @@ const Router = () => {
           element={<UpdateContract />}
         />
         <Route
-          path="/contractManager/contract/:contractId"
-          element={<ContractInformation />}
+          path="/contractManager/contractDetail"
+          element={<ContractManagerMain />}
         />
         <Route
           path="/contractManager/createContract"
@@ -47,6 +49,14 @@ const Router = () => {
         <Route
           path="/contractManager/request/:requestId"
           element={<RequestDetail />}
+        />
+        <Route
+          path="/contractManager/addEvaluationItem"
+          element={<CreateEvaluationItem />}
+        />
+        <Route
+          path="/contractManager/evaluationItemDetail"
+          element={<EvaluationItemDetail />}
         />
       </Routes>
     </BrowserRouter>

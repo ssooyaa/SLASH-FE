@@ -12,9 +12,9 @@ import ServiceInfoForm from "../../service/serviceForm/ServiceInfoForm";
 import CheckBox from "../../../../../common/CheckBox";
 import {
   CreateContract,
-  fetchContractInfo,
   CreateServiceDetail,
-} from "../../../../../../api/UserService";
+} from "../../../../../../api/ContractManagerService";
+import { fetchContractInfo } from "../../../../../../api/CommonService";
 
 const UpdateContractForm = () => {
   const { contractId } = useParams();

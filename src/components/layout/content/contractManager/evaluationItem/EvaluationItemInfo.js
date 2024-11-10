@@ -2,9 +2,9 @@ import React from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractInfoForm from "./contractForm/ContractInfoForm";
+import EvaluationItemInfoForm from "./evaluationItemForm/EvaluationItemInfoForm";
 
-const ContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
+const EvaluationItemInfo = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -17,7 +17,6 @@ const ContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
       >
         <FaBars />
       </button>
-
       {/* 프로필 및 환영 메시지 추가 */}
       <div className="profileSection">
         <div className="profileInfo">
@@ -28,11 +27,12 @@ const ContractInfo = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractInfoForm />
+          {" "}
+          <EvaluationItemInfoForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default ContractInfo;
+export default EvaluationItemInfo;

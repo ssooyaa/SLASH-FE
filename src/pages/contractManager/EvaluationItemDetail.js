@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ContractManagerSidebar from "../../components/layout/sidebar/ContactManagerSidebar";
 import "../../styles/Content.css";
-import ContractInfo from "../../components/layout/content/contractManager/contract/ContractInfo";
+import EvaluationItemInfo from "../../components/layout/content/contractManager/evaluationItem/EvaluationItemInfo";
 
-const ContractInformation = () => {
+const EvaluationItemDetail = () => {
   const [isNavOpen, setNavOpen] = useState(true);
   const [effectClass, setEffectClass] = useState(1);
 
@@ -19,7 +19,7 @@ const ContractInformation = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
-      <ContractInfo
+      <EvaluationItemInfo
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}
         effectClass={effectClass}
@@ -28,4 +28,4 @@ const ContractInformation = () => {
   );
 };
 
-export default ContractInformation;
+export default EvaluationItemDetail;
