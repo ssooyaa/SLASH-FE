@@ -23,7 +23,7 @@ const EvaluationItemListTable = ({ initialData, contractName }) => {
   return (
     <div className="listTable">
       <div className="listTableHead">
-        <p className="IndicatorP headerP">지표구분</p>
+        <p className="listTableCategory headerP">지표구분</p>
         <p className="isAutoP headerP">자동계산여부</p>
         <p className="periodP headerP">측정 주기</p>
         <p className="buttonP"></p>
