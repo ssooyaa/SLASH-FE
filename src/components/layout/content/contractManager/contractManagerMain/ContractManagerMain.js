@@ -133,6 +133,7 @@ const ContractManagerMain = () => {
                 <EvaluationItemListTable
                   initialData={evaluationItems || []}
                   contractName={contractName}
+                  contractId={contractId}
                 />
               </div>
             </div>

@@ -157,3 +157,63 @@ export const updateTotalTarget = async (contractId, requestTotalTargetDTO) => {
     return false;
   }
 };
+
+export const createEvaluationItem = async (
+  evaluationItemId,
+  requestEvaluationDTO
+) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.post(
+      `/contract-manager/total-target/${evaluationItemId}`,
+      requestEvaluationDTO,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+};
+
+export const updateEvaluationItem = async (
+  evaluationItemId,
+  requestEvaluationDTO
+) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.put(
+      `/contract-manager/evaluation-item/${evaluationItemId}`,
+      requestEvaluationDTO,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+};
