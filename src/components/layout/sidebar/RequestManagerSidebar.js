@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiLogOut } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js"

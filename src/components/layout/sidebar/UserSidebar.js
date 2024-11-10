@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiBarChart2, FiLogOut } from "react-icons/fi";
+import { FiHome, FiBarChart2 } from "react-icons/fi";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js"
