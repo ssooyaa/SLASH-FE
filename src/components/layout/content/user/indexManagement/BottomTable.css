@@ -1,0 +1,50 @@
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.customTable th,
+.customTable td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.customTable th {
+  background-color: #f4f7fc;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.customTable tr {
+  transition: background-color 0.3s;
+}
+
+.customTable tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.customTable .highlightedRow {
+  background-color: #e6f7ff;
+}
+
+.customTable a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.customTable a:hover {
+  text-decoration: underline;
+}
+
+.customTable td:last-child {
+  font-weight: bold;
+  color: #333;
+}
