@@ -1,0 +1,43 @@
+.topIndex {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+  margin: 10px 0px;
+  color: #6d6c6c;
+  font-weight: bold;
+  font-size: 85%;
+}
+
+.star {
+  color: red;
+}
+
+.criteria2 {
+  margin-left: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+  width: 150px;
+  background-color: aliceblue;
+  font-weight: bold;
+}
+
+.queryButton {
+  margin-left: auto; /* 버튼을 오른쪽 끝으로 정렬 */
+  padding: 2px 10px;
+  background-color: #1f2a44; /* Dark background color for the button */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.queryButton:hover,
+.queryButton:active {
+  background-color: #3a4f77; /* Slightly lighter color on hover */
+}
