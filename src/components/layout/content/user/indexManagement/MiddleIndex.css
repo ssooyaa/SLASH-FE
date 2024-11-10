@@ -1,0 +1,25 @@
+.middle {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+  left: 0;
+  gap: 30px;
+}
+
+.totalIndex {
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+  margin-left: -15px;
+  margin-top: 20px;
+  color: #444343;
+  font-weight: bold;
+  min-height: 200px;
+  width: 470px;
+  text-align: center;
+  padding-top: 30px; /* 텍스트를 아래로 내리기 위해 추가 */
+}
