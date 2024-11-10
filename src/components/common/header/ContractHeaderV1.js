@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaAsterisk, FaSistrix } from "react-icons/fa6";
 import "./ContractHeader.css";
-import { fetchAllContractName } from "../../../api/UserService";
 import { FaSearch } from "react-icons/fa";
+import {fetchAllContractName} from "../../../api/CommonService";
 // 날짜와 협약서 선택하는 부분 모두 있는 버전
 const ContractHeader = () => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
