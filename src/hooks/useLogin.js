@@ -1,9 +1,8 @@
 // src/hooks/useLogin.js
 import { useState } from "react";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
+import { authLogin } from "../service/api/authService";
 const useLogin = () => {
     const navigate = useNavigate();
     const [id, setId] = useState("");
@@ -27,16 +26,7 @@ const useLogin = () => {
         }
 
         try {
-            const response = await axios.post(
-                "http://localhost:8080/login",
-                { id, password },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            const { accessToken } = response.data.data;
+            const { accessToken } = await authLogin(id, password);
 
             // 토큰 저장
             localStorage.setItem("accessToken", accessToken);
@@ -84,6 +74,7 @@ const useLogin = () => {
         isPasswordVisible,
         togglePasswordVisibility,
         errors,
+        setErrors,
         handleSubmit,
     };
 };
