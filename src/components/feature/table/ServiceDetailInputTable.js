@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./ServiceDetailInputTable.css";
-import { GiContract } from "react-icons/gi";
 
 const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
   const [formData, setFormData] = useState({

@@ -45,12 +45,24 @@ const UpdateContractForm = () => {
     navigate(-1);
   };
 
+  const isValid = () => {
+    if (totalTargets.length === 0) {
+      alert("평가 점수를 입력해 주세요");
+      return false;
+    }
+    return true;
+  };
+
   // 조회 버튼 클릭 시 계약 정보 로드
   const submit = async (e) => {
     e.preventDefault();
     const updateData = totalTargets.filter((target) => target.grade !== "");
 
     setTotalTargets(updateData);
+
+    if (!isValid()) {
+      return; //미입력값 있을 시 제출 불가
+    }
 
     if (contractId) {
       const isModify = await fetchModifyIsPossible(contractId);

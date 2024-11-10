@@ -22,6 +22,7 @@ const AddEvaluationItemForm = () => {
     category: "",
     weight: 0,
     period: "월별",
+    purpose: "",
     formula: "",
     unit: "율(%)",
     serviceTargets: [],
@@ -95,6 +96,34 @@ const AddEvaluationItemForm = () => {
     navigate(-1);
   };
 
+  const isValid = () => {
+    if (formData.category === "") {
+      alert("평가 항목을 입력해 주세요");
+      return false;
+    }
+    if (formData.weight === 0) {
+      alert("가중치를 입력해 주세요");
+      return false;
+    }
+
+    if (formData.purpose === "") {
+      alert("서비스 목적을 입력해주세요");
+      return false;
+    }
+
+    if (formData.formula === "") {
+      alert("산출식을 입력해주세요");
+      return false;
+    }
+
+    if (serviceTargets.length === 0) {
+      alert("평가 점수를 입력해 주세요");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleChange("contractId", contractId);
@@ -112,6 +141,10 @@ const AddEvaluationItemForm = () => {
       serviceTargets: filterServiceTargets,
       taskTypes: updatedTaskTypes,
     };
+
+    if (!isValid()) {
+      return; //미입력값 있을 시 제출 불가
+    }
 
     try {
       const response = await CreateServiceDetail(updateFormData);
