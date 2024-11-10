@@ -14,3 +14,8 @@
 .formulaRow textarea {
   height: 75px;
 }
+
+.formulaRow textarea:focus {
+  border-color: black;
+  outline: none;
+}

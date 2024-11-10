@@ -4,10 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import {
-  CreateContract,
-  CreateServiceDetail,
-} from "../../../../../../api/UserService";
+import { CreateContract } from "../../../../../../api/ContractManagerService";
 import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 
 const ContractForm = () => {
@@ -109,8 +106,7 @@ const ContractForm = () => {
       console.log(updateFormData);
       const response = await CreateContract(updateFormData);
       if (response) {
-        console.log("계약 생성이 완료되었습니다.");
-        navigator(`/contractManager/contract/${response}`);
+        navigator("/contractManager/contractList");
       }
     } catch (error) {
       alert("저장 실패");
@@ -215,7 +211,7 @@ const ContractForm = () => {
           </div>
         </div>
         <div className="serviceFormButton">
-          <button className="grayButton" onClick={handleRedirect}>
+          <button className="grayButton" onClick={() => handleRedirect()}>
             닫기
           </button>
           <button className="blackButton" onClick={(e) => submit(e)}>

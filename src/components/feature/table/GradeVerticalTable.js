@@ -1,6 +1,8 @@
 import React from "react";
 
 const GradeVerticalTable = ({ data }) => {
+  const initialData = data ? data : [];
+
   return (
     <table>
       <thead>
@@ -12,7 +14,7 @@ const GradeVerticalTable = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => {
+        {initialData.map((item, index) => {
           return (
             <tr key={index}>
               <td>{item.grade}</td>

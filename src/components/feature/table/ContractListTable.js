@@ -7,7 +7,9 @@ const ContractListTable = ({ initialData = [] }) => {
   const navigator = useNavigate();
 
   const handleDetail = (contractId) => {
-    navigator(`/contractManager/contract/${contractId}`);
+    navigator("/contractManager/contractDetail", {
+      state: { contractId },
+    });
   };
 
   return (
@@ -25,10 +27,10 @@ const ContractListTable = ({ initialData = [] }) => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td>{item.companyName}</td>
+              <td>{item.contractName}</td>
               <td>{item.startDate}</td>
               <td>{item.endDate}</td>
-              <td>{item.terminate}</td>
+              <td>{item.terminate ? "만료" : ""}</td>
               <td>
                 <button onClick={() => handleDetail(item.contractId)}>
                   상세보기
