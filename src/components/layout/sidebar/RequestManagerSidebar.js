@@ -37,7 +37,7 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItem">
             <a
-              href="#"
+              href="/requestManager/status"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
             >
