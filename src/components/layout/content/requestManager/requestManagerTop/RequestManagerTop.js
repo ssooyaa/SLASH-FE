@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import MonthPicker from "../../../../feature/MonthPicker";
 import "../../../../feature/MonthPicker.css";
 import "./RequestManagerTop.css";
-import { getMonthlyData } from "../../../../../api/UserService";
 import { PieChart } from "../../../../feature/chart/systemTypeChart/PieChart";
 import "../../../../feature/chart/systemTypeChart/PieChart.css";
+import {getMonthlyData} from "../../../../../api/RequestManagerService";
 
 const RequestManagerTop = () => {
     const [monthlyData, setMonthlyData] = useState(null);
