@@ -72,3 +72,25 @@ export const fetchAllContractName = async () => {
     console.error("ERROR: ", error.response.data);
   }
 };
+
+export const fetchServiceInfo = async (evaluationItemId) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.get(`/common/detail/${evaluationItemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.data.success) {
+      console.log(response.data.data);
+
+      return response.data.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+  }
+};

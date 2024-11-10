@@ -211,7 +211,7 @@ const ContractForm = () => {
           </div>
         </div>
         <div className="serviceFormButton">
-          <button className="grayButton" onClick={handleRedirect}>
+          <button className="grayButton" onClick={() => handleRedirect()}>
             닫기
           </button>
           <button className="blackButton" onClick={(e) => submit(e)}>
