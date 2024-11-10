@@ -51,7 +51,7 @@ export const fetchContractInfo = async (contractId) => {
   }
 };
 
-export const fetchAllContraName = async () => {
+export const fetchAllContractName = async () => {
   try {
     const token = localStorage.getItem("accessToken"); // 토큰 가져오기
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ContractManagerMain.css";
 import {
-  fetchAllContraName,
+  fetchAllContractName,
   fetchContractInfo,
 } from "../../../../../api/CommonService";
 import GradeHorizonTable from "../../../../feature/table/GradeHorizonTable";
@@ -25,7 +25,7 @@ const ContractManagerMain = () => {
   // 초기 계약 리스트와 첫 번째 계약 정보 로드
   useEffect(() => {
     const loadData = async () => {
-      const response = await fetchAllContraName();
+      const response = await fetchAllContractName();
       setContractList(response);
 
       const firstContractId = location.state

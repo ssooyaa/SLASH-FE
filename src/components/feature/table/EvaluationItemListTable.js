@@ -36,7 +36,7 @@ const EvaluationItemListTable = ({ initialData }) => {
       ) : (
         data.map((item, index) => (
           <div className="listTableBody" key={item.id || index}>
-            <p className="IndicatorP">{item.category}</p>
+            <p className="listTableCategory">{item.category}</p>
             <p className="isAutoP">
               {item.autoCalculation ? "자동 계산" : "수동 계산"}
             </p>
