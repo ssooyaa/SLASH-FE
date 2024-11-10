@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import RequestDetailInfoForm from "./RequestDetailInfoForm";
 import RequestContentForm from "../RequestContentForm";
 import EditRequestForm from "../EditRequestForm";
 import { deleteRequest } from "../../../../service/api/userService";
+import {completeRequest} from "../../../../api/UserService"
 
 const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    setLoggedInUser(userId); // 상태 업데이트
+  }, []);
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   if (!requestData) {
@@ -29,6 +37,18 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
       alert("삭제 실패");
     }
   };
+
+  const handleComplete  =async ()=>{
+    try {
+      await completeRequest(requestData.requestId);
+      alert("처리 완료");
+      console.log("loggedInUser",loggedInUser,"managerId",requestData.managerId);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      alert("접근 실패");
+    }
+  }
 
   return (
     <div className="modal-content">
@@ -60,8 +80,12 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
             canEdit={
               requestData.requester === "c" && requestData.status === "접수완료"
             }
+            canComplete={
+              requestData.managerId === loggedInUser && requestData.status === "진행중"
+            }
             onDelete={handleDelete}
             onEdit={handleEdit}
+            onComplete={handleComplete}
           />
           <RequestContentForm
             formState={{
