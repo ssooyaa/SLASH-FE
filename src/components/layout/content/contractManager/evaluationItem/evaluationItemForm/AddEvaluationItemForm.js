@@ -110,7 +110,7 @@ const AddEvaluationItemForm = () => {
     try {
       const response = await CreateServiceDetail(updateFormData);
       if (response) {
-        console.log("저장 되었습니다.");
+        alert("저장 되었습니다.");
         navigate("/contractManager/contractDetail", {
           state: { contractId },
         });

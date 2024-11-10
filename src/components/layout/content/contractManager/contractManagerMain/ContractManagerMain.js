@@ -131,7 +131,7 @@ const ContractManagerMain = () => {
               </div>
               <div className="categoryTitle">
                 <EvaluationItemListTable
-                  initialData={evaluationItems}
+                  initialData={evaluationItems || []}
                   contractName={contractName}
                 />
               </div>
