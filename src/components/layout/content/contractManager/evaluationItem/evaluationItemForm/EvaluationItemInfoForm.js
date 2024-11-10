@@ -17,6 +17,8 @@ const EvaluationItemInfoForm = () => {
 
   const contractName = location.state?.contractName;
 
+  const contractId = location.state?.contractId;
+
   const [evaluationItemInfo, setEvaluationItemInfo] = useState({});
 
   const [serviceTargets, setServiceTargets] = useState([]);
@@ -44,8 +46,12 @@ const EvaluationItemInfoForm = () => {
     navigate(-1);
   };
 
-  const handleEditEvaluationItem = () => {
+  const handleEditEvaluationItem = (evaluationId) => {
     //수정페이지 작성 후 연결
+
+    navigate(`/contractManager/updateEvaluationItem/${evaluationId}`, {
+      state: { contractId, contractName },
+    });
   };
 
   return (
@@ -91,7 +97,9 @@ const EvaluationItemInfoForm = () => {
                     <span>*</span>
                   </div>
                   <div className="table taskReadTable">
-                    {evaluationItemInfo.taskTypes[0].deadline !== 0 ? (
+                    {evaluationItemInfo.taskTypes.some(
+                      (item) => item.deadline > 0
+                    ) ? (
                       <TaskDetailTable
                         initialData={evaluationItemInfo.taskTypes}
                       />
@@ -114,7 +122,7 @@ const EvaluationItemInfoForm = () => {
           </button>
           <button
             className="blackButton"
-            onClick={() => handleEditEvaluationItem()}
+            onClick={() => handleEditEvaluationItem(evaluationItemId)}
           >
             수정
           </button>

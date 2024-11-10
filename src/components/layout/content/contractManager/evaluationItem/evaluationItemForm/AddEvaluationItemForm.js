@@ -18,7 +18,7 @@ const AddEvaluationItemForm = () => {
   const contractName = location.state?.contractName;
 
   const [formData, setFormData] = useState({
-    contractId: 0,
+    contractId: contractId,
     category: "",
     weight: 0,
     period: "월별",
@@ -51,8 +51,7 @@ const AddEvaluationItemForm = () => {
   };
 
   const handleTaskDetail = (value) => {
-    setTaskTypes(value);
-    const updatedTaskTypes = taskTypes.map((item) => {
+    const updatedTaskTypes = value.map((item) => {
       if (typeof item === "object") {
         return {
           type: formData.category.split(" ")[0] + " 요청",
@@ -72,6 +71,8 @@ const AddEvaluationItemForm = () => {
         return null;
       }
     });
+
+    setTaskTypes(updatedTaskTypes);
     handleChange("taskTypes", updatedTaskTypes);
   };
 
@@ -91,20 +92,25 @@ const AddEvaluationItemForm = () => {
   };
 
   const handleRedirect = () => {
-    //계약 리스트페이지 작성 후 추가 예정
     navigate(-1);
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     handleChange("contractId", contractId);
 
     const filterServiceTargets = formData.serviceTargets.filter(
       (target) => target.grade !== ""
     );
 
+    const updatedTaskTypes = formData.taskTypes.filter(
+      (target) => target.taskDetail !== ""
+    );
+
     const updateFormData = {
       ...formData,
       serviceTargets: filterServiceTargets,
+      taskTypes: updatedTaskTypes,
     };
 
     try {

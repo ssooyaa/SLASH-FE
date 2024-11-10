@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ServiceDetailInputTable.css";
+import { GiContract } from "react-icons/gi";
 
 const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,26 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
     formula: initialData.formula || "",
     unit: initialData.unit || "율(%)",
   });
+
+  const [contractId, setContractId] = useState(initialData.contractId);
+
+  useEffect(() => {
+    // contractId가 변경될 때만 실행
+    if (contractId !== initialData.contractId) {
+      setContractId(initialData.contractId); // contractId 업데이트
+    }
+  }, [initialData.contractId]); // contractId가 변경될 때만 실행
+
+  useEffect(() => {
+    // initialData가 변경될 때 formData를 업데이트
+    setFormData({
+      purpose: initialData.purpose || "",
+      weight: initialData.weight || 0,
+      period: initialData.period || "월별",
+      formula: initialData.formula || "",
+      unit: initialData.unit || "율(%)",
+    });
+  }, [contractId]); // initialData가 변경될 때마다 실행
 
   const handleChangeData = (field, value) => {
     setFormData((prevData) => {
