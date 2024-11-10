@@ -152,7 +152,7 @@ body {
 }
 
 /* focus 상태에서는 스타일 변경 안되게 함 */
-.navLink:focus {
+.navItemSmall:focus .navLink:focus {
   outline: none; /* outline 제거 */
 }
 
@@ -194,6 +194,18 @@ body {
   width: 37px;
   border-top-right-radius: 100%;
   box-shadow: 0 -20px 0 0 #f0f4f8;
+}
+
+.navItemSmall {
+  margin-left: 50px;
+  font-size: 0.8rem;
+  color: #e2e0e0;
+  padding: 6px 20px;
+  width: 11rem;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 /* 로그아웃 버튼 스타일 */
