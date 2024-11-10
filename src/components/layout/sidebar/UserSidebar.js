@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiBarChart2, FiLogOut } from "react-icons/fi";
-import { MdQuestionMark } from "react-icons/md";
+import { MdAssignment, MdEventNote, MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
+import { FaFileContract } from "react-icons/fa6";
+import { FaRegClipboard } from "react-icons/fa";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -55,6 +57,18 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
               <MdQuestionMark className="navLinkIcon" />
               요청 관리
             </a>
+          </li>
+          <li className="navItem">
+            <a
+              href="/user/indexManagement"
+              className={`navLink ${activeIndex === 3 ? "active" : ""}`}
+              onClick={() => handleMenuClick(3)}
+            >
+              <MdEventNote className="navLinkIcon" />
+              지표 관리
+            </a>
+            <li className="navItemSmall">월간 지표</li>
+            <li className="navItemSmall">연간 지표</li>
           </li>
         </ul>
 
