@@ -1,6 +1,7 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "../../../../styles/Login.css";
 
-const InputGroup = ({
+const LoginInputGroup = ({
   type = "text",
   cls,
   value,
@@ -30,4 +31,4 @@ const InputGroup = ({
   );
 };
 
-export default InputGroup;
+export default LoginInputGroup;
