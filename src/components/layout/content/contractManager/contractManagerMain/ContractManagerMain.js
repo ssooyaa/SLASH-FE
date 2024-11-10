@@ -120,7 +120,10 @@ const ContractManagerMain = () => {
                 </button>
               </div>
               <div className="categoryTitle">
-                <EvaluationItemListTable initialData={evaluationItems} />
+                <EvaluationItemListTable
+                  initialData={evaluationItems}
+                  contractName={contractName}
+                />
               </div>
             </div>
           </>

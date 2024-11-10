@@ -3,7 +3,7 @@ import "./EvaluationItemList.css";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const EvaluationItemListTable = ({ initialData }) => {
+const EvaluationItemListTable = ({ initialData, contractName }) => {
   const [data, setData] = useState(initialData || []);
 
   const navigate = useNavigate();
@@ -13,14 +13,10 @@ const EvaluationItemListTable = ({ initialData }) => {
     setData(initialData);
   }, [initialData]);
 
-  const handleAddEvaluationItem = () => {
-    //페이지 구현 후 이동
-  };
-
   const handleEvaluationItemDetail = (evaluationItemId) => {
     console.log(evaluationItemId);
     navigate("/contractManager/evaluationItemDetail", {
-      state: { evaluationItemId },
+      state: { evaluationItemId, contractName },
     });
   };
 
