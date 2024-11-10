@@ -106,12 +106,13 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/statistics", {
+    const response = await axios.get("/common/statistics",{
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params,
+      params: params,
     });
+    console.log(params)
     return response.data;
   } catch (error) {
     console.error("오류:", error);
