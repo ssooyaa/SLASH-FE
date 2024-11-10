@@ -18,7 +18,7 @@ const AddEvaluationItemForm = () => {
   const contractName = location.state?.contractName;
 
   const [formData, setFormData] = useState({
-    contractId: 0,
+    contractId: contractId,
     category: "",
     weight: 0,
     period: "월별",
