@@ -24,6 +24,8 @@ const ContractManagerMain = () => {
 
   const [contractName, setContractName] = useState("");
 
+  const [selectContractId, setSelectContractId] = useState(null);
+
   // 초기 계약 리스트와 첫 번째 계약 정보 로드
   useEffect(() => {
     const loadData = async () => {
@@ -34,6 +36,7 @@ const ContractManagerMain = () => {
       const firstContractId =
         location.state?.contractId || response[0]?.contractId || null;
       setContractId(firstContractId);
+      setSelectContractId(firstContractId);
 
       if (firstContractId) {
         const initialContractInfo = await fetchContractInfo(firstContractId);
@@ -49,8 +52,9 @@ const ContractManagerMain = () => {
 
   // 조회 버튼 클릭 시 계약 정보 로드
   const handleSearchClick = async () => {
-    if (contractId) {
-      const contractInfo = await fetchContractInfo(contractId);
+    if (selectContractId) {
+      const contractInfo = await fetchContractInfo(selectContractId);
+      setContractId(selectContractId);
       setContractInfo(contractInfo);
       setEvaluationItems(contractInfo.evaluationItems);
       setContractName(contractInfo.contractName);
@@ -58,7 +62,7 @@ const ContractManagerMain = () => {
   };
 
   const handleContractChange = (event) => {
-    setContractId(Number(event.target.value));
+    setSelectContractId(Number(event.target.value));
   };
 
   const handleAddEvaluation = (contractId) => {
@@ -71,6 +75,10 @@ const ContractManagerMain = () => {
     navigate("/contractManager/createContract");
   };
 
+  const handleEditContract = (contractId) => {
+    navigate(`/contractManager/updateContract/${contractId}`);
+  };
+
   return (
     <div className="contractManagerMainDiv">
       <div className="contractSelect">
@@ -78,7 +86,7 @@ const ContractManagerMain = () => {
         <p>협약서</p>
         <select
           className="contractDropDown"
-          value={contractId ?? ""}
+          value={selectContractId ?? ""}
           onChange={handleContractChange}
         >
           {contractList.map((item) => (
@@ -104,7 +112,9 @@ const ContractManagerMain = () => {
 
             <div className="mainSlaGrade">
               <div className="mainGradeEditBtnDiv">
-                <button>수정하기</button>
+                <button onClick={() => handleEditContract(contractId)}>
+                  수정하기
+                </button>
               </div>
               <div className="table mainTotalGrade">
                 <GradeHorizonTable
