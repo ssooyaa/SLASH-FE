@@ -24,20 +24,12 @@
   text-transform: uppercase;
 }
 
-.customTable tr {
-  border-radius: 0.5rem;
+.customTable tbody tr:nth-child(odd) {
+  background-color: #eef8fe; /* 홀수 행 */
 }
 
-.customTable tr:nth-child(odd) {
-  background-color: #eef8fe;
-}
-
-.customTable tr:nth-child(even) {
-  background-color: #fcfcfc;
-}
-
-.customTable tr:hover {
-  background-color: #d4d3d3;
+.customTable tbody tr:nth-child(even) {
+  background-color: #fcfcfc; /* 짝수 행 */
 }
 
 .customTable a {
@@ -54,6 +46,13 @@
   color: #0056b3;
 }
 
-.customTable tr:last-child {
+/* tfoot 스타일 */
+.customTable tfoot tr {
+  background-color: #fcfcfc; /* 마지막 행 배경색 */
   font-weight: 600;
+}
+
+.customTable tfoot td {
+  padding: 15px 20px;
+  text-align: center;
 }
