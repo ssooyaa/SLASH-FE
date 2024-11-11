@@ -1,25 +1,39 @@
 .middle {
   display: flex;
-  flex-direction: row;
-  padding: 10px 15px;
-  left: 0;
-  gap: 30px;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4rem;
+  padding: 10px 0px;
 }
 
 .totalIndex {
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s;
-  margin-left: -15px;
-  margin-top: 20px;
-  color: #444343;
-  font-weight: bold;
-  min-height: 200px;
-  width: 470px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
   text-align: center;
-  padding-top: 30px; /* 텍스트를 아래로 내리기 위해 추가 */
+  flex: 1;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.totalIndex .title {
+  font-size: 1.4rem;
+  color: #5a5a5a;
+  margin-bottom: 1.1rem;
+  font-weight: 600;
+}
+
+.totalIndex .value {
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: #0056b3;
+}
+
+.totalIndex .subText {
+  font-size: 1.3rem;
+  color: #5a5a5a;
+  margin-top: 10px;
+  font-weight: 600;
 }

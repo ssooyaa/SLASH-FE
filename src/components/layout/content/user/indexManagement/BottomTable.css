@@ -1,41 +1,47 @@
 .customTable {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 1rem;
   overflow: hidden;
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .customTable th,
 .customTable td {
-  padding: 12px 15px;
+  padding: 15px 20px;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
 }
 
 .customTable th {
-  background-color: #f4f7fc;
-  color: #333;
-  font-weight: 600;
+  background-color: white;
+  color: #121824;
+  font-weight: 700;
+  border-bottom: 2px solid #e0e0e0;
   text-transform: uppercase;
 }
 
 .customTable tr {
-  transition: background-color 0.3s;
+  border-radius: 0.5rem;
+}
+
+.customTable tr:nth-child(odd) {
+  background-color: #eef8fe;
 }
 
 .customTable tr:nth-child(even) {
-  background-color: #f1f1f1;
+  background-color: #fcfcfc;
 }
 
-.customTable .highlightedRow {
-  background-color: #e6f7ff;
+.customTable tr:hover {
+  background-color: #d4d3d3;
 }
 
 .customTable a {
-  color: #007bff;
+  color: #0056b3;
   text-decoration: none;
   font-weight: 500;
 }
@@ -45,6 +51,9 @@
 }
 
 .customTable td:last-child {
-  font-weight: bold;
-  color: #333;
+  color: #0056b3;
+}
+
+.customTable tr:last-child {
+  font-weight: 600;
 }
