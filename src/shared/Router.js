@@ -30,7 +30,7 @@ const Router = () => {
         <Route path="/user/requestManagement" element={<RequestManagement />} />
         <Route path="/user/indexManagement" element={<IndexManagement />} />
         <Route
-          path="/user/indexManagement/detail/:evaluationItemId/:year/:month/:day"
+          path="/user/indexManagement/detail/:evaluationItemId/:date"
           element={<DetailIndex />}
         />
 
