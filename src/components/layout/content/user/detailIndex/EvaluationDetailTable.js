@@ -6,10 +6,8 @@ import {
 } from "../../../../../api/CommonService";
 import "../../../../../styles/CommonTable.css";
 const EvaluationDetailTable = () => {
-  const { evaluationItemId, year, month, day } = useParams();
-  const [id, setId] = useState(null);
-  const [date, setDate] = useState("");
-  const [evaluationItems, setEvaluationItems] = useState(null);
+  const { evaluationItemId, date } = useParams();
+  const [evaluationItem, setEvaluationItem] = useState(null);
   const [taskTypes, setTaskTypes] = useState([]);
   const [evaluationData, setEvaluationData] = useState([]);
 
@@ -18,129 +16,106 @@ const EvaluationDetailTable = () => {
       try {
         const data = await fetchEvaluationDetail(evaluationItemId);
         if (data && data.success) {
-          setEvaluationItems(data.data.evaluationItems);
-          setTaskTypes(data.data.taskTypes);
+          setEvaluationItem(data.data);
         }
       } catch (error) {
         console.error("Error fetching evaluation detail:", error);
       }
     };
 
-    loadEvaluationDetail();
+    if (evaluationItemId) {
+      loadEvaluationDetail();
+    }
   }, [evaluationItemId]);
 
   useEffect(() => {
-    //URL 파라미터를 상태로 저장
-    if (evaluationItemId && year && month && day) {
-      setId(evaluationItemId);
-      setDate(`${year}-${month}-${day}`);
-    }
-  }, [evaluationItemId, year, month, day]);
-
-  useEffect(() => {
     const loadEvaluationData = async () => {
-      if (id && date) {
-        try {
-          const response = await fetchEvaluationEquipment(id, date);
-          if (response && response.success) {
-            setEvaluationData(response.data);
-          }
-        } catch (error) {
-          console.log("Error fetching evaluation equipment data:", error);
+      try {
+        // Fetch data using the API
+        const response = await fetchEvaluationEquipment(evaluationItemId, date);
+        if (response && response.success) {
+          setEvaluationData(response.data);
+        } else {
+          setEvaluationData([]);
         }
+      } catch (error) {
+        console.error("Error fetching evaluation equipment data:", error);
+        setEvaluationData([]);
       }
     };
-    loadEvaluationData();
-  }, [id, date]);
+
+    if (evaluationItemId && date) {
+      loadEvaluationData();
+    }
+  }, [evaluationItemId, date]);
 
   return (
     <div className="etableContainer">
       <h3>평가 항목 세부 정보</h3>
-      {/* <h4>{evaluationItems.category}</h4> */}
-      {evaluationItems && (
-        <table className="ecustomTable">
-          <thead>
-            <tr>
-              <th>카테고리</th>
-              <th>가중치</th>
-              <th>주기</th>
-              <th>목적</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{evaluationItems.category}</td>
-              <td>{evaluationItems.weight}</td>
-              <td>{evaluationItems.period}</td>
-              <td>{evaluationItems.purpose}</td>
-            </tr>
-            <tr>
-              <th>단위</th>
-              <th colSpan={3}>산출식</th>
-            </tr>
-            <tr>
-              <td>{evaluationItems.unit}</td>
-              <td colSpan={3}>{evaluationItems.formula}</td>
-            </tr>
-          </tbody>
-        </table>
+      {evaluationItem && (
+        <>
+          <table className="ecustomTable">
+            <thead>
+              <tr>
+                <th>카테고리</th>
+                <th>가중치</th>
+                <th>주기</th>
+                <th>목적</th>
+                <th>자동 계산 여부</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{evaluationItem.category}</td>
+                <td>{evaluationItem.weight}</td>
+                <td>{evaluationItem.period}</td>
+                <td>{evaluationItem.purpose}</td>
+                <td>{evaluationItem.isAuto ? "자동" : "수동"}</td>
+              </tr>
+              <tr>
+                <th>단위</th>
+                <th colSpan={4}>산출식</th>
+              </tr>
+              <tr>
+                <td>{evaluationItem.unit}</td>
+                <td colSpan={4}>{evaluationItem.formula}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>서비스 대상 등급</h3>
+          {evaluationItem.serviceTargets &&
+          evaluationItem.serviceTargets.length > 0 ? (
+            <table className="ecustomTable">
+              <thead>
+                <tr>
+                  <th>등급</th>
+                  <th>최소값</th>
+                  <th>최대값</th>
+                  <th>점수</th>
+                </tr>
+              </thead>
+              <tbody>
+                {evaluationItem.serviceTargets.map((target, index) => (
+                  <tr key={index}>
+                    <td>{target.grade}</td>
+                    <td>
+                      {target.min} {target.minInclusive ? "이상" : "초과"}
+                    </td>
+                    <td>
+                      {target.max} {target.maxInclusive ? "이하" : "미만"}
+                    </td>
+                    <td>{target.score}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>서비스 대상 등급 데이터가 없습니다.</p>
+          )}
+        </>
       )}
 
-      <h3>서비스 대상 등급</h3>
-      {evaluationItems && evaluationItems.serviceTargets.length > 0 && (
-        <table className="ecustomTable">
-          <thead>
-            <tr>
-              <th>등급</th>
-              <th>최소값</th>
-              <th>최대값</th>
-              <th>점수</th>
-            </tr>
-          </thead>
-          <tbody>
-            {evaluationItems.serviceTargets.map((target, index) => (
-              <tr key={index}>
-                <td>{target.grade}</td>
-                <td>
-                  {target.min}
-                  {target.minInclusive ? " 이상" : " 초과"}
-                </td>
-                <td>
-                  {target.max}
-                  {target.maxInclusive ? " 이하" : " 미만"}
-                </td>
-                <td>{target.score}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      <h3>작업 유형</h3>
-      {taskTypes.length > 0 && (
-        <table className="ecustomTable">
-          <thead>
-            <tr>
-              <th>유형</th>
-              <th>세부 작업</th>
-              <th>마감 시간(시간)</th>
-              <th>서비스 관련성</th>
-              <th>포함 상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            {taskTypes.map((task, index) => (
-              <tr key={index}>
-                <td>{task.type}</td>
-                <td>{task.taskDetail}</td>
-                <td>{task.deadline}h</td>
-                <td>{task.serviceRelevance ? "예" : "아니오"}</td>
-                <td>{task.inclusionStatus ? "포함" : "미포함"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
       <h3>측정 결과</h3>
       {evaluationData.length > 0 ? (
         <table className="ecustomTable">
@@ -172,7 +147,7 @@ const EvaluationDetailTable = () => {
           </tbody>
         </table>
       ) : (
-        <p>데이터가 없습니다.</p>
+        <p>해당 날짜에 대한 데이터가 없습니다.</p>
       )}
     </div>
   );
