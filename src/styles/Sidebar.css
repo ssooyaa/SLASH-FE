@@ -145,18 +145,7 @@ body {
   border-bottom-left-radius: 20px;
 }
 
-.navLink:hover,
-.navLink.active,
-.navLink:focus {
-  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4);
-}
-
-/* focus 상태에서는 스타일 변경 안되게 함 */
-.navItemSmall:focus .navLink:focus {
-  outline: none; /* outline 제거 */
-}
-
-/* hover, active, focus 효과 모두 동일하게 적용 */
+/* 동일한 스타일을 hover, active, focus 모두에 적용 */
 .navLink:hover,
 .navLink.active,
 .navLink:focus {
@@ -166,6 +155,7 @@ body {
   position: relative;
   border-top-left-radius: 200px;
   border-bottom-left-radius: 200px;
+  box-shadow: inset 5px 0 5px -3px rgba(0, 0, 0, 0.4); /* 추가: hover 효과 유지 */
 }
 
 .navLink:hover::after,
@@ -197,7 +187,7 @@ body {
 }
 
 .navItemSmall {
-  margin-left: 50px;
+  margin-left: 30px;
   font-size: 0.8rem;
   color: #e2e0e0;
   padding: 6px 20px;
