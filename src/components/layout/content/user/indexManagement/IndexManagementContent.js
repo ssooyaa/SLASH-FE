@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
@@ -7,6 +7,15 @@ import ContractHeaderV1 from "../../../../common/header/ContractHeaderV1";
 import BottomTable from "./BottomTable";
 
 const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
+  // 상태 정의: ContractHeaderV1에서 받은 값을 저장
+  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
+
+  // 콜백 함수 정의
+  const handleContractSelection = (agreementId, date) => {
+    setSelectedAgreementId(agreementId);
+    setSelectedDate(date);
+  };
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -30,9 +39,11 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractHeaderV1 />
-          <MiddleIndex />
-          <BottomTable />
+          {/* 자식 컴포넌트에 콜백 함수 전달 */}
+          <ContractHeaderV1 onContractSelect={handleContractSelection} />
+          {/* 상태를 자식 컴포넌트로 전달 */}
+          <MiddleIndex agreementId={selectedAgreementId} date={selectedDate} />
+          <BottomTable agreementId={selectedAgreementId} date={selectedDate} />
         </div>
       </div>
     </div>

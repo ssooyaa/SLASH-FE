@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./MiddleIndex.css";
 import "../../../../../styles/Font.css";
+import { fetchIndicators } from "../../../../../api/CommonService";
 
-const MiddleIndex = () => {
+const MiddleIndex = ({ agreementId, date }) => {
   const [indicatorData, setIndicatorData] = useState({
     grade: "",
     requestCount: 0,
@@ -10,39 +11,29 @@ const MiddleIndex = () => {
   });
 
   useEffect(() => {
-    // 임시 데이터 사용
-    const mockData = {
-      success: true,
-      data: {
-        indicatorEtcInfo: {
-          grade: "S",
-          requestCount: 2,
-          incidentTime: 0,
-        },
-      },
-    };
+    const fetchData = async () => {
+      if (agreementId && date) {
+        // agreementId와 date가 유효한 경우에만 요청
+        try {
+          const response = await fetchIndicators(agreementId, date);
 
-    if (mockData && mockData.success) {
-      const { grade, requestCount, incidentTime } =
-        mockData.data.indicatorEtcInfo;
-      setIndicatorData({ grade, requestCount, incidentTime });
-    }
-  }, []);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetchEvaluationData();
-  //       if (response && response.success) {
-  //         const { grade, requestCount, incidentTime } =
-  //           response.data.indicatorEtcInfo;
-  //         setIndicatorData({ grade, requestCount, incidentTime });
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch indicator data: ", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+          if (response && response.success) {
+            const { grade, requestCount, incidentTime } =
+              response.data.indicatorEtcInfo;
+            setIndicatorData({ grade, requestCount, incidentTime });
+          } else {
+            // 실패 시 기본값 설정
+            setIndicatorData({ grade: "-", requestCount: 0, incidentTime: 0 });
+          }
+        } catch (error) {
+          console.error("Failed to fetch indicator data:", error);
+          // 오류 발생 시 기본값 설정
+          setIndicatorData({ grade: "-", requestCount: 0, incidentTime: 0 });
+        }
+      }
+    };
+    fetchData();
+  }, [agreementId, date]); // 의존성 배열에 agreementId와 date 추가
   return (
     <div className="middle">
       <div className="totalIndex">
