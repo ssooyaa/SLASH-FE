@@ -48,10 +48,11 @@ const UpdateEvaluationItemInfoForm = () => {
 
   const [taskTypes, setTaskTypes] = useState([]);
 
+  const [firstTaskTypesLength, setFirstTaskTypesLength] = useState(0);
+
   useEffect(() => {
     const loadData = async () => {
       const response = await fetchServiceInfo(evaluationItemId);
-      console.log(response);
       setFormData(response);
       setServiceTargets(response.serviceTargets);
       setTaskTypes(response.taskTypes || []);
@@ -63,9 +64,11 @@ const UpdateEvaluationItemInfoForm = () => {
         if (hasNonZeroDeadline) {
           setTaskTable(true);
           setSelectedOption("유형및시간");
+          setFirstTaskTypesLength(response.taskTypes.length);
         } else {
           setTaskTable(true);
           setSelectedOption("업무유형");
+          setFirstTaskTypesLength(response.taskTypes.length);
         }
       }
     };
@@ -77,7 +80,6 @@ const UpdateEvaluationItemInfoForm = () => {
       ...formData,
       [field]: value,
     };
-    console.log(updatedFormData);
     setFormData(updatedFormData);
   };
 
@@ -90,15 +92,14 @@ const UpdateEvaluationItemInfoForm = () => {
   };
 
   const handleRemoveTask = () => {
-    console.log("삭제");
     setTaskTable(false);
     setSelectedOption(null);
-    setUpdateTaskType([]);
-    setTaskTypes([]);
-    console.log("taskTable: ", taskTable);
-    console.log("selectedOption: ", selectedOption);
-    console.log("taskTypes: ", taskTypes);
-    console.log("update", updateTaskType);
+
+    if (firstTaskTypesLength !== 0) {
+      alert("업무유형을 모두 삭제 시 반영되지 않습니다. 삭제 후 추가해 주세요");
+      setUpdateTaskType([]);
+      setTaskTypes([]);
+    }
   };
 
   const handleRedirect = () => {
@@ -108,6 +109,7 @@ const UpdateEvaluationItemInfoForm = () => {
 
   const handleUpdateServiceTargets = (value) => {
     setUpdateServiceTargets(value);
+    setServiceTargets(value);
   };
 
   const handleUpdateTaskTypesDetail = (value) => {
@@ -133,8 +135,35 @@ const UpdateEvaluationItemInfoForm = () => {
     });
 
     setUpdateTaskType(updatedTaskTypes); // 상태 업데이트
-
+    setTaskTypes(updatedTaskTypes);
     return updatedTaskTypes;
+  };
+
+  const isValid = () => {
+    if (formData.category === "") {
+      alert("평가 항목을 입력해 주세요");
+      return false;
+    }
+    if (formData.weight === 0) {
+      alert("가중치를 입력해 주세요");
+      return false;
+    }
+
+    if (formData.purpose === "") {
+      alert("서비스 목적을 입력해주세요");
+      return false;
+    }
+
+    if (formData.formula === "") {
+      alert("산출식을 입력해주세요");
+      return false;
+    }
+
+    if (serviceTargets.length === 0) {
+      alert("등급 설정은 필수 입니다");
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -152,13 +181,19 @@ const UpdateEvaluationItemInfoForm = () => {
 
     handleChange("taskTypes", updatedTaskTypes);
 
+    if (!isValid()) {
+      return; //미입력값 있을 시 제출 불가
+    }
+
     const updatedFormData = {
       ...formData,
       serviceTargets: updatedServiceTargets,
       taskTypes: updatedTaskTypes, // 반환된 taskTypes 배열을 할당
     };
 
-    console.log(updatedFormData);
+    if (firstTaskTypesLength > 0 && taskTypes.length === 0) {
+      alert("업무유형을 모두 삭제 시 반영되지 않습니다. 삭제 후 추가해 주세요");
+    }
 
     if (evaluationItemId) {
       const isModify = await fetchModifyIsPossible(contractId);
