@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiLogOut } from "react-icons/fi";
-import { FaFileContract } from "react-icons/fa";
-import { MdQuestionMark } from "react-icons/md";
+import {FiHome, FiLogOut} from "react-icons/fi";
+import {FaFileContract} from "react-icons/fa";
+import {MdQuestionMark} from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
+const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
       <div className="navClose" onClick={toggleNav}></div>
 
       <div className="navHeader">
-        <img src={logo} alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo"/>
         <span className="sidebarTitle">SLASH</span>
       </div>
 
@@ -40,7 +40,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >
-              <FiHome className="navLinkIcon" />홈
+              <FiHome className="navLinkIcon"/>홈
             </a>
           </li>
           <li className="navItem">
@@ -49,19 +49,19 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
             >
-              <FaFileContract className="navLinkIcon" />
+              <FaFileContract className="navLinkIcon"/>
               계약 관리
             </a>
           </li>
 
           <li className="navItem">
             <a
-              href="#"
+              href="/contractManager/indicatorCalculator"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() => handleMenuClick(2)}
             >
-              <MdQuestionMark className="navLinkIcon" />
-              요청 관리
+              <MdQuestionMark className="navLinkIcon"/>
+              지표 관리
             </a>
           </li>
         </ul>
@@ -69,7 +69,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         {/* 로그아웃 버튼 추가 */}
         <div className="logoutSection">
           <button className="logoutBtn">
-            <FiLogOut className="logoutIcon" />
+            <FiLogOut className="logoutIcon"/>
             Logout
           </button>
         </div>
