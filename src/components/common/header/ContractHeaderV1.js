@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaAsterisk, FaSistrix } from "react-icons/fa6";
+import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
 import { FaSearch } from "react-icons/fa";
@@ -11,9 +11,9 @@ const ContractHeader = () => {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}`; // day 제거
   });
+
   const [contracts, setContracts] = useState([]);
 
   useEffect(() => {
@@ -64,14 +64,14 @@ const ContractHeader = () => {
         ))}
       </select>
       <input
-        type="date"
+        type="month"
         className="criteria2"
         value={selectedMonth}
         onChange={(e) => setSelectedMonth(e.target.value)}
       />
       <button className="queryButton">
         조회
-        <FaSearch />
+        <FaSearch className="searchIcon" />
       </button>
     </div>
   );
