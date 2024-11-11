@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiBarChart2, FiLogOut } from "react-icons/fi";
-import { MdAssignment, MdEventNote, MdQuestionMark } from "react-icons/md";
+import { FiHome, FiLogOut, FiTrendingUp } from "react-icons/fi";
+import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
-import { FaFileContract } from "react-icons/fa6";
-import { FaRegClipboard } from "react-icons/fa";
+import { FaTasks } from "react-icons/fa";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0); // 디폴트로 홈을 active로 설정
+  const location = useLocation();
+
+  // 컴포넌트 마운트 시 URL 경로에 따라 activeIndex 설정
+  useEffect(() => {
+    const pathToIndexMap = {
+      "/user": 0,
+      "/user/requestManagement": 1,
+      "/user/indexManagement": 2,
+      "/user/requestAllocation": 3,
+    };
+
+    const currentPath = location.pathname;
+    const savedIndex = localStorage.getItem("activeIndex");
+
+    // 저장된 인덱스가 있으면 사용, 없으면 URL을 기반으로 인덱스 설정
+    if (savedIndex !== null) {
+      setActiveIndex(parseInt(savedIndex, 10));
+    } else if (pathToIndexMap[currentPath] !== undefined) {
+      setActiveIndex(pathToIndexMap[currentPath]);
+    }
+  }, [location]);
 
   const handleMenuClick = (index) => {
     setActiveIndex(index);
+    localStorage.setItem("activeIndex", index); // 클릭된 인덱스를 로컬 스토리지에 저장
   };
 
   return (
@@ -40,19 +62,9 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItem">
             <a
-              href="#"
+              href="/user/requestManagement"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
-            >
-              <FiBarChart2 className="navLinkIcon" />
-              대시보드
-            </a>
-          </li>
-          <li className="navItem">
-            <a
-              href="/user/requestManagement"
-              className={`navLink ${activeIndex === 2 ? "active" : ""}`}
-              onClick={() => handleMenuClick(2)}
             >
               <MdQuestionMark className="navLinkIcon" />
               요청 관리
@@ -61,14 +73,22 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           <li className="navItem">
             <a
               href="/user/indexManagement"
+              className={`navLink ${activeIndex === 2 ? "active" : ""}`}
+              onClick={() => handleMenuClick(2)}
+            >
+              <FiTrendingUp className="navLinkIcon" />
+              지표 관리
+            </a>
+          </li>
+          <li className="navItem">
+            <a
+              href="/user/requestAllocation"
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() => handleMenuClick(3)}
             >
-              <MdEventNote className="navLinkIcon" />
-              지표 관리
+              <FaTasks className="navLinkIcon" />
+              요청 할당
             </a>
-            <li className="navItemSmall">월간 지표</li>
-            <li className="navItemSmall">연간 지표</li>
           </li>
         </ul>
 

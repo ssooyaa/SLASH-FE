@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiLogOut } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 
 const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0); // 기본값 설정
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleMenuClick = (index) => {
+  useEffect(() => {
+    const pathToIndexMap = {
+      "/requestManager": 0,
+      "/requestManager/taskDetails": 1,
+    };
+
+    const currentPath = location.pathname;
+    const savedIndex = localStorage.getItem("activeIndex");
+
+    if (savedIndex !== null) {
+      setActiveIndex(parseInt(savedIndex, 10));
+    } else if (pathToIndexMap[currentPath] !== undefined) {
+      setActiveIndex(pathToIndexMap[currentPath]);
+    }
+  }, [location]);
+
+  const handleMenuClick = (index, path) => {
     setActiveIndex(index);
+    localStorage.setItem("activeIndex", index);
+    navigate(path);
   };
 
   return (
@@ -28,9 +49,9 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="/requestManager"
+              href="#"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
-              onClick={() => handleMenuClick(0)}
+              onClick={() => handleMenuClick(0, "/requestManager")}
             >
               <FiHome className="navLinkIcon" />홈
             </a>
@@ -39,7 +60,7 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
             <a
               href="#"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
-              onClick={() => handleMenuClick(1)}
+              onClick={() => handleMenuClick(1, "/requestManager/taskDetails")}
             >
               <FaFileContract className="navLinkIcon" />
               업무 내역
