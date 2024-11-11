@@ -42,7 +42,6 @@ const AddEvaluationItemForm = () => {
       ...formData,
       [field]: value,
     };
-    console.log(updatedFormData);
     setFormData(updatedFormData);
   };
 

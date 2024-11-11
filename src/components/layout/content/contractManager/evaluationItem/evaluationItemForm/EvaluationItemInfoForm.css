@@ -28,3 +28,26 @@
 .taskTableDetail {
   margin-bottom: 5px;
 }
+
+.evaluationDeleteBtn {
+  margin-left: auto; /* 버튼을 오른쪽 끝으로 이동 */
+}
+
+.evaluationItemHead {
+  display: flex;
+  flex-direction: column;
+}
+
+.evaluationDeleteBtn button {
+  width: 98px;
+  height: 30px;
+  background-color: var(--main--color);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.evaluationDeleteBtn button:hover {
+  background-color: #1d2637;
+}

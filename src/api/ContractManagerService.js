@@ -217,3 +217,29 @@ export const updateEvaluationItem = async (
     return false;
   }
 };
+
+export const deleteEvaluationItem = async (evaluationItemId) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.delete(
+      `/contract-manager/evaluation-item/${evaluationItemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+};

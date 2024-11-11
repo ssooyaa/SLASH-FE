@@ -7,6 +7,7 @@ import GradeVerticalTable from "../../../../../feature/table/GradeVerticalTable"
 import NoScoreGradeTable from "../../../../../feature/table/NoScoreGradeTable";
 import TaskDetailTable from "../../../../../feature/table/TaskDetailTable";
 import OneColTable from "../../../../../feature/table/OneColTable";
+import { deleteEvaluationItem } from "../../../../../../api/ContractManagerService";
 
 const EvaluationItemInfoForm = () => {
   const navigate = useNavigate();
@@ -46,9 +47,24 @@ const EvaluationItemInfoForm = () => {
     navigate(-1);
   };
 
-  const handleEditEvaluationItem = (evaluationId) => {
-    //수정페이지 작성 후 연결
+  const handleDeleteEvaluationItem = async () => {
+    try {
+      const response = await deleteEvaluationItem(evaluationItemId);
+      if (response) {
+        alert("삭제 완료");
+        navigate("/contractManager/contractDetail", {
+          state: { contractId },
+        });
+      } else {
+        alert("삭제에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("삭제 실패");
+      console.error("Error deleting evaluation item:", error);
+    }
+  };
 
+  const handleEditEvaluationItem = (evaluationId) => {
     navigate(`/contractManager/updateEvaluationItem/${evaluationId}`, {
       state: { contractId, contractName },
     });
@@ -63,8 +79,13 @@ const EvaluationItemInfoForm = () => {
 
       <div className="evaluationItemInfoForm">
         <div className="evaluationItemInfoDetail">
-          <div className="evaluationItemTitle">
-            <p>{evaluationItemInfo.category}</p>
+          <div className="evaluationItemHead">
+            <div className="evaluationItemTitle">
+              <p>{evaluationItemInfo.category}</p>
+            </div>
+            <div className="evaluationDeleteBtn">
+              <button onClick={() => handleDeleteEvaluationItem()}>삭제</button>
+            </div>
           </div>
           <div className="serviceDetailDiv">
             <div className="tableTitle">
