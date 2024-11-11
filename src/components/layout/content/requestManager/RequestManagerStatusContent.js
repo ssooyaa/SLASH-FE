@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {FaBars} from "react-icons/fa6";
 import {IoPersonCircle} from "react-icons/io5";
-import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
-import ContractHeaderV1 from "../../../common/header/ContractHeaderV1";
+import RequestStatus from "./requestManagerStatus/RequestStatus";
 
 const RequestManagerStatusContent = () => {
   const [isNavOpen, setNavOpen] = useState(true);
@@ -35,8 +34,7 @@ const RequestManagerStatusContent = () => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractHeaderV1/>
-         <RequestManagerBottom/>
+          <RequestStatus/>
         </div>
       </div>
     </div>
