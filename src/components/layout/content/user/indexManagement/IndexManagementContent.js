@@ -4,7 +4,6 @@ import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import MiddleIndex from "./MiddleIndex";
 import ContractHeaderV1 from "../../../../common/header/ContractHeaderV1";
-import ContractHeaderV2 from "../../../../common/header/ContractHeaderV2";
 import BottomTable from "./BottomTable";
 
 const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
@@ -32,7 +31,6 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <div className="content">
         <div className="contentBox">
           <ContractHeaderV1 />
-          <ContractHeaderV2 />
           <MiddleIndex />
           <BottomTable />
         </div>
