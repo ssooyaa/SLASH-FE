@@ -77,14 +77,17 @@ export const completeRequest = async (requestId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error("서버 응답 에러:", error.response.status, error.response.data);
+      console.error(
+        "서버 응답 에러:",
+        error.response.status,
+        error.response.data
+      );
     } else {
       console.error("요청 실패:", error.message);
     }
     return []; // 오류 발생 시 빈 배열 반환
   }
 };
-
 
 // 시스템 및 장비 데이터를 가져오는 함수
 export const fetchSystemAndEquipment = async () => {
@@ -107,13 +110,13 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/statistics",{
+    const response = await axios.get("/common/statistics", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: params,
     });
-    console.log(params)
+    console.log(params);
     return response.data;
   } catch (error) {
     console.error("오류:", error);
@@ -219,7 +222,7 @@ export const fetchSystemData = async () => {
 
 export const fetchAllContractName = async () => {
   try {
-    const token = localStorage.getItem("accessToken"); // 토큰 가져오기
+    const token = localStorage.getItem("accessToken");
 
     const response = await axios.get("/common/all-contract-name", {
       headers: {
