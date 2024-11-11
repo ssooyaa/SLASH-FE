@@ -8,6 +8,7 @@ import {
 } from "../../../../../api/ContractManagerService";
 import {fetchAllContractName} from "../../../../../api/CommonService";
 import {FaAsterisk} from "react-icons/fa6";
+import {useNavigate} from "react-router-dom";
 
 const EstimateIndicator = () => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
@@ -143,7 +144,11 @@ const EstimateIndicator = () => {
       console.error("Error details:", error);
     }
   };
-
+  const navigate = useNavigate();
+  const handleDetailClick = (evaluationItemId) => {
+    // 평가 항목 ID와 선택한 날짜를 URL에 포함하여 페이지 이동
+    navigate(`/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${selectedDate}`);
+  };
 
   return (
     <div>
@@ -234,10 +239,11 @@ const EstimateIndicator = () => {
             >
               <table className="eInfoTable">
                 <colgroup>
-                  <col width="25%"/>
-                  <col width="25%"/>
-                  <col width="25%"/>
-                  <col width="25%"/>
+                  <col width="20%"/>
+                  <col width="20%"/>
+                  <col width="20%"/>
+                  <col width="20%"/>
+                  <col width="20%"/>
                 </colgroup>
                 <tbody>
                 <tr>
@@ -257,11 +263,12 @@ const EstimateIndicator = () => {
                     <div className="label">승인 여부</div>
                     <div className="value">{item.isApprove ? "승인됨" : "미승인"}</div>
                   </td>
+                  <td>
+                    <button className="eDetailButton" onClick={() => handleDetailClick(item.evaluationItemId)}>자세히 보기 &gt;</button>
+                  </td>
                 </tr>
                 <tr>
-                  <td colSpan="4" className="eDetailCell">
-                    <button className="eDetailButton">자세히 보기 &gt;</button>
-                  </td>
+
                 </tr>
                 </tbody>
               </table>
