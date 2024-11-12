@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import DashBoardBottom from "./dashBoard/dashBoardBottom/DashBoardBottom";
-import ContractHeaderV1 from "../../../common/header/ContractHeaderV1";
+import UserHeaderV1 from "../../../common/header/UserHeaderV1";
+import { fetchContractInfo } from "../../../../api/CommonService";
 
 const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
+  // 상태 정의: ContractHeaderV1에서 받은 값을 저장
+  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [contractInfo, setContractInfo] = useState({});
+
+  // 콜백 함수 정의
+  const handleContractSelection = (agreementId, date) => {
+    setSelectedAgreementId(agreementId);
+    setSelectedDate(date);
+    console.log("들어오니? ", agreementId, date);
+    const fetchContract = async (agreementId) => {
+      const contractDataInfo = await fetchContractInfo(agreementId);
+      setContractInfo(contractDataInfo);
+    };
+  };
+
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -29,8 +46,12 @@ const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractHeaderV1/>
-          <DashBoardBottom />
+          <UserHeaderV1 onContractSelect={handleContractSelection} />
+          <DashBoardBottom
+            agreementId={selectedAgreementId}
+            date={selectedDate}
+            contractInfo={contractInfo}
+          />
         </div>
       </div>
     </div>

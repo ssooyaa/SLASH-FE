@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
-import {FaExclamationCircle} from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";
@@ -14,10 +14,10 @@ import {
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
 
-const ChartView = ({selectedCriteria, setStatistics}) => {
+const ChartView = ({ selectedCriteria, statistics }) => {
   const [selectedSystem, setSelectedSystem] = useState("전체");
   const [selectedEquipment, setSelectedEquipment] = useState("전체");
-  const [statistics, setLocalStatistics] = useState([]);
+  const [filteredStatistics, setFilteredStatistics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [targetSystems, setTargetSystems] = useState(["전체"]);
@@ -26,68 +26,56 @@ const ChartView = ({selectedCriteria, setStatistics}) => {
 
   const getEquipmentsFromStatistics = (stats, selectedSystemName) => {
     if (selectedSystemName === "전체") {
-      return ["전체", ...new Set(stats.map(stat => stat.targetEquipment))];
+      return ["전체", ...new Set(stats.map((stat) => stat.targetEquipment))];
     } else {
       return [
         "전체",
         ...new Set(
           stats
-            .filter(stat => stat.targetSystem === selectedSystemName)
-            .map(stat => stat.targetEquipment)
+            .filter((stat) => stat.targetSystem === selectedSystemName)
+            .map((stat) => stat.targetEquipment)
         ),
       ];
     }
   };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-
-        const systemResponse = await fetchSystemAndEquipment();
-        if (systemResponse.success && systemResponse.data) {
-          const systemsData = systemResponse.data;
-          setSystemData(systemsData);
-          setTargetSystems(["전체", ...systemsData.map(system => system.systemName)]);
-        }
-
-        const statisticsResponse = await fetchStatistics({
-          date: "2024-10-31",
-          evaluationItemId: 1,
-        });
-
-        if (statisticsResponse.success && statisticsResponse.data) {
-          const statsData = statisticsResponse.data;
-          setStatistics(statsData);
-          setLocalStatistics(statsData);
-
-          const initialEquipments = getEquipmentsFromStatistics(statsData, "전체");
-          setTargetEquipments(initialEquipments);
-        }
-      } catch (err) {
-        setError("데이터를 가져오는 데 실패했습니다.");
-        console.error("Error fetching data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (statistics.length > 0) {
-      const newEquipments = getEquipmentsFromStatistics(statistics, selectedSystem);
+    setLoading(true);
+    console.log(statistics);
+    if (statistics?.length > 0) {
+      console.log("flag");
+      const newEquipments = getEquipmentsFromStatistics(
+        statistics,
+        selectedSystem
+      );
+      console.log(newEquipments);
       setTargetEquipments(newEquipments);
       setSelectedEquipment("전체");
     }
-  }, [selectedSystem, statistics]);
+  }, [statistics]);
 
-  const filteredStatistics = statistics.filter((stat) => {
-    const systemMatch = selectedSystem === "전체" || stat.targetSystem === selectedSystem;
-    const equipmentMatch = selectedEquipment === "전체" || stat.targetEquipment === selectedEquipment;
-    return systemMatch && equipmentMatch;
-  });
+  useEffect(() => {
+    console.log(selectedEquipment);
+    if (selectedEquipment && targetEquipments && statistics) {
+      console.log(statistics);
+      const updatedStatistics = statistics.filter((stat) => {
+        const systemMatch =
+          selectedSystem === "전체" || stat.targetSystem === selectedSystem;
+        const equipmentMatch =
+          selectedEquipment === "전체" ||
+          stat.targetEquipment === selectedEquipment;
+        return systemMatch && equipmentMatch;
+      });
+      setFilteredStatistics(updatedStatistics);
+      console.log(updatedStatistics);
+    }
+  }, [targetEquipments]);
+
+  useEffect(() => {
+    if (filteredStatistics) {
+      setLoading(false);
+    }
+  }, [filteredStatistics]);
 
   const formatDowntimeToHours = (totalMinutes) => {
     if (totalMinutes < 60) {
@@ -104,14 +92,13 @@ const ChartView = ({selectedCriteria, setStatistics}) => {
 
   const renderNoDataMessage = () => (
     <div className="noDataMessage">
-      <FaExclamationCircle className="noDataIcon"/>
+      <FaExclamationCircle className="noDataIcon" />
       <p>현재 선택된 조건에 맞는 데이터가 없습니다.</p>
       <p>다른 기간이나 시스템을 선택해 보세요.</p>
     </div>
   );
 
   const renderChart = (stat, index) => {
-    const formattedDate = stat.date.slice(0, 7);
     const score = stat.score;
     const color = score >= 100 ? "#2e8b57" : "#ff4d4d";
 
@@ -165,7 +152,9 @@ const ChartView = ({selectedCriteria, setStatistics}) => {
       series: [
         {
           name: "Score",
-          data: [{y: score, radius: "100%", innerRadius: "80%", color: color}],
+          data: [
+            { y: score, radius: "100%", innerRadius: "80%", color: color },
+          ],
           innerRadius: "80%",
           outerRadius: "100%",
         },
@@ -175,8 +164,7 @@ const ChartView = ({selectedCriteria, setStatistics}) => {
     return (
       <div key={index} className="statisticItem">
         <div className="chartContainer">
-          <p className="statDate">{formattedDate}</p>
-          <HighchartsReact highcharts={Highcharts} options={options}/>
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
         <div className="statDetails">
           <p>장비명: {stat.targetEquipment}</p>
@@ -203,7 +191,11 @@ const ChartView = ({selectedCriteria, setStatistics}) => {
           onSelect={(value) => setSelectedEquipment(value)}
         />
       </div>
-      <div className={filteredStatistics.length > 0 ? "systemCharts" : "noDataContainer"}>
+      <div
+        className={
+          filteredStatistics.length > 0 ? "systemCharts" : "noDataContainer"
+        }
+      >
         {filteredStatistics.length > 0
           ? filteredStatistics.map((stat, index) => renderChart(stat, index))
           : renderNoDataMessage()}

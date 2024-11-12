@@ -47,6 +47,8 @@ body {
   max-width: 15%;
   margin-bottom: 20px; /* Space below each row */
   height: 200px;
+  justify-content: center;
+  align-content: center;
 }
 
 .statDate {
@@ -65,7 +67,7 @@ body {
 }
 
 .statDetails {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .statDetails p {
@@ -79,8 +81,12 @@ body {
 
 .statisticItem .highcharts-root {
   width: 500px;
-  margin-top: -27px;
+  margin-top: 20px;
   margin-left: -10px;
+}
+
+.highcharts-data-labels {
+  margin-top: 45px;
 }
 .systemCharts {
   display: grid;
@@ -105,4 +111,8 @@ body {
   font-size: 2rem;
   color: #ccc;
   margin-bottom: 10px;
+}
+
+.highChart {
+  margin-top: 40px;
 }
