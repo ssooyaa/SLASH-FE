@@ -1,9 +1,10 @@
 import React from "react";
-import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
-import ContractManagerMain from "./contractManagerMain/ContractManagerMain";
-const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
+import RequestAllocationTable from "./RequestAllocationTable";
+import ContractHeaderV2 from "../../../../common/header/ContractHeaderV2";
+
+const RequestAllocationContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -16,6 +17,7 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       >
         <FaBars />
       </button>
+
       {/* 프로필 및 환영 메시지 추가 */}
       <div className="profileSection">
         <div className="profileInfo">
@@ -26,11 +28,12 @@ const ContractManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractManagerMain />
+          <ContractHeaderV2 />
+          <RequestAllocationTable />
         </div>
       </div>
     </div>
   );
 };
 
-export default ContractManagerMainContent;
+export default RequestAllocationContent;

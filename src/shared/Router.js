@@ -1,8 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/login/LoginPage";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "../pages/login/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
@@ -20,6 +18,7 @@ import DetailIndex from "../pages/user/DetailIndex";
 import DetailIndexContent from "../components/layout/content/contractManager/indexManagment/DetailIndexContent";
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import RequestAllocation from "../pages/contractManager/RequestAllocation";
 
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
@@ -135,8 +134,13 @@ const Router = () => {
           path="/contractManager/indexManagement"
           element={<DetailIndexContent />}
         />
-        <Route path="/contractManager/indicatorCalculator"
-               element={<IndicatorCalculator/>}
+        <Route
+          path="/contractManager/indicatorCalculator"
+          element={<IndicatorCalculator />}
+        />
+        <Route
+          path="/contractManager/requestAllocation"
+          element={<RequestAllocation />}
         />
       </Routes>
     </BrowserRouter>
