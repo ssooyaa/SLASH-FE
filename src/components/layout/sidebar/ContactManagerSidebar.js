@@ -53,7 +53,7 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="#"
+              href="/contractManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0, "/contractManager")}
             >
@@ -62,7 +62,6 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
           </li>
           <li className="navItem">
             <a
-              href="#"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() =>
                 handleMenuClick(1, "/contractManager/contractList")
@@ -75,7 +74,7 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
 
           <li className="navItem">
             <a
-              href="#"
+              // href="#"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() =>
                 handleMenuClick(2, "/contractManager/indexManagement")
@@ -88,7 +87,6 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
 
           <li className="navItem">
             <a
-              href="#"
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() =>
                 handleMenuClick(3, "/contractManager/requestAllocation")

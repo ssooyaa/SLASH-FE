@@ -50,12 +50,22 @@ const UpdateEvaluationItemInfoForm = () => {
 
   const [firstTaskTypesLength, setFirstTaskTypesLength] = useState(0);
 
+  const [isCustomInput, setIsCustomInput] = useState(false);
+
   useEffect(() => {
     const loadData = async () => {
       const response = await fetchServiceInfo(evaluationItemId);
       setFormData(response);
       setServiceTargets(response.serviceTargets);
       setTaskTypes(response.taskTypes || []);
+
+      if (
+        response.category !== "서비스 가동률" ||
+        response.category !== "서비스요청 적기처리율" ||
+        response.category !== "장애 적기처리율"
+      ) {
+        setIsCustomInput(true);
+      }
 
       if (response.taskTypes && response.taskTypes.length > 0) {
         const hasNonZeroDeadline = response.taskTypes.some(
@@ -81,6 +91,17 @@ const UpdateEvaluationItemInfoForm = () => {
       [field]: value,
     };
     setFormData(updatedFormData);
+  };
+
+  const handleSelectChange = (e) => {
+    const selectedValue = e.target.value;
+    if (selectedValue === "custom") {
+      setIsCustomInput(true);
+      handleChange("category", "");
+    } else {
+      setIsCustomInput(false);
+      handleChange("category", selectedValue);
+    }
   };
 
   const handleAddTask = () => {
@@ -244,13 +265,29 @@ const UpdateEvaluationItemInfoForm = () => {
       <div className="evaluationItemForm">
         <div className="evaluationItemInfo">
           <div className="evaluationItemTitle">
-            <input
-              className="serviceName"
-              type="text"
-              value={formData.category}
-              placeholder="서비스 평가 항목을 입력해 주세요"
-              onChange={(e) => handleChange("category", e.target.value)}
-            />
+            <select
+              className={`evaluationItemTitleInput ${isCustomInput ? "shortSelect" : ""}`}
+              name="category"
+              value={isCustomInput ? "custom" : formData.category}
+              onChange={handleSelectChange}
+            >
+              <option value="서비스 가동률">서비스 가동률</option>
+              <option value="서비스요청 적기처리율">
+                서비스요청 적기처리율
+              </option>
+              <option value="장애 적기처리율">장애 적기처리율</option>
+              <option value="custom">직접 입력</option>
+            </select>
+            {isCustomInput && (
+              <input
+                className="evaluationItemTitleInput customInput"
+                type="text"
+                name="category"
+                placeholder="서비스 항목을 입력해 주세요"
+                value={formData.category}
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+              />
+            )}
           </div>
           <div className="serviceDetailDiv">
             <div className="tableTitle inputTableTitle">
