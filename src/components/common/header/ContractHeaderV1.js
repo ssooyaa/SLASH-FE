@@ -4,7 +4,7 @@ import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
 import { FaSearch } from "react-icons/fa";
 // 날짜와 협약서 선택하는 부분 모두 있는 버전
-const ContractHeader = ({ onContractSelect }) => {
+const ContractHeaderV1 = ({ onContractSelect }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(() => {
@@ -79,4 +79,4 @@ const ContractHeader = ({ onContractSelect }) => {
   );
 };
 
-export default ContractHeader;
+export default ContractHeaderV1;
