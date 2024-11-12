@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiLogOut, FiTrendingUp } from "react-icons/fi";
+import { FiHome, FiTrendingUp } from "react-icons/fi";
 import { FaFileContract, FaTasks } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
-import { MdQuestionMark } from "react-icons/md";
-import logo from "../../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
-import LogoutButton from "../../common/button/LogoutButton.js"
+import LogoutButton from "../../common/button/LogoutButton.js";
 
 const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(0); // 기본값을 0으로 설정

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiLogOut, FiTrendingUp } from "react-icons/fi";
+import { FiHome, FiTrendingUp } from "react-icons/fi";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 import { FaTasks } from "react-icons/fa";
-import logo from "../../../assets/images/logo.png";
-import LogoutButton from "../../common/button/LogoutButton.js"
+import LogoutButton from "../../common/button/LogoutButton.js";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(0); // 디폴트로 홈을 active로 설정
