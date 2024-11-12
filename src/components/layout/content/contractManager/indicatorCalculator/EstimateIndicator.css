@@ -1,122 +1,140 @@
 .eContainer {
-    padding: 32px;
-    background-color: white;
-    border: 0.5px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
-    margin: 0 auto;
+  width: 100%;
+  padding-left: 10px;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  margin-bottom: 10px;
+  min-height: 200px;
+  padding-bottom: 20px;
 }
 
 .eSection {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
 
 .eSectionTitle {
-    font-size: 18px;
-    font-weight: 500;
-    color: #000;
-    margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 16px;
 }
 
 .eCard {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    margin-bottom: 16px;
+  display: flex;
+  background: white;
+  width: 95%;
+  height: 35px;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  align-items: center;
+  font-size: 15px;
+  justify-content: space-between;
 }
 
 .eCard.selected {
-    background-color: rgb(239, 246, 255);
+  background-color: rgb(239, 246, 255);
 }
 
 .eCardContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
 }
 
 .eCheckboxWrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .eCheckbox {
-    width: 20px;
-    height: 20px;
-    border-color: rgb(209, 213, 219);
-    border-radius: 4px;
-    cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-color: rgb(209, 213, 219);
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: black;
 }
 
 .eText {
-    font-size: 14px;
-    color: rgb(17, 24, 39);
+  font-size: 14px;
+  color: rgb(17, 24, 39);
 }
 
 .eMeasureButton {
-    background-color: black;
-    color: white;
-    font-size: 14px;
-    padding: 6px 16px;
-    height: 32px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  padding: 6px 10px;
+  height: 25px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: auto;
 }
 
 .eMeasureButton:hover {
-    background-color: rgb(31, 41, 55);
+  background-color: rgb(31, 41, 55);
 }
 
 /* 테이블 스타일 */
 .eInfoTable {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .eInfoTable td {
-    padding: 24px;
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .eInfoTable .label {
-    font-size: 14px;
-    color: rgb(107, 114, 128);
-    margin-bottom: 4px;
+  font-size: 14px;
+  color: rgb(107, 114, 128);
+  margin-bottom: 4px;
 }
 
 .eInfoTable .value {
-    font-size: 14px;
-    color: rgb(17, 24, 39);
+  font-size: 14px;
+  color: rgb(17, 24, 39);
 }
 
 .eDetailCell {
-    text-align: right;
-    padding-top: 0 !important;
+  text-align: right;
+  padding-top: 0 !important;
 }
 
 .eDetailButton {
-    color: rgb(107, 114, 128);
-    font-size: 14px;
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.2s;
+  color: rgb(107, 114, 128);
+  font-size: 14px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
 .eDetailButton:hover {
-    color: rgb(55, 65, 81);
+  color: rgb(55, 65, 81);
 }
 
-
 .eOddRow {
-    background-color: #E7F6FF; /* 홀수 행의 배경색 */
+  background-color: #e7f6ff; /* 홀수 행의 배경색 */
 }
 
 .eEvenRow {
-    background-color: #F1F1F1; /* 짝수 행의 배경색 */
+  background-color: #f1f1f1; /* 짝수 행의 배경색 */
+}
+
+.tableList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 10px;
+  align-items: center;
 }
