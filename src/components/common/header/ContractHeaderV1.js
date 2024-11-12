@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { FaAsterisk, FaSistrix } from "react-icons/fa6";
+import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
-import { FaSearch } from "react-icons/fa";
-import {fetchAllContractName} from "../../../api/CommonService";
+import { fetchAllContractName } from "../../../api/UserService";
 // 날짜와 협약서 선택하는 부분 모두 있는 버전
-const ContractHeader = () => {
+const ContractHeaderV1 = ({ onContractSelect }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(() => {
+  const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}`;
   });
+
   const [contracts, setContracts] = useState([]);
+
+  const handleAgreementChange = (e) => {
+    const id = e.target.value;
+    setSelectedAgreementId(id);
+    onContractSelect(id, selectedDate); // 콜백 호출
+  };
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setSelectedDate(date);
+    onContractSelect(selectedAgreementId, date); // 콜백 호출
+  };
 
   useEffect(() => {
     const fetchContracts = async () => {
@@ -38,23 +49,13 @@ const ContractHeader = () => {
     fetchContracts();
   }, []);
 
-  const handleAgreementChange = (e) => {
-    const selectedId = e.target.value;
-    const selectedName =
-      contracts.find(
-        (contract) => contract.contractId.toString() === selectedId
-      )?.contractName || "";
-    setSelectedAgreement(selectedName);
-    setSelectedAgreementId(selectedId);
-  };
-
   return (
     <div className="topIndex">
       <FaAsterisk className="star" />
       협약서
       <select
         className="criteria2"
-        value={selectedAgreementId || ""}
+        value={selectedAgreementId}
         onChange={handleAgreementChange}
       >
         {contracts.map((contract) => (
@@ -64,17 +65,13 @@ const ContractHeader = () => {
         ))}
       </select>
       <input
-        type="date"
+        type="month"
         className="criteria2"
-        value={selectedMonth}
-        onChange={(e) => setSelectedMonth(e.target.value)}
+        value={selectedDate}
+        onChange={handleDateChange}
       />
-      <button className="queryButton">
-        조회
-        <FaSearch />
-      </button>
     </div>
   );
 };
 
-export default ContractHeader;
+export default ContractHeaderV1;

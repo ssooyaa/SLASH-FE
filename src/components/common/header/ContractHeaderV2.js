@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { FaAsterisk, FaSistrix } from "react-icons/fa6";
+import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
-import { FaSearch } from "react-icons/fa";
-//협약서만 선택하는 버전
-const ContractHeader = () => {
+// 협약서 선택하는 부분만 있는 버전
+const ContractHeaderV2 = ({ onContractSelect }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
+
   const [contracts, setContracts] = useState([]);
+
+  const handleAgreementChange = (e) => {
+    const id = e.target.value;
+    setSelectedAgreementId(id);
+  };
 
   useEffect(() => {
     const fetchContracts = async () => {
@@ -31,23 +36,13 @@ const ContractHeader = () => {
     fetchContracts();
   }, []);
 
-  const handleAgreementChange = (e) => {
-    const selectedId = e.target.value;
-    const selectedName =
-      contracts.find(
-        (contract) => contract.contractId.toString() === selectedId
-      )?.contractName || "";
-    setSelectedAgreement(selectedName);
-    setSelectedAgreementId(selectedId);
-  };
-
   return (
     <div className="topIndex">
       <FaAsterisk className="star" />
       협약서
       <select
         className="criteria2"
-        value={selectedAgreementId || ""}
+        value={selectedAgreementId}
         onChange={handleAgreementChange}
       >
         {contracts.map((contract) => (
@@ -56,12 +51,8 @@ const ContractHeader = () => {
           </option>
         ))}
       </select>
-      <button className="queryButton">
-        조회
-        <FaSearch />
-      </button>
     </div>
   );
 };
 
-export default ContractHeader;
+export default ContractHeaderV2;

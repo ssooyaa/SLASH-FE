@@ -1,14 +1,19 @@
-import React, { useState } from "react";
-import "./AddEvaluationItemForm.css";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { fetchServiceInfo } from "../../../../../../api/CommonService";
+import {
+  fetchModifyIsPossible,
+  updateEvaluationItem,
+  createEvaluationItem,
+} from "../../../../../../api/ContractManagerService";
 import ServiceDetailInputTable from "../../../../../feature/table/ServiceDetailInputTable";
-import InputTable from "../../../../../feature/table/InputTable";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
+import InputTable from "../../../../../feature/table/InputTable";
 import TaskDetailInputTable from "../../../../../feature/table/TaskDetailInputTable";
-import { CreateServiceDetail } from "../../../../../../api/ContractManagerService";
 
-const AddEvaluationItemForm = () => {
+const UpdateEvaluationItemInfoForm = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -17,25 +22,58 @@ const AddEvaluationItemForm = () => {
 
   const contractName = location.state?.contractName;
 
+  const { evaluationItemId } = useParams();
+
   const [formData, setFormData] = useState({
     contractId: contractId,
+    evaluationItemId: evaluationItemId,
     category: "",
     weight: 0,
     period: "월별",
-    purpose: "",
     formula: "",
     unit: "율(%)",
     serviceTargets: [],
     taskTypes: [],
   });
 
+  const [taskTable, setTaskTable] = useState(false);
+
+  const [updateServiceTargets, setUpdateServiceTargets] = useState([]);
+
+  const [updateTaskType, setUpdateTaskType] = useState([]);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
   const [serviceTargets, setServiceTargets] = useState([]);
 
   const [taskTypes, setTaskTypes] = useState([]);
 
-  const [taskTable, setTaskTable] = useState(false);
+  const [firstTaskTypesLength, setFirstTaskTypesLength] = useState(0);
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await fetchServiceInfo(evaluationItemId);
+      setFormData(response);
+      setServiceTargets(response.serviceTargets);
+      setTaskTypes(response.taskTypes || []);
+
+      if (response.taskTypes && response.taskTypes.length > 0) {
+        const hasNonZeroDeadline = response.taskTypes.some(
+          (item) => item.deadline > 0
+        );
+        if (hasNonZeroDeadline) {
+          setTaskTable(true);
+          setSelectedOption("유형및시간");
+          setFirstTaskTypesLength(response.taskTypes.length);
+        } else {
+          setTaskTable(true);
+          setSelectedOption("업무유형");
+          setFirstTaskTypesLength(response.taskTypes.length);
+        }
+      }
+    };
+    loadData();
+  }, [evaluationItemId]);
 
   const handleChange = (field, value) => {
     const updatedFormData = {
@@ -45,12 +83,36 @@ const AddEvaluationItemForm = () => {
     setFormData(updatedFormData);
   };
 
-  const handleServiceTargets = (value) => {
-    setServiceTargets(value);
-    handleChange("serviceTargets", value);
+  const handleAddTask = () => {
+    setTaskTable(true);
   };
 
-  const handleTaskDetail = (value) => {
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
+
+  const handleRemoveTask = () => {
+    setTaskTable(false);
+    setSelectedOption(null);
+
+    if (firstTaskTypesLength !== 0) {
+      alert("업무유형을 모두 삭제 시 반영되지 않습니다. 삭제 후 추가해 주세요");
+      setUpdateTaskType([]);
+      setTaskTypes([]);
+    }
+  };
+
+  const handleRedirect = () => {
+    alert("수정된 정보는 저장되지 않습니다.");
+    navigate(-1);
+  };
+
+  const handleUpdateServiceTargets = (value) => {
+    setUpdateServiceTargets(value);
+    setServiceTargets(value);
+  };
+
+  const handleUpdateTaskTypesDetail = (value) => {
     const updatedTaskTypes = value.map((item) => {
       if (typeof item === "object") {
         return {
@@ -72,27 +134,9 @@ const AddEvaluationItemForm = () => {
       }
     });
 
+    setUpdateTaskType(updatedTaskTypes); // 상태 업데이트
     setTaskTypes(updatedTaskTypes);
-    handleChange("taskTypes", updatedTaskTypes);
-  };
-
-  const handleAddTask = () => {
-    setTaskTable(true);
-  };
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleRemoveTask = () => {
-    setTaskTable(false);
-    setSelectedOption(null);
-    setTaskTypes([]);
-    handleChange("taskTypes", []);
-  };
-
-  const handleRedirect = () => {
-    navigate(-1);
+    return updatedTaskTypes;
   };
 
   const isValid = () => {
@@ -116,46 +160,77 @@ const AddEvaluationItemForm = () => {
     }
 
     if (serviceTargets.length === 0) {
-      alert("평가 점수를 입력해 주세요");
+      alert("등급 설정은 필수 입니다");
       return false;
     }
-
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleChange("contractId", contractId);
+    console.log(updateTaskType);
 
-    const filterServiceTargets = formData.serviceTargets.filter(
+    const updatedServiceTargets = updateServiceTargets.filter(
       (target) => target.grade !== ""
     );
+    handleChange("serviceTargets", updatedServiceTargets);
 
-    const updatedTaskTypes = formData.taskTypes.filter(
+    const updatedTaskTypes = updateTaskType.filter(
       (target) => target.taskDetail !== ""
     );
 
-    const updateFormData = {
-      ...formData,
-      serviceTargets: filterServiceTargets,
-      taskTypes: updatedTaskTypes,
-    };
+    handleChange("taskTypes", updatedTaskTypes);
 
     if (!isValid()) {
       return; //미입력값 있을 시 제출 불가
     }
 
-    try {
-      const response = await CreateServiceDetail(updateFormData);
-      if (response) {
-        alert("저장 되었습니다.");
-        navigate("/contractManager/contractDetail", {
-          state: { contractId },
-        });
+    const updatedFormData = {
+      ...formData,
+      serviceTargets: updatedServiceTargets,
+      taskTypes: updatedTaskTypes, // 반환된 taskTypes 배열을 할당
+    };
+
+    if (firstTaskTypesLength > 0 && taskTypes.length === 0) {
+      alert("업무유형을 모두 삭제 시 반영되지 않습니다. 삭제 후 추가해 주세요");
+    }
+
+    if (evaluationItemId) {
+      const isModify = await fetchModifyIsPossible(contractId);
+      if (isModify) {
+        try {
+          const updatedEvaluationItem = await updateEvaluationItem(
+            evaluationItemId,
+            updatedFormData
+          );
+          console.log(updatedFormData);
+          if (updatedEvaluationItem) {
+            alert("수정 완료");
+            navigate("/contractManager/contractDetail", {
+              state: { contractId },
+            });
+          }
+        } catch (error) {
+          alert("수정 실패");
+          console.log("수정 실패: ", error);
+        }
+      } else {
+        try {
+          const postEvaluationItem = await createEvaluationItem(
+            evaluationItemId,
+            updatedFormData
+          );
+          if (postEvaluationItem) {
+            alert("수정 완료");
+            navigate("/contractManager/contractDetail", {
+              state: { contractId },
+            });
+          }
+        } catch (error) {
+          alert("수정 실패");
+          console.log("수정 실패: ", error);
+        }
       }
-    } catch (error) {
-      alert("저장 실패");
-      console.log("저장 실패");
     }
   };
 
@@ -191,19 +266,19 @@ const AddEvaluationItemForm = () => {
           </div>
           <div className="gradeTableDetail">
             <div className="tableTitle inputTableTitle">
-              <p>SLA 평가 등급</p>
+              <p>SLA 평가 등급 </p>
               <span>*</span>
             </div>
             <div className="table">
               {formData.unit === "건" ? (
                 <GradeInputTable
                   initialData={serviceTargets}
-                  onDataChange={handleServiceTargets}
+                  onDataChange={handleUpdateServiceTargets}
                 />
               ) : (
                 <NoScoreGradeInputTable
                   initialData={serviceTargets}
-                  onDataChange={handleServiceTargets}
+                  onDataChange={handleUpdateServiceTargets}
                 />
               )}
             </div>
@@ -243,10 +318,10 @@ const AddEvaluationItemForm = () => {
                         <div className="table yourTableClass">
                           <InputTable
                             label="업무 유형"
-                            initialData={taskTypes.map(
-                              (item) => item.taskDetail
-                            )}
-                            onDataChange={handleTaskDetail}
+                            initialData={
+                              taskTypes.map((item) => item.taskDetail) || []
+                            }
+                            onDataChange={handleUpdateTaskTypesDetail}
                           />
                         </div>
                       )}
@@ -254,7 +329,7 @@ const AddEvaluationItemForm = () => {
                         <div className="table yourTableClass">
                           <TaskDetailInputTable
                             initialData={taskTypes}
-                            onDataChange={handleTaskDetail}
+                            onDataChange={handleUpdateTaskTypesDetail}
                           />
                         </div>
                       )}
@@ -277,5 +352,4 @@ const AddEvaluationItemForm = () => {
     </div>
   );
 };
-
-export default AddEvaluationItemForm;
+export default UpdateEvaluationItemInfoForm;
