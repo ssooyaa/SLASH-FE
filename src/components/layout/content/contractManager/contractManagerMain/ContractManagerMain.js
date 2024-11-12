@@ -96,7 +96,6 @@ const ContractManagerMain = () => {
           ))}
         </select>
       </div>
-
       {contractList.length > 0 ? (
         contractInfo && contractInfo.contractName ? (
           <>
