@@ -1,14 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import "./EstimateIndicator.css"
+import React, { useEffect, useState } from "react";
+import "./EstimateIndicator.css";
 import {
   fetchStatisticsStatus,
   saveMeasuring,
   saveServiceMeasuring,
-  saveIncidentMeasuring
+  saveIncidentMeasuring,
 } from "../../../../../api/ContractManagerService";
-import {fetchAllContractName} from "../../../../../api/CommonService";
-import {FaAsterisk} from "react-icons/fa6";
-import {useNavigate} from "react-router-dom";
+import { fetchAllContractName } from "../../../../../api/CommonService";
+import { FaAsterisk } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import IndicatorTable from "../../../../feature/table/IndicatorTable";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { MdCalendarMonth } from "react-icons/md";
 
 const EstimateIndicator = () => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
@@ -22,8 +26,14 @@ const EstimateIndicator = () => {
   const [contracts, setContracts] = useState([]);
   const [data, setData] = useState({
     unCalculatedStatistics: [],
-    calculatedStatistics: []
+    calculatedStatistics: [],
   });
+
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  const [currentPicker, setCurrentPicker] = useState(null);
+
+  const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
 
   // Fetch contracts data
   useEffect(() => {
@@ -31,7 +41,10 @@ const EstimateIndicator = () => {
       try {
         const data = await fetchAllContractName();
         if (data && Array.isArray(data)) {
-          console.log("Fetched contract names:", data.map((contract) => contract.contractName));
+          console.log(
+            "Fetched contract names:",
+            data.map((contract) => contract.contractName)
+          );
           setContracts(data);
           if (data.length > 0) {
             setSelectedAgreementId(data[0].contractId); // set first contract as default
@@ -50,7 +63,6 @@ const EstimateIndicator = () => {
     }
   }, [selectedAgreementId, selectedDate]);
 
-
   const handleAgreementChange = (e) => {
     setSelectedAgreementId(e.target.value);
   };
@@ -60,13 +72,13 @@ const EstimateIndicator = () => {
   const handleCheckboxChange = (id) => {
     setCheckedItems((prev) => ({
       ...prev,
-      [id]: !prev[id]
+      [id]: !prev[id],
     }));
   };
 
   const handleMeasureClick = async (contractId, selectedDate) => {
     try {
-      console.log("contractId", contractId, "selectedDate", selectedDate)
+      console.log("contractId", contractId, "selectedDate", selectedDate);
       const fetchedData = await fetchStatisticsStatus(contractId, selectedDate);
 
       console.log("Fetched Data:", fetchedData); // Check the data structure
@@ -81,12 +93,12 @@ const EstimateIndicator = () => {
     }
   };
 
-  const handleEstimateClick = async ({evaluationItemId, date}) => {
+  const handleEstimateClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
 
       // saveMeasuring 호출하여 결과를 받음
-      const response = await saveMeasuring({evaluationItemId, date});
+      const response = await saveMeasuring({ evaluationItemId, date });
 
       console.log("response:", response); // 응답값 확인
 
@@ -102,13 +114,22 @@ const EstimateIndicator = () => {
     }
   };
 
+  const handleCalendarClick = (field, event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setCurrentPicker(field);
+    setShowCalendar(true);
+    setCalendarPosition({
+      top: rect.bottom + window.scrollY + 5,
+      left: rect.right + window.scrollX - 230,
+    });
+  };
 
-  const handleEstimateServiceClick = async ({evaluationItemId, date}) => {
+  const handleEstimateServiceClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
 
       // saveMeasuring 호출하여 결과를 받음
-      const response = await saveServiceMeasuring({evaluationItemId, date});
+      const response = await saveServiceMeasuring({ evaluationItemId, date });
 
       console.log("response:", response); // 응답값 확인
 
@@ -124,12 +145,12 @@ const EstimateIndicator = () => {
     }
   };
 
-  const handleEstimateIncidentClick = async ({evaluationItemId, date}) => {
+  const handleEstimateIncidentClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
 
       // saveMeasuring 호출하여 결과를 받음
-      const response = await saveIncidentMeasuring({evaluationItemId, date});
+      const response = await saveIncidentMeasuring({ evaluationItemId, date });
 
       console.log("response:", response); // 응답값 확인
 
@@ -147,13 +168,15 @@ const EstimateIndicator = () => {
   const navigate = useNavigate();
   const handleDetailClick = (evaluationItemId) => {
     // 평가 항목 ID와 선택한 날짜를 URL에 포함하여 페이지 이동
-    navigate(`/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${selectedDate}`);
+    navigate(
+      `/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${selectedDate}`
+    );
   };
 
   return (
     <div>
       <div className="topIndex">
-        <FaAsterisk className="star"/>
+        <FaAsterisk className="star" />
         협약서
         <select
           className="criteria2"
@@ -177,104 +200,94 @@ const EstimateIndicator = () => {
       <div className="eContainer">
         <div className="eSection">
           <h2 className="eSectionTitle">미계산</h2>
-          {data.unCalculatedStatistics.map((item, index) => (
-            <div
-              className={`eCard ${index % 2 === 0 ? "eOddRow" : "eEvenRow"}`}
-              key={item.evaluationItemId}
-            >
-              <div className="eCardContent">
-                <div className="eCheckboxWrapper">
-                  <input
-                    type="checkbox"
-                    checked={checkedItems[item.evaluationItemId] || false}
-                    onChange={() => handleCheckboxChange(item.evaluationItemId)}
-                    className="eCheckbox"
-                  />
-                  <span className="eText">{item.category}</span>
+          <div className="tableList">
+            {data.unCalculatedStatistics.map((item, index) => (
+              <div
+                className={`eCard ${index % 2 === 0 ? "eOddRow" : "eEvenRow"}`}
+                key={item.evaluationItemId}
+              >
+                <div className="eCardContent">
+                  <div className="eCheckboxWrapper">
+                    <input
+                      type="checkbox"
+                      checked={checkedItems[item.evaluationItemId] || false}
+                      onChange={() =>
+                        handleCheckboxChange(item.evaluationItemId)
+                      }
+                      className="eCheckbox"
+                    />
+                    <span className="eText">{item.category}</span>
+                  </div>
+                  {checkedItems[item.evaluationItemId] &&
+                    item.category === "서비스 가동률" && (
+                      <button
+                        className="eMeasureButton"
+                        onClick={async () => {
+                          await handleEstimateClick({
+                            evaluationItemId: item.evaluationItemId,
+                            date: selectedDate,
+                          });
+                          await handleMeasureClick(
+                            selectedAgreementId,
+                            selectedDate
+                          );
+                        }}
+                      >
+                        측정하기
+                      </button>
+                    )}
+                  {checkedItems[item.evaluationItemId] &&
+                    item.category === "서비스요청 적기처리율" && (
+                      <button
+                        className="eMeasureButton"
+                        onClick={async () => {
+                          await handleEstimateServiceClick({
+                            evaluationItemId: item.evaluationItemId,
+                            date: selectedDate,
+                          });
+                          await handleMeasureClick(
+                            selectedAgreementId,
+                            selectedDate
+                          );
+                        }}
+                      >
+                        측정하기
+                      </button>
+                    )}
+                  {checkedItems[item.evaluationItemId] &&
+                    item.category === "장애 적기처리율" && (
+                      <button
+                        className="eMeasureButton"
+                        onClick={async () => {
+                          await handleEstimateIncidentClick({
+                            evaluationItemId: item.evaluationItemId,
+                            date: selectedDate,
+                          });
+                          await handleMeasureClick(
+                            selectedAgreementId,
+                            selectedDate
+                          );
+                        }}
+                      >
+                        측정하기
+                      </button>
+                    )}
                 </div>
-                {checkedItems[item.evaluationItemId] && item.category === "서비스 가동률" && (
-                  <button
-                    className="eMeasureButton"
-                    onClick={async () => {
-                      await handleEstimateClick({evaluationItemId: item.evaluationItemId, date: selectedDate});
-                      await handleMeasureClick(selectedAgreementId, selectedDate);
-                    }}
-                  >
-                    측정하기
-                  </button>
-                )}
-                {checkedItems[item.evaluationItemId] && item.category === "서비스요청 적기처리율" && (
-                  <button
-                    className="eMeasureButton"
-                    onClick={async () => {
-                      await handleEstimateServiceClick({evaluationItemId: item.evaluationItemId, date: selectedDate});
-                      await handleMeasureClick(selectedAgreementId, selectedDate);
-                    }}
-                  >
-                    측정하기
-                  </button>
-                )}
-                {checkedItems[item.evaluationItemId] && item.category === "장애 적기처리율" && (
-                  <button
-                    className="eMeasureButton"
-                    onClick={async () => {
-                      await handleEstimateIncidentClick({evaluationItemId: item.evaluationItemId, date: selectedDate});
-                      await handleMeasureClick(selectedAgreementId, selectedDate);
-                    }}
-                  >
-                    측정하기
-                  </button>
-                )}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-
-        <div className="eSection">
-          <h2 className="eSectionTitle">계산 완료</h2>
-          {data.calculatedStatistics.map((item, index) => (
-            <div
-              className={`eCard ${index % 2 === 0 ? "eOddRow" : "eEvenRow"}`}
-              key={item.statisticsId}
-            >
-              <table className="eInfoTable">
-                <colgroup>
-                  <col width="20%"/>
-                  <col width="20%"/>
-                  <col width="20%"/>
-                  <col width="20%"/>
-                  <col width="20%"/>
-                </colgroup>
-                <tbody>
-                <tr>
-                  <td>
-                    <div className="label">지표 구분</div>
-                    <div className="value">{item.category}</div>
-                  </td>
-                  <td>
-                    <div className="label">자동 계산 여부</div>
-                    <div className="value">{item.isAuto ? "자동" : "수동"}</div>
-                  </td>
-                  <td>
-                    <div className="label">지표 측정일</div>
-                    <div className="value">{item.calculatedDate}</div>
-                  </td>
-                  <td>
-                    <div className="label">승인 여부</div>
-                    <div className="value">{item.isApprove ? "승인됨" : "미승인"}</div>
-                  </td>
-                  <td>
-                    <button className="eDetailButton" onClick={() => handleDetailClick(item.evaluationItemId)}>자세히 보기 &gt;</button>
-                  </td>
-                </tr>
-                <tr>
-
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          ))}
-        </div>
+      </div>
+      <div className="eContainer">
+        <h2 className="eSectionTitle">계산 완료</h2>
+        {data.calculatedStatistics.length > 0 ? (
+          <div className="tableList">
+            <IndicatorTable
+              initialData={data.calculatedStatistics}
+              handleDetail={handleDetailClick}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
