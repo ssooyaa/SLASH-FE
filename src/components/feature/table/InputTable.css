@@ -56,13 +56,14 @@
   position: absolute;
   background-color: transparent;
   width: 55px;
-  left: -20px;
+  left: -15px;
   top: 20px;
   z-index: 2;
   font-size: 13px;
   color: black;
   margin-right: 10px;
   padding: 0px;
+  cursor: pointer;
 }
 
 .plusIcon {

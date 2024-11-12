@@ -41,6 +41,7 @@ const TaskDetailInputTable = ({ initialData, onDataChange }) => {
   const deleteData = (index) => {
     const updatedData = data.filter((_, i) => i !== index);
     setData(updatedData);
+    onDataChange(updatedData);
     const updatedShowDeleteMenu = showDeleteMenu.filter((_, i) => i !== index);
     setShowDeleteMenu(updatedShowDeleteMenu);
   };
