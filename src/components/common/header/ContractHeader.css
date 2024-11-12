@@ -6,17 +6,17 @@ body {
 }
 .topIndex {
   display: flex;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
   align-items: center;
-  cursor: pointer;
-  padding: 6px 15px;
-  background-color: #fcfcfc;
-  border-radius: 0.8rem;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s;
-  margin: 10px 0px;
-  color: #6d6c6c;
-  font-weight: bold;
-  font-size: 80%;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  gap: 5px;
+  justify-content: flex-start; /* 요소들을 왼쪽 정렬 */
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
 
 .star {
@@ -24,17 +24,16 @@ body {
 }
 
 .criteria2 {
-  margin-left: 25px;
+  margin-left: 5px;
   height: 30px;
   font-size: 0.7rem;
   width: 160px;
-  background-color: #f0f8ff;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  padding: 0px 5px;
 }
 
 .criteria2:focus {

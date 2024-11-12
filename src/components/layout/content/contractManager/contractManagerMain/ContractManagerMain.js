@@ -7,23 +7,16 @@ import {
 } from "../../../../../api/CommonService";
 import GradeHorizonTable from "../../../../feature/table/GradeHorizonTable";
 import EvaluationItemListTable from "../../../../feature/table/EvaluationItemListTable";
-import { FaSearch } from "react-icons/fa";
 
 const ContractManagerMain = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const [contractId, setContractId] = useState(null);
-
   const [contractInfo, setContractInfo] = useState(null);
-
   const [contractList, setContractList] = useState([]);
-
   const [evaluationItems, setEvaluationItems] = useState([]);
-
   const [contractName, setContractName] = useState("");
-
   const [selectContractId, setSelectContractId] = useState(null);
 
   // 초기 계약 리스트와 첫 번째 계약 정보 로드
@@ -32,9 +25,17 @@ const ContractManagerMain = () => {
       const response = await fetchAllContractName();
       setContractList(response);
 
-      // location.state가 없거나 contractId가 없으면 null 처리
-      const firstContractId =
-        location.state?.contractId || response[0]?.contractId || null;
+      let firstContractId = null;
+
+      // 경로에 따라 처리
+      if (location.pathname === "/contractManager/contractDetail") {
+        // /contractManager/contractDetail 경로에서는 state에서 contractId를 사용
+        firstContractId = location.state?.contractId;
+      } else if (location.pathname === "/contractManager") {
+        // /contractManager 경로에서는 state가 없을 때 첫 번째 계약 선택
+        firstContractId = location.state?.contractId || response[0]?.contractId;
+      }
+
       setContractId(firstContractId);
       setSelectContractId(firstContractId);
 
@@ -50,19 +51,18 @@ const ContractManagerMain = () => {
     loadData();
   }, []);
 
-  // 조회 버튼 클릭 시 계약 정보 로드
-  const handleSearchClick = async () => {
-    if (selectContractId) {
-      const contractInfo = await fetchContractInfo(selectContractId);
-      setContractId(selectContractId);
+  // 계약 변경 시마다 계약 정보 로드
+  const handleContractChange = async (event) => {
+    const newContractId = Number(event.target.value);
+    setSelectContractId(newContractId);
+    setContractId(newContractId);
+
+    if (newContractId) {
+      const contractInfo = await fetchContractInfo(newContractId);
       setContractInfo(contractInfo);
       setEvaluationItems(contractInfo.evaluationItems);
       setContractName(contractInfo.contractName);
     }
-  };
-
-  const handleContractChange = (event) => {
-    setSelectContractId(Number(event.target.value));
   };
 
   const handleAddEvaluation = (contractId) => {
@@ -95,12 +95,7 @@ const ContractManagerMain = () => {
             </option>
           ))}
         </select>
-        <button className="contractMainSearchBtn" onClick={handleSearchClick}>
-          <FaSearch />
-          조회
-        </button>
       </div>
-
       {contractList.length > 0 ? (
         contractInfo && contractInfo.contractName ? (
           <>

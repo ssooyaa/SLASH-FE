@@ -1,6 +1,9 @@
 import React from "react";
 import Login from "../pages/login/LoginPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "../pages/login/LoginPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "../pages/login/Login";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
@@ -9,7 +12,6 @@ import CreateContract from "../pages/contractManager/CreateContract";
 import UpdateContract from "../pages/contractManager/UpdateContract";
 import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
-import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 import IndexManagement from "../pages/user/IndexManagement";
 import CreateEvaluationItem from "../pages/contractManager/CreateEvaluationItem";
 import EvaluationItemDetail from "../pages/contractManager/EvaluationItemDetail";
@@ -19,6 +21,7 @@ import DetailIndexContent from "../components/layout/content/contractManager/ind
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import RequestAllocation from "../pages/contractManager/RequestAllocation";
+import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
@@ -141,6 +144,10 @@ const Router = () => {
         <Route
           path="/contractManager/requestAllocation"
           element={<RequestAllocation />}
+        />
+        <Route
+          path="/requestManager/status"
+          element={<RequestManagerStatus />}
         />
       </Routes>
     </BrowserRouter>
