@@ -1,12 +1,13 @@
-import axios from "axios";
+// import axios from "axios";
+import apiClient from "./Interceptor";
 
-axios.defaults.baseURL = "http://localhost:8080";
+apiClient.defaults.baseURL = "http://localhost:8080";
 
 export const CreateContract = async (requestContractDTO) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.post(
+    const response = await apiClient.post(
       "/contract-manager/contract",
       requestContractDTO,
       {
@@ -35,7 +36,7 @@ export const CreateServiceDetail = async (requestContractDTO) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.post(
+    const response = await apiClient.post(
       "/contract-manager/evaluation-item",
       requestContractDTO,
       {

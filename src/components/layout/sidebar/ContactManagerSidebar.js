@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiLogOut } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import LogoutButton from "../../common/button/LogoutButton.js"
 
 const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -66,12 +67,8 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
         </ul>
 
-        {/* 로그아웃 버튼 추가 */}
         <div className="logoutSection">
-          <button className="logoutBtn">
-            <FiLogOut className="logoutIcon" />
-            Logout
-          </button>
+          <LogoutButton />
         </div>
 
         {/* 푸터 추가 */}

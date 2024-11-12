@@ -1,6 +1,7 @@
-import axios from "axios";
+// import axios from "axios";
+import apiClient from "./Interceptor";
 
-axios.defaults.baseURL = "http://localhost:8080";
+apiClient.defaults.baseURL = "http://localhost:8080";
 
 export const getMonthlyData = async (selectedYear, selectedMonth) => {
   try {
@@ -8,8 +9,8 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
     const params = { year: selectedYear, month: selectedMonth };
     console.log("전송 값:", params);
 
-    // axios 요청 수정
-    const response = await axios.get("/request-manager/monthly-data", {
+    // apiClient 요청 수정
+    const response = await apiClient.get("/request-manager/monthly-data", {
       params,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -28,7 +29,7 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
 export const assignTaskManager = async (dto) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.patch(
+    const response = await apiClient.patch(
       "/contract-manager/request/allocate",
       dto,
       {
@@ -48,7 +49,7 @@ export const assignTaskManager = async (dto) => {
 export const getManagerTaskStatus = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/contract-manager/status", {
+    const response = await apiClient.get("/contract-manager/status", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -64,7 +65,7 @@ export const getManagerTaskStatus = async () => {
 export const completeRequest = async (requestId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.patch(
+    const response = await apiClient.patch(
       `/request-manager/request/complete?requestId=${requestId}`,
       null,
       {
@@ -90,7 +91,7 @@ export const completeRequest = async (requestId) => {
 export const fetchSystemAndEquipment = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/all-systems", {
+    const response = await apiClient.get("/common/all-systems", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -106,7 +107,7 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/statistics",{
+    const response = await apiClient.get("/common/statistics",{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -124,7 +125,7 @@ export const fetchStatistics = async (params) => {
 export const fetchContractData = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/contract/1", {
+    const response = await apiClient.get("/common/contract/1", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -140,13 +141,13 @@ export const fetchOptions = async () => {
     const token = getAuthToken();
     const [systemsResponse, taskTypeResponse, taskDetailResponse] =
       await Promise.all([
-        axios.get("/common/systems", {
+        apiClient.get("/common/systems", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("/common/task-type", {
+        apiClient.get("/common/task-type", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("/common/task-detail", {
+        apiClient.get("/common/task-detail", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -169,7 +170,7 @@ const getAuthToken = () => localStorage.getItem("accessToken");
 export const fetchFilteredRequests = async (filters) => {
   try {
     const token = getAuthToken();
-    const response = await axios.get("/common/requests", {
+    const response = await apiClient.get("/common/requests", {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         type:
