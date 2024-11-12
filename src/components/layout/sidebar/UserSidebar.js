@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiBarChart2, FiLogOut } from "react-icons/fi";
+import { FiHome, FiBarChart2 } from "react-icons/fi";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
+import LogoutButton from "../../common/button/LogoutButton.js"
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -58,12 +59,8 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
         </ul>
 
-        {/* 로그아웃 버튼 추가 */}
         <div className="logoutSection">
-          <button className="logoutBtn">
-            <FiLogOut className="logoutIcon" />
-            Logout
-          </button>
+          <LogoutButton />
         </div>
 
         {/* 푸터 추가 */}
