@@ -2,8 +2,8 @@ import React from "react";
 import "../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
+import DashBoardTop from "./dashBoard/dashBoardTop/DashBoardTop";
 import DashBoardBottom from "./dashBoard/dashBoardBottom/DashBoardBottom";
-import ContractHeaderV1 from "../../../common/header/ContractHeaderV1";
 
 const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   return (
@@ -29,7 +29,7 @@ const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          <ContractHeaderV1/>
+          <DashBoardTop />
           <DashBoardBottom />
         </div>
       </div>

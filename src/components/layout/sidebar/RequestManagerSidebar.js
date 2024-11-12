@@ -61,7 +61,7 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
             <a
               href="/requestManager/status"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
-              onClick={() => handleMenuClick(1, "/requestManager/status")}
+              onClick={() => handleMenuClick(1, "/requestManager/taskDetails")}
             >
               <FaFileContract className="navLinkIcon" />
               업무 내역

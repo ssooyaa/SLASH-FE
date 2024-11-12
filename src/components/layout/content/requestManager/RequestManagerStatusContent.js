@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
 import {FaBars} from "react-icons/fa6";
 import {IoPersonCircle} from "react-icons/io5";
-import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
-import ContractHeaderV1 from "../../../common/header/ContractHeaderV1";
+import RequestStatus from "./requestManagerStatus/RequestStatus";
 
-const RequestManagerStatusContent = ({ isNavOpen, toggleNav, effectClass }) => {
-  // 상태 정의: ContractHeaderV1에서 받은 값을 저장
-  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
-  const [selectedDate, setSelectedDate] = useState("");
+const RequestManagerStatusContent = () => {
+  const [isNavOpen, setNavOpen] = useState(true);
+  const [effectClass, setEffectClass] = useState(1);
 
-  // 콜백 함수 정의
-  const handleContractSelection = (agreementId, date) => {
-    setSelectedAgreementId(agreementId);
-    setSelectedDate(date);
+  const toggleNav = () => {
+    setNavOpen(!isNavOpen);
   };
+
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -37,10 +34,7 @@ const RequestManagerStatusContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
-          {/* 자식 컴포넌트에 콜백 함수 전달 */}
-          <ContractHeaderV1 onContractSelect={handleContractSelection} />
-          {/* 상태를 자식 컴포넌트로 전달 */}
-          <RequestManagerBottom agreementId={selectedAgreementId} date={selectedDate}/>
+          <RequestStatus/>
         </div>
       </div>
     </div>
