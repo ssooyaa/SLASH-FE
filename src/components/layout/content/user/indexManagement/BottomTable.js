@@ -53,6 +53,7 @@ const BottomTable = ({ agreementId, date }) => {
           <th>지표 구분</th>
           <th>자동 계산 여부</th>
           <th>지표 측정일</th>
+          <th>측정 범위</th>
           <th>평가 점수</th>
           <th>평가 등급</th>
           <th></th>
@@ -68,6 +69,7 @@ const BottomTable = ({ agreementId, date }) => {
               <td>{item.category}</td>
               <td>{item.auto ? "자동계산" : "수동계산"}</td>
               <td>{item.date}</td>
+              <td>{item.calculateTime}</td>
               <td>{item.score}%</td>
               <td>{item.grade}등급</td>
               <td>
@@ -95,7 +97,7 @@ const BottomTable = ({ agreementId, date }) => {
           <tr>
             <td>전체</td>
             <td></td>
-            <td colSpan="2"></td>
+            <td colSpan="3"></td>
             <td>{indicatorEtcInfo.grade}등급</td>
             <td></td>
           </tr>
