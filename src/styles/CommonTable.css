@@ -1,9 +1,9 @@
 .etableContainer {
   margin: 30px;
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .etableContainer h3 {
@@ -26,7 +26,6 @@
   background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ecustomTable th,
@@ -52,7 +51,7 @@
 .egrayButton {
   margin-top: 20px;
   width: 98px;
-  height: 46px;
+  height: 36px;
   background-color: #a4a4a4;
   border: none;
   border-radius: 10px;
