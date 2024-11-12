@@ -11,6 +11,7 @@ import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
 import CreateEvaluationItem from "../pages/contractManager/CreateEvaluationItem";
 import EvaluationItemDetail from "../pages/contractManager/EvaluationItemDetail";
+import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -112,6 +113,10 @@ const Router = () => {
               <EvaluationItemDetail />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/contractManager/updateEvaluationItem/:evaluationItemId"
+          element={<UpdateEvaluationItem />}
         />
       </Routes>
     </BrowserRouter>

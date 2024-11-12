@@ -30,6 +30,9 @@
 }
 
 .contractMainSearchBtn {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
   width: 60px;
   height: 30px;
   background-color: var(--main--color);
@@ -39,6 +42,8 @@
   cursor: pointer;
   margin-left: auto; /* 버튼을 오른쪽 끝으로 이동 */
   margin-right: 25px;
+  justify-content: center;
+  align-items: center;
 }
 
 .contractMainSearchBtn:hover {
@@ -95,7 +100,7 @@
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
-  margin-top: 7px;
+  margin-top: 10px;
 }
 
 .contractMainSearchBtn:hover {
@@ -104,7 +109,7 @@
 
 .mainGradeEditBtnDiv button {
   width: 60px;
-  height: 35px;
+  height: 30px;
   background-color: var(--main--color);
   border: none;
   border-radius: 10px;
