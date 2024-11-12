@@ -106,11 +106,17 @@ const ContractManagerMain = () => {
             </div>
 
             <div className="mainSlaGrade">
-              <div className="mainGradeEditBtnDiv">
-                <button onClick={() => handleEditContract(contractId)}>
-                  수정하기
-                </button>
+              <div className="mainCardTitle">
+                <div className="mainCardTitleP">
+                  <p>종합 평가 등급</p>
+                </div>
+                <div className="mainGradeEditBtnDiv">
+                  <button onClick={() => handleEditContract(contractId)}>
+                    수정하기
+                  </button>
+                </div>
               </div>
+
               <div className="table mainTotalGrade">
                 <GradeHorizonTable
                   initialData={contractInfo?.totalTargets || []}
@@ -119,10 +125,15 @@ const ContractManagerMain = () => {
             </div>
 
             <div className="mainServiceCategory">
-              <div className="mainGradeEditBtnDiv">
-                <button onClick={() => handleAddEvaluation(contractId)}>
-                  지표추가
-                </button>
+              <div className="mainCardTitle">
+                <div className="mainCardTitleP">
+                  <p>종합 평가 등급</p>
+                </div>
+                <div className="mainGradeEditBtnDiv">
+                  <button onClick={() => handleAddEvaluation(contractId)}>
+                    지표추가
+                  </button>
+                </div>
               </div>
               <div className="categoryTitle">
                 <EvaluationItemListTable
