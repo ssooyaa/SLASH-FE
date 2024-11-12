@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
-import { FaSearch } from "react-icons/fa";
 // 협약서 선택하는 부분만 있는 버전
 const ContractHeaderV2 = ({ onContractSelect }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
