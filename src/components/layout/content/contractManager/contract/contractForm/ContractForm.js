@@ -133,26 +133,28 @@ const ContractForm = () => {
                 />
               </div>
               <div className="contractDate">
-                <p className="companyNameLabel">
-                  계약시작일
-                  <input
-                    className="companyData"
-                    name="startDate"
-                    placeholder="DD/MM/YYYY"
-                    value={
-                      formData.startDate
-                        ? formData.startDate.toLocaleDateString("en-GB")
-                        : ""
-                    }
-                    readOnly
-                  />
-                  <MdCalendarMonth
-                    className="calendarIcon"
-                    onClick={(e) => handleCalendarClick("startDate", e)}
-                  />
-                </p>
-                <p className="companyNameLabel">
-                  계약종료일
+                <div className="contractDateSelect">
+                  <label className="companyNameLabel">계약시작일</label>
+                  <div className="selectDate">
+                    <input
+                      className="companyData"
+                      name="startDate"
+                      placeholder="DD/MM/YYYY"
+                      value={
+                        formData.startDate
+                          ? formData.startDate.toLocaleDateString("en-GB")
+                          : ""
+                      }
+                      readOnly
+                    />
+                    <MdCalendarMonth
+                      className="calendarIcon"
+                      onClick={(e) => handleCalendarClick("startDate", e)}
+                    />
+                  </div>
+                </div>
+                <div className="contractDateSelect">
+                  <label className="companyNameLabel">계약종료일</label>
                   <input
                     className="companyData"
                     name="endDate"
@@ -168,7 +170,7 @@ const ContractForm = () => {
                     className="calendarIcon"
                     onClick={(e) => handleCalendarClick("endDate", e)}
                   />
-                </p>
+                </div>
                 {showCalendar && (
                   <div
                     className="calendarModal"
