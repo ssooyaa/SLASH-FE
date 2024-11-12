@@ -17,6 +17,7 @@ import DetailIndex from "../pages/user/DetailIndex";
 import DetailIndexContent from "../components/layout/content/contractManager/indexManagment/DetailIndexContent";
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
@@ -136,6 +137,7 @@ const Router = () => {
           path="/contractManager/indicatorCalculator"
           element={<IndicatorCalculator />}
         />
+        <Route path="/requestManager/status" element={<RequestManagerStatus/>}/>
       </Routes>
     </BrowserRouter>
   );
