@@ -80,7 +80,7 @@
   /* 스크롤 처리 */
   max-height: calc(1.5em * 8); /* 항목 높이에 맞게 최대 4개까지 표시 */
   overflow-y: auto; /* 스크롤 표시 */
-  min-width: 38px;
+  /* min-width: 38px; */
 }
 
 .dropdownOption {
