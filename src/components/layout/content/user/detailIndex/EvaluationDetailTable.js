@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchEvaluationDetail,
   fetchEvaluationEquipment,
@@ -8,8 +8,13 @@ import "../../../../../styles/CommonTable.css";
 const EvaluationDetailTable = () => {
   const { evaluationItemId, date } = useParams();
   const [evaluationItem, setEvaluationItem] = useState(null);
-  const [taskTypes, setTaskTypes] = useState([]);
   const [evaluationData, setEvaluationData] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
 
   useEffect(() => {
     const loadEvaluationDetail = async () => {
@@ -165,6 +170,10 @@ const EvaluationDetailTable = () => {
       ) : (
         <p>해당 날짜에 대한 데이터가 없습니다.</p>
       )}
+
+      <button className="egrayButton" onClick={handleRedirect}>
+        닫기
+      </button>
     </div>
   );
 };

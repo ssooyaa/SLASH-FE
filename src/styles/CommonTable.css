@@ -49,3 +49,13 @@
 .ecustomTable tr:nth-child(even) {
   background-color: #ffffff;
 }
+.egrayButton {
+  margin-top: 20px;
+  width: 98px;
+  height: 46px;
+  background-color: #a4a4a4;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
