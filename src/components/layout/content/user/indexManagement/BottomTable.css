@@ -8,6 +8,7 @@
   background-color: #ffffff;
   border: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 90%;
 }
 
 .customTable th,
@@ -19,7 +20,7 @@
 .customTable th {
   background-color: white;
   color: #121824;
-  font-weight: 700;
+  font-weight: 300;
   border-bottom: 2px solid #e0e0e0;
   text-transform: uppercase;
 }
@@ -35,7 +36,7 @@
 .customTable a {
   color: #0056b3;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 100;
 }
 
 .customTable a:hover {
@@ -49,7 +50,7 @@
 /* tfoot 스타일 */
 .customTable tfoot tr {
   background-color: #fcfcfc; /* 마지막 행 배경색 */
-  font-weight: 600;
+  font-weight: 200;
 }
 
 .customTable tfoot td {

@@ -69,7 +69,7 @@ const BottomTable = ({ agreementId, date }) => {
               <td>{item.auto ? "자동계산" : "수동계산"}</td>
               <td>{item.date}</td>
               <td>{item.score}%</td>
-              <td>{item.grade}</td>
+              <td>{item.grade}등급</td>
               <td>
                 <a
                   href="#"
@@ -96,7 +96,7 @@ const BottomTable = ({ agreementId, date }) => {
             <td>전체</td>
             <td></td>
             <td colSpan="2"></td>
-            <td>{indicatorEtcInfo.grade}</td>
+            <td>{indicatorEtcInfo.grade}등급</td>
             <td></td>
           </tr>
         </tfoot>
