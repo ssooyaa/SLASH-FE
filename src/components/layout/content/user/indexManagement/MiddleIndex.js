@@ -26,15 +26,25 @@ const MiddleIndex = ({ agreementId, date }) => {
         try {
           const response = await fetchIndicators(agreementId, date);
           if (response && response.success) {
-            const { grade, requestCount, incidentTime } =
+            const { grade, requestCount, incidentTime, score } =
               response.data.indicatorEtcInfo;
-            setIndicatorData({ grade, requestCount, incidentTime });
+            setIndicatorData({ grade, requestCount, incidentTime, score });
           } else {
-            setIndicatorData({ grade: "-", requestCount: 0, incidentTime: 0 });
+            setIndicatorData({
+              grade: "-",
+              requestCount: 0,
+              incidentTime: 0,
+              score: 0,
+            });
           }
         } catch (error) {
           console.error("Failed to fetch indicator data:", error);
-          setIndicatorData({ grade: "-", requestCount: 0, incidentTime: 0 });
+          setIndicatorData({
+            grade: "-",
+            requestCount: 0,
+            incidentTime: 0,
+            score: 0,
+          });
         }
       }
     };

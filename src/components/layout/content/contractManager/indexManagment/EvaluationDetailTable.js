@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   fetchEvaluationDetail,
   fetchEvaluationEquipment,
 } from "../../../../../api/CommonService";
 import "../../../../../styles/CommonTable.css";
+
 const EvaluationDetailTable = () => {
   const { evaluationItemId, date } = useParams();
+  const location = useLocation(); // Access the passed state
   const [evaluationItem, setEvaluationItem] = useState(null);
-  const [taskTypes, setTaskTypes] = useState([]);
   const [evaluationData, setEvaluationData] = useState([]);
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate(-1); // Navigate back, preserving previous state
+  };
 
   useEffect(() => {
     const loadEvaluationDetail = async () => {
@@ -31,7 +37,6 @@ const EvaluationDetailTable = () => {
   useEffect(() => {
     const loadEvaluationData = async () => {
       try {
-        // Fetch data using the API
         const response = await fetchEvaluationEquipment(evaluationItemId, date);
         if (response && response.success) {
           setEvaluationData(response.data);
@@ -165,6 +170,10 @@ const EvaluationDetailTable = () => {
       ) : (
         <p>해당 날짜에 대한 데이터가 없습니다.</p>
       )}
+
+      <button className="egrayButton" onClick={handleRedirect}>
+        닫기
+      </button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/login/LoginPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
@@ -17,6 +17,7 @@ import DetailIndex from "../pages/user/DetailIndex";
 import DetailIndexContent from "../components/layout/content/contractManager/indexManagment/DetailIndexContent";
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
+import RequestAllocation from "../pages/contractManager/RequestAllocation";
 import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -137,7 +138,14 @@ const Router = () => {
           path="/contractManager/indicatorCalculator"
           element={<IndicatorCalculator />}
         />
-        <Route path="/requestManager/status" element={<RequestManagerStatus/>}/>
+        <Route
+          path="/contractManager/requestAllocation"
+          element={<RequestAllocation />}
+        />
+        <Route
+          path="/requestManager/status"
+          element={<RequestManagerStatus />}
+        />
       </Routes>
     </BrowserRouter>
   );
