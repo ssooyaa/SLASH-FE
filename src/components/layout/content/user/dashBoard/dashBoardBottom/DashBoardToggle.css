@@ -1,7 +1,6 @@
 .dashboardToggle {
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
   width: 115px;
@@ -9,6 +8,7 @@
   border-radius: 10px;
   right: 0px;
   margin: 20px 0px;
+  margin-bottom: 0px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
 }
 
@@ -18,7 +18,6 @@
   margin-top: 20px;
   padding: 5px 15px;
   background-color: white;
-  border: 0.5px solid rgb(0, 0, 0, 0.15);
   align-content: center;
   border-radius: 10px;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
