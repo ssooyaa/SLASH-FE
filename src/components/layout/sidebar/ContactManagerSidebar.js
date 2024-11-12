@@ -53,6 +53,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <a
+              href="/contractManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0, "/contractManager")}
             >
