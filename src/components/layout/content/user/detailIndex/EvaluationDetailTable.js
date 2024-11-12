@@ -92,7 +92,6 @@ const EvaluationDetailTable = () => {
                   <th>등급</th>
                   <th>최소값</th>
                   <th>최대값</th>
-                  <th>점수</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,7 +104,6 @@ const EvaluationDetailTable = () => {
                     <td>
                       {target.max} {target.maxInclusive ? "이하" : "미만"}
                     </td>
-                    <td>{target.score}</td>
                   </tr>
                 ))}
               </tbody>
@@ -121,27 +119,45 @@ const EvaluationDetailTable = () => {
         <table className="ecustomTable">
           <thead>
             <tr>
-              <th>측정 장비</th>
-              <th>측정 날짜</th>
-              <th>장애 건수</th>
-              <th>총 장애 시간</th>
-              <th>측정 치</th>
-              <th>평가 점수</th>
-              <th>평가 점수(가중치 적용)</th>
-              <th>등급</th>
+              {evaluationData.some((item) => item.targetEquipment !== -1) && (
+                <th>측정 장비</th>
+              )}
+              {evaluationData.some((item) => item.date !== -1) && (
+                <th>측정 날짜</th>
+              )}
+              {evaluationData.some(
+                (item) => item.systemIncidentCount !== -1
+              ) && <th>장애 건수</th>}
+              {evaluationData.some((item) => item.totalDowntime !== -1) && (
+                <th>총 장애 시간</th>
+              )}
+              {evaluationData.some((item) => item.estimate !== -1) && (
+                <th>측정 치</th>
+              )}
+              {evaluationData.some((item) => item.score !== -1) && (
+                <th>평가 점수</th>
+              )}
+              {evaluationData.some((item) => item.weightedScore !== -1) && (
+                <th>평가 점수(가중치 적용)</th>
+              )}
+              {evaluationData.some((item) => item.grade !== -1) && (
+                <th>등급</th>
+              )}
             </tr>
           </thead>
           <tbody>
             {evaluationData.map((item, index) => (
               <tr key={index}>
-                <td>{item.targetEquipment}</td>
-                <td>{item.date}</td>
-                <td>{item.systemIncidentCount}</td>
-                <td>{item.totalDowntime}</td>
-                <td>{item.estimate}</td>
-                <td>{item.score}</td>
-                <td>{item.weightedScore}</td>
-                <td>{item.grade}</td>
+                {item.targetEquipment !== -1 && <td>{item.targetEquipment}</td>}
+                {item.date !== -1 && <td>{item.date}</td>}
+                {item.systemIncidentCount !== -1 && (
+                  <td>{item.systemIncidentCount}</td>
+                )}
+                {item.totalDowntime !== -1 && <td>{item.totalDowntime}</td>}
+                {item.estimate !== -1 && <td>{item.estimate}</td>}
+                {item.score !== -1 && <td>{item.score}</td>}
+                {item.weightedScore !== -1 && <td>{item.weightedScore}</td>}
+                {item.grade !== -1 && <td>{item.grade}</td>}
               </tr>
             ))}
           </tbody>
