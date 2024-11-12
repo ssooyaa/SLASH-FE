@@ -170,11 +170,6 @@ const RequestAllocationTable = () => {
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
-        <div className="headerTop">
-          <button className="tabButton" onClick={toggleModal}>
-            요청 등록
-          </button>
-        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
 
