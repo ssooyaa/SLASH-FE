@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/login/LoginPage";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Login from "../pages/login/Login";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
 import RequestManagerMain from "../pages/requestManager/RequestManagerMain";
@@ -9,9 +11,11 @@ import CreateContract from "../pages/contractManager/CreateContract";
 import UpdateContract from "../pages/contractManager/UpdateContract";
 import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
+import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 import IndexManagement from "../pages/user/IndexManagement";
 import CreateEvaluationItem from "../pages/contractManager/CreateEvaluationItem";
 import EvaluationItemDetail from "../pages/contractManager/EvaluationItemDetail";
+import IndicatorCalculator from "../pages/contractManager/IndicatorCalculator";
 import DetailIndex from "../pages/user/DetailIndex";
 import DetailIndexContent from "../components/layout/content/contractManager/indexManagment/DetailIndexContent";
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
@@ -130,6 +134,9 @@ const Router = () => {
         <Route
           path="/contractManager/indexManagement"
           element={<DetailIndexContent />}
+        />
+        <Route path="/contractManager/indicatorCalculator"
+               element={<IndicatorCalculator/>}
         />
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  assignTaskManager,
-  getManagerTaskStatus,
-} from "../../../../../../api/UserService";
+
 import "./RequestDetailBottom.css";
 import AssignmentButton from "../../../../../common/button/AssignmentButton";
 import { useParams } from "react-router-dom";
 import Modal from "../../../../../feature/modal/Modal";
 import RequestDetail from "../../../../../feature/request/select/RequestDetail";
+import {assignTaskManager, getManagerTaskStatus} from "../../../../../../api/RequestManagerService";
 
 const RequestDetailBottom = () => {
   const { requestId } = useParams(); // URL에서 requestId 가져오기

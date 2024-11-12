@@ -1,7 +1,6 @@
 import axios from "axios";
-import apiClient from "./Interceptor";
 
-apiClient.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "http://localhost:8080";
 
 export const getMonthlyData = async (selectedYear, selectedMonth) => {
   try {
@@ -9,8 +8,8 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
     const params = { year: selectedYear, month: selectedMonth };
     console.log("전송 값:", params);
 
-    // apiClient 요청 수정
-    const response = await apiClient.get("/request-manager/monthly-data", {
+    // axios 요청 수정
+    const response = await axios.get("/request-manager/monthly-data", {
       params,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -29,7 +28,7 @@ export const getMonthlyData = async (selectedYear, selectedMonth) => {
 export const assignTaskManager = async (dto) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.patch(
+    const response = await axios.patch(
       "/contract-manager/request/allocate",
       dto,
       {
@@ -49,7 +48,7 @@ export const assignTaskManager = async (dto) => {
 export const getManagerTaskStatus = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.get("/contract-manager/status", {
+    const response = await axios.get("/contract-manager/status", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -65,7 +64,7 @@ export const getManagerTaskStatus = async () => {
 export const completeRequest = async (requestId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.patch(
+    const response = await axios.patch(
       `/request-manager/request/complete?requestId=${requestId}`,
       null,
       {
@@ -78,11 +77,7 @@ export const completeRequest = async (requestId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error(
-        "서버 응답 에러:",
-        error.response.status,
-        error.response.data
-      );
+      console.error("서버 응답 에러:", error.response.status, error.response.data);
     } else {
       console.error("요청 실패:", error.message);
     }
@@ -90,17 +85,17 @@ export const completeRequest = async (requestId) => {
   }
 };
 
+
 // 시스템 및 장비 데이터를 가져오는 함수
 export const fetchSystemAndEquipment = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.get("/common/all-systems", {
+    const response = await axios.get("/common/all-systems", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("API 응답 데이터:", response.data); // 콘솔 로그로 응답 확인
-    return response.data.data; // 필요한 데이터 구조로 반환
+    return response.data;
   } catch (error) {
     console.error("시스템 및 장비 데이터를 가져오는 중 오류:", error);
     throw error;
@@ -111,13 +106,13 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.get("/common/statistics",{
+    const response = await axios.get("/common/statistics",{
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: params,
     });
-    console.log(params);
+    console.log(params)
     return response.data;
   } catch (error) {
     console.error("오류:", error);
@@ -129,7 +124,7 @@ export const fetchStatistics = async (params) => {
 export const fetchContractData = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await apiClient.get("/common/contract/1", {
+    const response = await axios.get("/common/contract/1", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -145,13 +140,13 @@ export const fetchOptions = async () => {
     const token = getAuthToken();
     const [systemsResponse, taskTypeResponse, taskDetailResponse] =
       await Promise.all([
-        apiClient.get("/common/systems", {
+        axios.get("/common/systems", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        apiClient.get("/common/task-type", {
+        axios.get("/common/task-type", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        apiClient.get("/common/task-detail", {
+        axios.get("/common/task-detail", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -174,7 +169,7 @@ const getAuthToken = () => localStorage.getItem("accessToken");
 export const fetchFilteredRequests = async (filters) => {
   try {
     const token = getAuthToken();
-    const response = await apiClient.get("/common/requests", {
+    const response = await axios.get("/common/requests", {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         type:
