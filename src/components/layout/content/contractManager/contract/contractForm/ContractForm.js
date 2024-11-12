@@ -171,7 +171,6 @@ const ContractForm = () => {
                     onClick={(e) => handleCalendarClick("endDate", e)}
                   />
                 </div>
-
                 {showCalendar && (
                   <div
                     className="calendarModal"
