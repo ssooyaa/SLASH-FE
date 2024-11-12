@@ -25,7 +25,7 @@ const EvaluationDetailTable = () => {
       const url = window.URL.createObjectURL(data);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "evaluation_detail.pdf";
+      a.download = "statistics.pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();
