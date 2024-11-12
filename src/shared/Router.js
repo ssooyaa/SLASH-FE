@@ -9,8 +9,11 @@ import CreateContract from "../pages/contractManager/CreateContract";
 import UpdateContract from "../pages/contractManager/UpdateContract";
 import RequestDetail from "../pages/contractManager/RequestDetail";
 import ContractList from "../pages/contractManager/ContractList";
+import IndexManagement from "../pages/user/IndexManagement";
 import CreateEvaluationItem from "../pages/contractManager/CreateEvaluationItem";
 import EvaluationItemDetail from "../pages/contractManager/EvaluationItemDetail";
+import DetailIndex from "../pages/user/DetailIndex";
+import DetailIndexContent from "../components/layout/content/contractManager/indexManagment/DetailIndexContent";
 import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 
@@ -26,6 +29,11 @@ const Router = () => {
                         element는 해당 주소로 이동했을 때 보여주고자 하는 컴포넌트를 넣어줍니다.
         */}
         <Route path="/" element={<Login />} />
+        <Route path="/user/indexManagement" element={<IndexManagement />} />
+        <Route
+          path="/user/indexManagement/detail/:evaluationItemId/:date"
+          element={<DetailIndex />}
+        />
         <Route
           path="/user"
           element={
@@ -117,6 +125,11 @@ const Router = () => {
         <Route
           path="/contractManager/updateEvaluationItem/:evaluationItemId"
           element={<UpdateEvaluationItem />}
+        />
+
+        <Route
+          path="/contractManager/indexManagement"
+          element={<DetailIndexContent />}
         />
       </Routes>
     </BrowserRouter>

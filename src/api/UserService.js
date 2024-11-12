@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 import apiClient from "./Interceptor";
 
 apiClient.defaults.baseURL = "http://localhost:8080";
@@ -78,14 +78,17 @@ export const completeRequest = async (requestId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error("서버 응답 에러:", error.response.status, error.response.data);
+      console.error(
+        "서버 응답 에러:",
+        error.response.status,
+        error.response.data
+      );
     } else {
       console.error("요청 실패:", error.message);
     }
     return []; // 오류 발생 시 빈 배열 반환
   }
 };
-
 
 // 시스템 및 장비 데이터를 가져오는 함수
 export const fetchSystemAndEquipment = async () => {
@@ -96,7 +99,8 @@ export const fetchSystemAndEquipment = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+    console.log("API 응답 데이터:", response.data); // 콘솔 로그로 응답 확인
+    return response.data.data; // 필요한 데이터 구조로 반환
   } catch (error) {
     console.error("시스템 및 장비 데이터를 가져오는 중 오류:", error);
     throw error;
@@ -113,7 +117,7 @@ export const fetchStatistics = async (params) => {
       },
       params: params,
     });
-    console.log(params)
+    console.log(params);
     return response.data;
   } catch (error) {
     console.error("오류:", error);
@@ -199,5 +203,41 @@ export const fetchFilteredRequests = async (filters) => {
   } catch (error) {
     console.error("Error fetching filtered requests:", error);
     throw error;
+  }
+};
+
+export const fetchSystemData = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get("/common/all-contract-name", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log("Response from /common/all-contract-name:", response.data); // Log response data
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching system and equipment data:", error);
+    throw error;
+  }
+};
+
+export const fetchAllContractName = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.get("/common/all-contract-name", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("Full API Response:", response);
+    if (response.data.success) {
+      console.log("API Response:", response.data.data);
+      return response.data.data;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
   }
 };
