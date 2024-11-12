@@ -52,10 +52,6 @@ const ContractHeaderV2 = ({ onContractSelect }) => {
           </option>
         ))}
       </select>
-      <button className="queryButton">
-        조회
-        <FaSearch className="searchIcon" />
-      </button>
     </div>
   );
 };

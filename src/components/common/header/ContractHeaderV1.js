@@ -71,10 +71,6 @@ const ContractHeaderV1 = ({ onContractSelect }) => {
         value={selectedDate}
         onChange={handleDateChange}
       />
-      <button className="queryButton">
-        조회
-        <FaSearch className="searchIcon" />
-      </button>
     </div>
   );
 };
