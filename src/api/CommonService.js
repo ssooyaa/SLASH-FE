@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 import apiClient from "./Interceptor";
 
 apiClient.defaults.baseURL = "http://localhost:8080";
