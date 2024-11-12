@@ -23,12 +23,19 @@
   width: 50%;
   padding: 10px;
   padding-right: 35px;
+  padding-left: 30px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   background-color: white;
   box-sizing: border-box;
   transition: border-color 0.3s ease;
   margin-left: 10px;
+}
+
+.contractDateSelect {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .contractTitle input:focus {
@@ -56,9 +63,6 @@
   align-items: start;
   height: 500px;
 }
-.companyNameLabel input {
-  margin-left: 23px;
-}
 
 .companyData {
   height: 35px;
@@ -82,7 +86,7 @@
   position: relative;
   cursor: pointer;
   font-size: 24px;
-  top: 20px;
+  top: 10px;
   left: -30px;
   transform: translateY(-50%);
   color: #888;
@@ -97,4 +101,14 @@
   margin: 0; /* 기본 여백 제거 */
   flex: 1;
   text-align: center; /* 중앙 정렬 */
+}
+
+.contractDateSelect {
+  margin-bottom: 10px;
+}
+
+.selectDate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
