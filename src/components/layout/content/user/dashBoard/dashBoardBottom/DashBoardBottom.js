@@ -55,6 +55,7 @@ const DashBoardBottom = () => {
           onSelect={setSelectedCriteria}
           style={{ width: "550px" }}
         />
+        <DashboardToggle view={view} setView={setView} />
       </div>
       <div className="toggleHeader" onClick={toggleTableVisibility}>
         {isTableVisible ? <FaChevronDown /> : <FaChevronRight />}
@@ -70,7 +71,6 @@ const DashBoardBottom = () => {
           />
         </div>
       )}
-      <DashboardToggle view={view} setView={setView} />
 
       <div className="criteriaStatistics">
         {view === "chart" ? (
