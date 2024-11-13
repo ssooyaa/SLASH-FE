@@ -249,6 +249,8 @@ export const fetchEvaluationItemCategory = async (contractId) => {
     return response.data.data;
   } catch (error) {
     console.error("에러 메세지를 몰러유");
+  }
+};
 
 // downloadPdf 함수
 export const downloadPdf = async (evaluationItemId, date) => {

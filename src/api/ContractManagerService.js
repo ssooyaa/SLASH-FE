@@ -345,7 +345,6 @@ export const deleteEvaluationItem = async (evaluationItemId) => {
   }
 };
 
-<<<<<<< HEAD
 //통계 지표 수정 api 요청 함수
 export const fetchEvaluationEquipment = async (evaluationItemId, date) => {
   const token = localStorage.getItem("accessToken"); // 토큰을 로컬스토리지에서 가져오기
@@ -384,28 +383,31 @@ export const fetchEditStatistics = async (evaluationItemId, editData) => {
     throw error;
   }
 };
-export const deleteStatistics = async (evaluationItemId, calculateTime) =>{
+
+export const deleteStatistics = async (evaluationItemId, calculateTime) => {
   try {
     const token = localStorage.getItem("accessToken");
 
-    const response = await apiClient.delete(`/contract-manager/statistics/${evaluationItemId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        date: calculateTime // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
+    const response = await apiClient.delete(
+      `/contract-manager/statistics/${evaluationItemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          date: calculateTime, // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
+        },
       }
-    });
+    );
     if (response.data.success) {
       return response.data.success;
     } else {
       return false;
     }
-  }catch (error) {
+  } catch (error) {
     console.error("ERROR: ", error.response.data);
     alert(error.response.data.message);
 
     return false;
   }
-
-}
+};
