@@ -10,9 +10,8 @@ import { fetchAllContractName } from "../../../../../api/CommonService";
 import { FaAsterisk } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import IndicatorTable from "../../../../feature/table/IndicatorTable";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdCalendarMonth } from "react-icons/md";
+import {deleteStatistics} from "../../../../../api/ContractManagerService";
 
 const EstimateIndicator = () => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
@@ -28,12 +27,6 @@ const EstimateIndicator = () => {
     unCalculatedStatistics: [],
     calculatedStatistics: [],
   });
-
-  const [showCalendar, setShowCalendar] = useState(false);
-
-  const [currentPicker, setCurrentPicker] = useState(null);
-
-  const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
 
   // Fetch contracts data
   useEffect(() => {
@@ -114,16 +107,6 @@ const EstimateIndicator = () => {
     }
   };
 
-  const handleCalendarClick = (field, event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setCurrentPicker(field);
-    setShowCalendar(true);
-    setCalendarPosition({
-      top: rect.bottom + window.scrollY + 5,
-      left: rect.right + window.scrollX - 230,
-    });
-  };
-
   const handleEstimateServiceClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
@@ -165,7 +148,9 @@ const EstimateIndicator = () => {
       console.error("Error details:", error);
     }
   };
+
   const navigate = useNavigate();
+
   const handleDetailClick = (evaluationItemId) => {
     // 평가 항목 ID와 선택한 날짜를 URL에 포함하여 페이지 이동
     navigate(
@@ -173,6 +158,21 @@ const EstimateIndicator = () => {
     );
   };
 
+  const handleDeleteStatistics = async (evaluationItemId, date) => {
+    const response = await deleteStatistics(evaluationItemId, date);
+    if (response) {
+      alert("삭제되었습니다.");
+      // 데이터를 다시 불러와서 갱신
+      const updatedData = await fetchStatisticsStatus(selectedAgreementId, selectedDate);
+      if (updatedData.success) {
+        setData(updatedData.data); // 새로 불러온 데이터로 갱신
+      } else {
+        alert("데이터를 갱신할 수 없습니다.");
+      }
+    } else {
+      alert("삭제 실패");
+    }
+  };
   return (
     <div>
       <div className="topIndex">
@@ -285,6 +285,7 @@ const EstimateIndicator = () => {
             <IndicatorTable
               initialData={data.calculatedStatistics}
               handleDetail={handleDetailClick}
+              handleDeleteStatistics={handleDeleteStatistics}
             />
           </div>
         ) : null}

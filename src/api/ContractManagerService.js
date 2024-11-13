@@ -1,6 +1,8 @@
 import axios from "axios";
+import apiClient from "./Interceptor";
 
 axios.defaults.baseURL = "http://localhost:8080";
+apiClient.defaults.baseURL = "http://localhost:8080";
 
 export const CreateContract = async (requestContractDTO) => {
   try {
@@ -356,3 +358,29 @@ export const deleteEvaluationItem = async (evaluationItemId) => {
     return false;
   }
 };
+
+export const deleteStatistics = async (evaluationItemId, calculateTime) =>{
+  try {
+    const token = localStorage.getItem("accessToken");
+
+    const response = await apiClient.delete(`/contract-manager/statistics/${evaluationItemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        date: calculateTime // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
+      }
+    });
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  }catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+
+}
