@@ -227,9 +227,7 @@ const UpdateEvaluationItemInfoForm = () => {
           console.log(updatedFormData);
           if (updatedEvaluationItem) {
             alert("수정 완료");
-            navigate("/contractManager/contractDetail", {
-              state: { contractId },
-            });
+            navigate(-1);
           }
         } catch (error) {
           alert("수정 실패");
@@ -243,9 +241,7 @@ const UpdateEvaluationItemInfoForm = () => {
           );
           if (postEvaluationItem) {
             alert("수정 완료");
-            navigate("/contractManager/contractDetail", {
-              state: { contractId },
-            });
+            navigate(-1);
           }
         } catch (error) {
           alert("수정 실패");
