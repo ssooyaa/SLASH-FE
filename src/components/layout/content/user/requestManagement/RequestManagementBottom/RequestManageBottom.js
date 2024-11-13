@@ -187,6 +187,7 @@ const RequestManagementBottom = () => {
             <CreateRequest
               isModalOpen={isRequestModalOpen}
               toggleModal={toggleRequestModal} // 모달 상태 변경 함수 전달
+              contractId={1}
             />
           )}
         </div>
