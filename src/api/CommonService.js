@@ -145,3 +145,22 @@ export const fetchEvaluationEquipment = async (evaluationItemId, date) => {
     throw error;
   }
 };
+
+// downloadPdf 함수
+export const downloadPdf = async (evaluationItemId, date) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(`/common/pdf/${evaluationItemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { date },
+      responseType: "blob", // 응답 타입을 blob으로 설정
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("PDF 다운로드 오류:", error);
+    throw error;
+  }
+};

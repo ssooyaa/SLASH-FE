@@ -3,17 +3,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchEvaluationDetail,
   fetchEvaluationEquipment,
+  downloadPdf,
 } from "../../../../../api/CommonService";
 import "../../../../../styles/CommonTable.css";
+
 const EvaluationDetailTable = () => {
   const { evaluationItemId, date } = useParams();
   const [evaluationItem, setEvaluationItem] = useState(null);
   const [evaluationData, setEvaluationData] = useState([]);
-
   const navigate = useNavigate();
 
   const handleRedirect = () => {
     navigate(-1); // 이전 페이지로 이동
+  };
+
+  const handleDownloadPdf = async () => {
+    try {
+      const data = await downloadPdf(evaluationItemId, date);
+
+      // Blob 데이터를 사용하여 PDF 파일 다운로드
+      const url = window.URL.createObjectURL(data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "statistics.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error("PDF 다운로드 오류:", error);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +54,6 @@ const EvaluationDetailTable = () => {
   useEffect(() => {
     const loadEvaluationData = async () => {
       try {
-        // Fetch data using the API
         const response = await fetchEvaluationEquipment(evaluationItemId, date);
         if (response && response.success) {
           setEvaluationData(response.data);
@@ -56,7 +73,13 @@ const EvaluationDetailTable = () => {
 
   return (
     <div className="etableContainer">
-      <h3>평가 항목 세부 정보</h3>
+      <div className="etableHeader">
+        <h3>평가 항목 세부 정보</h3>
+        <button
+          onClick={handleDownloadPdf}
+          className="pdfDownloadButton"
+        ></button>
+      </div>
       {evaluationItem && (
         <>
           <table className="ecustomTable">
