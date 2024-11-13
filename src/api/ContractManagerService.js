@@ -60,16 +60,19 @@ export const CreateServiceDetail = async (requestContractDTO) => {
 export const fetchStatisticsStatus = async (contractId, selectedDate) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const params = {contractId: contractId, date: selectedDate};
+    const params = { contractId: contractId, date: selectedDate };
     console.log("전송 값:", params);
 
     // axios 요청 수정
-    const response = await axios.get(`/contract-manager/statistics/status/${contractId}?date=${selectedDate}`, {
-      params,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `/contract-manager/statistics/status/${contractId}?date=${selectedDate}`,
+      {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log("서버 응답:", JSON.stringify(response.data, null, 2));
 
     return response.data; // 데이터를 반환
@@ -85,15 +88,11 @@ export const saveMeasuring = async (dto) => {
     const token = localStorage.getItem("accessToken");
 
     console.log(dto);
-    const response = await axios.post(
-      "/contract-manager/statistics",
-      dto,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post("/contract-manager/statistics", dto, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
@@ -105,8 +104,6 @@ export const saveMeasuring = async (dto) => {
     console.error("ERROR: ", error.response?.data || error.message);
     return false; // Return false on error
   }
-
-
 };
 
 export const saveServiceMeasuring = async (dto) => {
@@ -134,8 +131,6 @@ export const saveServiceMeasuring = async (dto) => {
     console.error("ERROR: ", error.response?.data || error.message);
     return false; // Return false on error
   }
-
-
 };
 
 export const saveIncidentMeasuring = async (dto) => {
@@ -143,15 +138,11 @@ export const saveIncidentMeasuring = async (dto) => {
     const token = localStorage.getItem("accessToken");
 
     console.log(dto);
-    const response = await axios.post(
-      "/common/incident-statistics",
-      dto,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post("/common/incident-statistics", dto, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
@@ -163,12 +154,7 @@ export const saveIncidentMeasuring = async (dto) => {
     console.error("ERROR: ", error.response?.data || error.message);
     return false; // Return false on error
   }
-
-
 };
-
-
-
 
 export const fetchAllContractInfo = async () => {
   try {
@@ -354,5 +340,44 @@ export const deleteEvaluationItem = async (evaluationItemId) => {
     alert(error.response.data.message);
 
     return false;
+  }
+};
+
+//통계 지표 수정 api 요청 함수
+export const fetchEvaluationEquipment = async (evaluationItemId, date) => {
+  const token = localStorage.getItem("accessToken"); // 토큰을 로컬스토리지에서 가져오기
+  try {
+    const response = await axios.get(
+      `/contract-manager/statistics/${evaluationItemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: { date: date },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching evaluation equipment data:", error);
+    throw error;
+  }
+};
+
+export const fetchEditStatistics = async (evaluationItemId, editData) => {
+  const token = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.patch(
+      `/contract-manager/statistics/${evaluationItemId}`,
+      editData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error saving edited statistics:", error);
+    throw error;
   }
 };
