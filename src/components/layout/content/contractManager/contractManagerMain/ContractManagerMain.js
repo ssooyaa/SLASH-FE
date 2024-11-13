@@ -127,7 +127,7 @@ const ContractManagerMain = () => {
             <div className="mainServiceCategory">
               <div className="mainCardTitle">
                 <div className="mainCardTitleP">
-                  <p>종합 평가 등급</p>
+                  <p>서비스 평가 항목</p>
                 </div>
                 <div className="mainGradeEditBtnDiv">
                   <button onClick={() => handleAddEvaluation(contractId)}>
