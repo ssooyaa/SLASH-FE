@@ -168,3 +168,16 @@
   justify-content: center;
   align-content: center;
 }
+
+.mainCardTitle {
+  display: flex;
+  width: 95%;
+  justify-content: space-between; /* 왼쪽과 오른쪽 끝에 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.mainCardTitleP p {
+  margin: 0; /* 기본 마진 제거 */
+  width: 400px;
+  font-weight: 500;
+}

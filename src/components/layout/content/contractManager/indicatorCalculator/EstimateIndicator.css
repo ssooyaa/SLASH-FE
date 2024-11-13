@@ -67,6 +67,7 @@
 }
 
 .eMeasureButton {
+  width: 70px;
   background-color: black;
   color: white;
   font-size: 14px;
