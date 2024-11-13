@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation, Route} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, Route } from "react-router-dom";
 import "../../../styles/Sidebar.css";
-import {FiHome, FiTrendingUp} from "react-icons/fi";
-import {FaFileContract, FaTasks} from "react-icons/fa";
+import { FiHome, FiTrendingUp } from "react-icons/fi";
+import { FaFileContract, FaTasks } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js";
 
-const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
+const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   const [activeIndex, setActiveIndex] = useState(0); // 기본값을 0으로 설정
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,8 +16,8 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
     const pathToIndexMap = {
       "/contractManager": 0,
       "/contractManager/contractList": 1,
-      "/contractManager/indexManagement": 2,
-      "/contractManager/requestAllocation": 3,
+      "/contractManager/requestAllocation": 2,
+      "/contractManager/indicatorCalculator": 3,
     };
 
     const currentPath = location.pathname;
@@ -45,7 +45,7 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
       <div className="navClose" onClick={toggleNav}></div>
 
       <div className="navHeader">
-        <img src={logo} alt="Logo" className="logo"/>
+        <img src={logo} alt="Logo" className="logo" />
         <span className="sidebarTitle">SLASH</span>
       </div>
 
@@ -53,46 +53,35 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
         <ul className="navList">
           <li className="navItem">
             <a
-              href="/contractManager"
+              href="#"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0, "/contractManager")}
             >
-              <FiHome className="navLinkIcon"/>홈
+              <FiHome className="navLinkIcon" />홈
             </a>
           </li>
           <li className="navItem">
             <a
+              href="#"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() =>
                 handleMenuClick(1, "/contractManager/contractList")
               }
             >
-              <FaFileContract className="navLinkIcon"/>
+              <FaFileContract className="navLinkIcon" />
               계약 관리
             </a>
           </li>
 
           <li className="navItem">
             <a
-              // href="#"
+              href="#"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() =>
-                handleMenuClick(2, "/contractManager/indexManagement")
+                handleMenuClick(2, "/contractManager/requestAllocation")
               }
             >
-              <FiTrendingUp className="navLinkIcon"/>
-              지표 관리
-            </a>
-          </li>
-
-          <li className="navItem">
-            <a
-              className={`navLink ${activeIndex === 3 ? "active" : ""}`}
-              onClick={() =>
-                handleMenuClick(3, "/contractManager/requestAllocation")
-              }
-            >
-              <FaTasks className="navLinkIcon"/>
+              <FaTasks className="navLinkIcon" />
               요청 할당
             </a>
           </li>
@@ -100,21 +89,19 @@ const ContractManagerSidebar = ({isNavOpen, toggleNav, effectClass}) => {
           <li className="navItem">
             <a
               href="#"
-              className={`navLink ${activeIndex === 4 ? "active" : ""}`}
+              className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() =>
-                handleMenuClick(4, "/contractManager/indicatorCalculator")
+                handleMenuClick(3, "/contractManager/indicatorCalculator")
               }
             >
-              <FiTrendingUp className="navLinkIcon"/>
+              <FiTrendingUp className="navLinkIcon" />
               지표 계산
             </a>
           </li>
-
-
         </ul>
 
         <div className="logoutSection">
-          <LogoutButton/>
+          <LogoutButton />
         </div>
 
         {/* 푸터 추가 */}
