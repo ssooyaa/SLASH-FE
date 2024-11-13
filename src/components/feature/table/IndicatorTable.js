@@ -3,7 +3,7 @@ import "./IndicatorTable.css";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const IndicatorTable = ({ initialData, handleDetail }) => {
+const IndicatorTable = ({ initialData, handleDetail,handleDeleteStatistics  }) => {
   const [data, setData] = useState(initialData || []);
 
   const navigate = useNavigate();
@@ -17,6 +17,10 @@ const IndicatorTable = ({ initialData, handleDetail }) => {
     handleDetail(id);
   };
 
+  const handleDeleteDate = (evaluationItemId,date) =>{
+    handleDeleteStatistics(evaluationItemId,date);
+  }
+
   return (
     <div className="listTable">
       <div className="listTableHead">
@@ -25,6 +29,7 @@ const IndicatorTable = ({ initialData, handleDetail }) => {
         <p className="dateP headerP">지표측정일</p>
         <p className="approvalP headerP">승인 여부</p>
         <p className="buttonP"></p>
+        <p className="deleteBtnP"></p>
       </div>
       {data.map((item, index) => (
         <div className="listTableBody" key={item.evaluationItemId || index}>
@@ -36,6 +41,11 @@ const IndicatorTable = ({ initialData, handleDetail }) => {
             <button onClick={() => handleData(item.evaluationItemId)}>
               자세히보기
               <MdKeyboardArrowRight />
+            </button>
+          </p>
+          <p className="deleteBtnP">
+            <button onClick={() => handleDeleteDate(item.evaluationItemId,item.calculatedDate)}>
+              삭제하기
             </button>
           </p>
         </div>
