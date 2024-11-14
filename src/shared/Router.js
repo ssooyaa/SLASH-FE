@@ -21,6 +21,7 @@ import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 import EstimateIndicatorEdit from "../pages/contractManager/EstimateIndicatorEdit";
 import StatisticsResults from "../pages/contractManager/StatisticsResults";
 import YearIndicator from "../pages/contractManager/YearIndicator";
+import StatisticsPdf from "../pages/contractManager/StatisticsPdf";
 
 const Router = () => {
   return (
@@ -42,6 +43,7 @@ const Router = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/user/yearIndicator" element={<YearIndicator />} />
         <Route
           path="/user/requestManagement"
           element={
@@ -149,7 +151,10 @@ const Router = () => {
           path="/contractManager/yearIndicator"
           element={<YearIndicator />}
         />
-        <Route path="/user/yearIndicator" element={<YearIndicator />} />
+        <Route
+          path="/contractManager/indexManagement/detail/:evaluationItemId/:date"
+          element={<StatisticsPdf />}
+        />
       </Routes>
     </BrowserRouter>
   );
