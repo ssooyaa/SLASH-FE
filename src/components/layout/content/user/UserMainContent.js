@@ -16,7 +16,6 @@ const UserMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   const handleContractSelection = (agreementId, date) => {
     setSelectedAgreementId(agreementId);
     setSelectedDate(date);
-    console.log("들어오니? ", agreementId, date);
     const fetchContract = async (agreementId) => {
       const contractDataInfo = await fetchContractInfo(agreementId);
       setContractInfo(contractDataInfo);

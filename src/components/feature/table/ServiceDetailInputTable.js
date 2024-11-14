@@ -85,7 +85,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
                 onChange={(e) => handleChangeData("unit", e.target.value)}
               >
                 <option value="율(%)">율(%)</option>
-                <option value="건">건</option>
+                <option value="건">건수</option>
               </select>
             </td>
           </tr>

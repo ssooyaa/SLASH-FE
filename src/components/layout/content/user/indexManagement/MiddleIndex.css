@@ -2,20 +2,23 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap: 4rem;
+  max-height: 300px;
   padding: 10px 0px;
 }
 
 .totalIndex {
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  padding: 1.5rem;
-  text-align: center;
-  flex: 1;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  gap: 5px;
+  justify-content: center; /* 요소들을 왼쪽 정렬 */
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .totalIndex .title {
@@ -36,4 +39,18 @@
   color: #5a5a5a;
   margin-top: 10px;
   font-weight: 600;
+}
+
+.monthChart {
+  width: 60%;
+  background-color: white;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+  gap: 5px;
+  justify-content: flex-start; /* 요소들을 왼쪽 정렬 */
+  margin-bottom: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
 }
