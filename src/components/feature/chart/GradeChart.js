@@ -1,36 +1,61 @@
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import "./GradeChart.css";
+import { MdHeight } from "react-icons/md";
 
-const GradeChart = () => {
-  const xCategory = [
-    "서비스 가동률",
-    "장애 요청 적기 처리율",
-    "서비스 요청 적기 처리율",
-  ];
-  const data = [4, 3, 2];
+const GradeChart = ({ indicatorList }) => {
+  const initialData = indicatorList || [];
 
+  // x축 카테고리와 y축 데이터 준비
+  const xCategory = initialData.map((item) => item.category);
+
+  // 각 카테고리에 따른 색상 설정
+  const data = initialData.map((item) => {
+    let color;
+    switch (item.category) {
+      case "서비스 가동률":
+        color = "#2C70F4"; // 파랑
+        break;
+      case "장애 적기처리율":
+        color = "#FE4853"; // 초록
+        break;
+      case "서비스요청 적기처리율":
+        color = "#06D86F"; // 빨강
+        break;
+      default:
+        color = "#888888"; // 기본 색상
+    }
+    return { y: item.weightedScore, color };
+  });
+
+  // y축 최대값을 10 단위로 설정
+  const yMax = Math.ceil(Math.max(...data.map((d) => d.y)) / 10) * 10 + 10;
+
+  // Highcharts 옵션
   const options = {
     chart: {
       type: "column",
-      width: 350,
-      height: 250,
+      height: 280,
+      backgroundColor: "transparent", // 배경 투명
+      padding: 30,
+      margin: 50,
     },
     title: {
-      text: "SLA지표",
+      text: null,
     },
     xAxis: {
       categories: xCategory,
+      lineWidth: 0, // x축 아래 선 제거
     },
     yAxis: {
-      categories: ["E", "D", "C", "B", "A"],
-      allowDecimals: true,
       title: {
-        text: "Grade",
+        text: null,
       },
-      min: 0, // y축 최소값 고정
-      max: 4, // y축 최대값 고정
-      gridLineWidth: 0, // 가로선 제거
+      min: 0,
+      max: yMax,
+      tickInterval: 10, // y축을 10 단위로 설정
+      gridLineWidth: 0,
     },
     plotOptions: {
       series: {
@@ -39,18 +64,20 @@ const GradeChart = () => {
           radius: 10,
         },
       },
-      column: { colorByPoint: true },
     },
     series: [
       {
-        data: data,
+        data: data, // 카테고리별 색상 데이터 적용
       },
     ],
     legend: {
       enabled: false,
     },
     tooltip: {
-      enabled: false, // hover 시 값이 나오지 않게 설정
+      enabled: true, // hover 시 값이 나오지 않게 설정
+    },
+    credits: {
+      enabled: false,
     },
     responsive: {
       rules: [
@@ -66,7 +93,7 @@ const GradeChart = () => {
               labels: {
                 align: "left",
                 x: 0,
-                y: -5,
+                y: 0,
               },
               title: {
                 text: null,
@@ -85,9 +112,15 @@ const GradeChart = () => {
   };
 
   return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
+    <>
+      {initialData.length === 0 ? (
+        <div className="noChartMessage">
+          <p>산출 결과가 없습니다</p>
+        </div>
+      ) : (
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      )}
+    </>
   );
 };
 
