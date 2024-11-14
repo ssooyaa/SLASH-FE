@@ -75,7 +75,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItemSmall">
             <Link
-              to="/contractManager/annualIndexManagement"
+              to="/contractManager/yearIndicator"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() => handleMenuClick(2)}
             >

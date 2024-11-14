@@ -20,6 +20,7 @@ import RequestAllocation from "../pages/contractManager/RequestAllocation";
 import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
 import EstimateIndicatorEdit from "../pages/contractManager/EstimateIndicatorEdit";
 import StatisticsResults from "../pages/contractManager/StatisticsResults";
+import YearIndicator from "../pages/contractManager/YearIndicator";
 
 const Router = () => {
   return (
@@ -151,6 +152,10 @@ const Router = () => {
         <Route
           path="/contractManager/autoCal"
           element={<EstimateIndicatorEdit />}
+        />
+        <Route
+          path="/contractManager/yearIndicator"
+          element={<YearIndicator />}
         />
       </Routes>
     </BrowserRouter>
