@@ -1,0 +1,53 @@
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__year-wrapper {
+  justify-content: center;
+}
+
+.datePickerContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.yearCriteria2 {
+  padding-right: 30px; /* 아이콘 공간 확보 */
+  box-sizing: border-box;
+  margin-left: 5px;
+  height: 30px;
+  font-size: 0.7rem;
+  width: 160px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  padding: 0px 5px;
+}
+
+.calendarIcon {
+  position: absolute;
+  left: 145px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #0b0b0b;
+  z-index: 1; /* 아이콘을 input 위에 고정 */
+  pointer-events: none; /* 아이콘 클릭으로 input이 열리게 함 */
+  font-size: 10px;
+}
+
+.datePickerContainer .react-datepicker {
+  z-index: 2; /* DatePicker dropdown이 input과 아이콘 위로 오도록 설정 */
+}
+
+.react-datepicker {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.react-datepicker-year-header {
+  border: none;
+}
