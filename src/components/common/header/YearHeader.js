@@ -11,8 +11,7 @@ const YearHeader = ({ onContractSelect }) => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
   const [contracts, setContracts] = useState([]);
   const [selectedDate, setSelectedDate] = useState(() => {
-    const storedDate = localStorage.getItem("selectedDate");
-    return storedDate ? new Date(storedDate) : new Date();
+    return new Date();
   });
 
   const handleAgreementChange = (e) => {
@@ -23,7 +22,6 @@ const YearHeader = ({ onContractSelect }) => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    localStorage.setItem("selectedDate", date.toISOString());
     onContractSelect(selectedAgreementId, date.getFullYear().toString());
   };
 
@@ -34,7 +32,13 @@ const YearHeader = ({ onContractSelect }) => {
         if (data && Array.isArray(data)) {
           setContracts(data);
           if (data.length > 0) {
-            setSelectedAgreementId(data[0].contractId);
+            const initialContractId = data[0].contractId;
+            setSelectedAgreementId(initialContractId);
+
+            onContractSelect(
+              initialContractId,
+              selectedDate.getFullYear().toString()
+            );
           }
         }
       } catch (error) {
@@ -42,7 +46,7 @@ const YearHeader = ({ onContractSelect }) => {
       }
     };
     fetchContracts();
-  }, []);
+  }, [onContractSelect, selectedDate]);
 
   return (
     <div className="topIndex">

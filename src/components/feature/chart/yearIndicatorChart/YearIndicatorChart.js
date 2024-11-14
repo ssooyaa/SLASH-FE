@@ -31,6 +31,7 @@ const transformData = (data) => {
 };
 
 const YearIndicatorsChart = ({ contractId, date }) => {
+  console.log("========chart", contractId, date);
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const YearIndicatorsChart = ({ contractId, date }) => {
     };
 
     fetchData();
-  }, []);
+  }, [contractId, date]);
 
   if (!chartData) {
     return <div>Loading...</div>;

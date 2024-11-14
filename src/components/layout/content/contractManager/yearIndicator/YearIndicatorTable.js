@@ -9,7 +9,7 @@ const YearIndicatorTable = ({ contractId, date }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchYearIndicators(contractId, date); //TODO: 계약 아이디, 연도
+        const response = await fetchYearIndicators(contractId, date);
         if (response) {
           setData(response);
         }

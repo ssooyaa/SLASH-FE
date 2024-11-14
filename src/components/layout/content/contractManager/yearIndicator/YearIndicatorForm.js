@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import YearIndicatorsChart from "../../../../feature/chart/yearIndicatorChart/YearIndicatorChart";
 import YearIndicatorTable from "./YearIndicatorTable";
+import YearHeader from "../../../../common/header/YearHeader";
 
 const YearIndicatorForm = () => {
+  const [selectedContractId, setSelectedContractId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleContractSelection = (contractId, date) => {
+    setSelectedContractId(contractId);
+    setSelectedDate(date);
+    console.log("계약", contractId, "날짜", date);
+  };
+
   return (
     <div>
-      <YearIndicatorsChart contractId={1} date={2024} />
-      <YearIndicatorTable contractId={1} date={2024} />
+      <YearHeader onContractSelect={handleContractSelection} />
+      <YearIndicatorsChart
+        contractId={selectedContractId}
+        date={selectedDate}
+      />
+      <YearIndicatorTable contractId={selectedContractId} date={selectedDate} />
     </div>
   );
 };
