@@ -4,8 +4,10 @@ import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagementBottom from "../requestManagement/RequestManagementBottom/RequestManageBottom";
 import RequestManagementTop from "../requestManagement/RequestManagementTop/RequestManagementTop";
+import ContractHeaderV3 from "../../../../common/header/ContractHeaderV3";
 
 const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
+
   return (
     <div
       className={`pageContent pageContentOffcanvas${effectClass} ${
@@ -29,6 +31,7 @@ const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       <hr className="divider" />
       <div className="content">
         <div className="contentBox">
+          <ContractHeaderV3/>
           <RequestManagementTop />
           <RequestManagementBottom />
         </div>
