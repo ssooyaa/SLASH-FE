@@ -176,7 +176,13 @@ const ChartView = ({selectedCriteria, statistics}) => {
 
   const renderChart = (stat, index) => {
     const score = stat.score;
-    const color = score >= 100 ? "#2e8b57" : "#ff4d4d";
+    const grade=stat.grade;
+    const color =
+      grade === 'A' ? "#2e8b57" :    // 밝은 초록색 (좋음)
+        grade === 'B' ? "#ffa500" :    // 주황색 (보통)
+          grade === 'C' ? "#ff6347" :    // 다홍색 (주의)
+            grade === 'D' ? "#b22222" :    // 어두운 빨강 (나쁨)
+              "#4a4040";
 
     const options = {
       chart: {
