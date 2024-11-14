@@ -88,7 +88,7 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItemSmall">
             <Link
-              to="/user/annualIndexManagement" // 연간 통계 경로 맞춤
+              to="/user/yearIndicator" // 연간 통계 경로 맞춤
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() => handleMenuClick(3)}
             >
