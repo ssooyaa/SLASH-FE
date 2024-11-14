@@ -9,18 +9,13 @@ const UserHeaderV1 = ({ onContractSelect }) => {
 
   const [contracts, setContracts] = useState([]);
 
-  // 초기 날짜를 설정하는 로직
+  // 오늘 날짜로 초기 설정
   const [selectedDate, setSelectedDate] = useState(() => {
-    const storedDate = localStorage.getItem("selectedDate");
-    if (storedDate) {
-      return storedDate; // 로컬 스토리지에서 날짜가 있으면 그것을 사용
-    } else {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`; // 오늘 날짜를 기본값으로 설정
-    }
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`; // 오늘 날짜를 기본값으로 설정
   });
 
   const handleAgreementChange = (e) => {
@@ -32,7 +27,6 @@ const UserHeaderV1 = ({ onContractSelect }) => {
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
-    localStorage.setItem("selectedDate", date);
     onContractSelect(selectedAgreementId, date);
   };
 
