@@ -35,18 +35,18 @@ const RequestDetailInfoForm = ({
         <ProcessStatusLabel processType={status} />
         <DueOnTimeLabel dueOnTime={dueOnTime} />
         {canEdit && (
-          <button className="deleteButton" onClick={onEdit}>
-            수정
+          <button className="editButton" onClick={onEdit}>
+            수정하기
           </button>
         )}
         {canDelete && (
           <button className="deleteButton" onClick={onDelete}>
-            삭제
+            삭제하기
           </button>
         )}
         {canComplete && (
           <button className="completeButton" onClick={onComplete}>
-            처리 완료
+            요청완료 처리
           </button>
         )}
       </div>

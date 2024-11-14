@@ -6,6 +6,7 @@
 
 .chartTable {
   width: 100%;
+  box-sizing: border-box;
   border-collapse: collapse;
   max-width: 1063px;
 }

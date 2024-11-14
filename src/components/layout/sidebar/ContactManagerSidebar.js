@@ -16,7 +16,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
   // Set activeIndex based on URL path
   useEffect(() => {
     const pathToIndexMap = {
-      "/contractManager/contractList": 0,
+      "/contractManager": 0,
       "/contractManager/statisticsResult": 1,
       "/contractManager/annualIndexManagement": 2,
       "/contractManager/indicatorCalculator": 3,
@@ -49,7 +49,7 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
         <ul className="navList">
           <li className="navItem">
             <Link
-              to="/contractManager/contractList"
+              to="/contractManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >

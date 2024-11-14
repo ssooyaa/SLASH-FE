@@ -3,15 +3,15 @@ import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
 // 협약서 선택하는 부분만 있는 버전
-const ContractHeaderV2 = ({ onContractSelect }) => {
+const ContractHeaderV2 = ({ onContractSelect, selectedAgreementId, setSelectedAgreementId }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
-  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
 
   const [contracts, setContracts] = useState([]);
 
   const handleAgreementChange = (e) => {
     const id = e.target.value;
     setSelectedAgreementId(id);
+    onContractSelect(id);
   };
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const ContractHeaderV2 = ({ onContractSelect }) => {
             setSelectedAgreement(data[0].contractName);
             setSelectedAgreementId(data[0].contractId);
           }
+          console.log(selectedAgreementId,selectedAgreement);
         }
       } catch (error) {
         console.error("Failed to fetch contracts: ", error);

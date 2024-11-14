@@ -1,55 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./MiddleIndex.css";
 import "../../../../../styles/Font.css";
-import { fetchIndicators } from "../../../../../api/CommonService";
+import GradeChart from "../../../../feature/chart/GradeChart";
 
-const MiddleIndex = ({ agreementId, date }) => {
+const MiddleIndex = ({ initialData }) => {
   const [indicatorData, setIndicatorData] = useState({
     grade: "",
-    requestCount: 0,
-    incidentTime: 0,
+    score: 0,
   });
-
-  const formatDowntimeToHours = (time) => {
-    if (time < 60) {
-      return `${time}m`;
-    } else {
-      const hours = Math.floor(time / 60);
-      const minutes = time % 60;
-      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
-    }
-  };
+  const [indicatorList, setIndicatorList] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (agreementId && date) {
-        try {
-          const response = await fetchIndicators(agreementId, date);
-          if (response && response.success) {
-            const { grade, requestCount, incidentTime, score } =
-              response.data.indicatorEtcInfo;
-            setIndicatorData({ grade, requestCount, incidentTime, score });
-          } else {
-            setIndicatorData({
-              grade: "-",
-              requestCount: 0,
-              incidentTime: 0,
-              score: 0,
-            });
-          }
-        } catch (error) {
-          console.error("Failed to fetch indicator data:", error);
-          setIndicatorData({
-            grade: "-",
-            requestCount: 0,
-            incidentTime: 0,
-            score: 0,
-          });
-        }
-      }
-    };
-    fetchData();
-  }, [agreementId, date]);
+    if (initialData) {
+      setIndicatorData(initialData.indicatorEtcInfo || { grade: "", score: 0 });
+      setIndicatorList(initialData.indicatorList || []);
+    }
+  }, [initialData]);
 
   return (
     <div className="middle">
@@ -58,15 +24,8 @@ const MiddleIndex = ({ agreementId, date }) => {
         <div className="value">{indicatorData.grade}등급</div>
         <div className="subText">{indicatorData.score}점</div>
       </div>
-      <div className="totalIndex">
-        <div className="title">요청 건수</div>
-        <div className="value">{indicatorData.requestCount}건</div>
-      </div>
-      <div className="totalIndex">
-        <div className="title">장애 발생 시간</div>
-        <div className="value">
-          {formatDowntimeToHours(indicatorData.incidentTime)}
-        </div>
+      <div className="monthChart">
+        <GradeChart indicatorList={indicatorList} />
       </div>
     </div>
   );

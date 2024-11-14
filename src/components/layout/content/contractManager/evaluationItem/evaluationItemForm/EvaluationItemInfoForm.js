@@ -102,10 +102,10 @@ const EvaluationItemInfoForm = () => {
               <span>*</span>
             </div>
             <div className="table">
-              {evaluationItemInfo.unit === "건" ? (
-                <GradeVerticalTable data={serviceTargets} />
-              ) : (
+              {evaluationItemInfo.unit === "율(%)" ? (
                 <NoScoreGradeTable data={serviceTargets} />
+              ) : (
+                <GradeVerticalTable data={serviceTargets} />
               )}
             </div>
           </div>

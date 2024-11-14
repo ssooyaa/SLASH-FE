@@ -51,6 +51,7 @@ export const fetchContractInfo = async (contractId) => {
     );
   }
 };
+
 //모든 계약 이름 조회
 export const fetchAllContractName = async () => {
   try {
@@ -71,6 +72,7 @@ export const fetchAllContractName = async () => {
     console.error("ERROR: ", error.response.data);
   }
 };
+
 //평가 지표에 대한 상세 정보
 export const fetchServiceInfo = async (evaluationItemId) => {
   try {
