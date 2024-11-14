@@ -15,8 +15,7 @@
 }
 
 .toggleTable {
-  width: 100%;
-  box-sizing: border-box;
+  width: auto;
   margin-top: 20px;
   padding: 5px 15px;
   background-color: white;
@@ -28,8 +27,6 @@
 
 /* 토글 헤더 스타일 */
 .toggleHeader {
-  width: 100%;
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   cursor: pointer;

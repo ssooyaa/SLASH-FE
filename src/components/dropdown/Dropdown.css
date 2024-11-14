@@ -28,26 +28,6 @@ body {
   margin-left: 10px;
 }
 
-.customDropdown2 {
-  width: auto;
-  height: 17px;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #ffffff;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #333;
-  transition:
-          background-color 0.2s ease,
-          color 0.2s ease;
-  position: relative; /* 추가: 드롭다운 목록의 상대 위치 설정 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
 .dropdownHeaderLabel {
   color: #333;
   font-weight: bold;
