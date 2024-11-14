@@ -100,7 +100,7 @@ export const fetchIndicators = async (contractId, yearMonth) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { date: yearMonth },
+      params: {date: yearMonth},
     });
     return response.data;
   } catch (error) {
