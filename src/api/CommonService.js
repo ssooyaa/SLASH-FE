@@ -100,7 +100,7 @@ export const fetchIndicators = async (contractId, yearMonth) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: {date: yearMonth},
+      params: { date: yearMonth },
     });
     return response.data;
   } catch (error) {
@@ -250,7 +250,7 @@ export const fetchEvaluationItemCategory = async (contractId) => {
   } catch (error) {
     console.error("에러 메세지를 몰러유");
   }
-}
+};
 
 // downloadPdf 함수
 export const downloadPdf = async (evaluationItemId, date) => {
