@@ -289,3 +289,20 @@ export const fetchYearlyWeightedScores = async (contractId, date) => {
     throw error;
   }
 };
+
+export const fetchYearIndicators = async (contractId, date) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(`/common/${contractId}/year-indicators`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { date },
+    });
+    console.log(response.data.data + "response.data.data");
+    return response.data.data;
+  } catch (error) {
+    console.error("연간 지표 테이블 조회 오류 발생");
+    throw error;
+  }
+};

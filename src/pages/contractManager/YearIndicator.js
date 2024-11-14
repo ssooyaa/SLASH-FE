@@ -11,6 +11,8 @@ const YearIndicator = () => {
     setNavOpen(!isNavOpen);
   };
 
+  //TODO: 헤더 추가
+
   return (
     <div>
       <ContractManagerSidebar
