@@ -2,36 +2,34 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
-import { FiHome, FiTrendingUp } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
 import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js";
 import { PiCalendarDuotone } from "react-icons/pi";
 import { IoCalendarNumberOutline } from "react-icons/io5";
+import { RiNumbersLine } from "react-icons/ri";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 기본으로 홈을 active로 설정
   const location = useLocation();
 
-  // 컴포넌트가 마운트될 때 URL 경로에 따라 activeIndex를 설정
+  // URL 경로에 따라 activeIndex 설정
+  const pathToIndexMap = {
+    "/user": 0,
+    "/user/requestManagement": 1,
+    "/user/indexManagement": 2,
+    "/user/annualIndexManagement": 3, // 연간 통계 경로 맞춰 설정
+  };
+
+  const currentPath = location.pathname;
+  const initialIndex = pathToIndexMap[currentPath] || 0;
+
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+
   useEffect(() => {
-    const pathToIndexMap = {
-      "/user": 0,
-      "/user/requestManagement": 1,
-      "/user/indexManagement": 3,
-      "": 4,
-    };
-
-    const currentPath = location.pathname;
-    const savedIndex = localStorage.getItem("activeIndex");
-
-    // 저장된 인덱스가 있으면 사용, 없으면 URL을 기반으로 인덱스 설정
-    if (savedIndex !== null) {
-      setActiveIndex(parseInt(savedIndex, 10));
-    } else if (pathToIndexMap[currentPath] !== undefined) {
-      setActiveIndex(pathToIndexMap[currentPath]);
-    }
-  }, [location]);
+    // URL이 변경될 때마다 activeIndex를 업데이트
+    setActiveIndex(initialIndex);
+  }, [location.pathname, initialIndex]);
 
   const handleMenuClick = (index) => {
     setActiveIndex(index);
@@ -73,7 +71,9 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
             </Link>
           </li>
           <li className="navItem2">
-            <FiTrendingUp className="navLinkIcon" />
+            <span className="navLinkIcon2">
+              <RiNumbersLine />
+            </span>
             통계 결과
           </li>
           <li className="navItemSmall">
@@ -88,7 +88,7 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           </li>
           <li className="navItemSmall">
             <Link
-              to="/user/indexManagement"
+              to="/user/annualIndexManagement" // 연간 통계 경로 맞춤
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() => handleMenuClick(3)}
             >

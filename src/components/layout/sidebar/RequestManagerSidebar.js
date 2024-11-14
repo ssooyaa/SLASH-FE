@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Sidebar.css";
 import { FiHome } from "react-icons/fi";
 import { FaFileContract } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
-import LogoutButton from "../../common/button/LogoutButton.js"
+import LogoutButton from "../../common/button/LogoutButton.js";
 
 const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 기본값 설정
-  const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState();
   const location = useLocation();
 
   useEffect(() => {
     const pathToIndexMap = {
       "/requestManager": 0,
-      "/requestManager/taskDetails": 1,
+      "/requestManager/status": 1,
     };
 
     const currentPath = location.pathname;
-    const savedIndex = localStorage.getItem("activeIndex");
-
-    if (savedIndex !== null) {
-      setActiveIndex(parseInt(savedIndex, 10));
-    } else if (pathToIndexMap[currentPath] !== undefined) {
-      setActiveIndex(pathToIndexMap[currentPath]);
-    }
+    setActiveIndex(pathToIndexMap[currentPath] ?? 0); // 해당 경로에 따라 activeIndex 설정
   }, [location]);
 
-  const handleMenuClick = (index, path) => {
+  const handleMenuClick = (index) => {
     setActiveIndex(index);
-    localStorage.setItem("activeIndex", index);
-    navigate(path);
   };
 
   return (
@@ -49,23 +40,23 @@ const RequestManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
       <aside>
         <ul className="navList">
           <li className="navItem">
-            <a
-              href="#"
+            <Link
+              to="/requestManager"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
-              onClick={() => handleMenuClick(0, "/requestManager")}
+              onClick={() => handleMenuClick(0)}
             >
               <FiHome className="navLinkIcon" />홈
-            </a>
+            </Link>
           </li>
           <li className="navItem">
-            <a
-              href="/requestManager/status"
+            <Link
+              to="/requestManager/status"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
-              onClick={() => handleMenuClick(1, "/requestManager/status")}
+              onClick={() => handleMenuClick(1)}
             >
               <FaFileContract className="navLinkIcon" />
               업무 내역
-            </a>
+            </Link>
           </li>
         </ul>
 
