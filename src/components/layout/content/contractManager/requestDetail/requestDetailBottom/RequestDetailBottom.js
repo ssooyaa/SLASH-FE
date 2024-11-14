@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-
 import "./RequestDetailBottom.css";
 import AssignmentButton from "../../../../../common/button/AssignmentButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../../../../feature/modal/Modal";
 import RequestDetail from "../../../../../feature/request/select/RequestDetail";
-import {assignTaskManager, getManagerTaskStatus} from "../../../../../../api/RequestManagerService";
+import {
+  assignTaskManager,
+  getManagerTaskStatus,
+} from "../../../../../../api/RequestManagerService";
 
 const RequestDetailBottom = () => {
   const { requestId } = useParams(); // URL에서 requestId 가져오기
@@ -13,6 +15,7 @@ const RequestDetailBottom = () => {
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
   const [isModalOpen, setModalOpen] = useState(false);
   const [isAssigned, setIsAssigned] = useState(false); // 할당 여부 상태
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +55,7 @@ const RequestDetailBottom = () => {
   // 모달 닫기
   const handleCloseModal = () => {
     setModalOpen(false);
+    navigate("/contractManager/requestAllocation"); // 리다이렉트 설정
   };
 
   return (

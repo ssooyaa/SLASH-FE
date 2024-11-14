@@ -104,7 +104,7 @@ const Router = () => {
           }
         />
         <Route
-          path="/contractManager/request/:requestId"
+          path="/contractManager/requestAllocation/request/:requestId"
           element={
             <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
               <RequestDetail />

@@ -12,9 +12,6 @@ import SearchBar from "../../../../../common/bar/SearchBar";
 import EquipmentTypeLabel from "../../../../../labels/equipmentType/EquipmentTypeLabel";
 import ShowRequestDetailModal from "../../../../../feature/request/select/RequestDetailModal";
 
-// Axios 기본 URL 설정
-axios.defaults.baseURL = "http://localhost:8080";
-
 // 한글 상태 -> 영어 enum 상태 변환 매핑
 const statusMapping = {
   "접수 완료": "REGISTERED",

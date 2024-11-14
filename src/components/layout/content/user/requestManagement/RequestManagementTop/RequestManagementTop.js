@@ -27,7 +27,7 @@ const RequestSelectTop = () => {
             <h3>
               <span className="rmNumber">15</span> 건
             </h3>
-            <span>접수완료</span>
+            <span>접수 완료</span>
           </div>
         </div>
       </div>
