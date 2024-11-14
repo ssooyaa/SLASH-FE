@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import "./StatisticsListTable.css";
 
-const StatisticsListTable = ({ initialData }) => {
+const StatisticsListTable = ({ initialData, handleDetail }) => {
   const [data, setData] = useState(initialData || {});
   const navigate = useNavigate();
 
@@ -14,11 +14,7 @@ const StatisticsListTable = ({ initialData }) => {
   }, [initialData]);
 
   const handleDetailClick = (evaluationItemId, date) => {
-    if (evaluationItemId && date) {
-      navigate(`/user/indexManagement/detail/${evaluationItemId}/${date}`);
-    } else {
-      console.error("Missing parameters:", { evaluationItemId, date });
-    }
+    handleDetail(evaluationItemId, date);
   };
 
   return (
