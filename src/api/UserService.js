@@ -121,10 +121,10 @@ export const fetchStatistics = async (params) => {
 };
 
 // 계약 데이터 가져오기 함수
-export const fetchContractData = async () => {
+export const fetchContractData = async (contractId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/contract/1", {
+    const response = await axios.get(`/common/contract/${contractId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
