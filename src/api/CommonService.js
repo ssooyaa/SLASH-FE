@@ -96,11 +96,13 @@ export const fetchServiceInfo = async (evaluationItemId) => {
 export const fetchIndicators = async (contractId, yearMonth) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get(`/common/${contractId}/indicators`, {
+    console.log(contractId);
+    console.log(yearMonth);
+    const response = await axios.get(`/common/${contractId}/month-indicators`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: {date: yearMonth},
+      params: { date: yearMonth },
     });
     return response.data;
   } catch (error) {
@@ -252,7 +254,6 @@ export const fetchEvaluationItemCategory = async (contractId) => {
   }
 };
 
-
 // downloadPdf 함수
 export const downloadPdf = async (evaluationItemId, date) => {
   try {
@@ -261,7 +262,7 @@ export const downloadPdf = async (evaluationItemId, date) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: {date},
+      params: { date },
       responseType: "blob", // 응답 타입을 blob으로 설정
     });
 
