@@ -87,12 +87,13 @@ body {
   text-transform: uppercase;
   color: white;
   transition: color 0.3s;
+  margin-left: -10px;
 }
 
 .logo {
   width: 7rem;
   height: auto;
-  margin-left: -1rem;
+  margin-left: -3rem;
 }
 
 @media (max-width: 576px) {
@@ -124,7 +125,7 @@ body {
   align-items: center;
   color: #fff;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 11px 16px;
   width: 11rem;
   transition: background-color 0.3s;
   border-radius: 20px 0 0 20px;
@@ -139,16 +140,19 @@ body {
 }
 
 .navItem2 {
-  margin-left: 16px;
+  margin-left: 17px;
   margin-bottom: 7px;
-  margin-top: 7px;
+  margin-top: 10px;
+}
+.navLinkIcon2 {
+  padding: 0.4rem;
 }
 
 .navItemSmall {
   margin-left: 20px;
   font-size: 0.8rem;
   color: #e2e0e0;
-  padding: 6px 20px;
+  padding: 1px 20px;
   width: 11rem;
   display: flex;
   align-items: center;
