@@ -100,7 +100,7 @@ export const fetchIndicators = async (contractId, yearMonth) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { date: yearMonth },
+      params: {date: yearMonth},
     });
     return response.data;
   } catch (error) {
@@ -249,6 +249,8 @@ export const fetchEvaluationItemCategory = async (contractId) => {
     return response.data.data;
   } catch (error) {
     console.error("에러 메세지를 몰러유");
+  }
+}
 
 // downloadPdf 함수
 export const downloadPdf = async (evaluationItemId, date) => {
@@ -258,7 +260,7 @@ export const downloadPdf = async (evaluationItemId, date) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { date },
+      params: {date},
       responseType: "blob", // 응답 타입을 blob으로 설정
     });
 
