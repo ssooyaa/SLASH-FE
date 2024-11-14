@@ -3,9 +3,8 @@ import { FaAsterisk } from "react-icons/fa6";
 import "./ContractHeader.css";
 import { fetchAllContractName } from "../../../api/UserService";
 // 협약서 선택하는 부분만 있는 버전
-const ContractHeaderV2 = ({ onContractSelect }) => {
+const ContractHeaderV2 = ({ onContractSelect, selectedAgreementId, setSelectedAgreementId }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
-  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
 
   const [contracts, setContracts] = useState([]);
 
@@ -13,7 +12,6 @@ const ContractHeaderV2 = ({ onContractSelect }) => {
     const id = e.target.value;
     setSelectedAgreementId(id);
     onContractSelect(id);
-    console.log("id",selectedAgreementId);
   };
 
   useEffect(() => {

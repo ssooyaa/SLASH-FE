@@ -2,10 +2,10 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080";
 
-export const getMonthlyData = async (selectedYear, selectedMonth) => {
+export const getMonthlyData = async (selectedYear, selectedMonth,contractId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const params = { year: selectedYear, month: selectedMonth };
+    const params = { year: selectedYear, month: selectedMonth,contractId:contractId};
     console.log("전송 값:", params);
 
     // axios 요청 수정
