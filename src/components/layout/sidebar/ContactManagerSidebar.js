@@ -1,46 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, Route } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiTrendingUp } from "react-icons/fi";
 import { FaFileContract, FaTasks } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js";
+import { IoCalendarNumberOutline } from "react-icons/io5";
+import { PiCalendarDuotone } from "react-icons/pi";
+import { RiNumbersLine } from "react-icons/ri";
 
 const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 기본값을 0으로 설정
-  const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState();
   const location = useLocation();
 
-  // 컴포넌트 마운트 시 URL 경로에 따라 activeIndex 설정
+  // Set activeIndex based on URL path
   useEffect(() => {
     const pathToIndexMap = {
-      "/contractManager": 0,
-      "/contractManager/contractList": 1,
-      "/contractManager/requestAllocation": 2,
+      "/contractManager/contractList": 0,
+      "/contractManager/statisticsResult": 1,
+      "/contractManager/annualIndexManagement": 2,
       "/contractManager/indicatorCalculator": 3,
+      "/contractManager/requestAllocation": 4,
     };
 
     const currentPath = location.pathname;
-    const savedIndex = localStorage.getItem("activeIndex");
-
-    if (savedIndex !== null) {
-      setActiveIndex(parseInt(savedIndex, 10));
-    } else if (pathToIndexMap[currentPath] !== undefined) {
+    if (pathToIndexMap[currentPath] !== undefined) {
       setActiveIndex(pathToIndexMap[currentPath]);
     }
-  }, [location]);
+  }, [location.pathname]);
 
-  const handleMenuClick = (index, path) => {
+  const handleMenuClick = (index) => {
     setActiveIndex(index);
-    localStorage.setItem("activeIndex", index); // 로컬 스토리지에 인덱스를 저장
-    navigate(path);
+    toggleNav(); // Toggle sidebar open/close
   };
 
   return (
     <nav
-      className={`nav navOffcanvas${effectClass} ${
-        isNavOpen ? "is-opened" : ""
-      }`}
+      className={`nav navOffcanvas${effectClass} ${isNavOpen ? "is-opened" : ""}`}
     >
       <div className="navClose" onClick={toggleNav}></div>
 
@@ -52,51 +48,61 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
       <aside>
         <ul className="navList">
           <li className="navItem">
-            <a
-              href="#"
+            <Link
+              to="/contractManager/contractList"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
-              onClick={() => handleMenuClick(0, "/contractManager")}
+              onClick={() => handleMenuClick(0)}
             >
-              <FiHome className="navLinkIcon" />홈
-            </a>
-          </li>
-          <li className="navItem">
-            <a
-              href="#"
-              className={`navLink ${activeIndex === 1 ? "active" : ""}`}
-              onClick={() =>
-                handleMenuClick(1, "/contractManager/contractList")
-              }
-            >
-              <FaFileContract className="navLinkIcon" />
+              <FiHome className="navLinkIcon" />
               계약 관리
-            </a>
+            </Link>
           </li>
-
-          <li className="navItem">
-            <a
-              href="#"
-              className={`navLink ${activeIndex === 2 ? "active" : ""}`}
-              onClick={() =>
-                handleMenuClick(2, "/contractManager/requestAllocation")
-              }
+          <li className="navItem2">
+            <span className="navLinkIcon2">
+              <RiNumbersLine />
+            </span>
+            통계 결과
+          </li>
+          <li className="navItemSmall">
+            <Link
+              to="/contractManager/statisticsResult"
+              className={`navLink ${activeIndex === 1 ? "active" : ""}`}
+              onClick={() => handleMenuClick(1)}
             >
-              <FaTasks className="navLinkIcon" />
-              요청 할당
-            </a>
+              <IoCalendarNumberOutline className="navLinkIcon" />
+              월간 통계
+            </Link>
           </li>
-
+          <li className="navItemSmall">
+            <Link
+              to="/contractManager/annualIndexManagement"
+              className={`navLink ${activeIndex === 2 ? "active" : ""}`}
+              onClick={() => handleMenuClick(2)}
+            >
+              <PiCalendarDuotone className="navLinkIcon" />
+              연간 통계
+            </Link>
+          </li>
           <li className="navItem">
-            <a
-              href="#"
+            <Link
+              to="/contractManager/indicatorCalculator"
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
-              onClick={() =>
-                handleMenuClick(3, "/contractManager/indicatorCalculator")
-              }
+              onClick={() => handleMenuClick(3)}
             >
               <FiTrendingUp className="navLinkIcon" />
               지표 계산
-            </a>
+            </Link>
+          </li>
+
+          <li className="navItem">
+            <Link
+              to="/contractManager/requestAllocation"
+              className={`navLink ${activeIndex === 4 ? "active" : ""}`}
+              onClick={() => handleMenuClick(4)}
+            >
+              <FaTasks className="navLinkIcon" />
+              요청 할당
+            </Link>
           </li>
         </ul>
 
@@ -104,7 +110,6 @@ const ContractManagerSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
           <LogoutButton />
         </div>
 
-        {/* 푸터 추가 */}
         <footer className="sidebarFooter">© 2024 SLASH ERP</footer>
       </aside>
     </nav>
