@@ -36,6 +36,7 @@ const RequestAllocationTable = () => {
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
+  const [filteredRequests, setFilteredRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -157,19 +158,30 @@ const RequestAllocationTable = () => {
     setIsModalOpen((prev) => !prev);
   };
 
+  //모달 열고 requestId 설정
   const openModal = (requestId) => {
     setSelectedRequestId(requestId);
     setIsModalOpen(true);
   };
 
+  //모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedRequestId(null);
   };
 
+  const handleProcessClick = (id) => {
+    console.log("Clicked task ID:", id);
+  };
+
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
+        <div className="headerTop">
+          <button className="tabButton" onClick={toggleModal}>
+            요청 등록
+          </button>
+        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
 

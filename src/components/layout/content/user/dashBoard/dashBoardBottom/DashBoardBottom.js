@@ -138,7 +138,6 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
           <div className="chartTable">
             <ChartTable
               selectedCriteria={selectedCriteria}
-              contractData={contractData}
               statistics={statistics} // 상태 전달
             />
           </div>
