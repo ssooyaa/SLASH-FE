@@ -12,6 +12,8 @@ const ContractHeaderV2 = ({ onContractSelect }) => {
   const handleAgreementChange = (e) => {
     const id = e.target.value;
     setSelectedAgreementId(id);
+    onContractSelect(id);
+    console.log("id",selectedAgreementId);
   };
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const ContractHeaderV2 = ({ onContractSelect }) => {
             setSelectedAgreement(data[0].contractName);
             setSelectedAgreementId(data[0].contractId);
           }
+          console.log(selectedAgreementId,selectedAgreement);
         }
       } catch (error) {
         console.error("Failed to fetch contracts: ", error);

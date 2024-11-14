@@ -6,18 +6,20 @@ import { PieChart } from "../../../../feature/chart/systemTypeChart/PieChart";
 import "../../../../feature/chart/systemTypeChart/PieChart.css";
 import {getMonthlyData} from "../../../../../api/RequestManagerService";
 
-const RequestManagerTop = () => {
+const RequestManagerTop = (contractId) => {
     const [monthlyData, setMonthlyData] = useState(null);
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(
         String(new Date().getMonth() + 1).padStart(2, "0")
     );
+    // const [contractId,setContractId]=useState(contractId);
 
     // MonthPicker에서 데이터를 업데이트할 핸들러 함수
     const handleMonthlyDataChange = async (selectedYear, selectedMonth) => {
         console.log("받은 데이터:", selectedYear, selectedMonth);
         const data = await getMonthlyData(selectedYear, selectedMonth);
         setMonthlyData(data.data);
+        console.log("contractId",contractId);
     };
 
     // 초기 데이터 요청
