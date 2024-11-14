@@ -149,6 +149,7 @@ const Router = () => {
           path="/contractManager/yearIndicator"
           element={<YearIndicator />}
         />
+        <Route path="/user/yearIndicator" element={<YearIndicator />} />
       </Routes>
     </BrowserRouter>
   );
