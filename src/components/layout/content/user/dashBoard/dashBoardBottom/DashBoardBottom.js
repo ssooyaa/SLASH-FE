@@ -15,6 +15,8 @@ import {
   fetchCommonServiceStatistics,
   fetchCommonIncidentStatistics,
 } from "../../../../../../api/CommonService";
+import {fetchContractData} from "../../../../../../api/UserService";
+import DropDownHeader from "../../../../../dropdown/DropDownHeader";
 
 // Axios 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";
@@ -29,6 +31,7 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
   const [statistics, setStatistics] = useState([]); // 상태 추가
   const [isTableVisible, setIsTableVisible] = useState(false);
   const [selectedCriteriaId, setSelectedCriteriaId] = useState(null);
+  const [evaluationItem,setEvaluationItem]=useState(null)
 
   const functions = {
     "서비스 가동률": async () => {
@@ -53,8 +56,13 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
       const categories = await fetchEvaluationItemCategory(agreementId);
       setCategories(categories);
     };
+    const fetchContract =async(agreementId)=>{
+      const evaluationItem=await fetchContractData((agreementId));
+      setEvaluationItem(evaluationItem.data);
+    }
     if (agreementId) {
       fetchCategory(agreementId);
+      fetchContract(agreementId);
     }
   }, [agreementId]);
 
@@ -90,7 +98,7 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
   return (
     <div className="totalDiv">
       <div className="criteria">
-        <Dropdown
+        <DropDownHeader
           className="criteria2"
           label="서비스 평가지표 : "
           options={categories.map((data) => data.category) || []}
@@ -116,7 +124,7 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
           <TableView
             className="toggleTable"
             selectedCriteria={selectedCriteria}
-            contractData={contractData}
+            contractData={evaluationItem}
           />
         </div>
       )}
