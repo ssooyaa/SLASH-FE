@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { FaAsterisk } from "react-icons/fa6";
+import React, {useEffect, useState} from "react";
+import {FaAsterisk} from "react-icons/fa6";
 import "./ContractHeader.css";
-import { fetchAllContractName } from "../../../api/UserService";
+import {fetchAllContractName} from "../../../api/UserService";
 
-const ContractHeaderV3 = ({ onContractSelect }) => {
+const ContractHeaderV3 = ({
+                            onContractSelect,
+                            setSelectedAgreementId,
+                            selectedAgreementId,
+                            selectedDate,
+                            setSelectedDate
+                          }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
-  const [selectedAgreementId, setSelectedAgreementId] = useState(
-    localStorage.getItem("selectedAgreementId") || null
-  );
-  const [selectedDate, setSelectedDate] = useState(
-    localStorage.getItem("selectedDate") ||
-    (() => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      return `${year}-${month}`;
-    })
-  );
-
   const [contracts, setContracts] = useState([]);
+
+
+  // 날짜가 변경될 때마다 selectedDate 업데이트
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
 
   const handleAgreementChange = (e) => {
     const id = e.target.value;
     setSelectedAgreementId(id);
-    localStorage.setItem("selectedAgreementId", id); // 로컬 스토리지에 저장
-    onContractSelect(id, selectedDate); // 콜백 호출
-  };
-
-  const handleDateChange = (e) => {
-    const date = e.target.value;
-    setSelectedDate(date);
-    localStorage.setItem("selectedDate", date); // 로컬 스토리지에 저장
-    onContractSelect(selectedAgreementId, date); // 콜백 호출
+    onContractSelect(id);
   };
 
   useEffect(() => {
@@ -39,24 +30,27 @@ const ContractHeaderV3 = ({ onContractSelect }) => {
       try {
         const data = await fetchAllContractName();
         if (data && Array.isArray(data)) {
+          console.log(
+            "Fetched contract names:",
+            data.map((contract) => contract.contractName)
+          );
           setContracts(data);
-          if (data.length > 0 && !selectedAgreementId) {
+          if (data.length > 0) {
             setSelectedAgreement(data[0].contractName);
             setSelectedAgreementId(data[0].contractId);
-            localStorage.setItem("selectedAgreementId", data[0].contractId); // 초기 계약 저장
-            onContractSelect(data[0].contractId, selectedDate);
           }
+          console.log(selectedAgreementId, selectedAgreement);
         }
       } catch (error) {
         console.error("Failed to fetch contracts: ", error);
       }
     };
     fetchContracts();
-  }, [onContractSelect, selectedAgreementId, selectedDate]);
+  }, [selectedAgreement, selectedAgreementId, setSelectedAgreementId]);
 
   return (
     <div className="topIndex">
-      <FaAsterisk className="star" />
+      <FaAsterisk className="star"/>
       협약서
       <select
         className="criteria2"

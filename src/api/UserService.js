@@ -5,7 +5,7 @@ axios.defaults.baseURL = "http://localhost:8080";
 export const getMonthlyData = async (selectedYear, selectedMonth) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const params = { year: selectedYear, month: selectedMonth };
+    const params = {year: selectedYear, month: selectedMonth};
     console.log("전송 값:", params);
 
     // axios 요청 수정
@@ -106,7 +106,7 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/statistics",{
+    const response = await axios.get("/common/statistics", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -125,7 +125,7 @@ export const fetchContractData = async (contractId) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(`/common/contract/${contractId}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {Authorization: `Bearer ${token}`},
     });
     return response.data;
   } catch (error) {
@@ -141,13 +141,13 @@ export const fetchOptions = async () => {
     const [systemsResponse, taskTypeResponse, taskDetailResponse] =
       await Promise.all([
         axios.get("/common/systems", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {Authorization: `Bearer ${token}`},
         }),
         axios.get("/common/task-type", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {Authorization: `Bearer ${token}`},
         }),
         axios.get("/common/task-detail", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {Authorization: `Bearer ${token}`},
         }),
       ]);
 
@@ -170,7 +170,7 @@ export const fetchFilteredRequests = async (filters) => {
   try {
     const token = getAuthToken();
     const response = await axios.get("/common/requests", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {Authorization: `Bearer ${token}`},
       params: {
         type:
           filters.selectedTaskType !== "전체"
@@ -194,7 +194,7 @@ export const fetchFilteredRequests = async (filters) => {
       },
     });
 
-    return response.data.data || { results: [], totalPages: 0, currentPage: 1 };
+    return response.data.data || {results: [], totalPages: 0, currentPage: 1};
   } catch (error) {
     console.error("Error fetching filtered requests:", error);
     throw error;
@@ -205,7 +205,7 @@ export const fetchSystemData = async () => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get("/common/all-contract-name", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {Authorization: `Bearer ${token}`},
     });
 
     console.log("Response from /common/all-contract-name:", response.data); // Log response data
@@ -237,14 +237,14 @@ export const fetchAllContractName = async () => {
   }
 };
 
-export const fetchRequestStatusByUser = async (year,month,contractId) => {
+export const fetchRequestStatusByUser = async (year, month, selectedAgreementId) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const params = { year: year, month: month,contractId: contractId };
+    const params = {year: year, month: month, contractId: selectedAgreementId};
     console.log("전송 값:", params);
 
     // axios 요청 수정
-    const response = await axios.get("/request-manager/monthly-data", {
+    const response = await axios.get("/common/request-status-count", {
       params,
       headers: {
         Authorization: `Bearer ${token}`,
