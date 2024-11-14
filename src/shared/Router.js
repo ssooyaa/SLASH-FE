@@ -133,7 +133,7 @@ const Router = () => {
 
         <Route
           path="/contractManager/indexManagement"
-          element={<DetailIndexContent />}
+          element={<IndexManagement />}
         />
         <Route
           path="/contractManager/indicatorCalculator"
