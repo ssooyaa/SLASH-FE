@@ -35,6 +35,8 @@ const YearIndicatorsChart = ({ contractId, date }) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
+    if (!contractId || !date) return; // contractId와 date가 유효할 때만 호출
+
     const fetchData = async () => {
       try {
         const data = await fetchYearlyWeightedScores(contractId, date);
