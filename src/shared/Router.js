@@ -19,6 +19,7 @@ import UpdateEvaluationItem from "../pages/contractManager/UpdateEvaluationItem"
 import ProtectedRoute from "../components/common/ProtectedRoute";
 import RequestAllocation from "../pages/contractManager/RequestAllocation";
 import RequestManagerStatus from "../pages/requestManager/RequestManagerStatus";
+import EstimateIndicatorEdit from "../pages/contractManager/EstimateIndicatorEdit";
 
 //BrowserRouter를 Router로 감싸는 이유는,
 //SPA의 장점인 브라우저가 깜빡이지 않고 다른 페이지로 이동할 수 있게 만들어줍니다!
@@ -141,6 +142,10 @@ const Router = () => {
         <Route
           path="/contractManager/requestAllocation"
           element={<RequestAllocation />}
+        />
+        <Route
+          path="/contractManager/autoCal"
+          element={<EstimateIndicatorEdit />}
         />
         <Route
           path="/requestManager/status"
