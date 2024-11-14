@@ -70,7 +70,7 @@ const BottomTable = ({ agreementId, date }) => {
               <td>{item.auto ? "자동계산" : "수동계산"}</td>
               <td>{item.date}</td>
               <td>{item.calculateTime}</td>
-              <td>{item.score}%</td>
+              <td>{item.score}점</td>
               <td>{item.grade}등급</td>
               <td>
                 <a
