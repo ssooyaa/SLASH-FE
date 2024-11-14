@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiTrendingUp } from "react-icons/fi";
-import { MdQuestionMark } from "react-icons/md";
+import { MdCalendarMonth, MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
 import { FaTasks } from "react-icons/fa";
 import LogoutButton from "../../common/button/LogoutButton.js";
+import { LiaCalendarDaySolid } from "react-icons/lia";
+import { PiCalendarDuotone } from "react-icons/pi";
+import { IoCalendarNumberOutline } from "react-icons/io5";
 
 const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 디폴트로 홈을 active로 설정
+  const [activeIndex, setActiveIndex] = useState(0); // 기본으로 홈을 active로 설정
   const location = useLocation();
 
-  // 컴포넌트 마운트 시 URL 경로에 따라 activeIndex 설정
+  // 컴포넌트가 마운트될 때 URL 경로에 따라 activeIndex를 설정
   useEffect(() => {
     const pathToIndexMap = {
       "/user": 0,
       "/user/requestManagement": 1,
       "/user/indexManagement": 2,
-      "/user/requestAllocation": 3,
+      "/user/indexManagement": 3,
+      "/user/indexManagement": 4,
     };
 
     const currentPath = location.pathname;
@@ -53,43 +57,47 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
       <aside>
         <ul className="navList">
           <li className="navItem">
-            <a
-              href="/user"
+            <Link
+              to="/user"
               className={`navLink ${activeIndex === 0 ? "active" : ""}`}
               onClick={() => handleMenuClick(0)}
             >
               <FiHome className="navLinkIcon" />홈
-            </a>
+            </Link>
           </li>
           <li className="navItem">
-            <a
-              href="/user/requestManagement"
+            <Link
+              to="/user/requestManagement"
               className={`navLink ${activeIndex === 1 ? "active" : ""}`}
               onClick={() => handleMenuClick(1)}
             >
               <MdQuestionMark className="navLinkIcon" />
               요청 관리
-            </a>
+            </Link>
           </li>
-          <li className="navItem">
-            <a
-              href="/user/indexManagement"
+          <li className="navItem2">
+            <FiTrendingUp className="navLinkIcon" />
+            통계 결과
+          </li>
+          <li className="navItemSmall">
+            <Link
+              to="/user/indexManagement"
               className={`navLink ${activeIndex === 2 ? "active" : ""}`}
               onClick={() => handleMenuClick(2)}
             >
-              <FiTrendingUp className="navLinkIcon" />
-              지표 관리
-            </a>
+              <IoCalendarNumberOutline className="navLinkIcon" />
+              월간 통계
+            </Link>
           </li>
-          <li className="navItem">
-            <a
-              href="/user/requestAllocation"
+          <li className="navItemSmall">
+            <Link
+              to="/user/indexManagement"
               className={`navLink ${activeIndex === 3 ? "active" : ""}`}
               onClick={() => handleMenuClick(3)}
             >
-              <FaTasks className="navLinkIcon" />
-              요청 할당
-            </a>
+              <PiCalendarDuotone className="navLinkIcon" />
+              연간 통계
+            </Link>
           </li>
         </ul>
 
