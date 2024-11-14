@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import RequestDetailInfoForm from "./RequestDetailInfoForm";
 import RequestContentForm from "../RequestContentForm";
 import EditRequestForm from "../EditRequestForm";
 import { deleteRequest } from "../../../../service/api/userService";
-import {completeRequest} from "../../../../api/RequestManagerService";
+import { completeRequest } from "../../../../api/RequestManagerService";
+import { useNavigate } from "react-router-dom";
 
 const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -32,23 +34,30 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
       await deleteRequest(requestData.requestId);
       alert("삭제되었습니다.");
       onClose();
+      window.location.href = "/user/requestManagement";
     } catch (error) {
       console.log(error);
       alert("삭제 실패");
     }
   };
 
-  const handleComplete  =async ()=>{
+  const handleComplete = async () => {
     try {
       await completeRequest(requestData.requestId);
       alert("처리 완료");
-      console.log("loggedInUser",loggedInUser,"managerId",requestData.managerId);
+      console.log(
+        "loggedInUser",
+        loggedInUser,
+        "managerId",
+        requestData.managerId
+      );
       onClose();
+      window.location.href = "/requestManager/status";
     } catch (error) {
       console.log(error);
       alert("접근 실패");
     }
-  }
+  };
 
   return (
     <div className="modal-content">
@@ -81,7 +90,8 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
               requestData.requester === "c" && requestData.status === "접수완료"
             }
             canComplete={
-              requestData.managerId === loggedInUser && requestData.status === "진행중"
+              requestData.managerId === loggedInUser &&
+              requestData.status === "진행중"
             }
             onDelete={handleDelete}
             onEdit={handleEdit}
