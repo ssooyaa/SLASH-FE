@@ -3,11 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Content.css";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiTrendingUp } from "react-icons/fi";
-import { MdCalendarMonth, MdQuestionMark } from "react-icons/md";
+import { MdQuestionMark } from "react-icons/md";
 import logo from "../../../assets/images/logo.png";
-import { FaTasks } from "react-icons/fa";
 import LogoutButton from "../../common/button/LogoutButton.js";
-import { LiaCalendarDaySolid } from "react-icons/lia";
 import { PiCalendarDuotone } from "react-icons/pi";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 
@@ -20,9 +18,8 @@ const UserSidebar = ({ isNavOpen, toggleNav, effectClass }) => {
     const pathToIndexMap = {
       "/user": 0,
       "/user/requestManagement": 1,
-      "/user/indexManagement": 2,
       "/user/indexManagement": 3,
-      "/user/indexManagement": 4,
+      "": 4,
     };
 
     const currentPath = location.pathname;
