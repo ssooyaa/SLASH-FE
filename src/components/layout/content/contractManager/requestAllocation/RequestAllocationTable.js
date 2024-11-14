@@ -19,7 +19,7 @@ const statusMapping = {
 
 const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
-const RequestAllocationTable = () => {
+const RequestAllocationTable = ({ agreementId, date }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
@@ -61,23 +61,28 @@ const RequestAllocationTable = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Agreement ID:", agreementId);
+    console.log("Date:", date);
+
     const loadFilteredRequests = async () => {
-      try {
-        const response = await fetchFilteredRequests({
-          selectedTaskType,
-          selectedEquipmentType,
-          selectedTaskDetail,
-          selectedStatus,
-          searchTerm,
-          page,
-          size,
-          statusMapping,
-        });
-        setTaskRequests(response.results);
-        setTotalPages(response.totalPages);
-        setPage(response.currentPage);
-      } catch (error) {
-        console.error("Error loading filtered requests:", error);
+      if (agreementId && date) {
+        try {
+          const response = await fetchFilteredRequests({
+            selectedTaskType,
+            selectedEquipmentType,
+            selectedTaskDetail,
+            selectedStatus,
+            searchTerm,
+            page,
+            size,
+            statusMapping,
+          });
+          setTaskRequests(response.results);
+          setTotalPages(response.totalPages);
+          setPage(response.currentPage);
+        } catch (error) {
+          console.error("Error loading filtered requests:", error);
+        }
       }
     };
 
@@ -90,6 +95,8 @@ const RequestAllocationTable = () => {
     page,
     size,
     searchTerm,
+    agreementId,
+    date,
   ]);
 
   const handleSelectStatus = (option) => {
@@ -215,7 +222,7 @@ const RequestAllocationTable = () => {
                   )}
                 </div>
               </th>
-              <th>담당자</th>
+              <th>요청자</th>
               <th>
                 <div
                   className="customDropdown"
