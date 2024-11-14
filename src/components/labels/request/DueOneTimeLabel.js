@@ -5,11 +5,11 @@ const DueOnTimeLabel = ({ dueOnTime }) => {
   const getLabelStyle = (dueOnTime) => {
     switch (dueOnTime) {
       case true:
-        return { backgroundColor: "#C3DBF8", color: "#2C70F4" };
+        return { backgroundColor: "#00C853", color: "#FFFFFF" };
       case false:
-        return { backgroundColor: "#F6F6F6", color: "#666666" };
+        return { backgroundColor: "#FFC107", color: "#FFFFFF" };
       default:
-        return { backgroundColor: "#fff", color: "#000" };
+        return { backgroundColor: "#FF5252", color: "#212121" };
     }
   };
 
