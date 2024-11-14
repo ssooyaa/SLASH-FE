@@ -84,10 +84,14 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
             requestTime={requestData.requestTime}
             endTime={requestData.endTime}
             canDelete={
-              requestData.requester === "c" && requestData.status !== "진행중"
+              requestData.requester === "c" &&
+              requestData.status !== "진행중" &&
+              loggedInUser === "3"
             }
             canEdit={
-              requestData.requester === "c" && requestData.status === "접수완료"
+              requestData.requester === "c" &&
+              requestData.status === "접수완료" &&
+              loggedInUser === "3"
             }
             canComplete={
               requestData.managerId === loggedInUser &&

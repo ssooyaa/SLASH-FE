@@ -26,7 +26,7 @@ const EditRequestForm = ({ requestData, onCancel, onSave }) => {
 
   useEffect(() => {
     const loadTaskTypes = async () => {
-      const data = await fetchTaskTypes();
+      const data = await fetchTaskTypes(1);
       setTaskTypeData(data);
     };
     loadTaskTypes();
@@ -109,11 +109,8 @@ const EditRequestForm = ({ requestData, onCancel, onSave }) => {
   );
 
   return (
-    <div className="modalOverlay">
-      <div className="modalContent">
-        <button className="closeButton" onClick={onCancel}>
-          &times;
-        </button>
+    <div className="requestEditModalOverlay">
+      <div className="requestModalContent">
         <div className="modalHeader">
           <h3>요청 수정</h3>
         </div>
