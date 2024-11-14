@@ -41,6 +41,7 @@ const RequestManagerBottom = () => {
   const [taskTypeOptions, setTaskTypeOptions] = useState(["전체"]);
   const [taskDetailOptions, setTaskDetailOptions] = useState(["전체"]);
   const [equipmentTypeOptions, setEquipmentTypeOptions] = useState(["전체"]);
+  const userId = localStorage.getItem("userId"); //로컬스토리지에서 userId 가져오기
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -58,6 +59,8 @@ const RequestManagerBottom = () => {
   }, []);
 
   useEffect(() => {
+    //userId 확인
+    console.log("User id from localstorage: ", userId);
     const loadFilteredRequests = async () => {
       try {
         const response = await fetchFilteredRequests({
@@ -70,9 +73,19 @@ const RequestManagerBottom = () => {
           size,
           statusMapping,
         });
-        setTaskRequests(response.results);
-        setTotalPages(response.totalPages);
-        setPage(response.currentPage);
+        console.log("API Response: ", response);
+        if (response && response.results) {
+          // userId와 일치하는 요청만 필터링
+          const filteredRequests = response.results.filter(
+            (task) => task.managerId === userId
+          );
+          console.log("Filtered Results: ", filteredRequests);
+          setTaskRequests(filteredRequests);
+          setTotalPages(response.totalPages);
+          setPage(response.currentPage);
+        } else {
+          console.log("No results in API response.");
+        }
       } catch (error) {
         console.error("Error loading filtered requests:", error);
       }
@@ -206,6 +219,7 @@ const RequestManagerBottom = () => {
                   )}
                 </div>
               </th>
+              <th>담당자</th>
               <th>
                 <div
                   className="customDropdown"
@@ -313,6 +327,7 @@ const RequestManagerBottom = () => {
                 <td>
                   <TaskTypeLabel taskType={task.type} />
                 </td>
+                <td onClick={() => openModal(task.id)}>{task.managerName}</td>
                 <td className="equipmentCell">
                   <EquipmentTypeLabel equipmentType={task.equipmentName} />
                 </td>
