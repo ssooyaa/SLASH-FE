@@ -5,46 +5,47 @@ import { fetchAllContractName } from "../../../api/UserService";
 
 const ContractHeaderV1 = ({ onContractSelect }) => {
   const [selectedAgreement, setSelectedAgreement] = useState("");
-  const [selectedAgreementId, setSelectedAgreementId] = useState(
-    localStorage.getItem("selectedAgreementId") || null
-  );
-  const [selectedDate, setSelectedDate] = useState(
-    localStorage.getItem("selectedDate") ||
-      (() => {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        return `${year}-${month}`;
-      })
-  );
+  const [selectedAgreementId, setSelectedAgreementId] = useState(null);
 
   const [contracts, setContracts] = useState([]);
+
+  // 초기 날짜를 설정하는 로직
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const storedDate = localStorage.getItem("selectedDate");
+    if (storedDate) {
+      return storedDate; // 로컬 스토리지에서 날짜가 있으면 그것을 사용
+    } else {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}`; // 오늘 날짜를 기본값으로 설정
+    }
+  });
 
   const handleAgreementChange = (e) => {
     const id = e.target.value;
     setSelectedAgreementId(id);
-    localStorage.setItem("selectedAgreementId", id); // 로컬 스토리지에 저장
-    onContractSelect(id, selectedDate); // 콜백 호출
+    onContractSelect(id, selectedDate);
   };
 
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
-    localStorage.setItem("selectedDate", date); // 로컬 스토리지에 저장
-    onContractSelect(selectedAgreementId, date); // 콜백 호출
+    localStorage.setItem("selectedDate", date);
+    onContractSelect(selectedAgreementId, date);
   };
 
+  // contracts를 불러오고 나서 초기 선택값 설정
   useEffect(() => {
     const fetchContracts = async () => {
       try {
         const data = await fetchAllContractName();
         if (data && Array.isArray(data)) {
           setContracts(data);
-          if (data.length > 0 && !selectedAgreementId) {
+          if (data.length > 0) {
             setSelectedAgreement(data[0].contractName);
             setSelectedAgreementId(data[0].contractId);
-            localStorage.setItem("selectedAgreementId", data[0].contractId); // 초기 계약 저장
-            onContractSelect(data[0].contractId, selectedDate);
           }
         }
       } catch (error) {
@@ -52,7 +53,14 @@ const ContractHeaderV1 = ({ onContractSelect }) => {
       }
     };
     fetchContracts();
-  }, [onContractSelect, selectedAgreementId, selectedDate]);
+  }, []);
+
+  // 선택된 협약서 ID와 날짜가 변경될 때마다 onContractSelect 호출
+  useEffect(() => {
+    if (selectedAgreementId && selectedDate) {
+      onContractSelect(selectedAgreementId, selectedDate);
+    }
+  }, [selectedAgreementId, selectedDate, onContractSelect]);
 
   return (
     <div className="topIndex">

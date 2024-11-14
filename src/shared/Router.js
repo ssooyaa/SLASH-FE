@@ -64,14 +64,6 @@ const Router = () => {
         />
         {/* 계약 관리자 관련 페이지 */}
         <Route
-          path="/contractManager"
-          element={
-            <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
-              <ContractManagerMain />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/contractManager/updateContract/:contractId"
           element={
             <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
@@ -96,7 +88,7 @@ const Router = () => {
           }
         />
         <Route
-          path="/contractManager/contractList"
+          path="/contractManager"
           element={
             <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
               <ContractList />
