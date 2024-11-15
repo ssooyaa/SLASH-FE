@@ -22,6 +22,7 @@ import EstimateIndicatorEdit from "../pages/contractManager/EstimateIndicatorEdi
 import StatisticsResults from "../pages/contractManager/StatisticsResults";
 import YearIndicator from "../pages/contractManager/YearIndicator";
 import StatisticsPdf from "../pages/contractManager/StatisticsPdf";
+import UserYearIndicator from "../pages/user/UserYearIndicator";
 
 const Router = () => {
   return (
@@ -43,7 +44,7 @@ const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/user/yearIndicator" element={<YearIndicator />} />
+        <Route path="/user/yearIndicator" element={<UserYearIndicator />} />
         <Route
           path="/user/requestManagement"
           element={

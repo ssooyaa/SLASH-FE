@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./IndicatorTable.css";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const IndicatorTable = ({
   initialData,
@@ -9,8 +8,6 @@ const IndicatorTable = ({
   handleDeleteStatistics,
 }) => {
   const [data, setData] = useState(initialData || []);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("EvaluationItemListTable 데이터: ", initialData); // data 값 확인
