@@ -8,8 +8,6 @@ import ChartTable from "./ChartTable";
 import axios from "axios";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import {
-  fetchServiceOperationStatistics,
-  fetchServiceStatistics,
   fetchEvaluationItemCategory,
   fetchServiceUptime,
   fetchCommonServiceStatistics,

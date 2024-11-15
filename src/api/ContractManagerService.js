@@ -114,7 +114,7 @@ export const saveServiceMeasuring = async (dto) => {
 
     console.log(dto);
     const response = await axios.post(
-      "/contract-manager/service-statistic",
+      "/contract-manager/service-statistics",
       dto,
       {
         headers: {
@@ -140,11 +140,15 @@ export const saveIncidentMeasuring = async (dto) => {
     const token = localStorage.getItem("accessToken");
 
     console.log(dto);
-    const response = await axios.post("/common/incident-statistics", dto, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      "/contract-manager/incident-statistics",
+      dto,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
