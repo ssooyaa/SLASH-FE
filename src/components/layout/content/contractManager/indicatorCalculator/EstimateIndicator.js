@@ -11,7 +11,7 @@ import { FaAsterisk } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import IndicatorTable from "../../../../feature/table/IndicatorTable";
 import "react-datepicker/dist/react-datepicker.css";
-import {deleteStatistics} from "../../../../../api/ContractManagerService";
+import { deleteStatistics } from "../../../../../api/ContractManagerService";
 
 const EstimateIndicator = () => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
@@ -19,8 +19,7 @@ const EstimateIndicator = () => {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}`;
   });
   const [contracts, setContracts] = useState([]);
   const [data, setData] = useState({
@@ -163,7 +162,10 @@ const EstimateIndicator = () => {
     if (response) {
       alert("삭제되었습니다.");
       // 데이터를 다시 불러와서 갱신
-      const updatedData = await fetchStatisticsStatus(selectedAgreementId, selectedDate);
+      const updatedData = await fetchStatisticsStatus(
+        selectedAgreementId,
+        selectedDate
+      );
       if (updatedData.success) {
         setData(updatedData.data); // 새로 불러온 데이터로 갱신
       } else {
@@ -190,7 +192,7 @@ const EstimateIndicator = () => {
           ))}
         </select>
         <input
-          type="date"
+          type="month"
           className="criteria2"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}

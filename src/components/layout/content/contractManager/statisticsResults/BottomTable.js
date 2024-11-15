@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./BottomTable.css";
 import StatisticsListTable from "../../../../feature/table/ StatisticsListTable";
 
 const BottomTable = ({ initialData }) => {
   const [data, setData] = useState(initialData || {});
-
   const navigate = useNavigate();
+
+  const handleDetail = (evaluationItemId, date) => {
+    if (evaluationItemId && date) {
+      navigate(
+        `/contractManager/indexManagement/detail/${evaluationItemId}/${date}`
+      );
+    } else {
+      console.error("Missing parameters:", { evaluationItemId, date });
+    }
+  };
 
   useEffect(() => {
     if (initialData) {
@@ -14,17 +22,9 @@ const BottomTable = ({ initialData }) => {
     }
   }, [initialData]);
 
-  const handleDetailClick = (evaluationItemId, date) => {
-    if (evaluationItemId && date) {
-      navigate(`/user/indexManagement/detail/${evaluationItemId}/${date}`);
-    } else {
-      console.error("Missing parameters:", { evaluationItemId, date });
-    }
-  };
-
   return (
     <div className="MonthStatisticsTable">
-      <StatisticsListTable initialData={data} />
+      <StatisticsListTable initialData={data} handleDetail={handleDetail} />
     </div>
   );
 };

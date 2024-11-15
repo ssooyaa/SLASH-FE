@@ -77,14 +77,17 @@ export const completeRequest = async (requestId) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error("서버 응답 에러:", error.response.status, error.response.data);
+      console.error(
+        "서버 응답 에러:",
+        error.response.status,
+        error.response.data
+      );
     } else {
       console.error("요청 실패:", error.message);
     }
     return []; // 오류 발생 시 빈 배열 반환
   }
 };
-
 
 // 시스템 및 장비 데이터를 가져오는 함수
 export const fetchSystemAndEquipment = async () => {
@@ -106,13 +109,13 @@ export const fetchSystemAndEquipment = async () => {
 export const fetchStatistics = async (params) => {
   try {
     const token = localStorage.getItem("accessToken");
-    const response = await axios.get("/common/statistics",{
+    const response = await axios.get("/common/statistics", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: params,
     });
-    console.log(params)
+    console.log(params);
     return response.data;
   } catch (error) {
     console.error("오류:", error);
@@ -191,6 +194,7 @@ export const fetchFilteredRequests = async (filters) => {
         keyword: filters.searchTerm,
         page: filters.page,
         size: filters.size,
+        contractId: filters.contractId,
       },
     });
 
@@ -234,5 +238,36 @@ export const fetchAllContractName = async () => {
     }
   } catch (error) {
     console.error("ERROR: ", error.response.data);
+  }
+};
+
+export const fetchRequestStatusByUser = async (
+  year,
+  month,
+  selectedAgreementId
+) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const params = {
+      year: year,
+      month: month,
+      contractId: selectedAgreementId,
+    };
+    console.log("전송 값:", params);
+
+    // axios 요청 수정
+    const response = await axios.get("/common/request-status-count", {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("서버 응답:", JSON.stringify(response.data, null, 2));
+
+    return response.data; // 데이터를 반환
+  } catch (error) {
+    console.error("데이터 전송 오류:", error);
+
+    return []; // 오류 발생 시 빈 배열 반환
   }
 };

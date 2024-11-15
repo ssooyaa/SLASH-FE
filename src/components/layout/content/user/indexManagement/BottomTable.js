@@ -14,7 +14,7 @@ const BottomTable = ({ initialData }) => {
     }
   }, [initialData]);
 
-  const handleDetailClick = (evaluationItemId, date) => {
+  const handleDetail = (evaluationItemId, date) => {
     if (evaluationItemId && date) {
       navigate(`/user/indexManagement/detail/${evaluationItemId}/${date}`);
     } else {
@@ -24,7 +24,7 @@ const BottomTable = ({ initialData }) => {
 
   return (
     <div className="MonthStatisticsTable">
-      <StatisticsListTable initialData={data} />
+      <StatisticsListTable initialData={data} handleDetail={handleDetail} />
     </div>
   );
 };

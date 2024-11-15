@@ -51,6 +51,7 @@ export const fetchContractInfo = async (contractId) => {
     );
   }
 };
+
 //모든 계약 이름 조회
 export const fetchAllContractName = async () => {
   try {
@@ -71,6 +72,7 @@ export const fetchAllContractName = async () => {
     console.error("ERROR: ", error.response.data);
   }
 };
+
 //평가 지표에 대한 상세 정보
 export const fetchServiceInfo = async (evaluationItemId) => {
   try {
@@ -96,13 +98,11 @@ export const fetchServiceInfo = async (evaluationItemId) => {
 export const fetchIndicators = async (contractId, yearMonth) => {
   try {
     const token = localStorage.getItem("accessToken");
-    console.log(contractId);
-    console.log(yearMonth);
     const response = await axios.get(`/common/${contractId}/month-indicators`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { date: yearMonth },
+      params: {date: yearMonth},
     });
     return response.data;
   } catch (error) {
@@ -269,6 +269,40 @@ export const downloadPdf = async (evaluationItemId, date) => {
     return response.data;
   } catch (error) {
     console.error("PDF 다운로드 오류:", error);
+    throw error;
+  }
+};
+
+export const fetchYearlyWeightedScores = async (contractId, date) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(`/common/${contractId}/weighted-score`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { date },
+    });
+
+    return response.data.data;
+  } catch (error) {
+    console.error("스택 차트 오류 발생");
+    throw error;
+  }
+};
+
+export const fetchYearIndicators = async (contractId, date) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(`/common/${contractId}/year-indicators`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { date },
+    });
+    console.log(response.data.data + "response.data.data");
+    return response.data.data;
+  } catch (error) {
+    console.error("연간 지표 테이블 조회 오류 발생");
     throw error;
   }
 };
