@@ -17,10 +17,22 @@ const EstimateIndicator = () => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
+    // 이전 달로 설정
+    now.setMonth(now.getMonth() - 1);
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     return `${year}-${month}`;
   });
+
+  // 현재 달의 이전 달까지만 선택 가능하도록 max 값 설정
+  const getMaxSelectableMonth = () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() - 1); // 현재 달의 이전 달로 설정
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    return `${year}-${month}`;
+  };
+
   const [contracts, setContracts] = useState([]);
   const [data, setData] = useState({
     unCalculatedStatistics: [],
@@ -39,7 +51,7 @@ const EstimateIndicator = () => {
           );
           setContracts(data);
           if (data.length > 0) {
-            setSelectedAgreementId(data[0].contractId); // set first contract as default
+            setSelectedAgreementId(data[0].contractId);
           }
         }
       } catch (error) {
@@ -73,7 +85,7 @@ const EstimateIndicator = () => {
       console.log("contractId", contractId, "selectedDate", selectedDate);
       const fetchedData = await fetchStatisticsStatus(contractId, selectedDate);
 
-      console.log("Fetched Data:", fetchedData); // Check the data structure
+      console.log("Fetched Data:", fetchedData);
       if (fetchedData.success) {
         setData(fetchedData.data);
       } else {
@@ -88,13 +100,8 @@ const EstimateIndicator = () => {
   const handleEstimateClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
-
-      // saveMeasuring 호출하여 결과를 받음
       const response = await saveMeasuring({ evaluationItemId, date });
-
-      console.log("response:", response); // 응답값 확인
-
-      // response가 true이면 성공, false이면 실패
+      console.log("response:", response);
       if (response) {
         alert("측정 완료");
       } else {
@@ -109,13 +116,8 @@ const EstimateIndicator = () => {
   const handleEstimateServiceClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
-
-      // saveMeasuring 호출하여 결과를 받음
       const response = await saveServiceMeasuring({ evaluationItemId, date });
-
-      console.log("response:", response); // 응답값 확인
-
-      // response가 true이면 성공, false이면 실패
+      console.log("response:", response);
       if (response) {
         alert("측정 완료");
       } else {
@@ -130,13 +132,8 @@ const EstimateIndicator = () => {
   const handleEstimateIncidentClick = async ({ evaluationItemId, date }) => {
     try {
       console.log("evaluationItemId", evaluationItemId, "date", date);
-
-      // saveMeasuring 호출하여 결과를 받음
       const response = await saveIncidentMeasuring({ evaluationItemId, date });
-
-      console.log("response:", response); // 응답값 확인
-
-      // response가 true이면 성공, false이면 실패
+      console.log("response:", response);
       if (response) {
         alert("측정 완료");
       } else {
@@ -151,7 +148,6 @@ const EstimateIndicator = () => {
   const navigate = useNavigate();
 
   const handleDetailClick = (evaluationItemId) => {
-    // 평가 항목 ID와 선택한 날짜를 URL에 포함하여 페이지 이동
     navigate(
       `/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${selectedDate}`
     );
@@ -161,13 +157,12 @@ const EstimateIndicator = () => {
     const response = await deleteStatistics(evaluationItemId, date);
     if (response) {
       alert("삭제되었습니다.");
-      // 데이터를 다시 불러와서 갱신
       const updatedData = await fetchStatisticsStatus(
         selectedAgreementId,
         selectedDate
       );
       if (updatedData.success) {
-        setData(updatedData.data); // 새로 불러온 데이터로 갱신
+        setData(updatedData.data);
       } else {
         alert("데이터를 갱신할 수 없습니다.");
       }
@@ -175,6 +170,7 @@ const EstimateIndicator = () => {
       alert("삭제 실패");
     }
   };
+
   return (
     <div>
       <div className="topIndex">
@@ -196,6 +192,7 @@ const EstimateIndicator = () => {
           className="criteria2"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
+          max={getMaxSelectableMonth()} // 현재 달의 이전 달까지만 선택 가능
         />
       </div>
 
