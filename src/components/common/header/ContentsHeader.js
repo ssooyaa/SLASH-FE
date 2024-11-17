@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaAsterisk, FaRegCalendar } from "react-icons/fa6";
-import "./ContractHeader.css";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./ContractHeader.css";
 import { format } from "date-fns";
 import ko from "date-fns/locale/ko"; // 한국어 로케일 import
 

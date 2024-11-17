@@ -80,12 +80,7 @@ export const saveServiceMeasuring = async (dto) => {
   try {
     const response = await axios.post(
       "/contract-manager/service-statistics",
-      dto,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      dto
     );
 
     // Check if response.data.success exists and return it

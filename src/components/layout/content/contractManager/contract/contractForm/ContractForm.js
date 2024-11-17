@@ -148,7 +148,7 @@ const ContractForm = () => {
                       readOnly
                     />
                     <MdCalendarMonth
-                      className="calendarIcon"
+                      className="contractCalendarIcon"
                       onClick={(e) => handleCalendarClick("startDate", e)}
                     />
                   </div>
@@ -167,7 +167,7 @@ const ContractForm = () => {
                     readOnly
                   />
                   <MdCalendarMonth
-                    className="calendarIcon"
+                    className="contractCalendarIcon"
                     onClick={(e) => handleCalendarClick("endDate", e)}
                   />
                 </div>

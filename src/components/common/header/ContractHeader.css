@@ -62,10 +62,20 @@ body {
   margin-left: 0.6rem;
 }
 
-.react-datepicker__month-wrapper {
+.react-datepicker__month-container {
+  width: auto;
+}
+
+.react-datepicker__monthPicker {
   width: 100%;
 }
 
-.react-datepicker__month .react-datepicker__month-text {
-  width: 50px;
+.react-datepicker__month-wrapper {
+  justify-content: space-around; /* 공간을 균등하게 분배 */
+}
+
+.react-datepicker__month .react-datepicker__month-text,
+.react-datepicker__month .react-datepicker__quarter-text {
+  width: 3rem !important;
+  margin-bottom: 0.5rem !important;
 }
