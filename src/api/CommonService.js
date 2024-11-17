@@ -60,6 +60,7 @@ export const fetchServiceInfo = async (evaluationItemId) => {
 //월간 지표 조회
 export const fetchIndicators = async (contractId, yearMonth) => {
   try {
+    console.log("들어오는값: ", contractId, yearMonth);
     const response = await axios.get(`/common/${contractId}/month-indicators`, {
       params: { date: yearMonth },
     });

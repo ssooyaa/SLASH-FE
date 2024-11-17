@@ -8,9 +8,11 @@ const StatisticsListTable = ({ initialData }) => {
 
   const handleDetailClick = (evaluationItemId, date) => {
     if (evaluationItemId && date) {
-      navigate(
-        `/contractManager/indexManagement/detail/${evaluationItemId}/${date}`
-      );
+      const basePath = window.location.pathname.startsWith("/contractManager")
+        ? navigate(
+            `/contractManager/indexManagement/detail/${evaluationItemId}/${date}`
+          )
+        : navigate(`/user/indexManagement/detail/${evaluationItemId}/${date}`);
     } else {
       console.error("Missing parameters:", { evaluationItemId, date });
     }

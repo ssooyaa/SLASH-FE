@@ -3,7 +3,7 @@ import "../../../../../styles/Content.css";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import MiddleIndex from "./MiddleIndex";
-import ContentsHeader from "../../../../common/header/ContentsHeader";
+import ContentsHeader from "../../../../../components/common/header/ContentsHeader";
 import { fetchIndicators } from "../../../../../api/CommonService";
 import { fetchAllContractName } from "../../../../../api/UserService";
 import StatisticsListTable from "../../../../feature/table/ StatisticsListTable";
@@ -30,26 +30,13 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       if (data && Array.isArray(data)) {
         if (data.length > 0) {
           setAgreements(data);
-
           // 초기에 세션에 저장된 agreement가 없다면 세션에 신규 등록
-          if (!selectedAgreement) {
-            setSelectedAgreement(data[0]);
-            sessionStorage.setItem(
-              "selectedAgreement",
-              JSON.stringify(data[0])
-            );
-          }
-
-          // 초기에 세션에 저장된 date가 없다면 세션에 신규 등록
-          if (!selectedDate) {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
-            const day = String(today.getDate()).padStart(2, "0");
-            const date = `${year}-${month}-${day}`;
-            setSelectedDate(date);
-            sessionStorage.setItem("selectedDate", date);
-          }
+          setSelectedAgreement(data[0]);
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth()).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+          const date = `${year}-${month}`;
+          setSelectedDate(date);
         }
       }
     } catch (error) {
@@ -94,6 +81,7 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
             selectedAgreement.contractId,
             dateFormatter(selectedDate)
           );
+          console.log("통계자료: ", response);
           if (response && response.success) {
             setContractData(response.data);
           }
