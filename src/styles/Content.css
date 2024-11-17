@@ -69,8 +69,8 @@ body {
 
 .navOpenBtn {
   position: fixed;
-  top: 0.3rem;
-  left: 30px;
+  top: 1rem;
+  left: 20px;
   width: 28px;
   height: 28px;
   background-color: #121824;
