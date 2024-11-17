@@ -9,7 +9,7 @@ body {
 
 .statisticsContainer {
   width: auto;
-  min-height: 320px;
+  min-height: 350px;
   padding: 5px 15px;
   background-color: white;
   align-content: center;
@@ -34,6 +34,7 @@ body {
   transition: all 0.3s ease;
   margin-top: -10px;
   gap: 10px;
+  min-height: 300px;
 }
 
 .chartContainer {
@@ -115,4 +116,49 @@ body {
 
 .highChart {
   margin-top: 40px;
+}
+
+.systemGroup {
+  margin-bottom: 40px;
+}
+
+.systemGroupHeader {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #1e293b;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemGroupHeader.hidden {
+  display: none;
+}
+
+.systemGroupItems {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.statisticItem {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 210px;
 }
