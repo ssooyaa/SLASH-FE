@@ -7,6 +7,7 @@ import ContentsHeader from "../../../../common/header/ContentsHeader";
 import { fetchIndicators } from "../../../../../api/CommonService";
 import { fetchAllContractName } from "../../../../../api/UserService";
 import StatisticsListTable from "../../../../feature/table/ StatisticsListTable";
+import "./IndexManagementContent.css";
 
 const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   // 전체 계약 정보 조회
