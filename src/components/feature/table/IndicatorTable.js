@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./IndicatorTable.css";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
-const IndicatorTable = ({ initialData, handleDetail,handleDeleteStatistics  }) => {
+const IndicatorTable = ({
+  initialData,
+  handleDetail,
+  handleDeleteStatistics,
+}) => {
   const [data, setData] = useState(initialData || []);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("EvaluationItemListTable 데이터: ", initialData); // data 값 확인
@@ -17,9 +18,9 @@ const IndicatorTable = ({ initialData, handleDetail,handleDeleteStatistics  }) =
     handleDetail(id);
   };
 
-  const handleDeleteDate = (evaluationItemId,date) =>{
-    handleDeleteStatistics(evaluationItemId,date);
-  }
+  const handleDeleteDate = (evaluationItemId, date) => {
+    handleDeleteStatistics(evaluationItemId, date);
+  };
 
   return (
     <div className="listTable">
@@ -35,7 +36,7 @@ const IndicatorTable = ({ initialData, handleDetail,handleDeleteStatistics  }) =
         <div className="listTableBody" key={item.evaluationItemId || index}>
           <p className="listTableCategory">{item.category}</p>
           <p className="isAutoP">{item.isAuto ? "자동" : "수동"}</p>
-          <p className="dateP dateP">{item.calculatedDate}</p>
+          <p className="dateP dateP">{item.date}</p>
           <p className="approvalP">{item.isApprove ? "승인됨" : "미승인"}</p>
           <p className="buttonP">
             <button onClick={() => handleData(item.evaluationItemId)}>
@@ -44,7 +45,9 @@ const IndicatorTable = ({ initialData, handleDetail,handleDeleteStatistics  }) =
             </button>
           </p>
           <p className="deleteBtnP">
-            <button onClick={() => handleDeleteDate(item.evaluationItemId,item.calculatedDate)}>
+            <button
+              onClick={() => handleDeleteDate(item.evaluationItemId, item.date)}
+            >
               삭제하기
             </button>
           </p>

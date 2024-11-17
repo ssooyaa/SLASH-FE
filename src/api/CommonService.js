@@ -102,7 +102,7 @@ export const fetchIndicators = async (contractId, yearMonth) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: {date: yearMonth},
+      params: { date: yearMonth },
     });
     return response.data;
   } catch (error) {
@@ -202,38 +202,6 @@ export const fetchCommonIncidentStatistics = async (evaluationItemId, date) => {
   } catch (error) {
     console.error("Error 장애적기처리율:", error);
     throw error;
-  }
-};
-
-export const fetchServiceStatistics = async (evaluationId, date) => {
-  try {
-    // date를 yyyy-MM-dd 형식으로 변환
-    const response = await axios.get("/contract-manager/service-statistic", {
-      params: {
-        evaluationId: evaluationId,
-        date: date,
-      },
-    });
-    return response.data.data; // 성공 시 응답 데이터 반환
-  } catch (error) {
-    console.error("Error fetching service statistics:", error);
-    throw error; // 에러 발생 시 처리
-  }
-};
-
-export const fetchServiceOperationStatistics = async (evaluationId, date) => {
-  try {
-    const formattedDate = date.toISOString().split("T")[0]; // date를 yyyy-MM-dd 형식으로 변환
-    const response = await axios.get("/contract-manager/service-statistic", {
-      params: {
-        evaluationId: evaluationId,
-        date: date,
-      },
-    });
-    return response.data.data; // 성공 시 응답 데이터 반환
-  } catch (error) {
-    console.error("Error fetching service statistics:", error);
-    throw error; // 에러 발생 시 처리
   }
 };
 

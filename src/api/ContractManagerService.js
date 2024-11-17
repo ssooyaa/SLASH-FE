@@ -114,7 +114,7 @@ export const saveServiceMeasuring = async (dto) => {
 
     console.log(dto);
     const response = await axios.post(
-      "/contract-manager/service-statistic",
+      "/contract-manager/service-statistics",
       dto,
       {
         headers: {
@@ -140,11 +140,15 @@ export const saveIncidentMeasuring = async (dto) => {
     const token = localStorage.getItem("accessToken");
 
     console.log(dto);
-    const response = await axios.post("/common/incident-statistics", dto, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      "/contract-manager/incident-statistics",
+      dto,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
@@ -384,8 +388,9 @@ export const fetchEditStatistics = async (evaluationItemId, editData) => {
   }
 };
 
-export const deleteStatistics = async (evaluationItemId, calculateTime) => {
+export const deleteStatistics = async (evaluationItemId, date) => {
   try {
+    console.log(evaluationItemId, date);
     const token = localStorage.getItem("accessToken");
 
     const response = await apiClient.delete(
@@ -395,7 +400,7 @@ export const deleteStatistics = async (evaluationItemId, calculateTime) => {
           Authorization: `Bearer ${token}`,
         },
         params: {
-          date: calculateTime, // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
+          date, // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
         },
       }
     );
