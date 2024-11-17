@@ -61,3 +61,11 @@ body {
 .searchIcon {
   margin-left: 0.6rem;
 }
+
+.react-datepicker__month-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__month .react-datepicker__month-text {
+  width: 50px;
+}
