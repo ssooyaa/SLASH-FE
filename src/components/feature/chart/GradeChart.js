@@ -68,7 +68,8 @@ const GradeChart = ({ indicatorList }) => {
       min: 0,
       max: yMax,
       tickInterval: 10, // y축을 10 단위로 설정
-      gridLineColor: "#E0E0E0", // 밝은 그리드 색상
+      gridLineColor: "#E8E8E8", // 밝은 그리드 색상
+      gridLineDashStyle: "Dash", // 점선 스타일로 경계 표현
       labels: {
         style: {
           fontSize: "12px",
@@ -91,6 +92,7 @@ const GradeChart = ({ indicatorList }) => {
     plotOptions: {
       column: {
         pointWidth: 30, // 막대 너비
+        borderWidth: 0, // 막대 테두리 제거
         dataLabels: {
           enabled: true, // 값 표시
           style: {
@@ -105,6 +107,11 @@ const GradeChart = ({ indicatorList }) => {
       {
         name: "SLA 점수",
         data: data, // 카테고리별 색상 데이터 적용
+        zones: [
+          { value: 60, color: "#FE4853" }, // Low score
+          { value: 80, color: "#FFA500" }, // Average score
+          { color: "#06D86F" }, // High score
+        ],
       },
     ],
     legend: {
