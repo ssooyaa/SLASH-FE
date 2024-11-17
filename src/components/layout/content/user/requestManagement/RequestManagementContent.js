@@ -4,10 +4,6 @@ import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagementBottom from "../requestManagement/RequestManagementBottom/RequestManageBottom";
 import RequestManagementTop from "../requestManagement/RequestManagementTop/RequestManagementTop";
-import {
-  fetchContractInfo,
-  fetchIndicators,
-} from "../../../../../api/CommonService";
 import ContractHeaderV3 from "../../../../common/header/ContractHeaderV3";
 
 const RequestManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {

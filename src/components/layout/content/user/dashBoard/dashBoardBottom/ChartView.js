@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ChartView.css";
 import Dropdown from "../../../../../dropdown/Dropdown";
-import { FaExclamationCircle } from "react-icons/fa";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";

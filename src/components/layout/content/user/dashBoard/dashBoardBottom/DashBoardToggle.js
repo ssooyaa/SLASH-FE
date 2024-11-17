@@ -1,4 +1,3 @@
-// DashboardToggle.js
 import React from "react";
 import { FaTable, FaChartPie } from "react-icons/fa";
 import "./DashBoardToggle.css";

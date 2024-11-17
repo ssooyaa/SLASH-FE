@@ -5,13 +5,11 @@ import { IoPersonCircle } from "react-icons/io5";
 import RequestManagerTop from "./requestManagerTop/RequestManagerTop";
 import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
 import ContractHeaderV2 from "../../../common/header/ContractHeaderV2";
-import { fetchContractInfo } from "../../../../api/CommonService";
 
 const RequestManagerMainContent = ({ isNavOpen, toggleNav, effectClass }) => {
   const [selectedAgreementId, setSelectedAgreementId] = useState(
     localStorage.getItem("selectedAgreementId") || null
   );
-  const [contractInfo, setContractInfo] = useState({});
 
   //콜백 함수 정의
   const handleContractSelection = (agreementId) => {
