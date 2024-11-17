@@ -34,7 +34,7 @@ const RequestManagerBottom = ({ agreementId, date }) => {
 
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(6);
+  const [size, setSize] = useState(12);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
