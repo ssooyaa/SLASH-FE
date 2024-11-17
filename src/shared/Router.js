@@ -46,7 +46,7 @@ const Router = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/user/yearIndicator" element={<YearIndicator />} />
+          <Route path="/user/yearIndicator" element={<UserYearIndicator />} />
           <Route
             path="/user/requestManagement"
             element={
