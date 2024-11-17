@@ -24,6 +24,8 @@ const EstimateIndicator = () => {
     return `${year}-${month}`;
   });
 
+  const [indicatorDate, setIndicatorDate] = useState(null);
+
   // 현재 달의 이전 달까지만 선택 가능하도록 max 값 설정
   const getMaxSelectableMonth = () => {
     const now = new Date();
@@ -38,6 +40,11 @@ const EstimateIndicator = () => {
     unCalculatedStatistics: [],
     calculatedStatistics: [],
   });
+
+  const handleDateUpdate = (date) => {
+    console.log("Updated date:", date); // 전달받은 date 확인
+    setIndicatorDate(date); // 상태 업데이트
+  };
 
   // Fetch contracts data
   useEffect(() => {
@@ -148,9 +155,13 @@ const EstimateIndicator = () => {
   const navigate = useNavigate();
 
   const handleDetailClick = (evaluationItemId) => {
-    navigate(
-      `/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${selectedDate}`
-    );
+    if (indicatorDate) {
+      navigate(
+        `/contractManager/autoCal?evaluationItemId=${evaluationItemId}&date=${indicatorDate}`
+      );
+    } else {
+      alert("날짜가 설정되지 않았습니다.");
+    }
   };
 
   const handleDeleteStatistics = async (evaluationItemId, date) => {
@@ -285,6 +296,7 @@ const EstimateIndicator = () => {
               initialData={data.calculatedStatistics}
               handleDetail={handleDetailClick}
               handleDeleteStatistics={handleDeleteStatistics}
+              handleDateUpdate={handleDateUpdate}
             />
           </div>
         ) : null}

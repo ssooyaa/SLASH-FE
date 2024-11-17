@@ -11,25 +11,36 @@ import {
 
 const EstimateIndicatorEdit = () => {
   const [searchParams] = useSearchParams();
-  const contractId = searchParams.get("contractId");
   const evaluationItemId = searchParams.get("evaluationItemId");
   const date = searchParams.get("date");
 
   const [evaluationItem, setEvaluationItem] = useState(null);
   const [evaluationData, setEvaluationData] = useState([]);
+  const [statisticsId, setStatisticsId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
   const [editData, setEditData] = useState({
     grade: "",
     score: "",
     weightedScore: "",
   });
-  const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태 관리
 
   const navigate = useNavigate();
 
+  const handleRedirect = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
+
+  // 수정 핸들러: 입력 값 변경 시 상태 업데이트
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // 수정/지표 확정 토글
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
-      // `수정하기` 버튼을 누르면 현재 데이터로 초기화
+      // 수정 모드 진입 시 마지막 데이터 값으로 초기화
       const lastItem = evaluationData[evaluationData.length - 1];
       setEditData({
         grade: lastItem.grade || "",
@@ -37,65 +48,61 @@ const EstimateIndicatorEdit = () => {
         weightedScore: lastItem.weightedScore || "",
       });
     } else {
-      // `지표 확정`을 누르면 수정한 값 반영
-      handleSaveEdit();
+      handleSaveEdit(); // 지표 확정 시 저장
     }
   };
 
+  // 수정 데이터 저장
   const handleSaveEdit = async () => {
     try {
-      const response = await fetchEditStatistics(evaluationItemId, editData);
-      if (response && response.success) {
-        alert("지표가 확정되었습니다.");
-        await loadEvaluationData(); // 데이터 새로고침
-        setIsEditing(false); // 수정 모드 종료
-      } else {
-        alert("지표 확정 실패");
-      }
+      await fetchEditStatistics(statisticsId, editData);
+      alert("지표가 확정되었습니다.");
+      await loadEvaluationData(); // 수정 후 데이터 재조회
+      setIsEditing(false); // 수정 모드 종료
     } catch (error) {
-      console.error("Error editing statistics:", error);
+      console.error("Error saving edited statistics:", error);
       alert("수정 중 오류 발생");
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleRedirect = () => {
-    navigate(-1); // 이전 페이지로 이동
-  };
-
-  useEffect(() => {
-    const loadEvaluationDetail = async () => {
-      try {
-        const data = await fetchEvaluationDetail(evaluationItemId);
-        if (data && data.success) {
-          setEvaluationItem(data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching evaluation detail:", error);
+  // 평가 항목 세부 데이터 로드
+  const loadEvaluationDetail = async () => {
+    try {
+      const data = await fetchEvaluationDetail(evaluationItemId);
+      if (data && data.success) {
+        setEvaluationItem(data.data);
       }
-    };
-    if (evaluationItemId) {
-      loadEvaluationDetail();
+    } catch (error) {
+      console.error("Error fetching evaluation detail:", error);
     }
-  }, [evaluationItemId]);
+  };
 
+  // 측정 결과 데이터 로드
   const loadEvaluationData = async () => {
     try {
       const response = await fetchEvaluationEquipment(evaluationItemId, date);
       if (response && response.success) {
         setEvaluationData(response.data);
+        if (response.data.length > 0) {
+          const lastItem = response.data[response.data.length - 1];
+          setStatisticsId(lastItem.statisticsId); // 마지막 statisticsId 저장
+        }
       } else {
         setEvaluationData([]);
+        setStatisticsId(null); // 데이터 없음 처리
       }
     } catch (error) {
       console.error("Error fetching evaluation equipment data:", error);
       setEvaluationData([]);
+      setStatisticsId(null); // 에러 발생 시 초기화
     }
   };
+
+  useEffect(() => {
+    if (evaluationItemId) {
+      loadEvaluationDetail();
+    }
+  }, [evaluationItemId]);
 
   useEffect(() => {
     if (evaluationItemId && date) {
@@ -106,77 +113,68 @@ const EstimateIndicatorEdit = () => {
   return (
     <div className="etableContainer">
       <h3>평가 항목 세부 정보</h3>
-      {evaluationItem && (
-        <>
-          <table className="ecustomTable">
-            <thead>
-              <tr>
-                <th>카테고리</th>
-                <th>가중치</th>
-                <th>주기</th>
-                <th>목적</th>
-                <th>자동 계산 여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{evaluationItem.category}</td>
-                <td>{evaluationItem.weight}</td>
-                <td>{evaluationItem.period}</td>
-                <td>{evaluationItem.purpose}</td>
-                <td>{evaluationItem.isAuto ? "자동" : "수동"}</td>
-              </tr>
-              <tr>
-                <th>단위</th>
-                <th colSpan={4}>산출식</th>
-              </tr>
-              <tr>
-                <td>{evaluationItem.unit}</td>
-                <td colSpan={4}>{evaluationItem.formula}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3>서비스 대상 등급</h3>
-          {evaluationItem.serviceTargets &&
-          evaluationItem.serviceTargets.length > 0 ? (
-            <table className="ecustomTable">
-              <thead>
-                <tr>
-                  <th>등급</th>
-                  <th>최소값</th>
-                  <th>최대값</th>
-                </tr>
-              </thead>
-              <tbody>
-                {evaluationItem.serviceTargets.map((target, index) => (
-                  <tr key={index}>
-                    <td>{target.grade}</td>
-                    <td>
-                      {target.min} {target.minInclusive ? "이상" : "초과"}
-                    </td>
-                    <td>
-                      {target.max} {target.maxInclusive ? "이하" : "미만"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>서비스 대상 등급 데이터가 없습니다.</p>
-          )}
-        </>
+      {evaluationItem ? (
+        <table className="ecustomTable">
+          <thead>
+            <tr>
+              <th>카테고리</th>
+              <th>가중치</th>
+              <th>주기</th>
+              <th>목적</th>
+              <th>자동 계산 여부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{evaluationItem.category}</td>
+              <td>{evaluationItem.weight}</td>
+              <td>{evaluationItem.period}</td>
+              <td>{evaluationItem.purpose}</td>
+              <td>{evaluationItem.isAuto ? "자동" : "수동"}</td>
+            </tr>
+          </tbody>
+        </table>
+      ) : (
+        <p>평가 항목 데이터를 불러오는 중입니다.</p>
       )}
 
+      <h3>서비스 대상 등급</h3>
+      {evaluationItem?.serviceTargets?.length > 0 ? (
+        <table className="ecustomTable">
+          <thead>
+            <tr>
+              <th>등급</th>
+              <th>최소값</th>
+              <th>최대값</th>
+            </tr>
+          </thead>
+          <tbody>
+            {evaluationItem.serviceTargets.map((target, index) => (
+              <tr key={index}>
+                <td>{target.grade}</td>
+                <td>
+                  {target.min} {target.minInclusive ? "이상" : "초과"}
+                </td>
+                <td>
+                  {target.max} {target.maxInclusive ? "이하" : "미만"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>서비스 대상 등급 데이터가 없습니다.</p>
+      )}
+
+      <h3>측정 결과</h3>
       <div
         style={{
           display: "flex",
-          alignItems: "center",
           justifyContent: "space-between",
-          padding: "10px 0",
+          alignItems: "center",
+          marginBottom: "16px",
         }}
       >
-        <h3 style={{ margin: 0 }}>측정 결과</h3>
         <button
           style={{
             backgroundColor: "#121824",
@@ -185,6 +183,7 @@ const EstimateIndicatorEdit = () => {
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
+            marginLeft: "auto", // 오른쪽으로 밀기 위한 스타일
           }}
           onClick={handleEditToggle}
         >
@@ -211,9 +210,15 @@ const EstimateIndicatorEdit = () => {
               {evaluationData.some((item) => item.estimate !== -1) && (
                 <th>측정 치</th>
               )}
-              <th>평가 점수</th>
-              <th>평가 점수(가중치 적용)</th>
-              <th>등급</th>
+              {evaluationData.some((item) => item.score !== -1) && (
+                <th>평가 점수</th>
+              )}
+              {evaluationData.some((item) => item.weightedScore !== -1) && (
+                <th>평가 점수(가중치 적용)</th>
+              )}
+              {evaluationData.some((item) => item.grade !== -1) && (
+                <th>등급</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -225,7 +230,7 @@ const EstimateIndicatorEdit = () => {
                   <td>{item.systemIncidentCount}</td>
                 )}
                 {item.totalDowntime !== -1 && <td>{item.totalDowntime}</td>}
-                {item.estimate !== -1 && <td>{item.estimate}</td>}
+                <td>{item.estimate}</td>
                 {index === evaluationData.length - 1 ? (
                   <>
                     <td>
@@ -270,9 +275,9 @@ const EstimateIndicatorEdit = () => {
                   </>
                 ) : (
                   <>
-                    <td>{item.score}</td>
-                    <td>{item.weightedScore}</td>
-                    <td>{item.grade}</td>
+                    {item.score !== -1 && <td>{item.score}</td>}
+                    {item.weightedScore !== -1 && <td>{item.weightedScore}</td>}
+                    {item.grade !== -1 && <td>{item.grade}</td>}
                   </>
                 )}
               </tr>

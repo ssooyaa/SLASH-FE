@@ -6,13 +6,17 @@ const IndicatorTable = ({
   initialData,
   handleDetail,
   handleDeleteStatistics,
+  handleDateUpdate,
 }) => {
   const [data, setData] = useState(initialData || []);
 
   useEffect(() => {
-    console.log("EvaluationItemListTable 데이터: ", initialData); // data 값 확인
+    if (Array.isArray(initialData) && initialData.length > 0) {
+      const singleDate = initialData[0].date; // 첫 번째 항목의 date
+      handleDateUpdate(singleDate); // 상위 컴포넌트로 전달
+    }
     setData(initialData);
-  }, [initialData]);
+  }, [initialData, handleDateUpdate]);
 
   const handleData = (id) => {
     handleDetail(id);
