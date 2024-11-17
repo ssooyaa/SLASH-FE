@@ -3,17 +3,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #f8f9fc, #e3e6f3); /* Smooth gradient */
+  background-size: cover; /* Ensure the gradient or image covers the screen */
+  background-repeat: no-repeat; /* Avoid repetition */
+  position: relative;
+  overflow: hidden;
+}
+
+.loginPage::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle at top right,
+    rgba(0, 123, 255, 0.2),
+    transparent
+  );
+  top: -50px;
+  left: -50px;
+  transform: rotate(45deg);
+  z-index: 1;
 }
 
 .loginContainer {
   background-color: white;
-
   padding: 60px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow for better depth */
   width: 350px;
   height: 400px;
   position: relative;
+  z-index: 2; /* Ensure it appears above the background effects */
 }
 
 .loginHeader {
@@ -21,7 +42,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-
   margin-bottom: 80px;
   transform: translateX(-11%);
 }
@@ -105,6 +125,7 @@
   cursor: pointer;
   font-size: 1.1rem;
   margin-top: 20px;
+  transition: all 0.3s ease; /* Smooth hover effect */
 }
 
 .loginButton:hover {
