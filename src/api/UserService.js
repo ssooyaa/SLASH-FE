@@ -194,10 +194,13 @@ export const fetchFilteredRequests = async (filters) => {
         keyword: filters.searchTerm,
         page: filters.page,
         size: filters.size,
-        contractId: filters.contractId,
+        contractId: filters.contractId, // 필수 값으로 유지
+        year: filters.year || undefined, // year가 없으면 제외
+        month: filters.month || undefined, // month가 없으면 제외
       },
     });
 
+    // 결과 반환
     return response.data.data || { results: [], totalPages: 0, currentPage: 1 };
   } catch (error) {
     console.error("Error fetching filtered requests:", error);

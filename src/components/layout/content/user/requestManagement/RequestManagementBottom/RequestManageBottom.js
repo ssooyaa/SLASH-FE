@@ -19,7 +19,7 @@ const statusMapping = {
   "처리 완료": "COMPLETED",
 };
 
-const RequestManagementBottom = () => {
+const RequestManagementBottom = ({ agreementId, date }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
@@ -61,23 +61,41 @@ const RequestManagementBottom = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Agreement ID:", agreementId);
+    console.log("Date:", date);
+
     const loadFilteredRequests = async () => {
-      try {
-        const response = await fetchFilteredRequests({
-          selectedTaskType,
-          selectedEquipmentType,
-          selectedTaskDetail,
-          selectedStatus,
-          searchTerm,
-          page,
-          size,
-          statusMapping,
-        });
-        setTaskRequests(response.results);
-        setTotalPages(response.totalPages);
-        setPage(response.currentPage);
-      } catch (error) {
-        console.error("Error loading filtered requests:", error);
+      if (agreementId) {
+        try {
+          let year, month;
+
+          // date 값이 있으면 year와 month를 추출
+          if (date) {
+            [year, month] = date.split("-");
+          }
+
+          const response = await fetchFilteredRequests({
+            selectedTaskType,
+            selectedEquipmentType,
+            selectedTaskDetail,
+            selectedStatus,
+            searchTerm,
+            page,
+            size,
+            statusMapping,
+            contractId: agreementId, // agreementId 매핑
+            year: year || undefined, // date 없으면 year 제외
+            month: month || undefined, // date 없으면 month 제외
+          });
+
+          setTaskRequests(response.results);
+          setTotalPages(response.totalPages);
+          setPage(response.currentPage);
+        } catch (error) {
+          console.error("Error loading filtered requests:", error);
+        }
+      } else {
+        console.warn("Agreement ID is missing. Skipping request.");
       }
     };
 
@@ -90,6 +108,8 @@ const RequestManagementBottom = () => {
     page,
     size,
     searchTerm,
+    agreementId, // dependency 추가
+    date, // dependency 추가
   ]);
 
   const handleSelectStatus = (option) => {
