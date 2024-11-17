@@ -67,6 +67,9 @@ const RequestAllocationTable = ({ agreementId, date }) => {
     const loadFilteredRequests = async () => {
       if (agreementId && date) {
         try {
+          // `date`에서 year와 month를 추출
+          const [year, month] = date.split("-");
+
           const response = await fetchFilteredRequests({
             selectedTaskType,
             selectedEquipmentType,
@@ -76,7 +79,11 @@ const RequestAllocationTable = ({ agreementId, date }) => {
             page,
             size,
             statusMapping,
+            contractId: agreementId, // contractId에 agreementId 매핑
+            year, // 요청에 year 추가
+            month, // 요청에 month 추가
           });
+
           setTaskRequests(response.results);
           setTotalPages(response.totalPages);
           setPage(response.currentPage);
