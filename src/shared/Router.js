@@ -22,6 +22,7 @@ import EstimateIndicatorEdit from "../pages/contractManager/EstimateIndicatorEdi
 import StatisticsResults from "../pages/contractManager/StatisticsResults";
 import YearIndicator from "../pages/contractManager/YearIndicator";
 import StatisticsPdf from "../pages/contractManager/StatisticsPdf";
+import UserYearIndicator from "../pages/user/UserYearIndicator";
 
 const LoginPage = lazy(() => import("../pages/login/LoginPage"));
 
@@ -31,7 +32,6 @@ const Router = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" index element={<LoginPage />} />
-
           {/* 사용자 권한 페이지들 */}
           <Route path="/user/indexManagement" element={<IndexManagement />} />
           <Route
@@ -129,7 +129,6 @@ const Router = () => {
             path="/contractManager/updateEvaluationItem/:evaluationItemId"
             element={<UpdateEvaluationItem />}
           />
-
           <Route
             path="/contractManager/statisticsResult"
             element={<StatisticsResults />}

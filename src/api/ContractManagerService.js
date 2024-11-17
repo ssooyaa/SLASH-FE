@@ -79,8 +79,13 @@ export const saveMeasuring = async (dto) => {
 export const saveServiceMeasuring = async (dto) => {
   try {
     const response = await axios.post(
-      "/contract-manager/service-statistic",
-      dto
+      "/contract-manager/service-statistics",
+      dto,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     // Check if response.data.success exists and return it
@@ -273,13 +278,13 @@ export const fetchEditStatistics = async (evaluationItemId, editData) => {
   }
 };
 
-export const deleteStatistics = async (evaluationItemId, calculateTime) => {
+export const deleteStatistics = async (evaluationItemId, date) => {
   try {
     const response = await axios.delete(
       `/contract-manager/statistics/${evaluationItemId}`,
       {
         params: {
-          date: calculateTime, // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
+          date, // LocalDate 형식의 날짜를 YYYY-MM-DD 형태로 전달
         },
       }
     );

@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { fetchYearIndicators } from "../../../../../api/CommonService";
 import BottomTable from "../statisticsResults/BottomTable";
 import "../../contractManager/yearIndicator/YearIndicator.css";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const YearIndicatorTable = ({ contractId, date }) => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
