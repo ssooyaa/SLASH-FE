@@ -8,11 +8,12 @@ const MiddleIndex = ({ initialData }) => {
     <div className="middle">
       <div className="totalIndex">
         <div className="title">종합평가 등급</div>
+
         <div className="value">
           {initialData?.indicatorEtcInfo?.grade || ""}등급
         </div>
         <div className="subText">
-          {initialData?.indicatorEtcInfo?.score || ""}점
+          {Math.round(initialData?.indicatorEtcInfo?.score * 100) / 100 || ""}점
         </div>
       </div>
       <div className="monthChart">

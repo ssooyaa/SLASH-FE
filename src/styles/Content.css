@@ -69,10 +69,10 @@ body {
 
 .navOpenBtn {
   position: fixed;
-  top: 0.3rem;
-  left: 30px;
-  width: 28px;
-  height: 28px;
+  top: 1rem;
+  left: 20px;
+  width: 26px;
+  height: 26px;
   background-color: #121824;
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

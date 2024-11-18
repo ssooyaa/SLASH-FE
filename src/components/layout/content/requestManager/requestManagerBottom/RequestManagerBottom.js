@@ -19,7 +19,7 @@ const statusMapping = {
 
 const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
-const RequestManagerBottom = () => {
+const RequestManagerBottom = ({ agreementId, date }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
@@ -34,7 +34,7 @@ const RequestManagerBottom = () => {
 
   const [taskRequests, setTaskRequests] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(6);
+  const [size, setSize] = useState(12);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -58,23 +58,41 @@ const RequestManagerBottom = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Agreement ID:", agreementId);
+    console.log("Date:", date);
+
     const loadFilteredRequests = async () => {
-      try {
-        const response = await fetchFilteredRequests({
-          selectedTaskType,
-          selectedEquipmentType,
-          selectedTaskDetail,
-          selectedStatus,
-          searchTerm,
-          page,
-          size,
-          statusMapping,
-        });
-        setTaskRequests(response.results);
-        setTotalPages(response.totalPages);
-        setPage(response.currentPage);
-      } catch (error) {
-        console.error("Error loading filtered requests:", error);
+      if (agreementId) {
+        try {
+          let year, month;
+
+          // date 값이 있으면 year와 month를 추출
+          if (date) {
+            [year, month] = date.split("-");
+          }
+
+          const response = await fetchFilteredRequests({
+            selectedTaskType,
+            selectedEquipmentType,
+            selectedTaskDetail,
+            selectedStatus,
+            searchTerm,
+            page,
+            size,
+            statusMapping,
+            contractId: agreementId, // agreementId 매핑
+            year: year || undefined, // date 없으면 year 제외
+            month: month || undefined, // date 없으면 month 제외
+          });
+
+          setTaskRequests(response.results);
+          setTotalPages(response.totalPages);
+          setPage(response.currentPage);
+        } catch (error) {
+          console.error("Error loading filtered requests:", error);
+        }
+      } else {
+        console.warn("Agreement ID is missing. Skipping request.");
       }
     };
 
@@ -87,6 +105,8 @@ const RequestManagerBottom = () => {
     page,
     size,
     searchTerm,
+    agreementId, // dependency 추가
+    date, // dependency 추가
   ]);
 
   const handleSelectStatus = (option) => {

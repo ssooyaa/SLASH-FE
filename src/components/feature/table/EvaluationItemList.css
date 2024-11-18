@@ -59,10 +59,10 @@
   background-color: transparent;
   border: none;
   padding: 8px 16px;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 .noData {

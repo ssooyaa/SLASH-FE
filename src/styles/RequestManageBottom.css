@@ -7,7 +7,7 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  height: 409px;
+  height: auto;
   background-color: white;
   box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
   border-radius: 10px;

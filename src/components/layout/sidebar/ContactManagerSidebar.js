@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../../styles/Sidebar.css";
 import { FiHome, FiTrendingUp } from "react-icons/fi";
-import { FaFileContract, FaTasks } from "react-icons/fa";
+import { FaTasks } from "react-icons/fa";
 import logo from "../../../assets/images/logo.png";
 import LogoutButton from "../../common/button/LogoutButton.js";
 import { IoCalendarNumberOutline } from "react-icons/io5";
