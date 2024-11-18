@@ -2,6 +2,7 @@ import React from "react";
 
 const TaskTypeLabel = ({ taskType }) => {
   const getLabelStyle = (taskType) => {
+    // eslint-disable-next-line default-case
     switch (taskType) {
       case "서비스 요청":
         return { backgroundColor: "#F6E9FF", color: "#C66FFC" };

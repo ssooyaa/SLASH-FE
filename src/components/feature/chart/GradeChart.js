@@ -2,7 +2,6 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import "./GradeChart.css";
-import { MdHeight } from "react-icons/md";
 
 const GradeChart = ({ indicatorList }) => {
   const initialData = indicatorList || [];
@@ -18,10 +17,10 @@ const GradeChart = ({ indicatorList }) => {
         color = "#2C70F4"; // 파랑
         break;
       case "장애 적기처리율":
-        color = "#FE4853"; // 초록
+        color = "#FE4853"; // 빨강
         break;
       case "서비스요청 적기처리율":
-        color = "#06D86F"; // 빨강
+        color = "#06D86F"; // 초록
         break;
       default:
         color = "#888888"; // 기본 색상
@@ -36,17 +35,31 @@ const GradeChart = ({ indicatorList }) => {
   const options = {
     chart: {
       type: "column",
-      height: 280,
-      backgroundColor: "transparent", // 배경 투명
-      padding: 30,
-      margin: 50,
+      backgroundColor: "transparent", // 배경 투명화
+      height: 300, // 차트 높이 설정
+      spacingBottom: 30, // 아래쪽 간격
+      style: {
+        fontFamily: "'Roboto', sans-serif", // 폰트 설정
+      },
     },
     title: {
-      text: null,
+      text: "SLA 지표 성과",
+      style: {
+        fontSize: "20px",
+        fontWeight: "bold",
+        color: "#2C70F4",
+      },
     },
     xAxis: {
       categories: xCategory,
       lineWidth: 0, // x축 아래 선 제거
+      labels: {
+        style: {
+          fontSize: "13px",
+          color: "#4A4A4A", // x축 레이블 색상
+          fontWeight: "600",
+        },
+      },
     },
     yAxis: {
       title: {
@@ -55,64 +68,68 @@ const GradeChart = ({ indicatorList }) => {
       min: 0,
       max: yMax,
       tickInterval: 10, // y축을 10 단위로 설정
-      gridLineWidth: 0,
+      gridLineColor: "#E8E8E8", // 밝은 그리드 색상
+      gridLineDashStyle: "Dash", // 점선 스타일로 경계 표현
+      labels: {
+        style: {
+          fontSize: "12px",
+          color: "#888",
+        },
+      },
+    },
+    tooltip: {
+      backgroundColor: "#FFFFFF",
+      borderColor: "#2C70F4",
+      borderRadius: 8,
+      shadow: true,
+      style: {
+        color: "#333",
+        fontSize: "12px",
+        fontWeight: "bold",
+      },
+      pointFormat: "<b>{point.y}</b> 점",
     },
     plotOptions: {
-      series: {
-        pointWidth: 20,
-        borderRadius: {
-          radius: 10,
+      column: {
+        pointWidth: 30, // 막대 너비
+        borderWidth: 0, // 막대 테두리 제거
+        dataLabels: {
+          enabled: true, // 값 표시
+          style: {
+            fontSize: "12px",
+            color: "#333",
+            fontWeight: "bold",
+          },
         },
       },
     },
     series: [
       {
+        name: "SLA 점수",
         data: data, // 카테고리별 색상 데이터 적용
+        zones: [
+          { value: 60, color: "#FE4853" }, // Low score
+          { value: 80, color: "#FFA500" }, // Average score
+          { color: "#06D86F" }, // High score
+        ],
       },
     ],
     legend: {
-      enabled: false,
-    },
-    tooltip: {
-      enabled: true, // hover 시 값이 나오지 않게 설정
+      enabled: false, // 범례 비활성화
     },
     credits: {
-      enabled: false,
-    },
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              display: false,
-            },
-            yAxis: {
-              labels: {
-                align: "left",
-                x: 0,
-                y: 0,
-              },
-              title: {
-                text: null,
-              },
-            },
-            subtitle: {
-              text: null,
-            },
-            credits: {
-              enabled: false,
-            },
-          },
-        },
-      ],
+      enabled: false, // Highcharts 로고 제거
     },
   };
 
   return (
-    <>
+    <div
+      style={{
+        maxWidth: "800px", // 차트 최대 너비
+        margin: "10 auto", // 수평 중앙 정렬
+        padding: "10px", // 외부 간격
+      }}
+    >
       {initialData.length === 0 ? (
         <div className="noChartMessage">
           <p>산출 결과가 없습니다</p>
@@ -120,7 +137,7 @@ const GradeChart = ({ indicatorList }) => {
       ) : (
         <HighchartsReact highcharts={Highcharts} options={options} />
       )}
-    </>
+    </div>
   );
 };
 

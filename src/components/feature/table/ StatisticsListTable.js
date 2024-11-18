@@ -56,8 +56,11 @@ const StatisticsListTable = ({ initialData, handleDetail }) => {
             <p className="dateP"></p>
             <p className="scoreP"></p>
             <p className="weightScoreP">
-              {data.indicatorEtcInfo?.score || "-"}
+              {data.indicatorEtcInfo?.score
+                ? Math.round(data.indicatorEtcInfo.score * 100) / 100
+                : "-"}
             </p>
+
             <p className="gradeP">{data.indicatorEtcInfo?.grade || "-"}</p>
             <p className="buttonP"></p>
           </div>
