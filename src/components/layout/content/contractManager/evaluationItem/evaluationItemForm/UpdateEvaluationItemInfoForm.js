@@ -196,11 +196,14 @@ const UpdateEvaluationItemInfoForm = () => {
     );
     handleChange("serviceTargets", updatedServiceTargets);
 
+    console.log(updateServiceTargets);
+
     const updatedTaskTypes = updateTaskType.filter(
       (target) => target.taskDetail !== ""
     );
 
     handleChange("taskTypes", updatedTaskTypes);
+    console.log(updatedTaskTypes);
 
     if (!isValid()) {
       return; //미입력값 있을 시 제출 불가
@@ -208,9 +211,11 @@ const UpdateEvaluationItemInfoForm = () => {
 
     const updatedFormData = {
       ...formData,
+      contractId: contractId,
       serviceTargets: updatedServiceTargets,
       taskTypes: updatedTaskTypes, // 반환된 taskTypes 배열을 할당
     };
+    console.log(updatedFormData);
 
     if (firstTaskTypesLength > 0 && taskTypes.length === 0) {
       alert("업무유형을 모두 삭제 시 반영되지 않습니다. 삭제 후 추가해 주세요");
@@ -235,13 +240,22 @@ const UpdateEvaluationItemInfoForm = () => {
         }
       } else {
         try {
+          if (updateServiceTargets.length === 0) {
+            updatedFormData.serviceTargets = serviceTargets;
+          }
+
+          if (updateTaskType.length === 0) {
+            updateEvaluationItem.taskTypes = taskTypes;
+          }
           const postEvaluationItem = await createEvaluationItem(
             evaluationItemId,
             updatedFormData
           );
           if (postEvaluationItem) {
             alert("수정 완료");
-            navigate(-1);
+            navigate("/contractManager/contractDetail", {
+              state: { contractId },
+            });
           }
         } catch (error) {
           alert("수정 실패");

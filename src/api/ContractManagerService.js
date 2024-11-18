@@ -173,7 +173,7 @@ export const createEvaluationItem = async (
 ) => {
   try {
     const response = await axios.post(
-      `/contract-manager/total-target/${evaluationItemId}`,
+      `/contract-manager/evaluation-item/${evaluationItemId}`,
       requestEvaluationDTO
     );
 
