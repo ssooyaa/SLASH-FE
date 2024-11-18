@@ -6,10 +6,8 @@ export const CreateContract = async (requestContractDTO) => {
       "/contract-manager/contract",
       requestContractDTO
     );
-
     if (response.data.success) {
       alert("계약생성 성공");
-
       return response.data.data;
     } else {
       return false;
@@ -17,7 +15,6 @@ export const CreateContract = async (requestContractDTO) => {
   } catch (error) {
     console.error("ERROR: ", error.response.data);
     alert(error.response.data.message);
-
     return false;
   }
 };
@@ -28,7 +25,6 @@ export const CreateServiceDetail = async (requestContractDTO) => {
       "/contract-manager/evaluation-item",
       requestContractDTO
     );
-
     if (response.data.success) {
       return response.data.success;
     } else {
@@ -36,7 +32,6 @@ export const CreateServiceDetail = async (requestContractDTO) => {
     }
   } catch (error) {
     console.error("ERROR: ", error.response.data);
-
     return false;
   }
 };
@@ -44,18 +39,15 @@ export const CreateServiceDetail = async (requestContractDTO) => {
 export const fetchStatisticsStatus = async (contractId, selectedDate) => {
   try {
     const params = { contractId: contractId, date: selectedDate };
-    // axios 요청 수정
     const response = await axios.get(
       `/contract-manager/statistics/status/${contractId}?date=${selectedDate}`,
       {
         params,
       }
     );
-
-    return response.data; // 데이터를 반환
+    return response.data;
   } catch (error) {
     console.error("데이터 전송 오류:", error);
-
     return []; // 오류 발생 시 빈 배열 반환
   }
 };
@@ -63,16 +55,14 @@ export const fetchStatisticsStatus = async (contractId, selectedDate) => {
 export const saveMeasuring = async (dto) => {
   try {
     const response = await axios.post("/contract-manager/statistics", dto);
-
-    // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
-      return true; // Return true if success
+      return true;
     } else {
-      return false; // Return false if not successful
+      return false;
     }
   } catch (error) {
     console.error("ERROR: ", error.response?.data || error.message);
-    return false; // Return false on error
+    return false;
   }
 };
 
@@ -82,16 +72,14 @@ export const saveServiceMeasuring = async (dto) => {
       "/contract-manager/service-statistics",
       dto
     );
-
-    // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
-      return true; // Return true if success
+      return true;
     } else {
-      return false; // Return false if not successful
+      return false;
     }
   } catch (error) {
     console.error("ERROR: ", error.response?.data || error.message);
-    return false; // Return false on error
+    return false;
   }
 };
 
@@ -101,23 +89,20 @@ export const saveIncidentMeasuring = async (dto) => {
       "/contract-manager/incident-statistics",
       dto
     );
-
-    // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
-      return true; // Return true if success
+      return true;
     } else {
-      return false; // Return false if not successful
+      return false;
     }
   } catch (error) {
     console.error("ERROR: ", error.response?.data || error.message);
-    return false; // Return false on error
+    return false;
   }
 };
 
 export const fetchAllContractInfo = async () => {
   try {
     const response = await axios.get("/contract-manager/all-contract");
-
     if (response.data.success) {
       return response.data.data;
     } else {
@@ -133,10 +118,8 @@ export const fetchModifyIsPossible = async (contractId) => {
     const response = await axios.get(
       `/contract-manager/modifiable/${contractId}`
     );
-
     if (response.data.success) {
       console.log(response.data.data);
-
       return response.data.data;
     } else {
       return [];
@@ -152,7 +135,6 @@ export const createTotalTarget = async (contractId, requestTotalTargetDTO) => {
       `/contract-manager/total-target/${contractId}`,
       requestTotalTargetDTO
     );
-
     if (response.data.success) {
       return response.data.success;
     } else {
@@ -172,7 +154,6 @@ export const updateTotalTarget = async (contractId, requestTotalTargetDTO) => {
       `/contract-manager/total-target/${contractId}`,
       requestTotalTargetDTO
     );
-
     if (response.data.success) {
       return response.data.success;
     } else {
