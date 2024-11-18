@@ -264,7 +264,8 @@ export const fetchEvaluationEquipment = async (evaluationItemId, date) => {
 export const fetchEditStatistics = async (evaluationItemId, editData) => {
   try {
     const response = await axios.patch(
-      `/contract-manager/statistics/${evaluationItemId}`
+      `/contract-manager/statistics/${evaluationItemId}`,
+      editData
     );
     return response.data;
   } catch (error) {
