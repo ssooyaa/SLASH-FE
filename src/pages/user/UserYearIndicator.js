@@ -21,6 +21,7 @@ const UserYearIndicator = () => {
         effectClass={effectClass}
         setEffectClass={setEffectClass}
       />
+
       <YearIndicatorInfo
         isNavOpen={isNavOpen}
         toggleNav={toggleNav}

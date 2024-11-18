@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import "./StatisticsListTable.css";
 
-const StatisticsListTable = ({ initialData, handleDetail }) => {
-  const [data, setData] = useState(initialData || {});
+const StatisticsListTable = ({ initialData }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (initialData) {
-      setData(initialData);
-    }
-  }, [initialData]);
-
   const handleDetailClick = (evaluationItemId, date) => {
-    handleDetail(evaluationItemId, date);
+    if (evaluationItemId && date) {
+      const basePath = window.location.pathname.startsWith("/contractManager")
+        ? navigate(
+            `/contractManager/indexManagement/detail/${evaluationItemId}/${date}`
+          )
+        : navigate(`/user/indexManagement/detail/${evaluationItemId}/${date}`);
+    } else {
+      console.error("Missing parameters:", { evaluationItemId, date });
+    }
   };
 
   return (
     <div className="listTable">
-      {data.indicatorList && data.indicatorList.length > 0 ? (
+      {initialData?.indicatorList && initialData?.indicatorList.length > 0 ? (
         <>
           <div className="listTableHead">
             <p className="listTableCategory headerP">지표구분</p>
@@ -30,7 +31,7 @@ const StatisticsListTable = ({ initialData, handleDetail }) => {
             <p className="gradeP headerP">평가 등급</p>
             <p className="buttonP"></p>
           </div>
-          {data.indicatorList.map((item, index) => (
+          {initialData?.indicatorList.map((item, index) => (
             <div className="listTableBody" key={item.evaluationItemId || index}>
               <p className="listTableCategory">{item.category}</p>
               <p className="isAutoP">{item.isAuto ? "자동" : "수동"}</p>
@@ -56,12 +57,14 @@ const StatisticsListTable = ({ initialData, handleDetail }) => {
             <p className="dateP"></p>
             <p className="scoreP"></p>
             <p className="weightScoreP">
-              {data.indicatorEtcInfo?.score
-                ? Math.round(data.indicatorEtcInfo.score * 100) / 100
+              {initialData.indicatorEtcInfo?.score
+                ? Math.round(initialData.indicatorEtcInfo.score * 100) / 100
                 : "-"}
             </p>
 
-            <p className="gradeP">{data.indicatorEtcInfo?.grade || "-"}</p>
+            <p className="gradeP">
+              {initialData.indicatorEtcInfo?.grade || "-"}
+            </p>
             <p className="buttonP"></p>
           </div>
         </>

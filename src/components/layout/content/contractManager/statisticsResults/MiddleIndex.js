@@ -4,30 +4,20 @@ import "../../../../../styles/Font.css";
 import GradeChart from "../../../../feature/chart/GradeChart";
 
 const MiddleIndex = ({ initialData }) => {
-  const [indicatorData, setIndicatorData] = useState({
-    grade: "",
-    score: 0,
-  });
-  const [indicatorList, setIndicatorList] = useState([]);
-
-  useEffect(() => {
-    if (initialData) {
-      setIndicatorData(initialData.indicatorEtcInfo || { grade: "", score: 0 });
-      setIndicatorList(initialData.indicatorList || []);
-    }
-  }, [initialData]);
-
   return (
     <div className="middle">
       <div className="totalIndex">
         <div className="title">종합평가 등급</div>
-        <div className="value">{indicatorData.grade}등급</div>
+
+        <div className="value">
+          {initialData?.indicatorEtcInfo?.grade || ""}등급
+        </div>
         <div className="subText">
-          {Math.round(indicatorData.score * 100) / 100}점
+          {Math.round(initialData?.indicatorEtcInfo?.score * 100) / 100 || ""}점
         </div>
       </div>
       <div className="monthChart">
-        <GradeChart indicatorList={indicatorList} />
+        <GradeChart indicatorList={initialData?.indicatorList || []} />
       </div>
     </div>
   );
