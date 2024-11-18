@@ -97,7 +97,10 @@ export const saveServiceMeasuring = async (dto) => {
 
 export const saveIncidentMeasuring = async (dto) => {
   try {
-    const response = await axios.post("/common/incident-statistics", dto);
+    const response = await axios.post(
+      "/contract-manager/incident-statistics",
+      dto
+    );
 
     // Check if response.data.success exists and return it
     if (response.data && response.data.success) {
@@ -211,6 +214,7 @@ export const updateEvaluationItem = async (
   requestEvaluationDTO
 ) => {
   try {
+    console.log(evaluationItemId, requestEvaluationDTO);
     const response = await axios.put(
       `/contract-manager/evaluation-item/${evaluationItemId}`,
       requestEvaluationDTO
