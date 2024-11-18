@@ -19,7 +19,7 @@ const statusMapping = {
 
 const statusOptions = ["전체", "접수 완료", "진행중", "처리 완료"];
 
-const RequestAllocationTable = () => {
+const RequestAllocationTable = ({ agreementId, date }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("전체");
@@ -61,23 +61,35 @@ const RequestAllocationTable = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Agreement ID:", agreementId);
+    console.log("Date:", date);
+
     const loadFilteredRequests = async () => {
-      try {
-        const response = await fetchFilteredRequests({
-          selectedTaskType,
-          selectedEquipmentType,
-          selectedTaskDetail,
-          selectedStatus,
-          searchTerm,
-          page,
-          size,
-          statusMapping,
-        });
-        setTaskRequests(response.results);
-        setTotalPages(response.totalPages);
-        setPage(response.currentPage);
-      } catch (error) {
-        console.error("Error loading filtered requests:", error);
+      if (agreementId && date) {
+        try {
+          // `date`에서 year와 month를 추출
+          const [year, month] = date.split("-");
+
+          const response = await fetchFilteredRequests({
+            selectedTaskType,
+            selectedEquipmentType,
+            selectedTaskDetail,
+            selectedStatus,
+            searchTerm,
+            page,
+            size,
+            statusMapping,
+            contractId: agreementId, // contractId에 agreementId 매핑
+            year, // 요청에 year 추가
+            month, // 요청에 month 추가
+          });
+
+          setTaskRequests(response.results);
+          setTotalPages(response.totalPages);
+          setPage(response.currentPage);
+        } catch (error) {
+          console.error("Error loading filtered requests:", error);
+        }
       }
     };
 
@@ -90,6 +102,8 @@ const RequestAllocationTable = () => {
     page,
     size,
     searchTerm,
+    agreementId,
+    date,
   ]);
 
   const handleSelectStatus = (option) => {
@@ -177,11 +191,6 @@ const RequestAllocationTable = () => {
   return (
     <div className="requestListContainer">
       <div className="requestHeaderContainer">
-        <div className="headerTop">
-          <button className="tabButton" onClick={toggleModal}>
-            요청 등록
-          </button>
-        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
 
@@ -215,7 +224,7 @@ const RequestAllocationTable = () => {
                   )}
                 </div>
               </th>
-              <th>담당자</th>
+              <th>요청자</th>
               <th>
                 <div
                   className="customDropdown"
