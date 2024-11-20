@@ -28,7 +28,7 @@ body {
   margin-left: 5px;
   height: 30px;
   font-size: 0.7rem;
-  width: 160px;
+  width: 160px !important;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   background-color: white;
