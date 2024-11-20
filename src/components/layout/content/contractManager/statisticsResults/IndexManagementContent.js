@@ -14,23 +14,19 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   const [agreements, setAgreements] = useState([]);
 
   // agreement와 date의 경우 새로고침시에 정보를 유지하기 위해 세션에 해당 정보 저장
-  const [selectedAgreement, setSelectedAgreement] = useState(
-    JSON.parse(sessionStorage.getItem("selectedAgreement")) || null
-  );
-  const [selectedDate, setSelectedDate] = useState(
-    sessionStorage.getItem("selectedDate") || null
-  );
+  const [selectedAgreement, setSelectedAgreement] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [contractData, setContractData] = useState({});
 
-  const getLastDayOfPreviousMonth = () => {
+  const getMaxDate = () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth()).padStart(2, "0"); //전월기준으로 +1 하지 않음
     return `${year}-${month}`;
   };
 
-  const maxDate = getLastDayOfPreviousMonth();
+  const maxDate = getMaxDate();
 
   // 계약정보를 불러오는 함수
   const fetchInitialContracts = async () => {
