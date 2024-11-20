@@ -4,11 +4,9 @@ import RequestContentForm from "../RequestContentForm";
 import EditRequestForm from "../EditRequestForm";
 import { deleteRequest } from "../../../../service/api/userService";
 import { completeRequest } from "../../../../api/RequestManagerService";
-import { useNavigate } from "react-router-dom";
 
 const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -90,7 +88,7 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
             }
             canEdit={
               requestData.requester === "c" &&
-              requestData.status === "접수완료" &&
+              requestData.status === "접수 완료" &&
               loggedInUser === "3"
             }
             canComplete={
