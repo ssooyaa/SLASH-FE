@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../../src/api/Interceptor";
 
 // 기본 URL 설정
 axios.defaults.baseURL = "http://localhost:8080";

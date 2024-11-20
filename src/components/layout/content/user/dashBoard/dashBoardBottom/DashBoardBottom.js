@@ -4,7 +4,6 @@ import "./DashBoardBottom.css";
 import TableView from "./TableView";
 import ChartView from "./ChartView";
 import ChartTable from "./ChartTable";
-import axios from "axios";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import {
   fetchEvaluationItemCategory,
@@ -14,9 +13,6 @@ import {
 } from "../../../../../../api/CommonService";
 import { fetchContractData } from "../../../../../../api/UserService";
 import DropDownHeader from "../../../../../dropdown/DropDownHeader";
-
-// Axios 기본 URL 설정
-axios.defaults.baseURL = "http://localhost:8080";
 
 const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
   const [categories, setCategories] = useState([]);
