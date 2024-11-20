@@ -32,7 +32,6 @@ const RequestDetailForm = ({ requestData, currentUser, onClose }) => {
       await deleteRequest(requestData.requestId);
       alert("삭제되었습니다.");
       onClose();
-      window.location.href = "/user/requestManagement";
     } catch (error) {
       console.log(error);
       alert("삭제 실패");

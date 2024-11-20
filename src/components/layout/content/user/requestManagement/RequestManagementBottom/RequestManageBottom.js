@@ -27,7 +27,6 @@ const RequestManagementBottom = ({ agreementId, date }) => {
   const [selectedEquipmentType, setSelectedEquipmentType] = useState("전체");
 
   const [isOpenStatus, setIsOpenStatus] = useState(false);
-  const [isOpenTaskType, setIsOpenTaskType] = useState(false);
   const [isOpenTaskDetail, setIsOpenTaskDetail] = useState(false);
   const [isOpenEquipmentType, setIsOpenEquipmentType] = useState(false);
 
@@ -109,17 +108,13 @@ const RequestManagementBottom = ({ agreementId, date }) => {
     searchTerm,
     agreementId, // dependency 추가
     date, // dependency 추가
+    isModalOpen,
+    isRequestModalOpen,
   ]);
 
   const handleSelectStatus = (option) => {
     setSelectedStatus(option);
     setIsOpenStatus(false);
-    setPage(1);
-  };
-
-  const handleSelectTaskType = (option) => {
-    setSelectedTaskType(option);
-    setIsOpenTaskType(false);
     setPage(1);
   };
 
@@ -175,10 +170,6 @@ const RequestManagementBottom = ({ agreementId, date }) => {
 
   const toggleRequestModal = () => {
     setIsRequestModalOpen((prev) => !prev);
-  };
-
-  const toggleModal = () => {
-    setIsModalOpen((prev) => !prev);
   };
 
   const openModal = (requestId) => {
