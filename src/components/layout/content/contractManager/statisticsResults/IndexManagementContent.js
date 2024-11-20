@@ -35,7 +35,6 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       if (data && Array.isArray(data)) {
         if (data.length > 0) {
           setAgreements(data);
-          // 초기에 세션에 저장된 agreement가 없다면 세션에 신규 등록
           setSelectedAgreement(data[0]);
           const today = new Date();
           const year = today.getFullYear();

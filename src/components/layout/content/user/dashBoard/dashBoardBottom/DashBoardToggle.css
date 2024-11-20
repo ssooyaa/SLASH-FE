@@ -14,13 +14,11 @@
 
 .chartTable {
   width: auto;
-  min-height: 350px;
   margin-top: 20px;
   padding: 5px 15px;
   background-color: white;
   align-content: center;
   border-radius: 10px;
-  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
 }
 
 .ctable,
