@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "./ContractForm.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -128,6 +128,7 @@ const ContractForm = () => {
                   <label className="companyNameLabel">계약시작일</label>
                   <div className="selectDate">
                     <DatePicker
+                      className="contractDatePicker"
                       selected={formData.startDate}
                       onChange={(date) => handleDateChange(date, "startDate")} // 필드 이름 전달
                       minDate={new Date()}
@@ -151,6 +152,7 @@ const ContractForm = () => {
                   <label className="companyNameLabel">계약종료일</label>
                   <div className="selectDate">
                     <DatePicker
+                      className="contractDatePicker"
                       selected={formData.endDate}
                       minDate={
                         formData.startDate

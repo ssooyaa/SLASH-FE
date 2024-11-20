@@ -114,3 +114,8 @@
   flex-direction: row;
   align-items: center;
 }
+
+.selectDate .react-datepicker {
+  top: -10px;
+  left: 25px;
+}
