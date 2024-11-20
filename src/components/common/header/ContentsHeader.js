@@ -12,13 +12,15 @@ const ContentsHeader = ({
   setSelectedAgreement,
   selectedDate,
   setSelectedDate,
+  maxDate,
   dateFormat,
 }) => {
   const handleAgreementChange = (e) => {
     const agreementName = e.target.value;
-    setSelectedAgreement(
-      agreements.filter((agreement) => agreement.contractName === agreementName)
+    const selected = agreements.find(
+      (agreement) => agreement.contractName === agreementName
     );
+    setSelectedAgreement(selected);
   };
 
   const handleDateChange = (date) => {
@@ -43,7 +45,7 @@ const ContentsHeader = ({
       협약서
       <select
         className="criteria2"
-        value={selectedAgreement || ""}
+        value={selectedAgreement?.contractName || ""}
         onChange={handleAgreementChange}
       >
         {agreements.map((agreement) => (
@@ -61,6 +63,7 @@ const ContentsHeader = ({
             showYearPicker={dateFormat === "year"}
             showMonthYearPicker={dateFormat === "month"}
             dateFormat={inputDateFormatter()}
+            maxDate={maxDate}
             customInput={
               <div className="datePickerContainer">
                 <input
