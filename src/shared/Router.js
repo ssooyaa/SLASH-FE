@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from "react";
-import Login from "../pages/login/LoginPage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import UserMain from "../pages/user/UserMain";
 import ContractManagerMain from "../pages/contractManager/ContractManagerMain";
@@ -33,10 +32,21 @@ const Router = () => {
         <Routes>
           <Route path="/" index element={<LoginPage />} />
           {/* 사용자 권한 페이지들 */}
-          <Route path="/user/indexManagement" element={<IndexManagement />} />
+          <Route
+            path="/user/indexManagement"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER"]}>
+                <IndexManagement />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/user/indexManagement/detail/:evaluationItemId/:date"
-            element={<DetailIndex />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER"]}>
+                <DetailIndex />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/user"
@@ -66,7 +76,11 @@ const Router = () => {
           />
           <Route
             path="/requestManager/status"
-            element={<RequestManagerStatus />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_REQUEST_MANAGER"]}>
+                <RequestManagerStatus />
+              </ProtectedRoute>
+            }
           />
           {/* 계약 관리자 관련 페이지 */}
           <Route
@@ -127,11 +141,19 @@ const Router = () => {
           />
           <Route
             path="/contractManager/updateEvaluationItem/:evaluationItemId"
-            element={<UpdateEvaluationItem />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <UpdateEvaluationItem />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/contractManager/statisticsResult"
-            element={<StatisticsResults />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <StatisticsResults />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/contractManager/indicatorCalculator"
@@ -143,19 +165,35 @@ const Router = () => {
           />
           <Route
             path="/contractManager/requestAllocation"
-            element={<RequestAllocation />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <RequestAllocation />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/contractManager/autoCal"
-            element={<EstimateIndicatorEdit />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <EstimateIndicatorEdit />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/contractManager/yearIndicator"
-            element={<YearIndicator />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <YearIndicator />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/contractManager/indexManagement/detail/:evaluationItemId/:date"
-            element={<StatisticsPdf />}
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_CONTRACT_MANAGER"]}>
+                <StatisticsPdf />
+              </ProtectedRoute>
+            }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

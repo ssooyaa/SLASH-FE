@@ -19,10 +19,8 @@ export const AuthProvider = ({ children }) => {
       const decodedToken = jwtDecode(data.data.accessToken);
       const newUser = { id: decodedToken.id, auth: decodedToken.auth };
       setUser(newUser);
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(data.data.accessToken)
-      );
+      localStorage.setItem("accessToken", data.data.accessToken);
+      localStorage.setItem("userId", newUser.id);
       localStorage.setItem("user", JSON.stringify(newUser));
       setIsAuthenticated(true);
     } else {
