@@ -53,7 +53,7 @@ apiClient.interceptors.response.use(
     else if (status === 403) {
       alert("권한이 없습니다. 접근이 제한된 페이지입니다.");
       localStorage.removeItem("accessToken");
-      window.location.href = "/";
+      window.location.href = "/error";
     } else {
     }
     return Promise.reject(error);
