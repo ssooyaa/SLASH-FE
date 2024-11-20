@@ -17,14 +17,6 @@ const ContractForm = () => {
 
   const [totalTargets, setTotalTargets] = useState([]);
 
-  const [showCalendar, setShowCalendar] = useState(false);
-
-  const [currentPicker, setCurrentPicker] = useState(null);
-
-  const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
-
-  const calendarRef = useRef(null);
-
   const navigator = useNavigate();
 
   const handleChangeFormData = (field, value) => {
@@ -35,23 +27,22 @@ const ContractForm = () => {
     console.log(formData);
   };
 
-  const handleCalendarClick = (field, event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setCurrentPicker(field);
-    setShowCalendar(true);
-    setCalendarPosition({
-      top: rect.bottom + window.scrollY + 5,
-      left: rect.right + window.scrollX - 230,
-    });
+  // 날짜 형식 변경 함수 (YYYY년 MM월 DD일)
+  const formatDate = (date) => {
+    if (!date) return "";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}년 ${month}월 ${day}일`;
   };
 
-  const handleDateChange = (date) => {
-    if (currentPicker === "startDate") {
-      handleChangeFormData("startDate", date);
-    } else {
-      handleChangeFormData("endDate", date);
-    }
-    setShowCalendar(false);
+  const handleDateChange = (date, field) => {
+    const updatedDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+    handleChangeFormData(field, updatedDate);
   };
 
   const handleTotalTargets = (value) => {
@@ -136,66 +127,53 @@ const ContractForm = () => {
                 <div className="contractDateSelect">
                   <label className="companyNameLabel">계약시작일</label>
                   <div className="selectDate">
-                    <input
-                      className="companyData"
-                      name="startDate"
-                      placeholder="DD/MM/YYYY"
-                      value={
-                        formData.startDate
-                          ? formData.startDate.toLocaleDateString("en-GB")
-                          : ""
+                    <DatePicker
+                      selected={formData.startDate}
+                      onChange={(date) => handleDateChange(date, "startDate")} // 필드 이름 전달
+                      minDate={new Date()}
+                      customInput={
+                        <div className="datePickerContainer">
+                          <input
+                            type="text"
+                            className="companyData"
+                            name="startDate"
+                            placeholder="DD/MM/YYYY"
+                            value={formatDate(formData.startDate)} // 날짜 형식 변경
+                            readOnly
+                          />
+                          <MdCalendarMonth className="contractCalendarIcon" />
+                        </div>
                       }
-                      readOnly
-                    />
-                    <MdCalendarMonth
-                      className="contractCalendarIcon"
-                      onClick={(e) => handleCalendarClick("startDate", e)}
                     />
                   </div>
                 </div>
                 <div className="contractDateSelect">
                   <label className="companyNameLabel">계약종료일</label>
-                  <input
-                    className="companyData"
-                    name="endDate"
-                    placeholder="DD/MM/YYYY"
-                    value={
-                      formData.endDate
-                        ? formData.endDate.toLocaleDateString("en-GB")
-                        : ""
-                    }
-                    readOnly
-                  />
-                  <MdCalendarMonth
-                    className="contractCalendarIcon"
-                    onClick={(e) => handleCalendarClick("endDate", e)}
-                  />
-                </div>
-                {showCalendar && (
-                  <div
-                    className="calendarModal"
-                    ref={calendarRef}
-                    style={{
-                      top: `${calendarPosition.top}px`,
-                      left: `${calendarPosition.left}px`,
-                    }}
-                  >
+                  <div className="selectDate">
                     <DatePicker
-                      selected={
-                        currentPicker === "startDate"
-                          ? formData.startDate
-                          : formData.endDate
-                      }
-                      onChange={handleDateChange}
-                      inline
+                      selected={formData.endDate}
                       minDate={
-                        currentPicker === "startDate"
-                          ? new Date()
-                          : formData.startDate
+                        formData.startDate
+                          ? new Date(formData.startDate.getTime() + 86400000)
+                          : new Date()
+                      } // startDate 다음 날부터 선택 가능
+                      onChange={(date) => handleDateChange(date, "endDate")}
+                      customInput={
+                        <div className="datePickerContainer">
+                          <input
+                            type="text"
+                            className="companyData"
+                            name="endDate"
+                            placeholder="DD/MM/YYYY"
+                            value={formatDate(formData.endDate)}
+                            readOnly
+                          />
+                          <MdCalendarMonth className="contractCalendarIcon" />
+                        </div>
                       }
                     />
                   </div>
-                )}
+                </div>
               </div>
             </div>
             <div className="table totalTable">

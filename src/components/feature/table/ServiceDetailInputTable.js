@@ -4,7 +4,7 @@ import "./ServiceDetailInputTable.css";
 const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
   const [formData, setFormData] = useState({
     purpose: initialData.purpose || "",
-    weight: initialData.weight || 0,
+    weight: initialData.weight || "0",
     period: initialData.period || "월별",
     formula: initialData.formula || "",
     unit: initialData.unit || "율(%)",
@@ -23,7 +23,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
     // initialData가 변경될 때 formData를 업데이트
     setFormData({
       purpose: initialData.purpose || "",
-      weight: initialData.weight || 0,
+      weight: initialData.weight || "0",
       period: initialData.period || "월별",
       formula: initialData.formula || "",
       unit: initialData.unit || "율(%)",
@@ -41,6 +41,23 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
     });
   };
 
+  const numberFormatter = (event) => {
+    let value = event.target.value.replace(/[^0-9]/g, ""); // 숫자만 남김
+
+    if (event.target.value !== value) {
+      alert("숫자만 입력 가능합니다.");
+    }
+
+    // formData 상태 업데이트
+    setFormData((prevData) => ({
+      ...prevData,
+      weight: value,
+    }));
+
+    // 부모 컴포넌트로 값 전달
+    handleData("weight", Number(value));
+  };
+
   return (
     <>
       <table>
@@ -55,12 +72,10 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
             <td>가중치</td>
             <td>
               <input
-                type="number"
+                type="text"
                 className="fullInput weight"
-                value={formData.weight}
-                onChange={(e) =>
-                  handleChangeData("weight", Number(e.target.value))
-                }
+                value={formData.weight || ""}
+                onChange={(e) => numberFormatter(e)}
               />
             </td>
             <td>측정주기</td>
