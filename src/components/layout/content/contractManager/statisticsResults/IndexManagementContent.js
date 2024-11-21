@@ -14,14 +14,19 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   const [agreements, setAgreements] = useState([]);
 
   // agreement와 date의 경우 새로고침시에 정보를 유지하기 위해 세션에 해당 정보 저장
-  const [selectedAgreement, setSelectedAgreement] = useState(
-    JSON.parse(sessionStorage.getItem("selectedAgreement")) || null
-  );
-  const [selectedDate, setSelectedDate] = useState(
-    sessionStorage.getItem("selectedDate") || null
-  );
+  const [selectedAgreement, setSelectedAgreement] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [contractData, setContractData] = useState({});
+
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth()).padStart(2, "0"); //전월기준으로 +1 하지 않음
+    return `${year}-${month}`;
+  };
+
+  const maxDate = getMaxDate();
 
   // 계약정보를 불러오는 함수
   const fetchInitialContracts = async () => {
@@ -30,11 +35,10 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
       if (data && Array.isArray(data)) {
         if (data.length > 0) {
           setAgreements(data);
-          // 초기에 세션에 저장된 agreement가 없다면 세션에 신규 등록
           setSelectedAgreement(data[0]);
           const today = new Date();
           const year = today.getFullYear();
-          const month = String(today.getMonth()).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+          const month = String(today.getMonth()).padStart(2, "0"); //전월기준으로 +1 하지 않음
           const date = `${year}-${month}`;
           setSelectedDate(date);
         }
@@ -55,33 +59,20 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
     fetchInitialContracts();
   }, []);
 
-  // 선택된 agreement가 바뀔 경우 세션 업데이트
-  useEffect(() => {
-    if (selectedAgreement) {
-      sessionStorage.setItem(
-        "selectedAgreement",
-        JSON.stringify(selectedAgreement)
-      );
-    }
-  }, [selectedAgreement]);
-
-  // 선택된 date가 바뀔 경우 세션 업데이트
-  useEffect(() => {
-    if (selectedDate) {
-      sessionStorage.setItem("selectedDate", selectedDate);
-    }
-  }, [selectedDate]);
-
   // agreement, 날짜가 변할 경우 새로운 contractData fetch
   useEffect(() => {
     const fetchData = async () => {
+      if (!selectedAgreement || !selectedDate) {
+        // 초기값이 없을 경우 fetchInitialContracts를 호출하여 설정
+        await fetchInitialContracts();
+      }
+
       if (selectedAgreement && selectedDate) {
         try {
           const response = await fetchIndicators(
             selectedAgreement.contractId,
             dateFormatter(selectedDate)
           );
-          console.log("통계자료: ", response);
           if (response && response.success) {
             setContractData(response.data);
           }
@@ -123,6 +114,7 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
             setSelectedAgreement={setSelectedAgreement}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            maxDate={maxDate}
             dateFormat={`month`}
           />
           {/* 상태를 자식 컴포넌트로 전달 */}

@@ -10,7 +10,7 @@ const TaskDetailInputTable = ({ initialData, onDataChange }) => {
     const addData = {
       taskDetail: "",
       serviceRelevance: false,
-      deadline: 0,
+      deadline: "0",
     };
     const updatedData = [...data, addData];
     setData(updatedData);
@@ -24,6 +24,19 @@ const TaskDetailInputTable = ({ initialData, onDataChange }) => {
     };
     setData(updateData);
     onDataChange(updateData);
+  };
+
+  const numberFormatter = (event, index) => {
+    // 입력값에서 숫자가 아닌 값을 제거
+    let value = event.target.value.replace(/[^0-9]/g, "");
+
+    // 숫자가 아닌 값이 입력되었을 경우 알림
+    if (event.target.value !== value) {
+      alert("숫자만 입력 가능합니다.");
+    }
+
+    // 값이 비어있으면 빈 문자열로 처리
+    handleData(index, "deadline", Number(value) || "");
   };
 
   const [showDeleteMenu, setShowDeleteMenu] = useState(
@@ -95,12 +108,10 @@ const TaskDetailInputTable = ({ initialData, onDataChange }) => {
               </td>
               <td>
                 <input
-                  type="number"
+                  type="text"
                   className="fullInput"
                   value={item.deadline}
-                  onChange={(e) =>
-                    handleData(index, "deadline", e.target.value)
-                  }
+                  onChange={(e) => numberFormatter(e, index)}
                 />
               </td>
             </tr>

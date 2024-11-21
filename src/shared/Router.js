@@ -33,6 +33,14 @@ const Router = () => {
           <Route path="/" index element={<LoginPage />} />
           {/* 사용자 권한 페이지들 */}
           <Route
+            path="/user"
+            element={
+              <ProtectedRoute allowedRoles={["ROLE_USER"]}>
+                <UserMain />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/user/indexManagement"
             element={
               <ProtectedRoute allowedRoles={["ROLE_USER"]}>
@@ -45,14 +53,6 @@ const Router = () => {
             element={
               <ProtectedRoute allowedRoles={["ROLE_USER"]}>
                 <DetailIndex />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user"
-            element={
-              <ProtectedRoute allowedRoles={["ROLE_USER"]}>
-                <UserMain />
               </ProtectedRoute>
             }
           />

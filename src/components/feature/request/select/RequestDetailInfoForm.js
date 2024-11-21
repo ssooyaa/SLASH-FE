@@ -33,7 +33,9 @@ const RequestDetailInfoForm = ({
         <h3>요청 내역</h3>
         <RequestLabel requestType={taskType} />
         <ProcessStatusLabel processType={status} />
-        <DueOnTimeLabel dueOnTime={dueOnTime} />
+        {status === "처리완료" ? (
+          <DueOnTimeLabel dueOnTime={dueOnTime} />
+        ) : null}
         {canEdit && (
           <button className="editButton" onClick={onEdit}>
             수정하기

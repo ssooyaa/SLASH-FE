@@ -9,11 +9,11 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
       ? initialData
       : Array(3).fill({
           grade: "",
-          min: 0,
-          max: 0,
+          min: "0",
+          max: "0",
           minInclusive: true,
           maxInclusive: false,
-          score: 0,
+          score: "0",
         })
   );
 
@@ -24,11 +24,11 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
         ? initialData
         : Array(3).fill({
             grade: "",
-            min: 0,
-            max: 0,
+            min: "0",
+            max: "0",
             minInclusive: true,
             maxInclusive: false,
-            score: 0,
+            score: "0",
           })
     );
   }, [initialData]);
@@ -38,11 +38,11 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
       ...data,
       {
         grade: "",
-        min: 0,
-        max: 0,
+        min: "0",
+        max: "0",
         minInclusive: true, // 기본값 설정
         maxInclusive: false, // 기본값 설정
-        score: 0,
+        score: "0",
       },
     ];
     setData(updatedData);
@@ -58,6 +58,25 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
     console.log(updateData);
     setData(updateData);
     onDataChange(updateData);
+  };
+
+  const numberFormatter = (event, index, type) => {
+    // 입력값을 받아오기 전에 숫자가 아닌 값들을 제거
+    let value = event.target.value.replace(/[^0-9.]/g, ""); // 숫자와 .만 남김
+
+    // 소수점이 여러 번 입력된 경우 처음 소수점만 남김
+    const parts = value.split(".");
+    if (parts.length > 2) {
+      value = `${parts[0]}.${parts.slice(1).join("")}`;
+    }
+
+    // 숫자가 아닌 값이 입력되었을 경우 알림
+    if (event.target.value !== value) {
+      alert("숫자만 입력 가능합니다.");
+    }
+
+    // min 필드에 값 설정 (문자열로 입력받고 처리)
+    handleData(index, type, value);
   };
 
   const [showDeleteMenu, setShowDeleteMenu] = useState(
@@ -119,11 +138,9 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
               </td>
               <td className="standardInput">
                 <input
-                  type="number"
-                  value={item.min}
-                  onChange={(e) =>
-                    handleData(index, "min", Number(e.target.value))
-                  }
+                  type="text"
+                  value={item.min || ""}
+                  onChange={(e) => numberFormatter(e, index, "min")}
                 />
                 <select
                   className="standardSelect"
@@ -139,9 +156,9 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
               </td>
               <td className="standardInput">
                 <input
-                  type="number"
-                  value={item.max}
-                  onChange={(e) => handleData(index, "max", e.target.value)}
+                  type="text"
+                  value={item.max || ""}
+                  onChange={(e) => numberFormatter(e, index, "max")}
                 />
                 <select
                   className="standardSelect"
@@ -157,10 +174,10 @@ const GradeInputTable = ({ initialData, onDataChange }) => {
               </td>
               <td>
                 <input
-                  type="number"
+                  type="text"
                   className="fullInput"
-                  value={item.score}
-                  onChange={(e) => handleData(index, "score", e.target.value)}
+                  value={item.score || ""}
+                  onChange={(e) => numberFormatter(e, index, "score")}
                 />
               </td>
             </tr>

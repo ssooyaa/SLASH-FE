@@ -47,6 +47,7 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
   useEffect(() => {
     const fetchCategory = async (agreementId) => {
       const categories = await fetchEvaluationItemCategory(agreementId);
+      console.log("카테고리: ", categories);
       setCategories(categories);
     };
     const fetchContract = async (agreementId) => {
@@ -95,13 +96,17 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
           className="criteria2"
           label="서비스 평가지표 : "
           options={categories.map((data) => data.category) || []}
-          selectedOption={selectedCriteria}
+          selectedOption={
+            categories.length > 0 ? selectedCriteria : "평가 항목이 없습니다." // categories가 비어 있으면 빈 값 설정
+          }
           onSelect={(option) => {
             const selectedCategory = categories.filter(
               (data) => data.category === option
             );
-            setSelectedCriteria(selectedCategory[0]?.category);
-            setSelectedCriteriaId(selectedCategory[0]?.evaluationItemId);
+            setSelectedCriteria(selectedCategory[0]?.category || ""); // 선택된 카테고리 초기화
+            setSelectedCriteriaId(
+              selectedCategory[0]?.evaluationItemId || null
+            ); // ID 초기화
           }}
           style={{ width: "550px" }}
         />
@@ -111,31 +116,38 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
         {isTableVisible ? <FaChevronDown /> : <FaChevronRight />}
         <span style={{ marginLeft: "5px" }}>서비스 평가 기준</span>
       </div>
-
-      {isTableVisible && (
-        <div className="toggleTable">
-          <TableView
-            className="toggleTable"
-            selectedCriteria={selectedCriteria}
-            contractData={evaluationItem}
-          />
+      {categories.length > 0 ? (
+        <>
+          {isTableVisible && (
+            <div className="toggleTable">
+              <TableView
+                className="toggleTable"
+                selectedCriteria={selectedCriteria}
+                contractData={evaluationItem}
+              />
+            </div>
+          )}
+          <div className="criteriaStatistics">
+            {view === "chart" ? (
+              <ChartView
+                selectedCriteria={selectedCriteria}
+                statistics={statistics} // 상태 전달
+              />
+            ) : (
+              <div className="chartTable">
+                <ChartTable
+                  selectedCriteria={selectedCriteria}
+                  statistics={statistics} // 상태 전달
+                />
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="noCategories">
+          <p>서비스 항목이 없습니다.</p>
         </div>
       )}
-      <div className="criteriaStatistics">
-        {view === "chart" ? (
-          <ChartView
-            selectedCriteria={selectedCriteria}
-            statistics={statistics} // 상태 전달
-          />
-        ) : (
-          <div className="chartTable">
-            <ChartTable
-              selectedCriteria={selectedCriteria}
-              statistics={statistics} // 상태 전달
-            />
-          </div>
-        )}
-      </div>
     </div>
   );
 };
