@@ -52,6 +52,7 @@ const DashBoardBottom = ({ agreementId, date, contractInfo }) => {
     };
     const fetchContract = async (agreementId) => {
       const evaluationItem = await fetchContractData(agreementId);
+      console.log("페치컨트랙트: ", evaluationItem);
       setEvaluationItem(evaluationItem.data);
     };
     if (agreementId) {
