@@ -13,7 +13,6 @@ const IndexManagementContent = ({ isNavOpen, toggleNav, effectClass }) => {
   // 전체 계약 정보 조회
   const [agreements, setAgreements] = useState([]);
 
-  // agreement와 date의 경우 새로고침시에 정보를 유지하기 위해 세션에 해당 정보 저장
   const [selectedAgreement, setSelectedAgreement] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
 

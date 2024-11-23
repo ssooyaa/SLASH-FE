@@ -30,7 +30,6 @@ const IndicatorTable = ({
     <div className="listTable">
       <div className="listTableHead">
         <p className="listTableCategory headerP">지표구분</p>
-        <p className="isAutoP headerP">자동계산여부</p>
         <p className="dateP headerP">지표측정일</p>
         <p className="approvalP headerP">승인 여부</p>
         <p className="buttonP"></p>
@@ -39,7 +38,6 @@ const IndicatorTable = ({
       {data.map((item, index) => (
         <div className="listTableBody" key={item.evaluationItemId || index}>
           <p className="listTableCategory">{item.category}</p>
-          <p className="isAutoP">{item.isAuto ? "자동" : "수동"}</p>
           <p className="dateP dateP">{item.date}</p>
           <p className="approvalP">{item.isApprove ? "승인됨" : "미승인"}</p>
           <p className="buttonP">
