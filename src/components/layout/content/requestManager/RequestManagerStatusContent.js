@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { IoPersonCircle } from "react-icons/io5";
 import RequestManagerBottom from "./requestManagerBottom/RequestManagerBottom";
-import ContractHeaderV1 from "../../../common/header/ContractHeaderV1";
 import ContentsHeader from "../../../common/header/ContentsHeader";
 import { fetchAllContractName } from "../../../../api/CommonService";
 
