@@ -8,6 +8,7 @@ import {
   fetchEvaluationDetail,
   fetchEvaluationEquipment,
 } from "../../../../../api/CommonService";
+import { approvalStatistics } from "../../../../../api/ContractManagerService";
 
 const EstimateIndicatorEdit = () => {
   const [searchParams] = useSearchParams();
@@ -24,6 +25,10 @@ const EstimateIndicatorEdit = () => {
     weightedScore: "",
   });
 
+  const [totalWeight, setTotalWeight] = useState(null);
+
+  const [approvalStatus, setApprovalStatus] = useState(null);
+
   const navigate = useNavigate();
 
   const handleRedirect = () => {
@@ -33,7 +38,30 @@ const EstimateIndicatorEdit = () => {
   // 수정 핸들러: 입력 값 변경 시 상태 업데이트
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditData((prev) => ({ ...prev, [name]: value }));
+    // if (evaluationItem.unit === "율(%)") {
+    setEditData((prev) => {
+      const updatedEditData = { ...prev, [name]: value };
+
+      if (name === "score") {
+        const calculatedWeightedScore =
+          (parseFloat(value) * evaluationItem.weight) / totalWeight;
+        updatedEditData.weightedScore = calculatedWeightedScore.toFixed(2); // 소수점 2자리
+        const scoreValue = parseFloat(value);
+        const grade = evaluationItem.serviceTargets.find((target) => {
+          const isMinValid = target.minInclusive
+            ? scoreValue >= target.min
+            : scoreValue > target.min;
+          const isMaxValid = target.maxInclusive
+            ? scoreValue <= target.max
+            : scoreValue < target.max;
+          return isMinValid && isMaxValid;
+        });
+
+        updatedEditData.grade = grade ? grade.grade : "등급 없음";
+      }
+
+      return updatedEditData;
+    });
   };
 
   // 수정/지표 확정 토글
@@ -56,7 +84,7 @@ const EstimateIndicatorEdit = () => {
   const handleSaveEdit = async () => {
     try {
       await fetchEditStatistics(statisticsId, editData);
-      alert("지표가 확정되었습니다.");
+      alert("지표가 저장되었습니다.");
       await loadEvaluationData(); // 수정 후 데이터 재조회
       setIsEditing(false); // 수정 모드 종료
     } catch (error) {
@@ -70,6 +98,7 @@ const EstimateIndicatorEdit = () => {
     try {
       const data = await fetchEvaluationDetail(evaluationItemId);
       if (data && data.success) {
+        console.log("평가데이터: ", data);
         setEvaluationItem(data.data);
       }
     } catch (error) {
@@ -82,10 +111,14 @@ const EstimateIndicatorEdit = () => {
     try {
       const response = await fetchEvaluationEquipment(evaluationItemId, date);
       if (response && response.success) {
+        console.log("초기데이터: ", response);
+        console.log("승인여부:", response.data[0].approvalStatus);
         setEvaluationData(response.data);
         if (response.data.length > 0) {
           const lastItem = response.data[response.data.length - 1];
           setStatisticsId(lastItem.statisticsId); // 마지막 statisticsId 저장
+          setApprovalStatus(response.data[0].approvalStatus);
+          setTotalWeight();
         }
       } else {
         setEvaluationData([]);
@@ -95,6 +128,19 @@ const EstimateIndicatorEdit = () => {
       console.error("Error fetching evaluation equipment data:", error);
       setEvaluationData([]);
       setStatisticsId(null); // 에러 발생 시 초기화
+    }
+  };
+
+  const handleApprovalStatus = async () => {
+    try {
+      const response = await approvalStatistics(statisticsId, evaluationItemId);
+      if (response) {
+        alert("지표가 확정되었습니다.");
+        navigate(-1);
+      }
+    } catch (error) {
+      console.error("Error fetching evaluation equipment data:", error);
+      alert("확정실패하였습니다.");
     }
   };
 
@@ -110,9 +156,29 @@ const EstimateIndicatorEdit = () => {
     }
   }, [evaluationItemId, date]);
 
+  useEffect(() => {
+    if (evaluationData.length > 0 && evaluationItem) {
+      const updateTotalWeight =
+        (evaluationItem.weight * evaluationData[0].score) /
+        evaluationData[0].weightedScore;
+      console.log(updateTotalWeight);
+      setTotalWeight(updateTotalWeight);
+    }
+  }, [evaluationData, evaluationItem]);
+
   return (
     <div className="etableContainer">
-      <h3>평가 항목 세부 정보</h3>
+      <div className="confirmTitle">
+        <h3>평가 항목 세부 정보</h3>
+        {approvalStatus === false && !isEditing ? (
+          <button
+            className="confirmButton"
+            onClick={() => handleApprovalStatus()}
+          >
+            확정하기
+          </button>
+        ) : null}
+      </div>
       {evaluationItem ? (
         <table className="ecustomTable">
           <thead>
@@ -139,7 +205,8 @@ const EstimateIndicatorEdit = () => {
       )}
 
       <h3>서비스 대상 등급</h3>
-      {evaluationItem?.serviceTargets?.length > 0 ? (
+      {evaluationItem?.serviceTargets?.length > 0 &&
+      evaluationItem?.unit === "율(%)" ? (
         <table className="ecustomTable">
           <thead>
             <tr>
@@ -162,6 +229,31 @@ const EstimateIndicatorEdit = () => {
             ))}
           </tbody>
         </table>
+      ) : evaluationItem?.unit === "건수" ? (
+        <table className="ecustomTable">
+          <thead>
+            <tr>
+              <th>등급</th>
+              <th>최소값</th>
+              <th>최대값</th>
+              <th>점수</th>
+            </tr>
+          </thead>
+          <tbody>
+            {evaluationItem.serviceTargets.map((target, index) => (
+              <tr key={index}>
+                <td>{target.grade}</td>
+                <td>
+                  {target.min} {target.minInclusive ? "이상" : "초과"}
+                </td>
+                <td>
+                  {target.max} {target.maxInclusive ? "이하" : "미만"}
+                </td>
+                <td>{target.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>서비스 대상 등급 데이터가 없습니다.</p>
       )}
@@ -175,20 +267,22 @@ const EstimateIndicatorEdit = () => {
           marginBottom: "16px",
         }}
       >
-        <button
-          style={{
-            backgroundColor: "#121824",
-            color: "white",
-            padding: "8px 16px",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            marginLeft: "auto", // 오른쪽으로 밀기 위한 스타일
-          }}
-          onClick={handleEditToggle}
-        >
-          {isEditing ? "지표 확정" : "수정하기"}
-        </button>
+        {approvalStatus === false && (
+          <button
+            style={{
+              backgroundColor: "#121824",
+              color: "white",
+              padding: "8px 16px",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              marginLeft: "auto",
+            }}
+            onClick={handleEditToggle}
+          >
+            {isEditing ? "저장하기" : "수정하기"}
+          </button>
+        )}
       </div>
 
       {evaluationData.length > 0 ? (
@@ -254,6 +348,7 @@ const EstimateIndicatorEdit = () => {
                           value={editData.weightedScore}
                           onChange={handleChange}
                           style={{ width: "80px" }}
+                          readOnly
                         />
                       ) : (
                         item.weightedScore
@@ -267,6 +362,7 @@ const EstimateIndicatorEdit = () => {
                           value={editData.grade}
                           onChange={handleChange}
                           style={{ width: "80px" }}
+                          readOnly
                         />
                       ) : (
                         item.grade
