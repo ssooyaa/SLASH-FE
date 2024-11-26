@@ -1,44 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./ServiceDetailInputTable.css";
 
-const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
-  const [formData, setFormData] = useState({
-    purpose: initialData.purpose || "",
-    weight: initialData.weight || "0",
-    period: initialData.period || "월별",
-    formula: initialData.formula || "",
-    unit: initialData.unit || "율(%)",
-  });
-
-  const [contractId, setContractId] = useState(initialData.contractId);
-
-  useEffect(() => {
-    // contractId가 변경될 때만 실행
-    if (contractId !== initialData.contractId) {
-      setContractId(initialData.contractId); // contractId 업데이트
-    }
-  }, [initialData.contractId]); // contractId가 변경될 때만 실행
-
-  useEffect(() => {
-    // initialData가 변경될 때 formData를 업데이트
-    setFormData({
-      purpose: initialData.purpose || "",
-      weight: initialData.weight || "0",
-      period: initialData.period || "월별",
-      formula: initialData.formula || "",
-      unit: initialData.unit || "율(%)",
-    });
-  }, [contractId]); // initialData가 변경될 때마다 실행
-
+const ServiceDetailInputTable = ({ initialData, handleData }) => {
   const handleChangeData = (field, value) => {
-    setFormData((prevData) => {
-      const updatedData = {
-        ...prevData,
-        [field]: value,
-      };
-      handleData(field, value);
-      return updatedData;
-    });
+    handleData(field, value);
   };
 
   const numberFormatter = (event) => {
@@ -47,13 +12,6 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
     if (event.target.value !== value) {
       alert("숫자만 입력 가능합니다.");
     }
-
-    // formData 상태 업데이트
-    setFormData((prevData) => ({
-      ...prevData,
-      weight: value,
-    }));
-
     // 부모 컴포넌트로 값 전달
     handleData("weight", Number(value));
   };
@@ -74,7 +32,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
               <input
                 type="text"
                 className="fullInput weight"
-                value={formData.weight || ""}
+                value={initialData.weight || ""}
                 onChange={(e) => numberFormatter(e)}
               />
             </td>
@@ -83,7 +41,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
               <select
                 name="period"
                 className="select"
-                value={formData.period}
+                value={initialData.period}
                 onChange={(e) => handleChangeData("period", e.target.value)}
               >
                 <option value="월별">월별</option>
@@ -96,7 +54,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
               <select
                 name="unit"
                 className="select"
-                value={formData.unit}
+                value={initialData.unit}
                 onChange={(e) => handleChangeData("unit", e.target.value)}
               >
                 <option value="율(%)">율(%)</option>
@@ -110,7 +68,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
               <input
                 type="text"
                 className="fullInput"
-                value={formData.purpose}
+                value={initialData.purpose}
                 onChange={(e) => handleChangeData("purpose", e.target.value)}
               />
             </td>
@@ -121,7 +79,7 @@ const ServiceDetailInputTable = ({ initialData = {}, handleData }) => {
               <textarea
                 type="text"
                 className="fullInput"
-                value={formData.formula}
+                value={initialData.formula}
                 onChange={(e) => handleChangeData("formula", e.target.value)}
               />
             </td>
