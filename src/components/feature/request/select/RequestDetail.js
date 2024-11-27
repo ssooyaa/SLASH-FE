@@ -4,8 +4,11 @@ import { showRequestDetail } from "../../../../service/api/userService";
 
 const RequestDetail = ({ requestId, onClose }) => {
   const [requestData, setRequestData] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user.auth;
 
   useEffect(() => {
+    console.log("데이터:", role);
     const fetchRequestDetail = async () => {
       const response = await showRequestDetail(requestId);
       if (response.success) {
@@ -19,7 +22,7 @@ const RequestDetail = ({ requestId, onClose }) => {
   return (
     <RequestDetailForm
       requestData={requestData}
-      currentUser={"c"}
+      currentUser={role}
       onClose={onClose}
     />
   );

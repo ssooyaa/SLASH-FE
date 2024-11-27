@@ -85,8 +85,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #6d6c6c;
 }
-
-.deleteButton {
-  background-color: var(--main--color);
-  margin-left: auto;
-}
