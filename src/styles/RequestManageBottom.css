@@ -24,13 +24,15 @@
 }
 
 .customDropdown {
-  width: 170px;
+  width: auto;
+  gap: 3px;
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
-  padding: 8px;
+  padding: 4px;
   border-radius: 5px;
+  flex-direction: column;
 }
 
 .customDropdown:hover .dropdownHeaderText {

@@ -92,7 +92,6 @@ const ChartView = ({ selectedCriteria, statistics }) => {
             : grade === "D"
               ? "#b22222"
               : "#4a4040";
-
     const options = {
       chart: {
         type: "solidgauge",
@@ -133,7 +132,7 @@ const ChartView = ({ selectedCriteria, statistics }) => {
             useHTML: true,
             format: `
               <div style="text-align:center">
-                <span style="font-size:1.4rem;color:#333">${stat.grade}</span><br/>
+                <span style="font-size:1.4rem;color:${color}">${stat.grade}</span><br/>
                 <span style="font-size:1.1rem;color:${color}">${score.toFixed(
                   2
                 )}%</span>

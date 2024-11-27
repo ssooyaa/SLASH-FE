@@ -4,7 +4,7 @@ body {
   font-family: "IBM Plex Sans KR", sans-serif;
   background-color: #f0f4f8;
   border-radius: 10px;
-  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.15);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .statisticsContainer {
@@ -29,12 +29,12 @@ body {
   flex-direction: row;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: all 0.3s ease;
   margin-top: -10px;
   gap: 10px;
-  min-height: 300px;
+  background-color: #f7f5f5;
 }
 
 .chartContainer {
@@ -44,12 +44,11 @@ body {
   width: 100px;
   position: relative;
   margin-left: 130px;
-  flex: 1 1; /* Two items per row */
+  flex: 1 1 auto; /* Flexible layout */
   max-width: 15%;
-  margin-bottom: 20px; /* Space below each row */
+  margin-bottom: 20px;
   height: 200px;
   justify-content: center;
-  align-content: center;
 }
 
 .statDate {
@@ -58,13 +57,14 @@ body {
   font-weight: bold;
   margin-left: -130px;
 }
+
 .serviceType {
   font-size: 0.9rem;
   color: #333;
   font-weight: bold;
   margin-top: -30px;
   margin-left: -70px;
-  align-self: flex-start; /* 왼쪽 정렬 */
+  align-self: flex-start;
 }
 
 .statDetails {
@@ -89,10 +89,11 @@ body {
 .highcharts-data-labels {
   margin-top: 45px;
 }
+
 .systemCharts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px; /* 두 개의 열 생성 */
+  gap: 20px;
   padding: 10px;
 }
 
@@ -148,17 +149,4 @@ body {
   gap: 20px;
   justify-content: center;
   align-items: center;
-}
-
-.statisticItem {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.chartContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 210px;
 }
