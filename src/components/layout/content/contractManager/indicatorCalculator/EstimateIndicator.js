@@ -12,30 +12,36 @@ import { useNavigate } from "react-router-dom";
 import IndicatorTable from "../../../../feature/table/IndicatorTable";
 import "react-datepicker/dist/react-datepicker.css";
 import { deleteStatistics } from "../../../../../api/ContractManagerService";
+import ContentsHeader from "../../../../common/header/ContentsHeader";
 
 const EstimateIndicator = () => {
+  const [agreements, setAgreements] = useState([]);
+
   const [selectedAgreementId, setSelectedAgreementId] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(() => {
-    const now = new Date();
-    // 이전 달로 설정
-    now.setMonth(now.getMonth() - 1);
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    return `${year}-${month}`;
-  });
+
+  const [selectedAgreement, setSelectedAgreement] = useState(null);
+
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [indicatorDate, setIndicatorDate] = useState(null);
 
-  // 현재 달의 이전 달까지만 선택 가능하도록 max 값 설정
-  const getMaxSelectableMonth = () => {
-    const now = new Date();
-    now.setMonth(now.getMonth() - 1); // 현재 달의 이전 달로 설정
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth()).padStart(2, "0"); //전월기준으로 +1 하지 않음
+    return `${year}-${month}`;
+  };
+
+  const maxDate = getMaxDate();
+
+  // 해당 페이지에서 이용하는 날짜 형식
+  const dateFormatter = (date) => {
+    const [year, month] = date.split("-");
     return `${year}-${month}`;
   };
 
   const [contracts, setContracts] = useState([]);
+
   const [data, setData] = useState({
     unCalculatedStatistics: [],
     calculatedStatistics: [],
@@ -44,6 +50,24 @@ const EstimateIndicator = () => {
   const handleDateUpdate = (date) => {
     console.log("Updated date:", date); // 전달받은 date 확인
     setIndicatorDate(date); // 상태 업데이트
+  };
+  const fetchInitialContracts = async () => {
+    try {
+      const data = await fetchAllContractName();
+      if (data && Array.isArray(data)) {
+        if (data.length > 0) {
+          setAgreements(data);
+          setSelectedAgreement(data[0]);
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth()).padStart(2, "0"); //전월기준으로 +1 하지 않음
+          const date = `${year}-${month}`;
+          setSelectedDate(date);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch contracts: ", error);
+    }
   };
 
   // Fetch contracts data
@@ -69,14 +93,29 @@ const EstimateIndicator = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedAgreementId && selectedDate) {
-      handleMeasureClick(selectedAgreementId, selectedDate);
-    }
-  }, [selectedAgreementId, selectedDate]);
+    const fetchData = async () => {
+      if (!selectedAgreement || !selectedDate) {
+        // 초기값이 없을 경우 fetchInitialContracts를 호출하여 설정
+        await fetchInitialContracts();
+      }
 
-  const handleAgreementChange = (e) => {
-    setSelectedAgreementId(e.target.value);
-  };
+      if (selectedAgreement && selectedDate) {
+        try {
+          const response = await fetchStatisticsStatus(
+            selectedAgreement.contractId,
+            dateFormatter(selectedDate)
+          );
+          if (response && response.success) {
+            console.log(response);
+            setData(response.data);
+          }
+        } catch (error) {
+          console.error("Failed to fetch indicator data:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [selectedAgreement, selectedDate]);
 
   const [checkedItems, setCheckedItems] = useState({});
 
@@ -184,32 +223,19 @@ const EstimateIndicator = () => {
 
   return (
     <div>
-      <div className="topIndex">
-        <FaAsterisk className="star" />
-        협약서
-        <select
-          className="criteria2"
-          value={selectedAgreementId || ""}
-          onChange={handleAgreementChange}
-        >
-          {contracts.map((contract) => (
-            <option key={contract.contractId} value={contract.contractId}>
-              {contract.contractName}
-            </option>
-          ))}
-        </select>
-        <input
-          type="month"
-          className="criteria2"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          max={getMaxSelectableMonth()} // 현재 달의 이전 달까지만 선택 가능
-        />
-      </div>
+      <ContentsHeader
+        agreements={contracts}
+        selectedAgreement={selectedAgreement}
+        setSelectedAgreement={setSelectedAgreement}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        maxDate={maxDate}
+        dateFormat={`month`}
+      />
 
       <div className="eContainer">
         <div className="eSection">
-          <h2 className="eSectionTitle">미계산</h2>
+          <h2 className="eSectionTitle">미측정 지표</h2>
           <div className="tableList">
             {data.unCalculatedStatistics.map((item, index) => (
               <div

@@ -17,6 +17,10 @@ const ChartTable = ({ statistics }) => {
   // statistics가 배열인지 확인하고 기본값 설정
   const safeStatistics = Array.isArray(statistics) ? statistics : [];
 
+  const handleTotalDownTime = statistics.some(
+    (stat) => stat.totalDowntime === -1
+  );
+
   return (
     <div className="chartTableContainer">
       <table className="chartTable">
@@ -26,7 +30,7 @@ const ChartTable = ({ statistics }) => {
             <th>장비명</th>
             <th>등급</th>
             <th>점수 (%)</th>
-            <th>총 중단 시간</th>
+            {handleTotalDownTime ? null : <th>총 중단 시간</th>}
             <th>요청 건수</th>
           </tr>
         </thead>
@@ -39,11 +43,13 @@ const ChartTable = ({ statistics }) => {
                 <td>{stat.targetEquipment}</td>
                 <td>{stat.grade}</td>
                 <td>{stat.score}%</td>
-                <td>
-                  {stat.totalDowntime === -1
-                    ? ""
-                    : formatDowntimeToHours(stat.totalDowntime)}
-                </td>
+                {!handleTotalDownTime && stat.targetEquipment !== -1 ? (
+                  <td>
+                    {stat.totalDowntime === -1
+                      ? ""
+                      : formatDowntimeToHours(stat.totalDowntime)}
+                  </td>
+                ) : null}
                 <td>{stat.requestCount}건</td>
               </tr>
             ))

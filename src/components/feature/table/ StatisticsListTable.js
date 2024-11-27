@@ -24,7 +24,6 @@ const StatisticsListTable = ({ initialData }) => {
         <>
           <div className="listTableHead">
             <p className="listTableCategory headerP">지표구분</p>
-            <p className="isAutoP headerP">자동계산여부</p>
             <p className="dateP headerP">측정월</p>
             <p className="scoreP headerP">평가 점수</p>
             <p className="weightScoreP headerP">평가 점수(가중치 적용)</p>
@@ -34,7 +33,6 @@ const StatisticsListTable = ({ initialData }) => {
           {initialData?.indicatorList.map((item, index) => (
             <div className="listTableBody" key={item.evaluationItemId || index}>
               <p className="listTableCategory">{item.category}</p>
-              <p className="isAutoP">{item.isAuto ? "자동" : "수동"}</p>
               <p className="dateP">{item.date}</p>
               <p className="scoreP">{item.score}</p>
               <p className="weightScoreP">{item.weightedScore}</p>
@@ -53,7 +51,6 @@ const StatisticsListTable = ({ initialData }) => {
           ))}
           <div className="listTableBody">
             <p className="listTableCategory">전체</p>
-            <p className="isAutoP"></p>
             <p className="dateP"></p>
             <p className="scoreP"></p>
             <p className="weightScoreP">
