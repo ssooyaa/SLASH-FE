@@ -137,7 +137,10 @@ const UpdateEvaluationItemInfoForm = () => {
     const updatedTaskTypes = value.map((item) => {
       if (typeof item === "object") {
         return {
-          type: formData.category.split(" ")[0] + " 요청",
+          type:
+            formData.category === "서비스요청 적기처리율"
+              ? "서비스 요청"
+              : formData.category.split(" ")[0] + " 요청",
           taskDetail: item.taskDetail,
           deadline: item.deadline ? item.deadline : 0,
           serviceRelevance:
@@ -147,7 +150,10 @@ const UpdateEvaluationItemInfoForm = () => {
         };
       } else if (typeof item === "string") {
         return {
-          type: formData.category.split(" ")[0] + " 요청",
+          type:
+            formData.category === "서비스요청 적기처리율"
+              ? "서비스 요청"
+              : formData.category.split(" ")[0] + " 요청",
           taskDetail: item,
         };
       } else {
@@ -317,7 +323,7 @@ const UpdateEvaluationItemInfoForm = () => {
               <span>*</span>
             </div>
             <div className="table">
-              {formData.unit === "건" ? (
+              {formData.unit === "건수" ? (
                 <GradeInputTable
                   initialData={serviceTargets}
                   onDataChange={handleUpdateServiceTargets}

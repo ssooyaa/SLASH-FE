@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./ServiceDetailInputTable.css";
 
 const ServiceDetailInputTable = ({ initialData, handleData }) => {
@@ -58,7 +58,7 @@ const ServiceDetailInputTable = ({ initialData, handleData }) => {
                 onChange={(e) => handleChangeData("unit", e.target.value)}
               >
                 <option value="율(%)">율(%)</option>
-                <option value="건">건수</option>
+                <option value="건수">건수</option>
               </select>
             </td>
           </tr>
