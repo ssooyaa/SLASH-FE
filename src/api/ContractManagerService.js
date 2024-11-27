@@ -281,3 +281,38 @@ export const deleteStatistics = async (evaluationItemId, date) => {
     return false;
   }
 };
+
+export const approvalStatistics = async (statisticsId, evaluationItemId) => {
+  try {
+    const response = await axios.patch(
+      `/contract-manager/${statisticsId}/approve/${evaluationItemId}`
+    );
+    if (response.data.success) {
+      return response.data.success;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+};
+
+export const evaluationItemInitialData = async (category) => {
+  try {
+    const response = await axios.get(
+      `/contract-manager/evaluation-item/${category}`
+    );
+    if (response.data.success) {
+      console.log(response.data.data);
+      return response.data.data;
+    }
+  } catch (error) {
+    console.error("ERROR: ", error.response.data);
+    alert(error.response.data.message);
+
+    return false;
+  }
+};

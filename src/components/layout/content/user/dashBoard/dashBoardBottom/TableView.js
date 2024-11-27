@@ -1,5 +1,6 @@
 import React from "react";
 import "./TableView.css";
+import GradeHorizonTable from "../../../../../feature/table/GradeHorizonTable";
 
 const TableView = ({ selectedCriteria, contractData }) => {
   if (!contractData || contractData.isTerminate) {
@@ -15,71 +16,36 @@ const TableView = ({ selectedCriteria, contractData }) => {
     return <p>해당 평가 항목에 대한 데이터가 없습니다.</p>;
   }
 
-  // 조건에 따른 표시 형식 설정 함수
-  const formatRange = (target) => {
-    const minText = target.minInclusive
-      ? `${target.min} 이상`
-      : `${target.min} 초과`;
-    const maxText = target.maxInclusive
-      ? `${target.max} 이하`
-      : `${target.max} 미만`;
-    return `${minText} ~ ${maxText}`;
-  };
-
   return (
     <div>
       <h2>서비스 평가항목</h2>
-      <table className="goalTable">
-        <thead>
-          <tr>
-            <th>평가 지표 구분</th>
-            <th>측정 주기</th>
-            <th>평가지표 내용</th>
-            <th>측정 단위</th>
-            <th>평가지표 가중치</th>
-            <th>평가 점수</th>
-            <th>평가점수(가중치반영)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{evaluationItem.category}</td>
-            <td>{evaluationItem.period}</td>
-            <td>{evaluationItem.purpose}</td>
-            <td>{evaluationItem.unit}</td>
-            <td>{evaluationItem.weight}</td>
-            <td>{evaluationItem.serviceTargets[0].score}</td>
-            <td>
-              {evaluationItem.serviceTargets[0].score *
-                (evaluationItem.weight / 100)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="table">
+        <table>
+          <thead>
+            <tr>
+              <th className="evaluationCategory">평가 지표 구분</th>
+              <th>측정 주기</th>
+              <th className="contentCol">평가지표 내용</th>
+              <th>측정 단위</th>
+              <th>평가지표 가중치</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{evaluationItem.category}</td>
+              <td>{evaluationItem.period}</td>
+              <td>{evaluationItem.purpose}</td>
+              <td>{evaluationItem.unit}</td>
+              <td>{evaluationItem.weight}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2>서비스 목표</h2>
-      <table className="goalTable">
-        <thead>
-          <tr>
-            <th>처리율</th>
-            {evaluationItem.serviceTargets.map((target, index) => (
-              <th key={index}>{formatRange(target)}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>서비스 목표</td>
-            {evaluationItem.serviceTargets.map((target, index) => (
-              <td key={index}>
-                {target.grade === "A"
-                  ? "목표수준(A)"
-                  : `기본범위(${target.grade})`}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <div className="table">
+        <GradeHorizonTable initialData={evaluationItem.serviceTargets} />
+      </div>
     </div>
   );
 };

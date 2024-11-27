@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddEvaluationItemForm.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import ServiceDetailInputTable from "../../../../../feature/table/ServiceDetailInputTable";
@@ -6,7 +6,10 @@ import InputTable from "../../../../../feature/table/InputTable";
 import GradeInputTable from "../../../../../feature/table/GradeInputTable";
 import NoScoreGradeInputTable from "../../../../../feature/table/NoScoreGradeInputTable";
 import TaskDetailInputTable from "../../../../../feature/table/TaskDetailInputTable";
-import { CreateServiceDetail } from "../../../../../../api/ContractManagerService";
+import {
+  CreateServiceDetail,
+  evaluationItemInitialData,
+} from "../../../../../../api/ContractManagerService";
 
 const AddEvaluationItemForm = () => {
   const navigate = useNavigate();
@@ -41,14 +44,53 @@ const AddEvaluationItemForm = () => {
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
+
     if (selectedValue === "custom") {
       setIsCustomInput(true);
-      handleChange("category", "");
+      setFormData((prev) => ({
+        contractId: contractId,
+        category: "",
+        weight: 0,
+        period: "월별",
+        purpose: "",
+        formula: "",
+        unit: "율(%)",
+        serviceTargets: [],
+        taskTypes: [], // 직접 입력 모드일 경우 category를 초기화
+      }));
     } else {
       setIsCustomInput(false);
-      handleChange("category", selectedValue);
+      setFormData((prev) => ({
+        ...prev,
+        category: selectedValue, // 셀렉트 박스의 값으로 category 업데이트
+      }));
     }
   };
+
+  // category가 변경될 때마다 API 호출하여 데이터 업데이트
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      if (
+        formData.category === "서비스 가동률" ||
+        formData.category === "서비스요청 적기처리율" ||
+        formData.category === "장애 적기처리율"
+      ) {
+        try {
+          const data = await evaluationItemInitialData(formData.category);
+          if (data) {
+            setFormData((prev) => ({
+              ...prev,
+              ...data, // 기존 데이터에 API 데이터 병합
+            }));
+          }
+        } catch (error) {
+          console.error("Error fetching category data:", error);
+        }
+      }
+    };
+
+    fetchCategoryData();
+  }, [formData.category]); // category 값이 변경될 때마다 실행
 
   const handleChange = (field, value) => {
     const updatedFormData = {
