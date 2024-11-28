@@ -1,7 +1,7 @@
 import axios from "../../../src/api/Interceptor";
 
 // 기본 URL 설정
-axios.defaults.baseURL = "http://43.201.46.62:80";
+axios.defaults.baseURL = "https://kimsuji.com";
 
 export const fetchSystemAndEquipments = async () => {
   try {
